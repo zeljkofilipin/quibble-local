@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+docker pull docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+
+mkdir -p ref/mediawiki/skins
+
+git clone --bare https://gerrit.wikimedia.org/r/mediawiki/core ref/mediawiki/core.git
+git clone --bare https://gerrit.wikimedia.org/r/mediawiki/vendor ref/mediawiki/vendor.git
+git clone --bare https://gerrit.wikimedia.org/r/mediawiki/skins/Vector ref/mediawiki/skins/Vector.git
+
+mkdir -p cache log src
+chmod 777 cache log src
