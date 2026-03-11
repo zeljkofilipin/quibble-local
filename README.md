@@ -17,6 +17,12 @@ Prepare the local environment for running Quibble. Pulls the Docker image, clone
 
 See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
 
+### `./fresh_install`
+
+Set up MediaWiki (without running tests) and open a shell. MediaWiki will be available at http://127.0.0.1:9413. Runs `./prepare` first if needed.
+
+See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
+
 ### `./clean`
 
 Clean up everything created by `./prepare`. Removes bare git repos and working directories.
