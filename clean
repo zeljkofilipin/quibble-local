@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 #
-# Clean up everything created by ./prepare.
-# Removes bare git repos and working directories.
+# Clean up working directories created by ./prepare.
+# Bare git repos in ref/ are kept (they are slow to re-clone; use ./fetch to update them).
+# To remove bare repos: rm -rf ref
 # Note: The Docker image pulled by ./prepare is not removed.
 # To remove it: docker rmi docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
 #
 set -euo pipefail
 
-rm -rf ref cache log src
+rm -rf cache log src

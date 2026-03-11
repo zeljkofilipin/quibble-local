@@ -38,7 +38,9 @@ Fetch the latest changes for all bare git repos in `ref/` from Gerrit.
 
 ### `./clean`
 
-Clean up everything created by `./prepare`. Removes bare git repos and working directories.
+Clean up working directories created by `./prepare`. Bare git repos in `ref/` are kept since they are slow to re-clone (use `./fetch` to update them).
+
+To also remove bare repos: `rm -rf ref`
 
 Note: The Docker image pulled by `./prepare` is not removed. To remove it:
 
