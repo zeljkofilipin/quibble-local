@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# Clean up everything created by ./prepare.
+# Removes bare git repos and working directories.
+# Note: The Docker image pulled by ./prepare is not removed.
+# To remove it: docker rmi docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+#
+set -euo pipefail
+
+rm -rf ref cache log src

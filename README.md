@@ -17,6 +17,14 @@ Prepare the local environment for running Quibble. Pulls the Docker image, clone
 
 See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
 
+### `./clean`
+
+Clean up everything created by `./prepare`. Removes bare git repos and working directories.
+
+Note: The Docker image pulled by `./prepare` is not removed. To remove it:
+
+    docker rmi docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+
 ## Further reading
 
 - [Quibble documentation](https://doc.wikimedia.org/quibble/)
