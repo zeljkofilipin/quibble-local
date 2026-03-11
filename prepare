@@ -1,13 +1,23 @@
 #!/usr/bin/env bash
+#
+# Prepare the local environment for running Quibble.
+# Pulls the Docker image, clones bare git repos as references,
+# and creates working directories.
+#
+# See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core
+#
 set -euo pipefail
 
+# Get the latest Quibble Docker image
 docker pull docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
 
+# Clone bare repos to use as local git references (avoids cloning from Gerrit each run)
 mkdir -p ref/mediawiki/skins
 
 git clone --bare https://gerrit.wikimedia.org/r/mediawiki/core ref/mediawiki/core.git
 git clone --bare https://gerrit.wikimedia.org/r/mediawiki/vendor ref/mediawiki/vendor.git
 git clone --bare https://gerrit.wikimedia.org/r/mediawiki/skins/Vector ref/mediawiki/skins/Vector.git
 
+# Create working directories (chmod 777 because the container runs as a different user)
 mkdir -p cache log src
 chmod 777 cache log src
