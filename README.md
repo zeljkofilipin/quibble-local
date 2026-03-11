@@ -23,6 +23,16 @@ Set up MediaWiki (without running tests) and open a shell. MediaWiki will be ava
 
 See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
 
+### `./install`
+
+Install an extension or skin and open a shell. MediaWiki will be available at http://127.0.0.1:9413. Assumes `./fresh_install` has been run first.
+
+    ./install extensions/Echo
+    ./install skins/MinervaNeue
+
+See: [Install MediaWiki Core and an Extension](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension)
+
+
 ### `./clean`
 
 Clean up everything created by `./prepare`. Removes bare git repos and working directories.
