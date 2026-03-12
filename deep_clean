@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# Remove everything quibble-local created, leaving only the git repo itself.
+# This removes cache/, log/, src/, ref/ and the Docker image.
+#
+set -euo pipefail
+
+# Use Docker (as root) to remove files owned by the container user.
+if docker image inspect docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest &>/dev/null; then
+  docker run --rm \
+    --entrypoint bash \
+    --user root \
+    -v "$(pwd)/cache:/cache" \
+    -v "$(pwd)/log:/workspace/log" \
+    -v "$(pwd)/src:/workspace/src" \
+    -v "$(pwd)/ref:/workspace/ref" \
+    docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+    -c "find /cache /workspace/log /workspace/src /workspace/ref -mindepth 1 -delete"
+fi
+
+rm -rf cache log src ref
+
+docker rmi docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest 2>/dev/null || true

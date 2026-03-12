@@ -38,13 +38,11 @@ Fetch the latest changes for all bare git repos in `ref/` from Gerrit.
 
 ### `./clean`
 
-Clean up working directories created by `./prepare`. Bare git repos in `ref/` are kept since they are slow to re-clone (use `./fetch` to update them).
+Clean up working directories created by `./prepare`. Bare git repos in `ref/` are kept since they are slow to re-clone (use `./fetch` to update them). The Docker image is also kept.
 
-To also remove bare repos: `rm -rf ref`
+### `./deep_clean`
 
-Note: The Docker image pulled by `./prepare` is not removed. To remove it:
-
-    docker rmi docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+Remove everything created by quibble-local, including bare git repos in `ref/` and the Docker image.
 
 ## Further reading
 
