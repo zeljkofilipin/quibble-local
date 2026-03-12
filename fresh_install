@@ -25,12 +25,20 @@ chmod 777 cache log src 2>/dev/null || \
     docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
     -c "chmod 777 /cache /workspace/log /workspace/src"
 
-docker run -it --rm \
-  --entrypoint=quibble-with-supervisord \
-  -p 9413:9413 \
-  -v "$(pwd)"/cache:/cache \
-  -v "$(pwd)"/log:/workspace/log \
-  -v "$(pwd)"/ref:/srv/git:ro \
-  -v "$(pwd)"/src:/workspace/src \
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
-  --shell
+cmd="docker run -it --rm
+  --entrypoint=quibble-with-supervisord
+  -p 9413:9413
+  -v $(pwd)/cache:/cache
+  -v $(pwd)/log:/workspace/log
+  -v $(pwd)/ref:/srv/git:ro
+  -v $(pwd)/src:/workspace/src
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+  --shell"
+max_len=$(echo "$cmd" | awk '{ if (length > max) max = length } END { print max }')
+delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
+echo "$delimiter
+fresh_install is running this command:
+$delimiter
+$cmd
+$delimiter"
+eval "$cmd"

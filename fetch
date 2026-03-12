@@ -5,6 +5,13 @@
 set -euo pipefail
 
 find ref -name '*.git' -type d | while read -r repo; do
-  echo "Updating ${repo} ..."
-  git -C "$repo" fetch
+  cmd="git -C $repo fetch"
+  max_len=$(echo "$cmd" | awk '{ if (length > max) max = length } END { print max }')
+  delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
+  echo "$delimiter
+fetch is running this command:
+$delimiter
+$cmd
+$delimiter"
+  eval "$cmd"
 done

@@ -6,11 +6,19 @@
 set -euo pipefail
 
 # Use Docker (as root) to remove files owned by the container user.
-docker run --rm \
-  --entrypoint bash \
-  --user root \
-  -v "$(pwd)/src:/workspace/src" \
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
-  -c "find /workspace/src -mindepth 1 -delete"
+cmd="docker run --rm
+  --entrypoint bash
+  --user root
+  -v $(pwd)/src:/workspace/src
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+  -c 'find /workspace/src -mindepth 1 -delete'"
+max_len=$(echo "$cmd" | awk '{ if (length > max) max = length } END { print max }')
+delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
+echo "$delimiter
+clean is running this command:
+$delimiter
+$cmd
+$delimiter"
+eval "$cmd"
 
 rm -rf src

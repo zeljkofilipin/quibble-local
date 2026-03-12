@@ -9,7 +9,15 @@
 set -euo pipefail
 
 # Get the latest Quibble Docker image
-docker pull docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+cmd="docker pull docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest"
+max_len=$(echo "$cmd" | awk '{ if (length > max) max = length } END { print max }')
+delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
+echo "$delimiter
+prepare is running this command:
+$delimiter
+$cmd
+$delimiter"
+eval "$cmd"
 
 # Clone bare repos to use as local git references (avoids cloning from Gerrit each run)
 mkdir -p ref/mediawiki/skins

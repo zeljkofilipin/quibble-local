@@ -26,15 +26,23 @@ if [ ! -d "$ref_dir" ]; then
   git clone --bare "https://gerrit.wikimedia.org/r/${repo}" "$ref_dir"
 fi
 
-docker run -it --rm \
-  --entrypoint=quibble-with-supervisord \
-  -p 9413:9413 \
-  -v "$(pwd)"/cache:/cache \
-  -v "$(pwd)"/log:/workspace/log \
-  -v "$(pwd)"/ref:/srv/git:ro \
-  -v "$(pwd)"/src:/workspace/src \
-  -e "ZUUL_PROJECT=${repo}" \
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
-  --skip-zuul \
-  --skip-deps \
-  --shell
+cmd="docker run -it --rm
+  --entrypoint=quibble-with-supervisord
+  -p 9413:9413
+  -v $(pwd)/cache:/cache
+  -v $(pwd)/log:/workspace/log
+  -v $(pwd)/ref:/srv/git:ro
+  -v $(pwd)/src:/workspace/src
+  -e ZUUL_PROJECT=${repo}
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+  --skip-zuul
+  --skip-deps
+  --shell"
+max_len=$(echo "$cmd" | awk '{ if (length > max) max = length } END { print max }')
+delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
+echo "$delimiter
+install is running this command:
+$delimiter
+$cmd
+$delimiter"
+eval "$cmd"

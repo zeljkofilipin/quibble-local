@@ -17,16 +17,24 @@ if [ $# -gt 0 ]; then
   docker_args+=(-e "ZUUL_PROJECT=${repo}")
 fi
 
-docker run -it --rm \
-  --entrypoint=quibble-with-supervisord \
-  -p 9413:9413 \
-  -v "$(pwd)"/cache:/cache \
-  -v "$(pwd)"/log:/workspace/log \
-  -v "$(pwd)"/ref:/srv/git:ro \
-  -v "$(pwd)"/src:/workspace/src \
-  -e CI=true \
-  ${docker_args[@]+"${docker_args[@]}"} \
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
-  --skip-zuul \
-  --skip-deps \
-  --run selenium
+cmd="docker run -it --rm
+  --entrypoint=quibble-with-supervisord
+  -p 9413:9413
+  -v $(pwd)/cache:/cache
+  -v $(pwd)/log:/workspace/log
+  -v $(pwd)/ref:/srv/git:ro
+  -v $(pwd)/src:/workspace/src
+  -e CI=true
+  ${docker_args[@]+"${docker_args[@]}"}
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+  --skip-zuul
+  --skip-deps
+  --run selenium"
+max_len=$(echo "$cmd" | awk '{ if (length > max) max = length } END { print max }')
+delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
+echo "$delimiter
+run_selenium_tests is running this command:
+$delimiter
+$cmd
+$delimiter"
+eval "$cmd"
