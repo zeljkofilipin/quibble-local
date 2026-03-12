@@ -12,5 +12,5 @@ $label is running this command:
 $delimiter
 $1
 $delimiter"
-  eval "$1"
+  eval "$(echo "$1" | tr '\n' ' ')"
 }
