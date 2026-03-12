@@ -8,4 +8,14 @@
 #
 set -euo pipefail
 
+# Use Docker (as root) to remove files owned by the container user.
+docker run --rm \
+  --entrypoint bash \
+  --user root \
+  -v "$(pwd)/cache:/cache" \
+  -v "$(pwd)/log:/workspace/log" \
+  -v "$(pwd)/src:/workspace/src" \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  -c "find /cache /workspace/log /workspace/src -mindepth 1 -delete"
+
 rm -rf cache log src
