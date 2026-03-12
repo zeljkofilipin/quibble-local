@@ -10,20 +10,7 @@
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension
 #
 set -euo pipefail
-
-# Display the command with delimiters, then execute it.
-run() {
-  local max_len
-  max_len=$(echo "$1" | awk '{ if (length > max) max = length } END { print max }')
-  local delimiter
-  delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
-  echo "$delimiter
-install is running this command:
-$delimiter
-$1
-$delimiter"
-  eval "$1"
-}
+. "$(dirname "$0")"/lib
 
 if [ $# -eq 0 ]; then
   echo "Usage: ./install extensions/EXTENSION or ./install skins/SKIN"

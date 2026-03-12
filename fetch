@@ -3,20 +3,7 @@
 # Fetch the latest changes for all bare git repos in ref/ from Gerrit.
 #
 set -euo pipefail
-
-# Display the command with delimiters, then execute it.
-run() {
-  local max_len
-  max_len=$(echo "$1" | awk '{ if (length > max) max = length } END { print max }')
-  local delimiter
-  delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
-  echo "$delimiter
-fetch is running this command:
-$delimiter
-$1
-$delimiter"
-  eval "$1"
-}
+. "$(dirname "$0")"/lib
 
 find ref -name '*.git' -type d | while read -r repo; do
   run "git -C $repo fetch"

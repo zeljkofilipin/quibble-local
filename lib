@@ -1,0 +1,16 @@
+# Display the command with delimiters, then execute it.
+# The script name is derived from $0 of the calling script.
+run() {
+  local label
+  label=$(basename "$0")
+  local max_len
+  max_len=$(echo "$1" | awk '{ if (length > max) max = length } END { print max }')
+  local delimiter
+  delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
+  echo "$delimiter
+$label is running this command:
+$delimiter
+$1
+$delimiter"
+  eval "$1"
+}
