@@ -12,6 +12,8 @@ if [ ! -d ref/mediawiki/core.git ]; then
   "$(dirname "$0")"/prepare
 fi
 
+"$(dirname "$0")"/clean
+
 # Ensure working directories exist with proper permissions for the container user.
 # Docker creates missing mount dirs as root; chmod may fail if they're already root-owned.
 mkdir -p cache log src
