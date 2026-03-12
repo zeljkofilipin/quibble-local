@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 #
-# Clean up working directories created by ./prepare.
-# Bare git repos in ref/ are kept (they are slow to re-clone; use ./fetch to update them).
-# To remove bare repos: rm -rf ref
-# Note: The Docker image pulled by ./prepare is not removed.
-# To remove it: docker rmi docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+# Remove src/ (MediaWiki source code).
+# Use ./deep_clean to remove everything quibble-local created.
 #
 set -euo pipefail
 
@@ -12,10 +9,8 @@ set -euo pipefail
 docker run --rm \
   --entrypoint bash \
   --user root \
-  -v "$(pwd)/cache:/cache" \
-  -v "$(pwd)/log:/workspace/log" \
   -v "$(pwd)/src:/workspace/src" \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
-  -c "find /cache /workspace/log /workspace/src -mindepth 1 -delete"
+  -c "find /workspace/src -mindepth 1 -delete"
 
-rm -rf cache log src
+rm -rf src

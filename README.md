@@ -38,7 +38,7 @@ Fetch the latest changes for all bare git repos in `ref/` from Gerrit.
 
 ### `./clean`
 
-Clean up working directories created by `./prepare`. Bare git repos in `ref/` are kept since they are slow to re-clone (use `./fetch` to update them). The Docker image is also kept.
+Remove `src/` (MediaWiki source code). Cache, logs, bare git repos, and the Docker image are kept.
 
 ### `./deep_clean`
 
