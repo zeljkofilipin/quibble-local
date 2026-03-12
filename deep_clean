@@ -5,9 +5,23 @@
 #
 set -euo pipefail
 
+# Display the command with delimiters, then execute it.
+run() {
+  local max_len
+  max_len=$(echo "$1" | awk '{ if (length > max) max = length } END { print max }')
+  local delimiter
+  delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
+  echo "$delimiter
+deep_clean is running this command:
+$delimiter
+$1
+$delimiter"
+  eval "$1"
+}
+
 # Use Docker (as root) to remove files owned by the container user.
 if docker image inspect docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest &>/dev/null; then
-  cmd="docker run --rm
+  run "docker run --rm
   --entrypoint bash
   --user root
   -v $(pwd)/cache:/cache
@@ -16,16 +30,8 @@ if docker image inspect docker-registry.wikimedia.org/releng/quibble-bullseye-ph
   -v $(pwd)/ref:/workspace/ref
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
   -c 'find /cache /workspace/log /workspace/src /workspace/ref -mindepth 1 -delete'"
-  max_len=$(echo "$cmd" | awk '{ if (length > max) max = length } END { print max }')
-  delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
-  echo "$delimiter
-deep_clean is running this command:
-$delimiter
-$cmd
-$delimiter"
-  eval "$cmd"
 fi
 
-rm -rf cache log src ref
+run "rm -rf cache log src ref"
 
-docker rmi docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest 2>/dev/null || true
+run "docker rmi docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest 2>/dev/null || true"

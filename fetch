@@ -4,14 +4,20 @@
 #
 set -euo pipefail
 
-find ref -name '*.git' -type d | while read -r repo; do
-  cmd="git -C $repo fetch"
-  max_len=$(echo "$cmd" | awk '{ if (length > max) max = length } END { print max }')
+# Display the command with delimiters, then execute it.
+run() {
+  local max_len
+  max_len=$(echo "$1" | awk '{ if (length > max) max = length } END { print max }')
+  local delimiter
   delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
   echo "$delimiter
 fetch is running this command:
 $delimiter
-$cmd
+$1
 $delimiter"
-  eval "$cmd"
+  eval "$1"
+}
+
+find ref -name '*.git' -type d | while read -r repo; do
+  run "git -C $repo fetch"
 done

@@ -9,6 +9,20 @@
 #
 set -euo pipefail
 
+# Display the command with delimiters, then execute it.
+run() {
+  local max_len
+  max_len=$(echo "$1" | awk '{ if (length > max) max = length } END { print max }')
+  local delimiter
+  delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
+  echo "$delimiter
+run_selenium_tests is running this command:
+$delimiter
+$1
+$delimiter"
+  eval "$1"
+}
+
 docker_args=()
 
 if [ $# -gt 0 ]; then
@@ -17,7 +31,7 @@ if [ $# -gt 0 ]; then
   docker_args+=(-e "ZUUL_PROJECT=${repo}")
 fi
 
-cmd="docker run -it --rm
+run "docker run -it --rm
   --entrypoint=quibble-with-supervisord
   -p 9413:9413
   -v $(pwd)/cache:/cache
@@ -30,11 +44,3 @@ cmd="docker run -it --rm
   --skip-zuul
   --skip-deps
   --run selenium"
-max_len=$(echo "$cmd" | awk '{ if (length > max) max = length } END { print max }')
-delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
-echo "$delimiter
-run_selenium_tests is running this command:
-$delimiter
-$cmd
-$delimiter"
-eval "$cmd"

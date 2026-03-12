@@ -11,6 +11,20 @@
 #
 set -euo pipefail
 
+# Display the command with delimiters, then execute it.
+run() {
+  local max_len
+  max_len=$(echo "$1" | awk '{ if (length > max) max = length } END { print max }')
+  local delimiter
+  delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
+  echo "$delimiter
+install is running this command:
+$delimiter
+$1
+$delimiter"
+  eval "$1"
+}
+
 if [ $# -eq 0 ]; then
   echo "Usage: ./install extensions/EXTENSION or ./install skins/SKIN"
   exit 1
@@ -23,10 +37,10 @@ ref_dir="ref/${repo}.git"
 # Clone bare repo if not already present
 if [ ! -d "$ref_dir" ]; then
   mkdir -p "$(dirname "$ref_dir")"
-  git clone --bare "https://gerrit.wikimedia.org/r/${repo}" "$ref_dir"
+  run "git clone --bare https://gerrit.wikimedia.org/r/${repo} $ref_dir"
 fi
 
-cmd="docker run -it --rm
+run "docker run -it --rm
   --entrypoint=quibble-with-supervisord
   -p 9413:9413
   -v $(pwd)/cache:/cache
@@ -38,11 +52,3 @@ cmd="docker run -it --rm
   --skip-zuul
   --skip-deps
   --shell"
-max_len=$(echo "$cmd" | awk '{ if (length > max) max = length } END { print max }')
-delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
-echo "$delimiter
-install is running this command:
-$delimiter
-$cmd
-$delimiter"
-eval "$cmd"

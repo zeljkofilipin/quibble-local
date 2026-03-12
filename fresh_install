@@ -8,6 +8,20 @@
 #
 set -euo pipefail
 
+# Display the command with delimiters, then execute it.
+run() {
+  local max_len
+  max_len=$(echo "$1" | awk '{ if (length > max) max = length } END { print max }')
+  local delimiter
+  delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
+  echo "$delimiter
+fresh_install is running this command:
+$delimiter
+$1
+$delimiter"
+  eval "$1"
+}
+
 if [ ! -d ref/mediawiki/core.git ]; then
   "$(dirname "$0")"/prepare
 fi
@@ -25,7 +39,7 @@ chmod 777 cache log src 2>/dev/null || \
     docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
     -c "chmod 777 /cache /workspace/log /workspace/src"
 
-cmd="docker run -it --rm
+run "docker run -it --rm
   --entrypoint=quibble-with-supervisord
   -p 9413:9413
   -v $(pwd)/cache:/cache
@@ -34,11 +48,3 @@ cmd="docker run -it --rm
   -v $(pwd)/src:/workspace/src
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
   --shell"
-max_len=$(echo "$cmd" | awk '{ if (length > max) max = length } END { print max }')
-delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
-echo "$delimiter
-fresh_install is running this command:
-$delimiter
-$cmd
-$delimiter"
-eval "$cmd"

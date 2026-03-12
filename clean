@@ -5,20 +5,26 @@
 #
 set -euo pipefail
 
+# Display the command with delimiters, then execute it.
+run() {
+  local max_len
+  max_len=$(echo "$1" | awk '{ if (length > max) max = length } END { print max }')
+  local delimiter
+  delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
+  echo "$delimiter
+clean is running this command:
+$delimiter
+$1
+$delimiter"
+  eval "$1"
+}
+
 # Use Docker (as root) to remove files owned by the container user.
-cmd="docker run --rm
+run "docker run --rm
   --entrypoint bash
   --user root
   -v $(pwd)/src:/workspace/src
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
   -c 'find /workspace/src -mindepth 1 -delete'"
-max_len=$(echo "$cmd" | awk '{ if (length > max) max = length } END { print max }')
-delimiter=$(printf '%*s' "$max_len" '' | tr ' ' '-')
-echo "$delimiter
-clean is running this command:
-$delimiter
-$cmd
-$delimiter"
-eval "$cmd"
 
-rm -rf src
+run "rm -rf src"
