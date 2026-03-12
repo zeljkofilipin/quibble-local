@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#
+# Run Selenium tests. Assumes ./fresh_install has been run first.
+#
+# Usage: ./run_selenium_tests
+#        ./run_selenium_tests extensions/Echo
+#
+# See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble
+#
+set -euo pipefail
+
+docker_args=()
+
+if [ $# -gt 0 ]; then
+  component="$1"
+  repo="mediawiki/${component}"
+  docker_args+=(-e "ZUUL_PROJECT=${repo}")
+fi
+
+docker run -it --rm \
+  --entrypoint=quibble-with-supervisord \
+  -p 9413:9413 \
+  -v "$(pwd)"/cache:/cache \
+  -v "$(pwd)"/log:/workspace/log \
+  -v "$(pwd)"/ref:/srv/git:ro \
+  -v "$(pwd)"/src:/workspace/src \
+  "${docker_args[@]}" \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --skip-zuul \
+  --skip-deps \
+  --run selenium

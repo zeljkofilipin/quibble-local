@@ -32,6 +32,15 @@ Install an extension or skin and open a shell. MediaWiki will be available at ht
 
 See: [Install MediaWiki Core and an Extension](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension)
 
+### `./run_selenium_tests`
+
+Run Selenium tests. Assumes `./fresh_install` (or `./install`) has been run first.
+
+    ./run_selenium_tests
+    ./run_selenium_tests extensions/Echo
+
+See: [Run tests targeting Quibble](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble)
+
 ### `./fetch`
 
 Fetch the latest changes for all bare git repos in `ref/` from Gerrit.
