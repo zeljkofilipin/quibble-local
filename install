@@ -36,6 +36,4 @@ run "docker run -it --rm
   -v $(pwd)/src:/workspace/src
   -e ZUUL_PROJECT=${repo}
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
-  --skip-zuul
-  --skip-deps
   --shell"
