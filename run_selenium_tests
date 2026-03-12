@@ -10,12 +10,12 @@
 set -euo pipefail
 . "$(dirname "$0")"/lib
 
-docker_args=()
+zuul_project=""
 
 if [ $# -gt 0 ]; then
   component="$1"
   repo="mediawiki/${component}"
-  docker_args+=(-e "ZUUL_PROJECT=${repo}")
+  zuul_project="-e ZUUL_PROJECT=${repo}"
 fi
 
 run "docker run -it --rm
@@ -26,7 +26,7 @@ run "docker run -it --rm
   -v $(pwd)/ref:/srv/git:ro
   -v $(pwd)/src:/workspace/src
   -e CI=true
-  ${docker_args[@]+"${docker_args[@]}"}
+  ${zuul_project}
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
   --skip-zuul
   --skip-deps
