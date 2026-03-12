@@ -23,7 +23,7 @@ ref_dir="ref/${repo}.git"
 
 # Clone bare repo if not already present
 if [ ! -d "$ref_dir" ]; then
-  mkdir -p "$(dirname "$ref_dir")"
+  run "mkdir -p $(dirname "$ref_dir")"
   run "git clone --bare https://gerrit.wikimedia.org/r/${repo} $ref_dir"
 fi
 

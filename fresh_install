@@ -17,14 +17,16 @@ fi
 
 # Ensure working directories exist with proper permissions for the container user.
 # Docker creates missing mount dirs as root; chmod may fail if they're already root-owned.
-mkdir -p cache log src
-chmod 777 cache log src 2>/dev/null || \
-  docker run --rm --entrypoint bash --user root \
-    -v "$(pwd)/cache:/cache" \
-    -v "$(pwd)/log:/workspace/log" \
-    -v "$(pwd)/src:/workspace/src" \
-    docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
-    -c "chmod 777 /cache /workspace/log /workspace/src"
+run "mkdir -p cache log src"
+run "chmod 777 cache log src" 2>/dev/null || \
+  run "docker run --rm
+  --entrypoint bash
+  --user root
+  -v $(pwd)/cache:/cache
+  -v $(pwd)/log:/workspace/log
+  -v $(pwd)/src:/workspace/src
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+  -c 'chmod 777 /cache /workspace/log /workspace/src'"
 
 run "docker run -it --rm
   --entrypoint=quibble-with-supervisord
