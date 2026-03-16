@@ -1,0 +1,45 @@
+#!/bin/sh
+#
+# Run all scripts and report which ones passed or failed.
+# Useful for detecting regressions after changes.
+#
+# Usage: ./test
+#
+
+failed=""
+passed=""
+
+run_test() {
+  printf "\n========================================\n"
+  printf "= Running: %s\n" "$*"
+  printf "========================================\n"
+  if "$@"; then
+    passed="$passed $1"
+  else
+    failed="$failed $1"
+  fi
+}
+
+run_test ./deep_clean
+run_test ./prepare
+run_test ./fresh_install
+run_test ./run_selenium_tests
+run_test ./install extensions/Echo
+run_test ./run_selenium_tests extensions/Echo
+run_test ./fetch
+run_test ./clean
+
+printf "\n========================================\n"
+printf "= Results\n"
+printf "========================================\n"
+
+if [ -n "$passed" ]; then
+  printf "PASSED:%s\n" "$passed"
+fi
+
+if [ -n "$failed" ]; then
+  printf "FAILED:%s\n" "$failed"
+  exit 1
+fi
+
+printf "\nAll scripts passed.\n"
