@@ -8,6 +8,12 @@
 stages:
 - test
 - secret-detection
+shellcheck:
+  stage: test
+  image: koalaman/shellcheck-alpine:stable
+  script:
+    - ./lint
+
 sast:
   stage: test
 include:
