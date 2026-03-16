@@ -3,15 +3,14 @@
 # Remove src/ (MediaWiki source code).
 # Use ./deep_clean to remove everything quibble-local created.
 #
-set -euo pipefail
-. "$(dirname "$0")"/lib
+set -euxo pipefail
 
 # Use Docker (as root) to remove files owned by the container user.
-run "docker run --rm
-  --entrypoint bash
-  --user root
-  -v $(pwd)/src:/workspace/src
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
-  -c 'find /workspace/src -mindepth 1 -delete'"
+docker run --rm \
+  --entrypoint bash \
+  --user root \
+  -v "$(pwd)"/src:/workspace/src \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  -c 'find /workspace/src -mindepth 1 -delete'
 
-run "rm -rf src"
+rm -rf src

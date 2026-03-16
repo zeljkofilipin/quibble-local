@@ -6,8 +6,7 @@
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core
 #
-set -euo pipefail
-. "$(dirname "$0")"/lib
+set -euxo pipefail
 
 if [ ! -d ref/mediawiki/core.git ]; then
   "$(dirname "$0")"/prepare
@@ -17,23 +16,23 @@ fi
 
 # Ensure working directories exist with proper permissions for the container user.
 # Docker creates missing mount dirs as root; chmod may fail if they're already root-owned.
-run "mkdir -p cache log src"
-run "chmod 777 cache log src" 2>/dev/null || \
-  run "docker run --rm
-  --entrypoint bash
-  --user root
-  -v $(pwd)/cache:/cache
-  -v $(pwd)/log:/workspace/log
-  -v $(pwd)/src:/workspace/src
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
-  -c 'chmod 777 /cache /workspace/log /workspace/src'"
+mkdir -p cache log src
+chmod 777 cache log src 2>/dev/null || \
+  docker run --rm \
+    --entrypoint bash \
+    --user root \
+    -v "$(pwd)"/cache:/cache \
+    -v "$(pwd)"/log:/workspace/log \
+    -v "$(pwd)"/src:/workspace/src \
+    docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+    -c 'chmod 777 /cache /workspace/log /workspace/src'
 
-run "docker run -it --rm
-  --entrypoint=quibble-with-supervisord
-  -p 9413:9413
-  -v $(pwd)/cache:/cache
-  -v $(pwd)/log:/workspace/log
-  -v $(pwd)/ref:/srv/git:ro
-  -v $(pwd)/src:/workspace/src
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
-  --shell"
+docker run -it --rm \
+  --entrypoint=quibble-with-supervisord \
+  -p 9413:9413 \
+  -v "$(pwd)"/cache:/cache \
+  -v "$(pwd)"/log:/workspace/log \
+  -v "$(pwd)"/ref:/srv/git:ro \
+  -v "$(pwd)"/src:/workspace/src \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --shell

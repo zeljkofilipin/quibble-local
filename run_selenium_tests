@@ -8,26 +8,27 @@
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble
 #
 set -euo pipefail
-. "$(dirname "$0")"/lib
 
-zuul_project=""
+zuul_project=()
 
 if [ $# -gt 0 ]; then
   component="$1"
   repo="mediawiki/${component}"
-  zuul_project="-e ZUUL_PROJECT=${repo}"
+  zuul_project=(-e "ZUUL_PROJECT=${repo}")
 fi
 
-run "docker run -it --rm
-  --entrypoint=quibble-with-supervisord
-  -p 9413:9413
-  -v $(pwd)/cache:/cache
-  -v $(pwd)/log:/workspace/log
-  -v $(pwd)/ref:/srv/git:ro
-  -v $(pwd)/src:/workspace/src
-  -e CI=true
-  ${zuul_project}
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
-  --skip-zuul
-  --skip-deps
-  --run selenium"
+set -x
+
+docker run -it --rm \
+  --entrypoint=quibble-with-supervisord \
+  -p 9413:9413 \
+  -v "$(pwd)"/cache:/cache \
+  -v "$(pwd)"/log:/workspace/log \
+  -v "$(pwd)"/ref:/srv/git:ro \
+  -v "$(pwd)"/src:/workspace/src \
+  -e CI=true \
+  "${zuul_project[@]}" \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --skip-zuul \
+  --skip-deps \
+  --run selenium
