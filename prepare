@@ -6,7 +6,8 @@
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core
 #
-set -euxo pipefail
+set -euo pipefail
+. "$(dirname "$0")"/lib
 
 # Get the latest Quibble Docker image
 docker pull docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest

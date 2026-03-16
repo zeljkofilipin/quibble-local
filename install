@@ -20,7 +20,7 @@ component="$1"
 repo="mediawiki/${component}"
 ref_dir="ref/${repo}.git"
 
-set -x
+. "$(dirname "$0")"/lib
 
 # Clone bare repo if not already present
 if [ ! -d "$ref_dir" ]; then

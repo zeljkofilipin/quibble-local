@@ -2,7 +2,8 @@
 #
 # Fetch the latest changes for all bare git repos in ref/ from Gerrit.
 #
-set -euxo pipefail
+set -euo pipefail
+. "$(dirname "$0")"/lib
 
 find ref -name '*.git' -type d | while read -r repo; do
   git -C "$repo" fetch

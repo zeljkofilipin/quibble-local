@@ -6,7 +6,8 @@
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core
 #
-set -euxo pipefail
+set -euo pipefail
+. "$(dirname "$0")"/lib
 
 if [ ! -d ref/mediawiki/core.git ]; then
   "$(dirname "$0")"/prepare

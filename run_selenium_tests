@@ -17,7 +17,7 @@ if [ $# -gt 0 ]; then
   zuul_project=(-e "ZUUL_PROJECT=${repo}")
 fi
 
-set -x
+. "$(dirname "$0")"/lib
 
 docker run -it --rm \
   --entrypoint=quibble-with-supervisord \

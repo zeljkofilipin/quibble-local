@@ -3,7 +3,8 @@
 # Remove src/ (MediaWiki source code).
 # Use ./deep_clean to remove everything quibble-local created.
 #
-set -euxo pipefail
+set -euo pipefail
+. "$(dirname "$0")"/lib
 
 # Use Docker (as root) to remove files owned by the container user.
 docker run --rm \

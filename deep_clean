@@ -3,7 +3,8 @@
 # Remove everything quibble-local created, leaving only the git repo itself.
 # This removes cache/, log/, src/, ref/ and the Docker image.
 #
-set -euxo pipefail
+set -euo pipefail
+. "$(dirname "$0")"/lib
 
 # Use Docker (as root) to remove files owned by the container user.
 if docker image inspect docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest &>/dev/null; then
