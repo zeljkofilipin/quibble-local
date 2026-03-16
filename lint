@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+#
+# Run shellcheck on all shell scripts in the repo.
+#
+set -euo pipefail
+
+shellcheck clean deep_clean fetch fresh_install install lib prepare run_selenium_tests
