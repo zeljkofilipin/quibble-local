@@ -53,6 +53,14 @@ Remove `src/` (MediaWiki source code). Cache, logs, bare git repos, and the Dock
 
 Remove everything created by quibble-local, including bare git repos in `ref/` and the Docker image.
 
+### `./lint`
+
+Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo.
+
+### `./test`
+
+Run all scripts and report which ones passed or failed. Useful for detecting regressions after changes.
+
 ## Further reading
 
 - [Quibble documentation](https://doc.wikimedia.org/quibble/)
