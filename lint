@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Run shellcheck on all shell scripts in the repo.
 #
