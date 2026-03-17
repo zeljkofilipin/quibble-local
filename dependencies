@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# Output dependencies for an extension or skin.
+#
+# Usage: ./dependencies extensions/Echo
+#        ./dependencies skins/MinervaNeue
+#
+set -euo pipefail
+
+if [ $# -eq 0 ]; then
+  echo "Usage: ./dependencies extensions/EXTENSION or ./dependencies skins/SKIN"
+  exit 1
+fi
+
+component="$1"
+
+if [[ "$component" == extensions/* ]]; then
+  dep_key="${component#extensions/}"
+else
+  dep_key="$component"
+fi
+
+awk -v key="${dep_key}:" '$0==key{f=1;next} f&&/^[^ ]/{exit} f&&/^ *- /{sub(/^ *- /,"");print}' src/config/zuul/dependencies.yaml
