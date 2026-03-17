@@ -26,6 +26,8 @@ run_test ./fresh_install
 run_test ./run_selenium_tests
 run_test ./install extensions/Echo
 run_test ./run_selenium_tests extensions/Echo
+run_test ./install extensions/CampaignEvents
+run_test ./run_selenium_tests extensions/CampaignEvents
 run_test ./fetch
 run_test ./clean
 
