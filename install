@@ -28,6 +28,39 @@ if [ ! -d "$ref_dir" ]; then
   git clone --bare "https://gerrit.wikimedia.org/r/${repo}" "$ref_dir"
 fi
 
+# Clone bare repos for dependencies listed in extension.json/skin.json
+config_file="extension.json"
+if [[ "$component" == skins/* ]]; then
+  config_file="skin.json"
+fi
+
+set +x
+config=$(git -C "$ref_dir" show HEAD:"$config_file" 2>/dev/null || true)
+if [ -n "$config" ]; then
+  section=""
+  while IFS= read -r line; do
+    if [[ "$line" =~ \"(extensions|skins)\"[[:space:]]*:[[:space:]]*\{ ]]; then
+      section="${BASH_REMATCH[1]}"
+      continue
+    fi
+    if [ -n "$section" ] && [[ "$line" =~ \} ]]; then
+      section=""
+      continue
+    fi
+    if [ -n "$section" ] && [[ "$line" =~ \"([^\"]+)\" ]]; then
+      dep="${section}/${BASH_REMATCH[1]}"
+      dep_repo="mediawiki/${dep}"
+      dep_ref_dir="ref/${dep_repo}.git"
+      if [ ! -d "$dep_ref_dir" ]; then
+        mkdir -p "$(dirname "$dep_ref_dir")"
+        echo "Cloning dependency: ${dep}"
+        git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
+      fi
+    fi
+  done <<< "$config"
+fi
+set -x
+
 docker run -it --rm \
   --entrypoint=quibble-with-supervisord \
   -p 9413:9413 \
