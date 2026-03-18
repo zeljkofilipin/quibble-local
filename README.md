@@ -45,6 +45,17 @@ See: [Run tests targeting Quibble](https://www.mediawiki.org/wiki/Selenium/How-t
 
 Fetch the latest changes for all bare git repos in `ref/` from Gerrit.
 
+### `./dependencies`
+
+Output dependencies for an extension or skin from `zuul/dependencies.yaml`.
+
+    ./dependencies extensions/Echo
+    ./dependencies skins/MinervaNeue
+
+### `./help`
+
+List all scripts with their description and usage.
+
 ### `./clean`
 
 Remove `src/` (MediaWiki source code). Cache, logs, bare git repos, and the Docker image are kept.
