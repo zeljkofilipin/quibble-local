@@ -3,6 +3,7 @@
 # Run Selenium tests for core and all gated repositories.
 # For each component: fresh_install, install (if not core),
 # check if Selenium tests exist, and run them.
+# WARNING: This will take a very long time to run (50+ components).
 #
 # Usage: ./run_all
 #

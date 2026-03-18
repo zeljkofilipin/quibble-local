@@ -2,6 +2,7 @@
 #
 # Run all scripts and report which ones passed or failed.
 # Useful for detecting regressions after changes.
+# WARNING: This will take a long time to run.
 #
 # Usage: ./test
 #

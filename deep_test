@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
 # Run deep_clean, then run all tests. Slower but starts from a clean state.
+# WARNING: This will take a very long time to run.
 #
 # Usage: ./deep_test
 #

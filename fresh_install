@@ -3,6 +3,7 @@
 # Installs MediaWiki core (without running tests) and opens a shell.
 # MediaWiki will be available at http://127.0.0.1:9413
 # Runs ./prepare first if needed.
+# WARNING: This will delete and recreate src/.
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core
 #
