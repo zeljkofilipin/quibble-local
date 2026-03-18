@@ -4,6 +4,8 @@
 #
 # Usage: ./run_selenium_tests
 #        ./run_selenium_tests extensions/Echo
+#        ./run_selenium_tests --spec tests/selenium/specs/page.js
+#        ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/echo.js
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble
 #
@@ -11,20 +13,43 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 
 # Build optional ZUUL_PROJECT env var if an extension/skin was specified
 zuul_project=() # empty array by default
-if [ $# -gt 0 ]; then
-  component="$1"
-  repo="mediawiki/${component}"
-  # Tell Quibble which extension/skin to target
-  zuul_project=(-e "ZUUL_PROJECT=${repo}")
-fi
+wdio_args=() # extra arguments to pass to wdio (e.g. --spec)
+
+# Parse arguments: first arg may be a component (extensions/X or skins/X),
+# remaining args are passed through to wdio
+while [ $# -gt 0 ]; do
+  case "$1" in
+    extensions/* | skins/*) # component path (e.g. extensions/Echo)
+      component="$1"
+      repo="mediawiki/${component}"
+      # Tell Quibble which extension/skin to target
+      zuul_project=(-e "ZUUL_PROJECT=${repo}")
+      shift
+      ;;
+    *) # everything else is a wdio argument (e.g. --spec file.js)
+      wdio_args+=("$1")
+      shift
+      ;;
+  esac
+done
 
 . "$(dirname "$0")"/lib # source shared setup (enables trace output)
+
+# Decide how to run tests:
+# - with --spec: use --command to run a specific test file
+# - without: use --run selenium to run all tests
+if [ ${#wdio_args[@]} -gt 0 ]; then
+  # Run a specific test file using npm run selenium-test with wdio arguments
+  quibble_args=(--command "npm run selenium-test -- ${wdio_args[*]}")
+else
+  # Run all Selenium tests
+  quibble_args=(--run selenium)
+fi
 
 # Run Selenium tests in the container
 # -e CI=true: tell Quibble this is a CI run
 # --skip-zuul: don't clone repos (already in src/)
 # --skip-deps: don't install dependencies (already installed)
-# --run selenium: only run Selenium tests
 # ${zuul_project[@]+"..."}: expand array only if non-empty (bash 3.2 compat)
 docker run -it --rm \
   --entrypoint=quibble-with-supervisord \
@@ -38,4 +63,4 @@ docker run -it --rm \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --skip-zuul \
   --skip-deps \
-  --run selenium
+  "${quibble_args[@]}"

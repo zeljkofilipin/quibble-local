@@ -40,6 +40,8 @@ Run Selenium tests. Assumes `./fresh_install` (or `./install`) has been run firs
 
     ./run_selenium_tests
     ./run_selenium_tests extensions/Echo
+    ./run_selenium_tests --spec tests/selenium/specs/page.js
+    ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/echo.js
 
 See: [Run tests targeting Quibble](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble)
 
