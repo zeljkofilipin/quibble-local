@@ -29,10 +29,12 @@ run_test ./prepare
 run_test ./fresh_install
 run_test ./run_selenium_tests
 run_test ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js
+run_test ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"
 run_test ./install extensions/Echo
 run_test ./dependencies extensions/Echo
 run_test ./run_selenium_tests extensions/Echo
 run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/echo.js
+run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/echo.js --mochaOpts.grep "alerts and notices are visible"
 run_test ./install extensions/CampaignEvents
 run_test ./run_selenium_tests extensions/CampaignEvents
 run_test ./fetch
