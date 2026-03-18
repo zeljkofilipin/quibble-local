@@ -34,6 +34,10 @@ Install an extension or skin and open a shell. MediaWiki will be available at ht
 
 See: [Install MediaWiki Core and an Extension](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension)
 
+### `./run_all`
+
+Run Selenium tests for core and all gated repositories. For each component: `./fresh_install`, `./install` (if not core), check if Selenium tests exist, and run them.
+
 ### `./run_selenium_tests`
 
 Run Selenium tests. Assumes `./fresh_install` (or `./install`) has been run first.
