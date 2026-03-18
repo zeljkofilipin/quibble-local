@@ -15,10 +15,11 @@ docker pull docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
 # Clone bare repos to use as local git references (avoids cloning from Gerrit each run)
 mkdir -p ref/mediawiki/skins # create directory structure for bare repos
 
-git clone --bare https://gerrit.wikimedia.org/r/mediawiki/core ref/mediawiki/core.git
-git clone --bare https://gerrit.wikimedia.org/r/mediawiki/vendor ref/mediawiki/vendor.git
-git clone --bare https://gerrit.wikimedia.org/r/mediawiki/skins/Vector ref/mediawiki/skins/Vector.git
-git clone --bare https://gerrit.wikimedia.org/r/integration/config ref/integration/config.git
+# Skip cloning if the bare repo already exists
+[ -d ref/mediawiki/core.git ] || git clone --bare https://gerrit.wikimedia.org/r/mediawiki/core ref/mediawiki/core.git
+[ -d ref/mediawiki/vendor.git ] || git clone --bare https://gerrit.wikimedia.org/r/mediawiki/vendor ref/mediawiki/vendor.git
+[ -d ref/mediawiki/skins/Vector.git ] || git clone --bare https://gerrit.wikimedia.org/r/mediawiki/skins/Vector ref/mediawiki/skins/Vector.git
+[ -d ref/integration/config.git ] || git clone --bare https://gerrit.wikimedia.org/r/integration/config ref/integration/config.git
 
 # Create working directories (chmod 777 because the container runs as a different user)
 mkdir -p cache log src
