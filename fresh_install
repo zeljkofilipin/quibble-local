@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Set up MediaWiki (without running tests) and open a shell.
+# Installs MediaWiki core (without running tests) and opens a shell.
 # MediaWiki will be available at http://127.0.0.1:9413
 # Runs ./prepare first if needed.
 #

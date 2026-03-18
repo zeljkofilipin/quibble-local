@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
 # Open a shell in the container with MediaWiki running.
+# Skips installation (assumes ./fresh_install or ./install has been run first).
 # MediaWiki will be available at http://127.0.0.1:9413
-# Assumes ./fresh_install (or ./install) has been run first.
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib # source shared setup (enables trace output)

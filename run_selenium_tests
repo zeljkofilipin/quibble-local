@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Run Selenium tests. Assumes ./fresh_install has been run first.
+# Run Selenium tests. Skips installation (assumes ./fresh_install or ./install has been run first).
 #
 # Usage: ./run_selenium_tests
 #        ./run_selenium_tests extensions/Echo

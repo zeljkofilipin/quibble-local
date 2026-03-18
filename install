@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-# Install an extension or skin and open a shell.
+# Installs an extension or skin (and its dependencies) into an existing MediaWiki core and opens a shell.
+# Skips core installation (assumes ./fresh_install has already installed core).
 # MediaWiki will be available at http://127.0.0.1:9413
-# Assumes ./fresh_install has been run first.
 #
 # Usage: ./install extensions/Echo
 #        ./install skins/MinervaNeue
