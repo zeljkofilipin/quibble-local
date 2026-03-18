@@ -15,6 +15,7 @@ There is no build step. There are no unit tests — `./test` is an integration t
 
 ## Script conventions
 
+- Scripts must work with bash 3.2 (macOS default) — avoid bash 4+ features (associative arrays, `mapfile`, `${var,,}`, `|&`)
 - One executable file per command, no `.sh` extensions
 - All bash scripts start with `set -euo pipefail` and source `lib` (which enables `set -x` with a custom `PS4`)
 - `lint` script must list all shell scripts explicitly — update it when adding new scripts
