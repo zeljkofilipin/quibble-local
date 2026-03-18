@@ -45,9 +45,9 @@ Run Selenium tests. Assumes `./fresh_install` (or `./install`) has been run firs
     ./run_selenium_tests
     ./run_selenium_tests extensions/Echo
     ./run_selenium_tests --spec tests/selenium/specs/page.js
-    ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/echo.js
+    ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js
     ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"
-    ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/echo.js --mochaOpts.grep "alerts and notices are visible"
+    ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"
 
 See: [Run tests targeting Quibble](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble)
 

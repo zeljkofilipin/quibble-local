@@ -39,8 +39,8 @@ run_test ./dependencies extensions/Echo
 run_test ./gated
 run_test ./selenium_tests_exist extensions/Echo
 run_test ./run_selenium_tests extensions/Echo
-run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/echo.js
-run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/echo.js --mochaOpts.grep "alerts and notices are visible"
+run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js
+run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"
 run_test ./install extensions/CampaignEvents
 run_test ./run_selenium_tests extensions/CampaignEvents
 run_test ./fetch

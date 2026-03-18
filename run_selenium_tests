@@ -5,9 +5,9 @@
 # Usage: ./run_selenium_tests
 #        ./run_selenium_tests extensions/Echo
 #        ./run_selenium_tests --spec tests/selenium/specs/page.js
-#        ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/echo.js
+#        ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js
 #        ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"
-#        ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/echo.js --mochaOpts.grep "alerts and notices are visible"
+#        ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble
 #
@@ -38,11 +38,16 @@ done
 . "$(dirname "$0")"/lib # source shared setup (enables trace output)
 
 # Decide how to run tests:
-# - with --spec: use --command to run a specific test file
-# - without: use --run selenium to run all tests
+# - with --spec + component: cd into component dir, then run specific test
+# - with --spec (no component): run specific test from repo root
+# - without --spec: use --run selenium to run all tests
 if [ ${#wdio_args[@]} -gt 0 ]; then
-  # Run a specific test file using npm run selenium-test with wdio arguments
-  quibble_args=(--command "npm run selenium-test -- ${wdio_args[*]}")
+  # For extensions/skins, cd into the component directory first
+  if [ -n "${component:-}" ]; then
+    quibble_args=(--command "cd ${component} && npm run selenium-test -- ${wdio_args[*]}")
+  else
+    quibble_args=(--command "npm run selenium-test -- ${wdio_args[*]}")
+  fi
 else
   # Run all Selenium tests
   quibble_args=(--run selenium)
