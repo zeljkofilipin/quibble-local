@@ -2,16 +2,28 @@
 #
 # Output the list of gated repositories (extensions and skins).
 # Reads gatedextensions and gatedskins from parameter_functions.py.
-# Assumes ./install has been run first (needs src/config).
+# Clones integration/config into src/config if needed.
+# Assumes ./prepare has been run first (needs ref/integration/config.git).
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
+# Clone integration/config working copy from bare repo if not already present
+config_ref_dir="ref/integration/config.git" # bare repo cloned by ./prepare
+config_src_dir="src/config"                 # working copy needed for parameter_functions.py
+if [ ! -d "$config_src_dir" ]; then
+  if [ ! -d "$config_ref_dir" ]; then
+    echo "Error: $config_ref_dir not found. Run ./prepare first."
+    exit 1
+  fi
+  git clone "$config_ref_dir" "$config_src_dir" # create working copy from bare repo
+fi
+
 # Path to the file containing gated extensions and skins lists
-config_file="src/config/zuul/parameter_functions.py"
+config_file="$config_src_dir/zuul/parameter_functions.py"
 
 # Check that the config file exists
 if [ ! -f "$config_file" ]; then
-  echo "Error: $config_file not found. Run ./install first."
+  echo "Error: $config_file not found."
   exit 1
 fi
 
