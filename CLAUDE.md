@@ -22,7 +22,7 @@ There is no build step. There are no unit tests — `./test` is an integration t
 - Scripts must work with bash 3.2 (macOS default) — avoid bash 4+ features (associative arrays, `mapfile`, `${var,,}`, `|&`)
 - One executable file per command, no `.sh` extensions
 - All bash scripts start with `set -euo pipefail` and source `lib` (which enables `set -x` with a custom `PS4`)
-- When adding or updating a script, ensure `help`, `README.md`, and `lint` are kept in sync, and run `./lint`
+- When adding or updating a script, ensure `help`, `README.md`, `lint`, and `test` are kept in sync, and run `./lint`
 - Docker container runs as a different user, so `chmod 777` is used on shared directories
 - `clean` and `deep_clean` use Docker (as root) to remove container-owned files before `rm -rf`
 - The `--entrypoint=quibble-with-supervisord` flag is used on all `docker run` commands
