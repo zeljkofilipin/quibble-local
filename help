@@ -6,7 +6,7 @@
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
 # Loop through all scripts in alphabetical order
-for script in clean deep_clean deep_test dependencies fetch fresh_install help install lint prepare run_selenium_tests shell test; do
+for script in clean deep_clean deep_test dependencies fetch fresh_install help install lint prepare run_selenium_tests shellto test; do
   description=""
   usage=""
 

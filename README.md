@@ -60,7 +60,7 @@ Output dependencies for an extension or skin from `zuul/dependencies.yaml`.
 
 List all scripts with their description and usage.
 
-### `./shell`
+### `./shellto`
 
 Open a shell in the container with MediaWiki running at http://127.0.0.1:9413. Assumes `./fresh_install` (or `./install`) has been run first.
 
