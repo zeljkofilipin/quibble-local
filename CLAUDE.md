@@ -27,6 +27,7 @@ There is no build step. There are no unit tests — `./test` is an integration t
 - Every line of code must have an inline comment explaining what it does
 - When changing a script, check that all comments (header and inline) still accurately describe the code
 - When adding or updating a script, ensure `help`, `README.md`, `lint`, and `test` are kept in sync, and run `./lint`
+- Every new argument to a script must have a corresponding test in `test`
 - Docker container runs as a different user, so `chmod 777` is used on shared directories
 - `clean` and `deep_clean` use Docker (as root) to remove container-owned files before `rm -rf`
 - The `--entrypoint=quibble-with-supervisord` flag is used on all `docker run` commands
