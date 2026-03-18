@@ -3,8 +3,8 @@
 # Remove everything quibble-local created, leaving only the git repo itself.
 # This removes cache/, log/, src/, ref/ and the Docker image.
 #
-set -euo pipefail
-. "$(dirname "$0")"/lib
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib # source shared setup (enables trace output)
 
 # Use Docker (as root) to remove files owned by the container user.
 # Check if the Docker image exists (suppress all output)
@@ -20,6 +20,7 @@ if docker image inspect docker-registry.wikimedia.org/releng/quibble-bullseye-ph
     -c 'find /cache /workspace/log /workspace/src /workspace/ref -mindepth 1 -delete'
 fi
 
+# Remove the now-empty directories from the host
 rm -rf cache log src ref
 
 # Remove the Docker image (ignore errors if already removed)

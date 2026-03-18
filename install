@@ -9,31 +9,34 @@
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension
 #
-set -euo pipefail
+set -euo pipefail # exit on error, undefined vars, or pipe failures
 
+# Show usage if no argument provided
 if [ $# -eq 0 ]; then
   echo "Usage: ./install extensions/EXTENSION or ./install skins/SKIN"
   exit 1
 fi
 
+# Build paths from the component argument (e.g. "extensions/Echo")
 component="$1"
-repo="mediawiki/${component}"
-ref_dir="ref/${repo}.git"
+repo="mediawiki/${component}"       # e.g. "mediawiki/extensions/Echo"
+ref_dir="ref/${repo}.git"           # e.g. "ref/mediawiki/extensions/Echo.git"
 
-. "$(dirname "$0")"/lib
+. "$(dirname "$0")"/lib # source shared setup (enables trace output)
 
-# Clone bare repo if not already present
+# Clone bare repo for the extension/skin if not already present
 if [ ! -d "$ref_dir" ]; then
-  mkdir -p "$(dirname "$ref_dir")"
+  mkdir -p "$(dirname "$ref_dir")"  # create parent directories
   git clone --bare "https://gerrit.wikimedia.org/r/${repo}" "$ref_dir"
 fi
 
 # Clone integration/config for dependency info
 config_ref_dir="ref/integration/config.git"
 if [ ! -d "$config_ref_dir" ]; then
-  mkdir -p "$(dirname "$config_ref_dir")"
+  mkdir -p "$(dirname "$config_ref_dir")" # create parent directories
   git clone --bare "https://gerrit.wikimedia.org/r/integration/config" "$config_ref_dir"
 fi
+# Create a working copy of integration/config in src/ (needed by ./dependencies)
 config_src_dir="src/config"
 if [ ! -d "$config_src_dir" ]; then
   git clone "$config_ref_dir" "$config_src_dir"
@@ -42,8 +45,10 @@ fi
 # Build list of dependency repos from zuul/dependencies.yaml
 # Disable trace output while processing dependencies (too noisy)
 set +x
-deps=()
+deps=() # array to collect dependency repo paths
+# Read each dependency name from the ./dependencies script output
 while IFS= read -r dep_name; do
+  # Skins use "mediawiki/skins/Name", extensions use "mediawiki/extensions/Name"
   if [[ "$dep_name" == skins/* ]]; then
     dep_repo="mediawiki/${dep_name}"
   else
@@ -53,16 +58,17 @@ while IFS= read -r dep_name; do
   dep_ref_dir="ref/${dep_repo}.git"
   if [ ! -d "$dep_ref_dir" ]; then
     echo "Cloning dependency: ${dep_name}"
-    mkdir -p "$(dirname "$dep_ref_dir")"
+    mkdir -p "$(dirname "$dep_ref_dir")" # create parent directories
     git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
   fi
-  deps+=("$dep_repo")
-done < <("$(dirname "$0")"/dependencies "$component")
+  deps+=("$dep_repo") # add to the dependencies array
+done < <("$(dirname "$0")"/dependencies "$component") # feed dependency names from ./dependencies
 # Re-enable trace output
 set -x
 
 # Install extension/skin with its dependencies
-# --resolve-requires: let Quibble resolve and install dependencies
+# -e ZUUL_PROJECT: tell Quibble which extension/skin is the main project
+# --resolve-requires: let Quibble resolve and install PHP/extension dependencies
 # --command true: install only, no tests
 # "${deps[@]}": list of dependency repos to clone
 docker run -it --rm \

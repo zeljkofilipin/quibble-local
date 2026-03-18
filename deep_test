@@ -4,7 +4,9 @@
 #
 # Usage: ./deep_test
 #
-set -euo pipefail
+set -euo pipefail # exit on error, undefined vars, or pipe failures
 
+# Remove everything quibble-local created
 "$(dirname "$0")"/deep_clean
+# Run all tests
 "$(dirname "$0")"/test

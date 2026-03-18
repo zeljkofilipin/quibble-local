@@ -3,32 +3,37 @@
 # List all scripts with their description and usage.
 # Prerequisites: Bash, Git, Docker. Optional: ShellCheck (for linting).
 #
-set -euo pipefail
+set -euo pipefail # exit on error, undefined vars, or pipe failures
 
+# Loop through all scripts in alphabetical order
 for script in clean deep_clean deep_test dependencies fetch fresh_install help install lint prepare run_selenium_tests shell test; do
   description=""
   usage=""
 
+  # Read the script file line by line to extract the comment header
   while IFS= read -r line; do
-    # Skip shebang
+    # Skip shebang (e.g. #!/usr/bin/env bash)
     [[ "$line" == "#!"* ]] && continue
-    # End of comment header
+    # Stop at the first non-comment line (end of header)
     [[ "$line" != "#"* ]] && break
 
     text="${line#\#}"   # strip leading '#'
     text="${text# }"    # strip leading space
 
+    # Skip empty comment lines
     if [ -z "$text" ]; then
       continue
     fi
 
+    # Extract usage line or first description line
     if [[ "$text" == Usage:* ]]; then
-      usage="${text#Usage: }"
+      usage="${text#Usage: }" # strip "Usage: " prefix
     elif [ -z "$description" ]; then
-      description="$text"
+      description="$text" # first non-empty comment is the description
     fi
-  done < "$script"
+  done < "$script" # read from the script file
 
+  # Print the script name, description, and usage (if any)
   printf "./%s\n" "$script"
   printf "  %s\n" "$description"
   if [ -n "$usage" ]; then

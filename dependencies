@@ -5,20 +5,23 @@
 # Usage: ./dependencies extensions/Echo
 #        ./dependencies skins/MinervaNeue
 #
-set -euo pipefail
+set -euo pipefail # exit on error, undefined vars, or pipe failures
 
+# Show usage if no argument provided
 if [ $# -eq 0 ]; then
   echo "Usage: ./dependencies extensions/EXTENSION or ./dependencies skins/SKIN"
   exit 1
 fi
 
+# Get the component from the first argument (e.g. "extensions/Echo")
 component="$1"
 
 # Strip "extensions/" prefix if present (skins/ is kept as-is)
+# dependencies.yaml uses bare names for extensions but "skins/Name" for skins
 if [[ "$component" == extensions/* ]]; then
-  dep_key="${component#extensions/}"
+  dep_key="${component#extensions/}" # remove "extensions/" prefix
 else
-  dep_key="$component"
+  dep_key="$component" # keep as-is (e.g. "skins/MinervaNeue")
 fi
 
 # Parse dependencies.yaml: find the key, print each "- item" line until the next top-level key

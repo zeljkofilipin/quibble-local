@@ -7,19 +7,25 @@
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble
 #
-set -euo pipefail
+set -euo pipefail # exit on error, undefined vars, or pipe failures
 
-zuul_project=()
-
+# Build optional ZUUL_PROJECT env var if an extension/skin was specified
+zuul_project=() # empty array by default
 if [ $# -gt 0 ]; then
   component="$1"
   repo="mediawiki/${component}"
-# Tell Quibble which extension/skin to target
+  # Tell Quibble which extension/skin to target
   zuul_project=(-e "ZUUL_PROJECT=${repo}")
 fi
 
-. "$(dirname "$0")"/lib
+. "$(dirname "$0")"/lib # source shared setup (enables trace output)
 
+# Run Selenium tests in the container
+# -e CI=true: tell Quibble this is a CI run
+# --skip-zuul: don't clone repos (already in src/)
+# --skip-deps: don't install dependencies (already installed)
+# --run selenium: only run Selenium tests
+# ${zuul_project[@]+"..."}: expand array only if non-empty (bash 3.2 compat)
 docker run -it --rm \
   --entrypoint=quibble-with-supervisord \
   -p 9413:9413 \
@@ -33,6 +39,3 @@ docker run -it --rm \
   --skip-zuul \
   --skip-deps \
   --run selenium
-# --skip-zuul: don't clone repos (already in src/)
-# --skip-deps: don't install dependencies (already installed)
-# ${zuul_project[@]+"..."}: expand array only if non-empty (bash 3.2 compat)

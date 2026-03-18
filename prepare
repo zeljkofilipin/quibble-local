@@ -6,14 +6,14 @@
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core
 #
-set -euo pipefail
-. "$(dirname "$0")"/lib
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib # source shared setup (enables trace output)
 
 # Get the latest Quibble Docker image
 docker pull docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
 
 # Clone bare repos to use as local git references (avoids cloning from Gerrit each run)
-mkdir -p ref/mediawiki/skins
+mkdir -p ref/mediawiki/skins # create directory structure for bare repos
 
 git clone --bare https://gerrit.wikimedia.org/r/mediawiki/core ref/mediawiki/core.git
 git clone --bare https://gerrit.wikimedia.org/r/mediawiki/vendor ref/mediawiki/vendor.git

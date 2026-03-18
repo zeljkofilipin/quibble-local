@@ -2,10 +2,10 @@
 #
 # Fetch the latest changes for all bare git repos in ref/ from Gerrit.
 #
-set -euo pipefail
-. "$(dirname "$0")"/lib
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib # source shared setup (enables trace output)
 
 # Find all bare git repos (directories ending in .git) and fetch each one
 find ref -name '*.git' -type d | while read -r repo; do
-  git -C "$repo" fetch
+  git -C "$repo" fetch # -C runs git in the repo's directory
 done

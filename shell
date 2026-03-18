@@ -4,9 +4,13 @@
 # MediaWiki will be available at http://127.0.0.1:9413
 # Assumes ./fresh_install (or ./install) has been run first.
 #
-set -euo pipefail
-. "$(dirname "$0")"/lib
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib # source shared setup (enables trace output)
 
+# Start the container with MediaWiki running and open a bash shell
+# --skip-zuul: don't clone repos (already in src/)
+# --skip-deps: don't install dependencies (already installed)
+# --command bash: open a bash shell instead of running tests
 docker run -it --rm \
   --entrypoint=quibble-with-supervisord \
   -p 9413:9413 \
@@ -18,6 +22,3 @@ docker run -it --rm \
   --skip-zuul \
   --skip-deps \
   --command bash
-# --skip-zuul: don't clone repos (already in src/)
-# --skip-deps: don't install dependencies (already installed)
-# --command bash: open a bash shell instead of running tests
