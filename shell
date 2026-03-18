@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#
+# Open a shell in the container with MediaWiki running.
+# MediaWiki will be available at http://127.0.0.1:9413
+# Assumes ./fresh_install (or ./install) has been run first.
+#
+set -euo pipefail
+. "$(dirname "$0")"/lib
+
+docker run -it --rm \
+  --entrypoint=quibble-with-supervisord \
+  -p 9413:9413 \
+  -v "$(pwd)"/cache:/cache \
+  -v "$(pwd)"/log:/workspace/log \
+  -v "$(pwd)"/ref:/srv/git:ro \
+  -v "$(pwd)"/src:/workspace/src \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --skip-zuul \
+  --skip-deps \
+  --command bash
