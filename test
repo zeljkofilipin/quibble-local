@@ -8,8 +8,8 @@
 #
 
 # No set -euo pipefail: we want to continue after failures to collect all results
-failed="" # space-separated list of failed script names
-passed="" # space-separated list of passed script names
+failed="" # newline-separated list of failed commands (with arguments)
+passed="" # newline-separated list of passed commands (with arguments)
 
 # Run a command and record whether it passed or failed
 run_test() {
@@ -17,9 +17,11 @@ run_test() {
   printf "= Running: %s\n" "$*"
   printf "========================================\n"
   if "$@"; then
-    passed="$passed $1" # add script name to passed list
+    passed="$passed
+  $*" # append full command on a new indented line
   else
-    failed="$failed $1" # add script name to failed list
+    failed="$failed
+  $*" # append full command on a new indented line
   fi
 }
 
