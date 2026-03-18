@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#
+# Check if a component has Selenium tests.
+# Exits 0 if selenium-test script exists in package.json, 1 otherwise.
+# Assumes ./fresh_install (or ./install) has been run first.
+#
+# Usage: ./selenium_tests_exist
+#        ./selenium_tests_exist extensions/Echo
+#        ./selenium_tests_exist skins/MinervaNeue
+#
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+
+# Build the path to package.json (core or component)
+if [ $# -gt 0 ]; then
+  package_json="src/${1}/package.json" # e.g. src/extensions/Echo/package.json
+else
+  package_json="src/package.json" # core
+fi
+
+# Check if package.json exists
+if [ ! -f "$package_json" ]; then
+  exit 1
+fi
+
+# Check if package.json contains a "selenium-test" script
+grep -q '"selenium-test"' "$package_json"

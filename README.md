@@ -66,6 +66,13 @@ Output the list of gated repositories (extensions and skins) from `parameter_fun
 
 List all scripts with their description and usage.
 
+### `./selenium_tests_exist`
+
+Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
+
+    ./selenium_tests_exist
+    ./selenium_tests_exist extensions/Echo
+
 ### `./shellto`
 
 Open a shell in the container with MediaWiki running at http://127.0.0.1:9413. Assumes `./fresh_install` (or `./install`) has been run first.

@@ -27,12 +27,14 @@ run_test ./help
 run_test ./lint
 run_test ./prepare
 run_test ./fresh_install
+run_test ./selenium_tests_exist
 run_test ./run_selenium_tests
 run_test ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js
 run_test ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"
 run_test ./install extensions/Echo
 run_test ./dependencies extensions/Echo
 run_test ./gated
+run_test ./selenium_tests_exist extensions/Echo
 run_test ./run_selenium_tests extensions/Echo
 run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/echo.js
 run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/echo.js --mochaOpts.grep "alerts and notices are visible"
