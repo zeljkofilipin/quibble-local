@@ -21,7 +21,7 @@ There is no build step. There are no unit tests — `./test` is an integration t
 
 - Scripts must work with bash 3.2 (macOS default) — avoid bash 4+ features (associative arrays, `mapfile`, `${var,,}`, `|&`)
 - One executable file per command, no `.sh` extensions
-- All bash scripts start with `set -euo pipefail` and source `lib` (which enables `set -x` with a custom `PS4`)
+- All bash scripts start with `set -euo pipefail` and source `lib` (which enables `set -x` with a custom `PS4`). Exception: utility scripts (`help`, `lint`, `test`, `deep_test`, `dependencies`) skip `lib` because trace output would bury their actual output in noise.
 - All scripts must have a comment block at the top describing what the script does, with example usage if it takes arguments
 - When adding or updating a script, ensure `help`, `README.md`, `lint`, and `test` are kept in sync, and run `./lint`
 - Docker container runs as a different user, so `chmod 777` is used on shared directories
