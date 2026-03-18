@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # Run all scripts and report which ones passed or failed.
 # Useful for detecting regressions after changes.
