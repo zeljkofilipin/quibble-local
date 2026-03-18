@@ -8,7 +8,7 @@ Wrapper scripts for running [Quibble](https://doc.wikimedia.org/quibble/) (Media
 
 ## Lint and test
 
-- **Lint:** `./lint` — runs ShellCheck on all scripts (CI also runs this)
+- **Lint:** `./lint` — runs ShellCheck on all scripts (CI also runs this). Run after every change.
 - **Test:** `./test` — runs all scripts end-to-end (slow; requires Docker, clones repos from Gerrit)
 
 There is no build step. There are no unit tests — `./test` is an integration test that exercises every script.
