@@ -9,7 +9,7 @@ Inspired by [mediawiki-quickstart](https://gitlab.wikimedia.org/repos/test-platf
 - [Bash](https://www.gnu.org/software/bash/)
 - [Git](https://git-scm.com/)
 - [Docker](https://www.docker.com/)
-- [ShellCheck](https://www.shellcheck.net/) (for linting)
+- [ShellCheck](https://www.shellcheck.net/) (optional, for linting)
 
 ## Commands
 

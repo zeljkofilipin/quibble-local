@@ -8,7 +8,7 @@ Wrapper scripts for running [Quibble](https://doc.wikimedia.org/quibble/) (Media
 
 ## Prerequisites
 
-Bash, Git, Docker, and [ShellCheck](https://www.shellcheck.net/) (for linting).
+Bash, Git, and Docker. Optional: [ShellCheck](https://www.shellcheck.net/) (for linting).
 
 ## Lint and test
 
