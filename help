@@ -5,7 +5,7 @@
 #
 set -euo pipefail
 
-for script in clean deep_clean dependencies fetch fresh_install help install lint prepare run_selenium_tests test; do
+for script in clean deep_clean deep_test dependencies fetch fresh_install help install lint prepare run_selenium_tests test; do
   description=""
   usage=""
 

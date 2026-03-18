@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# Run deep_clean, then run all tests. Slower but starts from a clean state.
+#
+# Usage: ./deep_test
+#
+set -euo pipefail
+
+"$(dirname "$0")"/deep_clean
+"$(dirname "$0")"/test

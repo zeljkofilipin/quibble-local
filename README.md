@@ -74,6 +74,10 @@ Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo.
 
 Run all scripts and report which ones passed or failed. Useful for detecting regressions after changes.
 
+### `./deep_test`
+
+Run `./deep_clean` first, then `./test`. Slower but starts from a completely clean state.
+
 ## Further reading
 
 - [Quibble documentation](https://doc.wikimedia.org/quibble/)
