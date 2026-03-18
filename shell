@@ -18,3 +18,6 @@ docker run -it --rm \
   --skip-zuul \
   --skip-deps \
   --command bash
+# --skip-zuul: don't clone repos (already in src/)
+# --skip-deps: don't install dependencies (already installed)
+# --command bash: open a bash shell instead of running tests

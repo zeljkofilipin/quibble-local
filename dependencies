@@ -14,10 +14,12 @@ fi
 
 component="$1"
 
+# Strip "extensions/" prefix if present (skins/ is kept as-is)
 if [[ "$component" == extensions/* ]]; then
   dep_key="${component#extensions/}"
 else
   dep_key="$component"
 fi
 
+# Parse dependencies.yaml: find the key, print each "- item" line until the next top-level key
 awk -v key="${dep_key}:" '$0==key{f=1;next} f&&/^[^ ]/{exit} f&&/^ *- /{sub(/^ *- /,"");print}' src/config/zuul/dependencies.yaml

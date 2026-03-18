@@ -18,6 +18,7 @@ fi
 # Ensure working directories exist with proper permissions for the container user.
 # Docker creates missing mount dirs as root; chmod may fail if they're already root-owned.
 mkdir -p cache log src
+# chmod may fail if dirs are already root-owned, so fall back to Docker as root
 chmod 777 cache log src 2>/dev/null || \
   docker run --rm \
     --entrypoint bash \
@@ -28,6 +29,7 @@ chmod 777 cache log src 2>/dev/null || \
     docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
     -c 'chmod 777 /cache /workspace/log /workspace/src'
 
+# Install MediaWiki and open a shell (--command true = install only, no tests)
 docker run -it --rm \
   --entrypoint=quibble-with-supervisord \
   -p 9413:9413 \

@@ -15,8 +15,8 @@ for script in clean deep_clean deep_test dependencies fetch fresh_install help i
     # End of comment header
     [[ "$line" != "#"* ]] && break
 
-    text="${line#\#}"
-    text="${text# }"
+    text="${line#\#}"   # strip leading '#'
+    text="${text# }"    # strip leading space
 
     if [ -z "$text" ]; then
       continue

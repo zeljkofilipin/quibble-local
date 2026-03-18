@@ -6,6 +6,7 @@
 # Usage: ./test
 #
 
+# No set -euo pipefail: we want to continue after failures to collect all results
 failed=""
 passed=""
 

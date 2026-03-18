@@ -14,6 +14,7 @@ zuul_project=()
 if [ $# -gt 0 ]; then
   component="$1"
   repo="mediawiki/${component}"
+# Tell Quibble which extension/skin to target
   zuul_project=(-e "ZUUL_PROJECT=${repo}")
 fi
 
@@ -32,3 +33,6 @@ docker run -it --rm \
   --skip-zuul \
   --skip-deps \
   --run selenium
+# --skip-zuul: don't clone repos (already in src/)
+# --skip-deps: don't install dependencies (already installed)
+# ${zuul_project[@]+"..."}: expand array only if non-empty (bash 3.2 compat)

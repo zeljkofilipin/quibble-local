@@ -40,6 +40,7 @@ if [ ! -d "$config_src_dir" ]; then
 fi
 
 # Build list of dependency repos from zuul/dependencies.yaml
+# Disable trace output while processing dependencies (too noisy)
 set +x
 deps=()
 while IFS= read -r dep_name; do
@@ -57,8 +58,13 @@ while IFS= read -r dep_name; do
   fi
   deps+=("$dep_repo")
 done < <("$(dirname "$0")"/dependencies "$component")
+# Re-enable trace output
 set -x
 
+# Install extension/skin with its dependencies
+# --resolve-requires: let Quibble resolve and install dependencies
+# --command true: install only, no tests
+# "${deps[@]}": list of dependency repos to clone
 docker run -it --rm \
   --entrypoint=quibble-with-supervisord \
   -p 9413:9413 \

@@ -7,6 +7,7 @@ set -euo pipefail
 . "$(dirname "$0")"/lib
 
 # Use Docker (as root) to remove files owned by the container user.
+# Check if the Docker image exists (suppress all output)
 if docker image inspect docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest &>/dev/null; then
   docker run --rm \
     --entrypoint bash \
@@ -21,4 +22,5 @@ fi
 
 rm -rf cache log src ref
 
+# Remove the Docker image (ignore errors if already removed)
 docker rmi docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest 2>/dev/null || true
