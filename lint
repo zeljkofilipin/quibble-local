@@ -4,4 +4,4 @@
 #
 set -euo pipefail
 
-shellcheck clean deep_clean fetch fresh_install install lib prepare run_selenium_tests
+shellcheck clean deep_clean fetch fresh_install help install lib prepare run_selenium_tests

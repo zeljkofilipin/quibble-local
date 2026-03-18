@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#
+# List all scripts with their description and usage.
+#
+set -euo pipefail
+
+for script in clean deep_clean dependencies fetch fresh_install help install lint prepare run_selenium_tests test; do
+  description=""
+  usage=""
+
+  while IFS= read -r line; do
+    # Skip shebang
+    [[ "$line" == "#!"* ]] && continue
+    # End of comment header
+    [[ "$line" != "#"* ]] && break
+
+    text="${line#\#}"
+    text="${text# }"
+
+    if [ -z "$text" ]; then
+      continue
+    fi
+
+    if [[ "$text" == Usage:* ]]; then
+      usage="${text#Usage: }"
+    elif [ -z "$description" ]; then
+      description="$text"
+    fi
+  done < "$script"
+
+  printf "./%s\n" "$script"
+  printf "  %s\n" "$description"
+  if [ -n "$usage" ]; then
+    printf "  Usage: %s\n" "$usage"
+  fi
+  printf "\n"
+done
