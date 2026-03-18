@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
 # List all scripts with their description and usage.
+# Prerequisites: Bash, Git, Docker, ShellCheck (for linting).
 #
 set -euo pipefail
 

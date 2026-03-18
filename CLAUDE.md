@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Wrapper scripts for running [Quibble](https://doc.wikimedia.org/quibble/) (MediaWiki CI test runner) locally via Docker. Targets macOS and Ubuntu. Inspired by [mediawiki-quickstart](https://gitlab.wikimedia.org/repos/test-platform/mediawiki-quickstart).
 
+## Prerequisites
+
+Bash, Git, Docker, and [ShellCheck](https://www.shellcheck.net/) (for linting).
+
 ## Lint and test
 
 - **Lint:** `./lint` — runs ShellCheck on all scripts (CI also runs this). Run after every change.
