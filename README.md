@@ -58,6 +58,10 @@ Output dependencies for an extension or skin from `zuul/dependencies.yaml`.
     ./dependencies extensions/Echo
     ./dependencies skins/MinervaNeue
 
+### `./gated`
+
+Output the list of gated repositories (extensions and skins) from `parameter_functions.py`. Assumes `./install` has been run first.
+
 ### `./help`
 
 List all scripts with their description and usage.

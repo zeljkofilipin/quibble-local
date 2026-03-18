@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#
+# Output the list of gated repositories (extensions and skins).
+# Reads gatedextensions and gatedskins from parameter_functions.py.
+# Assumes ./install has been run first (needs src/config).
+#
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+
+# Path to the file containing gated extensions and skins lists
+config_file="src/config/zuul/parameter_functions.py"
+
+# Check that the config file exists
+if [ ! -f "$config_file" ]; then
+  echo "Error: $config_file not found. Run ./install first."
+  exit 1
+fi
+
+# Extract Python list entries from gatedextensions and gatedskins.
+# Finds lines like '    'ExtensionName',' inside each list and strips quotes/whitespace.
+# -v list=NAME: which Python list to extract from
+# Looks for the list assignment, then prints each quoted entry until the closing bracket.
+extract_list() {
+  awk -v list="$1" '
+    $0 ~ "^" list " = \\[" { found=1; next }  # start of the list
+    found && /^\]/ { exit }                     # end of the list
+    found && /'\''/ {                           # line with a quoted string
+      gsub(/^[[:space:]]*'\''/, "")             # strip leading whitespace and opening quote
+      gsub(/'\''.*/, "")                        # strip closing quote and everything after
+      print                                     # print the extracted name
+    }
+  ' "$config_file"
+}
+
+# Print gated extensions prefixed with "extensions/"
+extract_list "gatedextensions" | while IFS= read -r name; do
+  echo "extensions/$name"
+done
+
+# Print gated skins prefixed with "skins/"
+extract_list "gatedskins" | while IFS= read -r name; do
+  echo "skins/$name"
+done
