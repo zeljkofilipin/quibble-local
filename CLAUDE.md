@@ -10,6 +10,13 @@ Wrapper scripts for running [Quibble](https://doc.wikimedia.org/quibble/) (Media
 
 Bash, Git, and Docker. Optional: [ShellCheck](https://www.shellcheck.net/) (for linting).
 
+## CI
+
+GitLab CI must pass for every commit. The pipeline runs ShellCheck (lint) and security scans. Test CI locally before pushing:
+
+- **Local lint (requires ShellCheck installed):** `./lint`
+- **Local lint (Docker, same image as CI):** `docker run --rm -v "$PWD:/mnt:ro" koalaman/shellcheck-alpine:stable sh -c "apk add --no-cache bash >/dev/null 2>&1 && cd /mnt && ./lint"`
+
 ## Lint and test
 
 - **Lint:** `./lint` — runs ShellCheck on all scripts (CI also runs this). Run after every change.
