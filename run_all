@@ -37,7 +37,7 @@ printf "# Core\n"
 printf "########################################\n"
 if run_step core ./fresh_install; then
   if ./selenium_tests_exist; then
-    run_step core ./run_selenium_tests
+    run_step core ./run_selenium_tests || true # failure recorded, continue
   fi
   passed="$passed core"
 fi
@@ -50,7 +50,7 @@ while IFS= read -r component <&3; do # read from fd 3 so stdin stays free for do
   if run_step "$component" ./fresh_install; then
     if run_step "$component" ./install "$component"; then
       if ./selenium_tests_exist "$component"; then
-        run_step "$component" ./run_selenium_tests "$component"
+        run_step "$component" ./run_selenium_tests "$component" || true # failure recorded, continue
       fi
     fi
   fi
