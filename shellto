@@ -8,6 +8,11 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (enables trace output)
 
 # Start the container with MediaWiki running and open a bash shell
+# -it: interactive terminal (so you can type commands in the shell)
+# --rm: remove container on exit
+# --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
+# -p 9413:9413: expose MediaWiki port from container to host
+# "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
 # --skip-zuul: don't clone repos (already in src/)
 # --skip-deps: don't install dependencies (already installed)
 # --command bash: open a bash shell instead of running tests

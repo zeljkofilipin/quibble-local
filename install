@@ -12,7 +12,7 @@
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
 # Show usage if no argument provided
-if [ $# -eq 0 ]; then
+if [ $# -eq 0 ]; then # $# is the number of arguments
   echo "Usage: ./install extensions/EXTENSION or ./install skins/SKIN"
   exit 1
 fi
@@ -39,10 +39,11 @@ fi
 . "$(dirname "$0")"/lib/ensure_config
 
 # Build list of dependency repos from zuul/dependencies.yaml
-# Disable trace output while processing dependencies (too noisy)
-set +x
+set +x # disable trace output while processing dependencies (too noisy)
 deps=() # array to collect dependency repo paths
-# Read each dependency name from the ./dependencies script output
+# Read each dependency name from the ./dependencies script output.
+# IFS= prevents trimming whitespace; -r prevents backslash interpretation.
+# < <(...) is process substitution: runs ./dependencies and feeds its output as stdin.
 while IFS= read -r dep_name; do
   # Skins use "mediawiki/skins/Name", extensions use "mediawiki/extensions/Name"
   if [[ "$dep_name" == skins/* ]]; then
@@ -57,15 +58,19 @@ while IFS= read -r dep_name; do
     mkdir -p "$(dirname "$dep_ref_dir")" # create parent directories
     git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
   fi
-  deps+=("$dep_repo") # add to the dependencies array
+  deps+=("$dep_repo") # add to the dependencies array; += appends to bash arrays
 done < <("$(dirname "$0")"/dependencies "$component") # feed dependency names from ./dependencies
-# Re-enable trace output
-set -x
+set -x # re-enable trace output
 
 # Install extension/skin with its dependencies
+# -it: interactive terminal (so you can type commands in the shell)
+# --rm: remove container on exit
+# --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
+# -p 9413:9413: expose MediaWiki port from container to host
+# "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
 # -e ZUUL_PROJECT: tell Quibble which extension/skin is the main project
 # --resolve-requires: let Quibble resolve and install PHP/extension dependencies
-# --command true: install only, no tests
+# --command true: install only, don't run tests
 # "${deps[@]}": list of dependency repos to clone
 docker run -it --rm \
   --entrypoint=quibble-with-supervisord \

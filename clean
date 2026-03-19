@@ -8,6 +8,10 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (enables trace output)
 
 # Use Docker (as root) to remove files owned by the container user.
+# --rm: remove container on exit
+# --entrypoint bash: override default entrypoint to run a shell command
+# --user root: run as root to have permission to delete all files
+# -v: mount src/ so we can delete its contents from inside the container
 docker run --rm \
   --entrypoint bash \
   --user root \

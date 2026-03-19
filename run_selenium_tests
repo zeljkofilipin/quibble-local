@@ -18,19 +18,20 @@ zuul_project=() # empty array by default
 wdio_args=() # extra arguments to pass to wdio (e.g. --spec)
 
 # Parse arguments: first arg may be a component (extensions/X or skins/X),
-# remaining args are passed through to wdio
+# remaining args are passed through to wdio.
+# $# is the number of arguments remaining.
 while [ $# -gt 0 ]; do
   case "$1" in
     extensions/* | skins/*) # component path (e.g. extensions/Echo)
       component="$1"
       repo="mediawiki/${component}"
-      # Tell Quibble which extension/skin to target
+      # Tell Quibble which extension/skin to target via -e (env var) flag
       zuul_project=(-e "ZUUL_PROJECT=${repo}")
-      shift
+      shift # remove this argument from $@
       ;;
     *) # everything else is a wdio argument (e.g. --spec file.js)
-      wdio_args+=("$1")
-      shift
+      wdio_args+=("$1") # += appends to bash arrays
+      shift # remove this argument from $@
       ;;
   esac
 done
@@ -41,9 +42,10 @@ done
 # - with --spec + component: cd into component dir, then run specific test
 # - with --spec (no component): run specific test from repo root
 # - without --spec: use --run selenium to run all tests
+# ${#arr[@]} gets the number of elements in the array
 if [ ${#wdio_args[@]} -gt 0 ]; then
-  # For extensions/skins, cd into the component directory first
-  if [ -n "${component:-}" ]; then
+  # ${component:-} expands to empty string if $component is unset (avoids set -u error)
+  if [ -n "${component:-}" ]; then # for extensions/skins, cd into the component directory first
     quibble_args=(--command "cd ${component} && npm run selenium-test -- ${wdio_args[*]}")
   else
     quibble_args=(--command "npm run selenium-test -- ${wdio_args[*]}")
@@ -54,10 +56,16 @@ else
 fi
 
 # Run Selenium tests in the container
+# -it: interactive terminal
+# --rm: remove container on exit
+# --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
+# -p 9413:9413: expose MediaWiki port from container to host
+# "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
 # -e CI=true: tell Quibble this is a CI run
+# ${zuul_project[@]+"${zuul_project[@]}"}: bash 3.2 workaround to expand array
+#   only if non-empty (empty array with set -u would cause "unbound variable" error)
 # --skip-zuul: don't clone repos (already in src/)
 # --skip-deps: don't install dependencies (already installed)
-# ${zuul_project[@]+"..."}: expand array only if non-empty (bash 3.2 compat)
 docker run -it --rm \
   --entrypoint=quibble-with-supervisord \
   -p 9413:9413 \

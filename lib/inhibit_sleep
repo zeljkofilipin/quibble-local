@@ -2,10 +2,11 @@
 # Sourced by long-running scripts to prevent the machine from suspending.
 # Uses caffeinate on macOS, systemd-inhibit on Linux.
 # The caller's PID ($$) is used so the inhibit ends when the caller exits.
-if [ "$(uname)" = "Darwin" ]; then
+if [ "$(uname)" = "Darwin" ]; then # check if running on macOS
   caffeinate -s -w $$ & # macOS: prevent sleep while the caller is alive
-else
+else # Linux: use systemd-inhibit to block sleep
   systemd-inhibit --what=sleep --who="$(basename "$0")" --why="Quibble tests running" sleep infinity &
-  inhibit_sleep_pid=$!                                    # save PID to kill on exit
-  trap 'kill $inhibit_sleep_pid 2>/dev/null' EXIT         # clean up on script exit
+  # sleep infinity keeps the inhibit process alive in the background until killed
+  inhibit_sleep_pid=$!                                    # $! is the PID of the last background process
+  trap 'kill $inhibit_sleep_pid 2>/dev/null' EXIT         # clean up the inhibit process when the script exits
 fi

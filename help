@@ -7,8 +7,8 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 
 # Loop through all scripts in alphabetical order
 for script in clean deep_clean deep_test dependencies fetch fresh_install gated help install lint prepare run_all run_selenium_tests selenium_tests_exist shellto test; do
-  description=""
-  usage=""
+  description="" # will hold the first line of the script's comment header
+  usage=""       # will hold the Usage: line if present
 
   # Read the script file line by line to extract the comment header
   while IFS= read -r line; do

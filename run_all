@@ -20,11 +20,12 @@ passed="" # space-separated list of passed components
 # Run a command, print what it does, and record pass/fail
 run_step() {
   local component="$1" # component name for tracking (e.g. "core" or "extensions/Echo")
-  shift                 # remaining args are the command to run
+  shift                 # remove first arg; remaining args ("$@") are the command to run
+  # print a visual separator with the component name and command
   printf "\n========================================\n"
-  printf "= %s: %s\n" "$component" "$*"
+  printf "= %s: %s\n" "$component" "$*" # $* joins all args into a single string
   printf "========================================\n"
-  if "$@"; then
+  if "$@"; then # run the command (all remaining arguments)
     return 0 # step passed
   else
     failed="$failed $component" # record failure
@@ -33,25 +34,30 @@ run_step() {
 }
 
 # --- Core ---
+# print section header for core
 printf "\n########################################\n"
 printf "# Core\n"
 printf "########################################\n"
-if run_step core ./fresh_install; then
-  if ./selenium_tests_exist; then
-    run_step core ./run_selenium_tests
+if run_step core ./fresh_install; then # install core; skip remaining steps if this fails
+  if ./selenium_tests_exist; then # check if core has Selenium tests
+    run_step core ./run_selenium_tests # run core Selenium tests
   fi
-  passed="$passed core"
+  passed="$passed core" # record core as passed
 fi
 
 # --- Gated repositories ---
-while IFS= read -r component <&3; do # read from fd 3 so stdin stays free for docker
+# IFS= preserves whitespace in component names; -r prevents backslash interpretation.
+# <&3 reads from file descriptor 3 instead of stdin, because docker's -it flag needs stdin.
+# 3< <(...) is process substitution: runs ./gated and connects its output to fd 3.
+while IFS= read -r component <&3; do
+  # print section header for this component
   printf "\n########################################\n"
   printf "# %s\n" "$component"
   printf "########################################\n"
-  if run_step "$component" ./fresh_install; then
-    if run_step "$component" ./install "$component"; then
-      if ./selenium_tests_exist "$component"; then
-        run_step "$component" ./run_selenium_tests "$component"
+  if run_step "$component" ./fresh_install; then # install core; skip remaining steps if this fails
+    if run_step "$component" ./install "$component"; then # install extension/skin; skip tests if this fails
+      if ./selenium_tests_exist "$component"; then # check if this component has Selenium tests
+        run_step "$component" ./run_selenium_tests "$component" # run Selenium tests
       fi
     fi
   fi

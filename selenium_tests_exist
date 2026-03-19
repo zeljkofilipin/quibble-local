@@ -19,8 +19,9 @@ fi
 
 # Check if package.json exists
 if [ ! -f "$package_json" ]; then
-  exit 1
+  exit 1 # no package.json means no tests
 fi
 
 # Check if package.json contains a "selenium-test" script
+# -q: quiet mode, don't print matches, just set exit code (0=found, 1=not found)
 grep -q '"selenium-test"' "$package_json"

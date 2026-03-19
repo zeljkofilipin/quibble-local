@@ -21,7 +21,12 @@ fi
 # Ensure working directories exist with proper permissions for the container user.
 # Docker creates missing mount dirs as root; chmod may fail if they're already root-owned.
 mkdir -p cache log src
-# chmod may fail if dirs are already root-owned, so fall back to Docker as root
+# chmod 777: container runs as a different user, so dirs must be world-writable.
+# 2>/dev/null: suppress errors if dirs are already root-owned.
+# ||: if chmod fails, fall back to Docker as root to set permissions.
+# --rm: remove container on exit
+# --entrypoint bash: override default entrypoint to run a shell command
+# --user root: run as root to have permission to chmod
 chmod 777 cache log src 2>/dev/null || \
   docker run --rm \
     --entrypoint bash \
@@ -30,9 +35,15 @@ chmod 777 cache log src 2>/dev/null || \
     -v "$QUIBBLE_DIR"/log:/workspace/log \
     -v "$QUIBBLE_DIR"/src:/workspace/src \
     "$QUIBBLE_IMAGE" \
-    -c 'chmod 777 /cache /workspace/log /workspace/src'
+    -c 'chmod 777 /cache /workspace/log /workspace/src' # set permissions inside the container
 
-# Install MediaWiki and open a shell (--command true = install only, no tests)
+# Install MediaWiki and open a shell
+# -it: interactive terminal (so you can type commands in the shell)
+# --rm: remove container on exit
+# --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
+# -p 9413:9413: expose MediaWiki port from container to host
+# "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
+# --command true: install only, don't run tests ("true" exits immediately)
 docker run -it --rm \
   --entrypoint=quibble-with-supervisord \
   -p 9413:9413 \

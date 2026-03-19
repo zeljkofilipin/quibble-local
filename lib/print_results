@@ -3,18 +3,20 @@
 # Expects $passed and $failed variables to be set by the caller.
 # Sourced by scripts that track test/step results (run_all, test).
 print_results() {
+  # print results section header
   printf "\n========================================\n"
   printf "= Results\n"
   printf "========================================\n"
 
-  if [ -n "$passed" ]; then
+  # -n tests if the string is non-empty
+  if [ -n "$passed" ]; then # if any items passed
     printf "PASSED:%s\n" "$passed" # print list of passed items
   fi
 
-  if [ -n "$failed" ]; then
+  if [ -n "$failed" ]; then # if any items failed
     printf "FAILED:%s\n" "$failed" # print list of failed items
     exit 1 # exit with error if anything failed
   fi
 
-  printf "\nAll passed.\n"
+  printf "\nAll passed.\n" # only reached if nothing failed
 }

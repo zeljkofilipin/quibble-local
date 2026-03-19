@@ -17,10 +17,11 @@ passed="" # newline-separated list of passed commands (with arguments)
 
 # Run a command and record whether it passed or failed
 run_test() {
+  # print a visual separator with the command name
   printf "\n========================================\n"
-  printf "= Running: %s\n" "$*"
+  printf "= Running: %s\n" "$*" # $* joins all args into a single string
   printf "========================================\n"
-  if "$@"; then
+  if "$@"; then # run the command (all arguments passed to this function)
     passed="$passed
   $*" # append full command on a new indented line
   else
@@ -30,25 +31,25 @@ run_test() {
 }
 
 # Run each script in order (some depend on earlier ones)
-run_test ./help
-run_test ./lint
-run_test ./prepare
-run_test ./fresh_install
-run_test ./selenium_tests_exist
-run_test ./run_selenium_tests
-run_test ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js
-run_test ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"
-run_test ./install extensions/Echo
-run_test ./dependencies extensions/Echo
-run_test ./gated
-run_test ./selenium_tests_exist extensions/Echo
-run_test ./run_selenium_tests extensions/Echo
-run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js
-run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"
-run_test ./install extensions/CampaignEvents
-run_test ./run_selenium_tests extensions/CampaignEvents
-run_test ./fetch
-run_test ./clean
+run_test ./help                        # test that help output works
+run_test ./lint                        # test that all scripts pass shellcheck
+run_test ./prepare                     # test that prepare pulls image and clones repos
+run_test ./fresh_install               # test fresh core install
+run_test ./selenium_tests_exist        # test that core has Selenium tests
+run_test ./run_selenium_tests          # test running all core Selenium tests
+run_test ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js  # test running a specific test file
+run_test ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"  # test filtering by grep pattern
+run_test ./install extensions/Echo     # test installing an extension
+run_test ./dependencies extensions/Echo  # test listing extension dependencies
+run_test ./gated                       # test listing gated repos
+run_test ./selenium_tests_exist extensions/Echo  # test that extension has Selenium tests
+run_test ./run_selenium_tests extensions/Echo  # test running extension Selenium tests
+run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js  # test running a specific extension test file
+run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"  # test filtering extension tests by grep
+run_test ./install extensions/CampaignEvents  # test installing another extension
+run_test ./run_selenium_tests extensions/CampaignEvents  # test running another extension's tests
+run_test ./fetch                       # test fetching latest changes
+run_test ./clean                       # test cleaning up src/
 
 # Print pass/fail summary and exit with error if any script failed
 print_results
