@@ -107,6 +107,18 @@ Run `./deep_clean` first, then `./test`. Slower but starts from a completely cle
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending (via `./test`).
 
+## Internal scripts
+
+These are sourced by other scripts and are not intended to be run directly.
+
+### `lib`
+
+Shared setup sourced by scripts that run Docker commands. Sets a custom debug prompt and enables trace output (`set -x`).
+
+### `inhibit_sleep`
+
+Sourced by long-running scripts (`run_all`, `test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+
 ## Further reading
 
 - [Quibble documentation](https://doc.wikimedia.org/quibble/)
