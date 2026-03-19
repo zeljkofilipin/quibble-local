@@ -13,5 +13,5 @@ QUIBBLE_VOLUMES=(
   -v "$QUIBBLE_DIR"/ref:/srv/git:ro        # bare git repos as references
   -v "$QUIBBLE_DIR"/src:/workspace/src     # MediaWiki source code
 )
-PS4=$'\n========================================\n= $(basename "$0") is running: ' # custom prompt showing script name
+PS4=$'\n========================================\n= ${0##*/} is running: ' # custom prompt showing script name (uses parameter expansion, not $(basename) which breaks set -e in bash 3.2)
 set -x # print each command before running it
