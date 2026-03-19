@@ -4,10 +4,20 @@
 # For each component: fresh_install, install (if not core),
 # check if Selenium tests exist, and run them.
 # WARNING: This will take a very long time to run (50+ components).
+# WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
 # Usage: ./run_all
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
+
+# Prevent the machine from suspending while this long-running script is active
+if [ "$(uname)" = "Darwin" ]; then
+  caffeinate -s -w $$ & # macOS: prevent sleep while this process is alive
+else
+  systemd-inhibit --what=sleep --who=run_all --why="Quibble tests running" sleep infinity &
+  inhibit_pid=$!                          # save PID to kill on exit
+  trap 'kill $inhibit_pid 2>/dev/null' EXIT # clean up on script exit
+fi
 
 # Track results for summary
 failed="" # space-separated list of failed components

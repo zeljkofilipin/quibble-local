@@ -38,6 +38,8 @@ See: [Install MediaWiki Core and an Extension](https://www.mediawiki.org/wiki/Se
 
 Run Selenium tests for core and all gated repositories. For each component: `./fresh_install`, `./install` (if not core), check if Selenium tests exist, and run them.
 
+**Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
+
 ### `./run_selenium_tests`
 
 Run Selenium tests. Assumes `./fresh_install` (or `./install`) has been run first.
