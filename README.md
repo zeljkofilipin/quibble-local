@@ -99,6 +99,10 @@ Remove `src/` (MediaWiki source code). Cache, logs, bare git repos, and the Dock
 
 Remove everything created by quibble-local, including bare git repos in `ref/` and the Docker image.
 
+### `./ci`
+
+Run the same lint check that GitLab CI runs, using Docker. Does not require ShellCheck to be installed locally.
+
 ### `./lint`
 
 Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo.
