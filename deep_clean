@@ -13,10 +13,10 @@ if docker image inspect "$QUIBBLE_IMAGE" &>/dev/null; then
   docker run --rm \
     --entrypoint bash \
     --user root \
-    -v "$(pwd)"/cache:/cache \
-    -v "$(pwd)"/log:/workspace/log \
-    -v "$(pwd)"/src:/workspace/src \
-    -v "$(pwd)"/ref:/workspace/ref \
+    -v "$QUIBBLE_DIR"/cache:/cache \
+    -v "$QUIBBLE_DIR"/log:/workspace/log \
+    -v "$QUIBBLE_DIR"/src:/workspace/src \
+    -v "$QUIBBLE_DIR"/ref:/workspace/ref \
     "$QUIBBLE_IMAGE" \
     -c 'find /cache /workspace/log /workspace/src /workspace/ref -mindepth 1 -delete'
 fi

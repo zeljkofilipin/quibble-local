@@ -4,13 +4,14 @@
 # and enables trace output (set -x).
 # Not sourced by utility scripts (help, lint, test, etc.) where trace output would be noise.
 export QUIBBLE_IMAGE="docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest" # Docker image for Quibble
+QUIBBLE_DIR="$(pwd)" # project root, captured before set -x to avoid noisy pwd trace
 # Common Docker volume mounts for Quibble commands (cache, log, ref, src)
 # shellcheck disable=SC2034 # used by scripts that source this file
 QUIBBLE_VOLUMES=(
-  -v "$(pwd)"/cache:/cache           # composer/npm cache
-  -v "$(pwd)"/log:/workspace/log     # Quibble logs
-  -v "$(pwd)"/ref:/srv/git:ro        # bare git repos as references
-  -v "$(pwd)"/src:/workspace/src     # MediaWiki source code
+  -v "$QUIBBLE_DIR"/cache:/cache           # composer/npm cache
+  -v "$QUIBBLE_DIR"/log:/workspace/log     # Quibble logs
+  -v "$QUIBBLE_DIR"/ref:/srv/git:ro        # bare git repos as references
+  -v "$QUIBBLE_DIR"/src:/workspace/src     # MediaWiki source code
 )
 PS4=$'\n========================================\n= $(basename "$0") is running: ' # custom prompt showing script name
 set -x # print each command before running it

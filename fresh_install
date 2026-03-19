@@ -26,9 +26,9 @@ chmod 777 cache log src 2>/dev/null || \
   docker run --rm \
     --entrypoint bash \
     --user root \
-    -v "$(pwd)"/cache:/cache \
-    -v "$(pwd)"/log:/workspace/log \
-    -v "$(pwd)"/src:/workspace/src \
+    -v "$QUIBBLE_DIR"/cache:/cache \
+    -v "$QUIBBLE_DIR"/log:/workspace/log \
+    -v "$QUIBBLE_DIR"/src:/workspace/src \
     "$QUIBBLE_IMAGE" \
     -c 'chmod 777 /cache /workspace/log /workspace/src'
 

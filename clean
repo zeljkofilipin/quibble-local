@@ -11,7 +11,7 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 docker run --rm \
   --entrypoint bash \
   --user root \
-  -v "$(pwd)"/src:/workspace/src \
+  -v "$QUIBBLE_DIR"/src:/workspace/src \
   "$QUIBBLE_IMAGE" \
   -c 'find /workspace/src -mindepth 1 -delete' # delete contents but not the mount point itself
 
