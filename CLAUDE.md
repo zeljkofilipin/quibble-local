@@ -24,6 +24,7 @@ There is no build step. There are no unit tests — `./test` is an integration t
 - Command names and interfaces should match [mediawiki-quickstart](https://gitlab.wikimedia.org/repos/test-platform/mediawiki-quickstart) whenever possible
 - One executable file per command, no `.sh` extensions
 - All bash scripts start with `set -euo pipefail` and source `lib` (which enables `set -x` with a custom `PS4`). Exception: utility scripts (`help`, `lint`, `test`, `deep_test`, `dependencies`) skip `lib` because trace output would bury their actual output in noise.
+- Long-running scripts (`run_all`, `test`) source `inhibit_sleep` to prevent the machine from suspending
 - All scripts must have a comment block at the top describing what the script does, with example usage if it takes arguments
 - Every line of code must have an inline comment explaining what it does
 - When changing a script, check that all comments (header and inline) still accurately describe the code
