@@ -26,7 +26,7 @@ There is no build step. There are no unit tests — `./test` is an integration t
 - All bash scripts start with `set -euo pipefail` and source `lib/setup` (which enables `set -x` with a custom `PS4`). Exception: utility scripts (`help`, `lint`, `test`, `deep_test`, `dependencies`, `gated`, `selenium_tests_exist`, `run_all`) skip `lib/setup` because trace output would bury their actual output in noise.
 - Long-running scripts (`run_all`, `test`) source `lib/inhibit_sleep` to prevent the machine from suspending
 - All scripts must have a comment block at the top describing what the script does, with example usage if it takes arguments
-- Every line of code must have an inline comment explaining what it does
+- Every line of code must have an inline comment explaining what it does. Comments should be plentiful, especially around bash quirks and non-obvious syntax (e.g. `${0##*/}`, `${arr[@]+"..."}`, `$@` vs `$*`, process substitution `< <(...)`, file descriptor redirection `<&3`, `set -euo pipefail` flags, docker flags). Most users and developers will not be familiar with bash.
 - When changing a script, check that all comments (header and inline) still accurately describe the code
 - When adding or updating a script, ensure `help`, `README.md`, `lint`, and `test` are kept in sync, and run `./lint`
 - Internal scripts (sourced helpers in `lib/` like `lib/setup`, `lib/inhibit_sleep`) must be documented in a separate section in `README.md` to make it clear they are not intended to be run directly
