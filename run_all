@@ -10,8 +10,8 @@
 #
 # No set -euo pipefail: we want to continue after failures to collect all results
 
-. "$(dirname "$0")"/inhibit_sleep # prevent the machine from suspending
-. "$(dirname "$0")"/print_results # provides print_results function
+. "$(dirname "$0")"/lib/inhibit_sleep # prevent the machine from suspending
+. "$(dirname "$0")"/lib/print_results # provides print_results function
 
 # Track results for summary
 failed="" # space-separated list of failed components

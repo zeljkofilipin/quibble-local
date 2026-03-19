@@ -35,7 +35,7 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-. "$(dirname "$0")"/lib # source shared setup (enables trace output)
+. "$(dirname "$0")"/lib/setup # source shared setup (enables trace output)
 
 # Decide how to run tests:
 # - with --spec + component: cd into component dir, then run specific test

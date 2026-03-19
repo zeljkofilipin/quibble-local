@@ -8,7 +8,7 @@
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
 # Ensure integration/config working copy exists (needed for parameter_functions.py)
-. "$(dirname "$0")"/ensure_config
+. "$(dirname "$0")"/lib/ensure_config
 
 # Path to the file containing gated extensions and skins lists
 config_file="$config_src_dir/zuul/parameter_functions.py"

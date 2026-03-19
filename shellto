@@ -5,7 +5,7 @@
 # MediaWiki will be available at http://127.0.0.1:9413
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
-. "$(dirname "$0")"/lib # source shared setup (enables trace output)
+. "$(dirname "$0")"/lib/setup # source shared setup (enables trace output)
 
 # Start the container with MediaWiki running and open a bash shell
 # --skip-zuul: don't clone repos (already in src/)

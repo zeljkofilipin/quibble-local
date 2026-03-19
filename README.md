@@ -109,23 +109,23 @@ Run `./deep_clean` first, then `./test`. Slower but starts from a completely cle
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending (via `./test`).
 
-## Internal scripts
+## Internal scripts (`lib/`)
 
 These are sourced by other scripts and are not intended to be run directly.
 
-### `lib`
+### `lib/setup`
 
-Shared setup sourced by scripts that run Docker commands. Sets a custom debug prompt and enables trace output (`set -x`).
+Shared setup sourced by scripts that run Docker commands. Exports `QUIBBLE_IMAGE` and `QUIBBLE_VOLUMES`, sets a custom debug prompt, and enables trace output (`set -x`).
 
-### `ensure_config`
+### `lib/ensure_config`
 
 Sourced by scripts that need zuul config (`gated`, `install`). Ensures the `integration/config` working copy exists in `src/config` by cloning from the bare repo.
 
-### `inhibit_sleep`
+### `lib/inhibit_sleep`
 
 Sourced by long-running scripts (`run_all`, `test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
-### `print_results`
+### `lib/print_results`
 
 Sourced by scripts that track test/step results (`run_all`, `test`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
 

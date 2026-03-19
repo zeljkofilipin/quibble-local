@@ -5,4 +5,4 @@
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
 # Check all scripts for shell scripting issues
-shellcheck clean deep_clean deep_test dependencies ensure_config fetch fresh_install gated help inhibit_sleep install lib lint prepare print_results run_all run_selenium_tests selenium_tests_exist shellto test
+shellcheck clean deep_clean deep_test dependencies fetch fresh_install gated help install lint prepare run_all run_selenium_tests selenium_tests_exist shellto test lib/setup lib/ensure_config lib/inhibit_sleep lib/print_results
