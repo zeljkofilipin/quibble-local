@@ -35,6 +35,7 @@ There is no build step. There are no unit tests — `./test` is an integration t
 - `clean` and `deep_clean` use Docker (as root) to remove container-owned files before `rm -rf`
 - The `--entrypoint=quibble-with-supervisord` flag is used on all `docker run` commands
 - Port 9413 is exposed via `-p 9413:9413` (macOS; not `--network host`)
+- All functionality shared across two or more files must be extracted into a helper file (like `lib` and `inhibit_sleep`)
 
 ## Directory layout (runtime, all gitignored)
 
