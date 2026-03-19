@@ -33,7 +33,7 @@ There is no build step. There are no unit tests — `./test` is an integration t
 - Every new argument to a script must have a corresponding test in `test`
 - Docker container runs as a different user, so `chmod 777` is used on shared directories
 - `clean` and `deep_clean` use Docker (as root) to remove container-owned files before `rm -rf`
-- The `--entrypoint=quibble-with-supervisord` flag is used on all `docker run` commands
+- The `--entrypoint=quibble-with-supervisord` flag is used on all `docker run` commands that run Quibble (cleanup commands in `clean`, `deep_clean`, and `fresh_install` use `--entrypoint bash` instead)
 - Port 9413 is exposed via `-p 9413:9413` (macOS; not `--network host`)
 - All functionality shared across two or more files must be extracted into a helper file (like `lib` and `inhibit_sleep`)
 
