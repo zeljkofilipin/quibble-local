@@ -99,9 +99,13 @@ Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo.
 
 Run all scripts and report which ones passed or failed. Useful for detecting regressions after changes.
 
+**Warning:** This script inhibits sleep to prevent the machine from suspending.
+
 ### `./deep_test`
 
 Run `./deep_clean` first, then `./test`. Slower but starts from a completely clean state.
+
+**Warning:** This script inhibits sleep to prevent the machine from suspending (via `./test`).
 
 ## Further reading
 

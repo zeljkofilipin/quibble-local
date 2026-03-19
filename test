@@ -3,11 +3,21 @@
 # Run all scripts and report which ones passed or failed.
 # Useful for detecting regressions after changes.
 # WARNING: This will take a long time to run.
+# WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
 # Usage: ./test
 #
 
 # No set -euo pipefail: we want to continue after failures to collect all results
+
+# Prevent the machine from suspending while this long-running script is active
+if [ "$(uname)" = "Darwin" ]; then
+  caffeinate -s -w $$ & # macOS: prevent sleep while this process is alive
+else
+  systemd-inhibit --what=sleep --who=test --why="Quibble tests running" sleep infinity &
+  inhibit_pid=$!                          # save PID to kill on exit
+  trap 'kill $inhibit_pid 2>/dev/null' EXIT # clean up on script exit
+fi
 failed="" # newline-separated list of failed commands (with arguments)
 passed="" # newline-separated list of passed commands (with arguments)
 
