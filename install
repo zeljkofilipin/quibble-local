@@ -74,10 +74,7 @@ set -x
 docker run -it --rm \
   --entrypoint=quibble-with-supervisord \
   -p 9413:9413 \
-  -v "$(pwd)"/cache:/cache \
-  -v "$(pwd)"/log:/workspace/log \
-  -v "$(pwd)"/ref:/srv/git:ro \
-  -v "$(pwd)"/src:/workspace/src \
+  "${QUIBBLE_VOLUMES[@]}" \
   -e ZUUL_PROJECT="${repo}" \
   "$QUIBBLE_IMAGE" \
   --resolve-requires \

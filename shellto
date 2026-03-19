@@ -14,10 +14,7 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 docker run -it --rm \
   --entrypoint=quibble-with-supervisord \
   -p 9413:9413 \
-  -v "$(pwd)"/cache:/cache \
-  -v "$(pwd)"/log:/workspace/log \
-  -v "$(pwd)"/ref:/srv/git:ro \
-  -v "$(pwd)"/src:/workspace/src \
+  "${QUIBBLE_VOLUMES[@]}" \
   "$QUIBBLE_IMAGE" \
   --skip-zuul \
   --skip-deps \
