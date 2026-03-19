@@ -11,13 +11,7 @@ Inspired by [mediawiki-quickstart](https://gitlab.wikimedia.org/repos/test-platf
 - [Docker](https://www.docker.com/)
 - [ShellCheck](https://www.shellcheck.net/) (optional, for linting)
 
-## Commands
-
-### `./prepare`
-
-Prepare the local environment for running Quibble. Pulls the Docker image, clones bare git repos as references, and creates working directories.
-
-See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
+## Commands (same as mediawiki-quickstart)
 
 ### `./fresh_install`
 
@@ -34,12 +28,6 @@ Install an extension or skin and open a shell. MediaWiki will be available at ht
 
 See: [Install MediaWiki Core and an Extension](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension)
 
-### `./run_all`
-
-Run Selenium tests for core and all gated repositories. For each component: `./fresh_install`, `./install` (if not core), check if Selenium tests exist, and run them.
-
-**Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
-
 ### `./run_selenium_tests`
 
 Run Selenium tests. Assumes `./fresh_install` (or `./install`) has been run first.
@@ -52,6 +40,30 @@ Run Selenium tests. Assumes `./fresh_install` (or `./install`) has been run firs
     ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"
 
 See: [Run tests targeting Quibble](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble)
+
+### `./shellto`
+
+Open a shell in the container with MediaWiki running at http://127.0.0.1:9413. Assumes `./fresh_install` (or `./install`) has been run first.
+
+### `./test`
+
+Run all scripts and report which ones passed or failed. Useful for detecting regressions after changes.
+
+**Warning:** This script inhibits sleep to prevent the machine from suspending.
+
+## Commands (unique to quibble-local)
+
+### `./prepare`
+
+Prepare the local environment for running Quibble. Pulls the Docker image, clones bare git repos as references, and creates working directories.
+
+See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
+
+### `./run_all`
+
+Run Selenium tests for core and all gated repositories. For each component: `./fresh_install`, `./install` (if not core), check if Selenium tests exist, and run them.
+
+**Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
 ### `./fetch`
 
@@ -79,10 +91,6 @@ Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
     ./selenium_tests_exist
     ./selenium_tests_exist extensions/Echo
 
-### `./shellto`
-
-Open a shell in the container with MediaWiki running at http://127.0.0.1:9413. Assumes `./fresh_install` (or `./install`) has been run first.
-
 ### `./clean`
 
 Remove `src/` (MediaWiki source code). Cache, logs, bare git repos, and the Docker image are kept.
@@ -94,12 +102,6 @@ Remove everything created by quibble-local, including bare git repos in `ref/` a
 ### `./lint`
 
 Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo.
-
-### `./test`
-
-Run all scripts and report which ones passed or failed. Useful for detecting regressions after changes.
-
-**Warning:** This script inhibits sleep to prevent the machine from suspending.
 
 ### `./deep_test`
 
