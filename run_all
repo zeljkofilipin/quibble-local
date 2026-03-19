@@ -14,8 +14,8 @@
 . "$(dirname "$0")"/lib/print_results # provides print_results function
 
 # Track results for summary
-failed="" # space-separated list of failed components
-passed="" # space-separated list of passed components
+failed="" # newline-separated list of failed components
+passed="" # newline-separated list of passed components
 
 # Run a command, print what it does, and record pass/fail
 run_step() {
@@ -28,7 +28,8 @@ run_step() {
   if "$@"; then # run the command (all remaining arguments)
     return 0 # step passed
   else
-    failed="$failed $component" # record failure
+    failed="$failed
+  $component" # append component on a new indented line
     return 1 # step failed, caller can skip remaining steps
   fi
 }
@@ -42,7 +43,8 @@ if run_step core ./fresh_install; then # install core; skip remaining steps if t
   if ./selenium_tests_exist; then # check if core has Selenium tests
     run_step core ./run_selenium_tests # run core Selenium tests
   fi
-  passed="$passed core" # record core as passed
+  passed="$passed
+  core" # append core on a new indented line
 fi
 
 # --- Gated repositories ---
@@ -64,7 +66,8 @@ while IFS= read -r component <&3; do
   # Record as passed if not already in failed list
   case "$failed" in
     *"$component"*) ;; # already recorded as failed
-    *) passed="$passed $component" ;; # add to passed list
+    *) passed="$passed
+  $component" ;; # append component on a new indented line
   esac
 done 3< <(./gated) # feed gated list via fd 3 (not stdin, which docker needs)
 
