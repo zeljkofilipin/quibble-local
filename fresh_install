@@ -29,7 +29,7 @@ chmod 777 cache log src 2>/dev/null || \
     -v "$(pwd)"/cache:/cache \
     -v "$(pwd)"/log:/workspace/log \
     -v "$(pwd)"/src:/workspace/src \
-    docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+    "$QUIBBLE_IMAGE" \
     -c 'chmod 777 /cache /workspace/log /workspace/src'
 
 # Install MediaWiki and open a shell (--command true = install only, no tests)
@@ -40,5 +40,5 @@ docker run -it --rm \
   -v "$(pwd)"/log:/workspace/log \
   -v "$(pwd)"/ref:/srv/git:ro \
   -v "$(pwd)"/src:/workspace/src \
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  "$QUIBBLE_IMAGE" \
   --command true

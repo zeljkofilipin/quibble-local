@@ -12,7 +12,7 @@ docker run --rm \
   --entrypoint bash \
   --user root \
   -v "$(pwd)"/src:/workspace/src \
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  "$QUIBBLE_IMAGE" \
   -c 'find /workspace/src -mindepth 1 -delete' # delete contents but not the mount point itself
 
 # Remove the now-empty src/ directory from the host

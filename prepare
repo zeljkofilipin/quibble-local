@@ -10,7 +10,7 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib # source shared setup (enables trace output)
 
 # Get the latest Quibble Docker image
-docker pull docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+docker pull "$QUIBBLE_IMAGE"
 
 # Clone bare repos to use as local git references (avoids cloning from Gerrit each run)
 mkdir -p ref/mediawiki/skins # create directory structure for bare repos

@@ -67,7 +67,7 @@ docker run -it --rm \
   -v "$(pwd)"/src:/workspace/src \
   -e CI=true \
   ${zuul_project[@]+"${zuul_project[@]}"} \
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  "$QUIBBLE_IMAGE" \
   --skip-zuul \
   --skip-deps \
   "${quibble_args[@]}"

@@ -9,7 +9,7 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 
 # Use Docker (as root) to remove files owned by the container user.
 # Check if the Docker image exists (suppress all output)
-if docker image inspect docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest &>/dev/null; then
+if docker image inspect "$QUIBBLE_IMAGE" &>/dev/null; then
   docker run --rm \
     --entrypoint bash \
     --user root \
@@ -17,7 +17,7 @@ if docker image inspect docker-registry.wikimedia.org/releng/quibble-bullseye-ph
     -v "$(pwd)"/log:/workspace/log \
     -v "$(pwd)"/src:/workspace/src \
     -v "$(pwd)"/ref:/workspace/ref \
-    docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+    "$QUIBBLE_IMAGE" \
     -c 'find /cache /workspace/log /workspace/src /workspace/ref -mindepth 1 -delete'
 fi
 
@@ -25,4 +25,4 @@ fi
 rm -rf cache log src ref
 
 # Remove the Docker image (ignore errors if already removed)
-docker rmi docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest 2>/dev/null || true
+docker rmi "$QUIBBLE_IMAGE" 2>/dev/null || true

@@ -18,7 +18,7 @@ docker run -it --rm \
   -v "$(pwd)"/log:/workspace/log \
   -v "$(pwd)"/ref:/srv/git:ro \
   -v "$(pwd)"/src:/workspace/src \
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  "$QUIBBLE_IMAGE" \
   --skip-zuul \
   --skip-deps \
   --command bash
