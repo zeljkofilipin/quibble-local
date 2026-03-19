@@ -117,6 +117,10 @@ These are sourced by other scripts and are not intended to be run directly.
 
 Shared setup sourced by scripts that run Docker commands. Sets a custom debug prompt and enables trace output (`set -x`).
 
+### `ensure_config`
+
+Sourced by scripts that need zuul config (`gated`, `install`). Ensures the `integration/config` working copy exists in `src/config` by cloning from the bare repo.
+
 ### `inhibit_sleep`
 
 Sourced by long-running scripts (`run_all`, `test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.

@@ -1,0 +1,13 @@
+# shellcheck shell=bash
+# Ensures the integration/config working copy exists in src/config.
+# Clones from the bare repo ref/integration/config.git (created by ./prepare).
+# Sourced by scripts that need zuul config (e.g. gated, install).
+config_ref_dir="ref/integration/config.git" # bare repo cloned by ./prepare
+config_src_dir="src/config"                 # working copy for zuul config files
+if [ ! -d "$config_src_dir" ]; then
+  if [ ! -d "$config_ref_dir" ]; then
+    echo "Error: $config_ref_dir not found. Run ./prepare first."
+    exit 1
+  fi
+  git clone "$config_ref_dir" "$config_src_dir" # create working copy from bare repo
+fi

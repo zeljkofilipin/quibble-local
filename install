@@ -30,17 +30,13 @@ if [ ! -d "$ref_dir" ]; then
   git clone --bare "https://gerrit.wikimedia.org/r/${repo}" "$ref_dir"
 fi
 
-# Clone integration/config for dependency info
-config_ref_dir="ref/integration/config.git"
-if [ ! -d "$config_ref_dir" ]; then
-  mkdir -p "$(dirname "$config_ref_dir")" # create parent directories
-  git clone --bare "https://gerrit.wikimedia.org/r/integration/config" "$config_ref_dir"
+# Clone bare repo for integration/config if not already present
+if [ ! -d "ref/integration/config.git" ]; then
+  mkdir -p ref/integration # create parent directories
+  git clone --bare "https://gerrit.wikimedia.org/r/integration/config" "ref/integration/config.git"
 fi
-# Create a working copy of integration/config in src/ (needed by ./dependencies)
-config_src_dir="src/config"
-if [ ! -d "$config_src_dir" ]; then
-  git clone "$config_ref_dir" "$config_src_dir"
-fi
+# Ensure integration/config working copy exists (needed by ./dependencies)
+. "$(dirname "$0")"/ensure_config
 
 # Build list of dependency repos from zuul/dependencies.yaml
 # Disable trace output while processing dependencies (too noisy)
