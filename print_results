@@ -1,0 +1,20 @@
+# shellcheck shell=bash
+# Prints pass/fail summary and exits with error if any failures.
+# Expects $passed and $failed variables to be set by the caller.
+# Sourced by scripts that track test/step results (run_all, test).
+print_results() {
+  printf "\n========================================\n"
+  printf "= Results\n"
+  printf "========================================\n"
+
+  if [ -n "$passed" ]; then
+    printf "PASSED:%s\n" "$passed" # print list of passed items
+  fi
+
+  if [ -n "$failed" ]; then
+    printf "FAILED:%s\n" "$failed" # print list of failed items
+    exit 1 # exit with error if anything failed
+  fi
+
+  printf "\nAll passed.\n"
+}

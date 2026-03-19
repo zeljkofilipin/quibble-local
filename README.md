@@ -125,6 +125,10 @@ Sourced by scripts that need zuul config (`gated`, `install`). Ensures the `inte
 
 Sourced by long-running scripts (`run_all`, `test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
+### `print_results`
+
+Sourced by scripts that track test/step results (`run_all`, `test`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
+
 ## Further reading
 
 - [Quibble documentation](https://doc.wikimedia.org/quibble/)
