@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+# Run the same lint check that GitLab CI runs, using Docker.
+# Does not require ShellCheck to be installed locally.
+# Usage: ./ci
+#
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+
+# Run shellcheck inside the same Alpine image used in CI
+# --rm: remove container after it exits
+# -v: mount repo read-only into /mnt
+# sh -c: install bash (not included in Alpine), then run ./lint
+docker run --rm -v "$PWD:/mnt:ro" koalaman/shellcheck-alpine:stable sh -c "apk add --no-cache bash >/dev/null 2>&1 && cd /mnt && ./lint"

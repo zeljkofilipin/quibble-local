@@ -15,11 +15,12 @@ Bash, Git, and Docker. Optional: [ShellCheck](https://www.shellcheck.net/) (for 
 GitLab CI must pass for every commit. The pipeline runs ShellCheck (lint) and security scans. Test CI locally before pushing:
 
 - **Local lint (requires ShellCheck installed):** `./lint`
-- **Local lint (Docker, same image as CI):** `docker run --rm -v "$PWD:/mnt:ro" koalaman/shellcheck-alpine:stable sh -c "apk add --no-cache bash >/dev/null 2>&1 && cd /mnt && ./lint"`
+- **Local lint (Docker, same image as CI):** `./ci`
 
 ## Lint and test
 
 - **Lint:** `./lint` — runs ShellCheck on all scripts (CI also runs this). Run after every change.
+- **CI:** `./ci` — runs ShellCheck in Docker (same image as GitLab CI). Run after every change.
 - **Test:** `./test` — runs all scripts end-to-end (slow; requires Docker, clones repos from Gerrit)
 
 There is no build step. There are no unit tests — `./test` is an integration test that exercises every script.
@@ -30,7 +31,7 @@ There is no build step. There are no unit tests — `./test` is an integration t
 - All commands in all scripts must work on both Ubuntu and macOS. If a command is not available on both, check the OS and run the appropriate command (e.g. `caffeinate` on macOS, `systemd-inhibit` on Linux)
 - Command names and interfaces should match [mediawiki-quickstart](https://gitlab.wikimedia.org/repos/test-platform/mediawiki-quickstart) whenever possible
 - One executable file per command, no `.sh` extensions
-- All bash scripts start with `set -euo pipefail` and source `lib/setup` (which checks prerequisites and enables `set -x` with a custom `PS4`). Exception: utility scripts (`help`, `lint`, `test`, `deep_test`, `dependencies`, `gated`, `selenium_tests_exist`, `run_all`) skip `lib/setup` because trace output would bury their actual output in noise.
+- All bash scripts start with `set -euo pipefail` and source `lib/setup` (which checks prerequisites and enables `set -x` with a custom `PS4`). Exception: utility scripts (`ci`, `help`, `lint`, `test`, `deep_test`, `dependencies`, `gated`, `selenium_tests_exist`, `run_all`) skip `lib/setup` because trace output would bury their actual output in noise.
 - `lib/setup` must check that all prerequisites are available (git, docker, docker running) and output debugging information (OS and version, bash version, git version, docker version) before enabling trace output
 - Long-running scripts (`run_all`, `test`) source `lib/inhibit_sleep` to prevent the machine from suspending
 - All scripts must have a comment block at the top describing what the script does, with example usage if it takes arguments
