@@ -37,6 +37,16 @@ QUIBBLE_VOLUMES=(
   -v "$QUIBBLE_DIR"/src:/workspace/src     # MediaWiki source code
 )
 
+# --- Docker interactive flags ---
+# In verbose mode (or when run directly), use -it for interactive terminal + TTY.
+# In silent mode, drop -t to avoid TTY control characters in log files.
+# shellcheck disable=SC2034 # used by scripts that source this file
+if [ "${QUIBBLE_VERBOSE:-}" = "1" ]; then
+  QUIBBLE_DOCKER_FLAGS=(-it) # interactive + TTY for terminal use
+else
+  QUIBBLE_DOCKER_FLAGS=(-i)  # interactive only (no TTY = clean log output)
+fi
+
 # --- Trace output ---
 PS4=$'\n========================================\n= ${0##*/} is running: ' # custom prompt showing script name (uses parameter expansion, not $(basename) which breaks set -e in bash 3.2)
 set -x # print each command before running it

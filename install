@@ -63,7 +63,7 @@ done < <("$(dirname "$0")"/dependencies "$component") # feed dependency names fr
 set -x # re-enable trace output
 
 # Install extension/skin with its dependencies
-# -it: interactive terminal (so you can type commands in the shell)
+# "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
 # --rm: remove container on exit
 # --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
 # -p 9413:9413: expose MediaWiki port from container to host
@@ -72,7 +72,7 @@ set -x # re-enable trace output
 # --resolve-requires: let Quibble resolve and install PHP/extension dependencies
 # --command true: install only, don't run tests
 # "${deps[@]}": list of dependency repos to clone
-docker run -it --rm \
+docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm \
   --entrypoint=quibble-with-supervisord \
   -p 9413:9413 \
   "${QUIBBLE_VOLUMES[@]}" \

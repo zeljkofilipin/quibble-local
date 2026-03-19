@@ -56,7 +56,7 @@ else
 fi
 
 # Run Selenium tests in the container
-# -it: interactive terminal
+# "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
 # --rm: remove container on exit
 # --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
 # -p 9413:9413: expose MediaWiki port from container to host
@@ -66,7 +66,7 @@ fi
 #   only if non-empty (empty array with set -u would cause "unbound variable" error)
 # --skip-zuul: don't clone repos (already in src/)
 # --skip-deps: don't install dependencies (already installed)
-docker run -it --rm \
+docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm \
   --entrypoint=quibble-with-supervisord \
   -p 9413:9413 \
   "${QUIBBLE_VOLUMES[@]}" \

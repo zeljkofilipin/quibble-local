@@ -38,13 +38,13 @@ chmod 777 cache log src 2>/dev/null || \
     -c 'chmod 777 /cache /workspace/log /workspace/src' # set permissions inside the container
 
 # Install MediaWiki and open a shell
-# -it: interactive terminal (so you can type commands in the shell)
+# "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
 # --rm: remove container on exit
 # --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
 # -p 9413:9413: expose MediaWiki port from container to host
 # "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
 # --command true: install only, don't run tests ("true" exits immediately)
-docker run -it --rm \
+docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm \
   --entrypoint=quibble-with-supervisord \
   -p 9413:9413 \
   "${QUIBBLE_VOLUMES[@]}" \

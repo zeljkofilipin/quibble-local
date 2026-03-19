@@ -47,7 +47,10 @@ Open a shell in the container with MediaWiki running at http://127.0.0.1:9413. A
 
 ### `./test`
 
-Run all scripts and report which ones passed or failed. Useful for detecting regressions after changes.
+Run all scripts and report which ones passed or failed. Useful for detecting regressions after changes. Silent by default; use `--verbose` for full output.
+
+    ./test
+    ./test --verbose
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
 
@@ -61,7 +64,10 @@ See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run
 
 ### `./run_all`
 
-Run Selenium tests for core and all gated repositories. For each component: `./fresh_install`, `./install` (if not core), check if Selenium tests exist, and run them.
+Run Selenium tests for core and all gated repositories. For each component: `./fresh_install`, `./install` (if not core), check if Selenium tests exist, and run them. Silent by default; use `--verbose` for full output.
+
+    ./run_all
+    ./run_all --verbose
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 

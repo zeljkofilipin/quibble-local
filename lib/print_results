@@ -15,6 +15,9 @@ print_results() {
 
   if [ -n "$failed" ]; then # if any items failed
     printf "FAILED:%s\n" "$failed" # print list of failed items
+    if [ -z "${QUIBBLE_VERBOSE:-}" ]; then # if in silent mode
+      printf "\nLogs: log/silent/\n" # point to log directory for debugging
+    fi
     exit 1 # exit with error if anything failed
   fi
 
