@@ -8,7 +8,7 @@
 #
 # Usage: ./run_all
 #
-set -euo pipefail # exit on error, undefined vars, or pipe failures
+# No set -euo pipefail: we want to continue after failures to collect all results
 
 . "$(dirname "$0")"/inhibit_sleep # prevent the machine from suspending
 
@@ -37,7 +37,7 @@ printf "# Core\n"
 printf "########################################\n"
 if run_step core ./fresh_install; then
   if ./selenium_tests_exist; then
-    run_step core ./run_selenium_tests || true # failure recorded, continue
+    run_step core ./run_selenium_tests
   fi
   passed="$passed core"
 fi
@@ -50,7 +50,7 @@ while IFS= read -r component <&3; do # read from fd 3 so stdin stays free for do
   if run_step "$component" ./fresh_install; then
     if run_step "$component" ./install "$component"; then
       if ./selenium_tests_exist "$component"; then
-        run_step "$component" ./run_selenium_tests "$component" || true # failure recorded, continue
+        run_step "$component" ./run_selenium_tests "$component"
       fi
     fi
   fi
