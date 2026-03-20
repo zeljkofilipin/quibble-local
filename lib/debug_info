@@ -1,0 +1,25 @@
+# shellcheck shell=bash
+# Checks prerequisites and outputs debug information.
+# Sourced by lib/setup (for scripts that run Docker commands) and by
+# test/run_all (which skip lib/setup but still want debug info in silent mode).
+
+# --- Prerequisite checks ---
+# Check that required commands are available (command -v returns 0 if found)
+if ! command -v git >/dev/null; then # check if git is installed
+  echo "Error: git is not installed. See https://git-scm.com/" >&2 # >&2 prints to stderr
+  exit 1
+fi
+if ! command -v docker >/dev/null; then # check if docker is installed
+  echo "Error: docker is not installed. See https://www.docker.com/" >&2
+  exit 1
+fi
+if ! docker info >/dev/null 2>&1; then # check if Docker daemon is running (suppress verbose output)
+  echo "Error: Docker is not running. Start Docker and try again." >&2
+  exit 1
+fi
+
+# --- Debug information ---
+echo "OS: $(uname -s) $(uname -r)"    # e.g. "Darwin 25.3.0" or "Linux 6.1.0"
+echo "bash: ${BASH_VERSION}"           # e.g. "3.2.57(1)-release"
+echo "git: $(git --version)"           # e.g. "git version 2.43.0"
+echo "docker: $(docker --version)"     # e.g. "Docker version 24.0.7"

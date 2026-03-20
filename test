@@ -24,9 +24,10 @@ export QUIBBLE_VERBOSE="$verbose" # propagate to child scripts (lib/setup reads 
 
 # Create and clean log directory for silent mode
 if [ -z "$verbose" ]; then
+  . "$(dirname "$0")"/lib/debug_info # check prerequisites and print debug info before output is redirected
   mkdir -p log/silent   # create log directory for captured output
   rm -f log/silent/*.log # clear old logs to avoid confusion from stale results
-  printf "Running in silent mode (default). Logs: log/silent/. Use --verbose for full output.\n\n"
+  printf "\nRunning in silent mode (default). Logs: log/silent/. Use --verbose for full output.\n\n"
 fi
 
 failed="" # newline-separated list of failed commands (with arguments)
