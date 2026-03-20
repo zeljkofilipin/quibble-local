@@ -27,7 +27,8 @@ if [ -z "$verbose" ]; then
   . "$(dirname "$0")"/lib/debug_info # check prerequisites and print debug info before output is redirected
   mkdir -p log/silent   # create log directory for captured output
   rm -f log/silent/*.log # clear old logs to avoid confusion from stale results
-  printf "\nRunning in silent mode (default). Logs: log/silent/. Use --verbose for full output.\n\n"
+  printf "\nRunning in silent mode (default). Use --verbose for full output.\n"
+  printf "Logs: log/silent/. To watch progress: tail -f log/silent/*.log\n\n"
 fi
 
 failed="" # newline-separated list of failed commands (with arguments)
