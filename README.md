@@ -123,6 +123,10 @@ Run `./deep_clean` first, then `./test`. Slower but starts from a completely cle
 
 These are sourced by other scripts and are not intended to be run directly.
 
+### `lib/heartbeat`
+
+Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test` and `run_all` for silent mode progress feedback. Provides `run_with_dots` function.
+
 ### `lib/debug_info`
 
 Checks prerequisites (git, docker, Docker daemon running) and outputs debug information (OS, bash, git, docker versions). Sourced by `lib/setup` (for scripts that run Docker commands) and by `test`/`run_all` (which skip `lib/setup` but still want debug info in silent mode).

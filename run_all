@@ -21,6 +21,7 @@ export QUIBBLE_VERBOSE="$verbose" # propagate to child scripts (lib/setup reads 
 
 . "$(dirname "$0")"/lib/inhibit_sleep # prevent the machine from suspending
 . "$(dirname "$0")"/lib/print_results # provides print_results function
+. "$(dirname "$0")"/lib/heartbeat     # provides run_with_dots function
 
 # Create and clean log directory for silent mode
 if [ -z "$verbose" ]; then
@@ -54,13 +55,13 @@ run_step() {
       return 1 # step failed, caller can skip remaining steps
     fi
   else
-    # Silent: redirect output to log file, print dot or x
+    # Silent: save output to log file, print a dot per line of output, then ok or FAIL
     local log_file="log/silent/${component//\//-}--${step}.log" # e.g. log/silent/extensions-Echo--install.log
-    if "$@" > "$log_file" 2>&1; then # redirect stdout+stderr to log file
-      printf "." # success: print dot
+    if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
+      printf " ok " # success: mark step as passed
       return 0
     else
-      printf "x" # failure: print x
+      printf " FAIL " # failure: mark step as failed
       failed="$failed
   $component" # append component on a new indented line
       return 1

@@ -1,0 +1,15 @@
+# shellcheck shell=bash
+# Run a command, save output to a log file, print a dot for each line of output.
+# Sourced by test and run_all for silent mode progress feedback.
+#
+# Usage: run_with_dots LOG_FILE COMMAND [ARGS...]
+# Returns the command's exit code.
+run_with_dots() {
+  local log_file="$1" # path to the log file for captured output
+  shift                # remaining args are the command to run
+  # Run command, merge stderr into stdout, save to log file, print a dot per line.
+  # tee writes to both the log file and stdout; the while loop reads each line and prints a dot.
+  "$@" 2>&1 | tee "$log_file" | while IFS= read -r _; do printf "."; done
+  return "${PIPESTATUS[0]}" # return the command's exit code, not tee's or while's
+  # PIPESTATUS is a bash array holding exit codes of all commands in the last pipeline
+}
