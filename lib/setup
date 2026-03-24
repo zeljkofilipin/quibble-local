@@ -1,17 +1,23 @@
 # shellcheck shell=bash
 # Shared setup sourced by scripts that run Docker commands.
-# Sources lib/debug_info for prerequisites and debug output, exports QUIBBLE_IMAGE
-# and QUIBBLE_VOLUMES, sets a custom debug prompt, and enables trace output (set -x)
-# in verbose mode. Silent by default (no trace output, no debug info).
+# Sources lib/debug_info for debug output and basic prerequisites, checks Docker
+# prerequisites, exports QUIBBLE_IMAGE and QUIBBLE_VOLUMES, sets a custom debug prompt,
+# and enables trace output (set -x) in verbose mode.
 # Not sourced by utility scripts (help, lint, test, etc.) where trace output would be noise.
 
-# Check prerequisites and print debug info
+# Print debug info and check basic prerequisites (git)
 # $0 is the top-level script (e.g. ./fresh_install), so dirname gives the project root
-# In silent mode, redirect stdout to /dev/null (errors still go to stderr via >&2).
-if [ "${VERBOSE:-}" = "1" ]; then
-  . "$(dirname "$0")"/lib/debug_info # verbose: show prerequisites and debug info
-else
-  . "$(dirname "$0")"/lib/debug_info > /dev/null # silent: check prerequisites only (errors still shown via stderr)
+. "$(dirname "$0")"/lib/debug_info
+
+# --- Docker prerequisite checks ---
+# All scripts that source lib/setup run Docker commands, so docker must be available.
+if ! command -v docker >/dev/null; then # check if docker is installed
+  echo "Error: docker is not installed. See https://www.docker.com/" >&2 # >&2 prints to stderr
+  exit 1
+fi
+if ! docker info >/dev/null 2>&1; then # check if Docker daemon is running (suppress verbose output)
+  echo "Error: Docker is not running. Start Docker and try again." >&2
+  exit 1
 fi
 
 # --- Shared variables ---

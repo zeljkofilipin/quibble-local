@@ -6,6 +6,7 @@
 #        VERBOSE=1 ./lint
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib/debug_info # print debug info, check prerequisites, show verbose hint
 
 # Check all scripts for shell scripting issues
 shellcheck ci clean deep_clean deep_test dependencies fetch fresh_install gated help install lint prepare run_all run_selenium_tests selenium_tests_exist shellto test lib/debug_info lib/heartbeat lib/setup lib/ensure_config lib/inhibit_sleep lib/print_results

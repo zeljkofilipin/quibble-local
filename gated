@@ -9,6 +9,7 @@
 #        VERBOSE=1 ./gated
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib/debug_info # print debug info, check prerequisites, show verbose hint
 
 # Ensure integration/config working copy exists (needed for parameter_functions.py)
 . "$(dirname "$0")"/lib/ensure_config

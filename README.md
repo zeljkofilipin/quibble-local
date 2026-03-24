@@ -175,11 +175,11 @@ Run a command, save output to a log file, and print a dot for each line of outpu
 
 ### `lib/debug_info`
 
-Checks prerequisites (git, docker, Docker daemon running) and outputs debug information (OS, bash, git, docker versions). Sourced by `lib/setup` (for scripts that run Docker commands) and by `test`/`run_all` (which skip `lib/setup` but still want debug info in silent mode).
+Outputs debug information (OS, bash, git, docker versions), checks basic prerequisites (git), and shows a "use VERBOSE=1 for full output" hint in silent mode. Sourced by all scripts.
 
 ### `lib/setup`
 
-Shared setup sourced by scripts that run Docker commands. Sources `lib/debug_info` for prerequisites and debug output, exports `QUIBBLE_IMAGE` and `QUIBBLE_VOLUMES`, sets a custom debug prompt, and enables trace output (`set -x`).
+Shared setup sourced by scripts that run Docker commands. Sources `lib/debug_info` for debug output, checks Docker prerequisites (docker installed, Docker daemon running), exports `QUIBBLE_IMAGE` and `QUIBBLE_VOLUMES`, sets a custom debug prompt, and enables trace output (`set -x`).
 
 ### `lib/ensure_config`
 
