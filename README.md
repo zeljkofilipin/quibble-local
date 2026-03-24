@@ -120,6 +120,15 @@ Output the list of gated repositories (extensions and skins) from `parameter_fun
     ./gated
     VERBOSE=1 ./gated
 
+### `./run_required`
+
+Run Selenium tests for all gated repositories using only required dependencies (from `extension.json`/`skin.json`). For each component: `./fresh_install`, `./install` with required deps only, check if Selenium tests exist, and run them. Silent by default; use `VERBOSE=1` for full output.
+
+    ./run_required
+    VERBOSE=1 ./run_required
+
+**Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
+
 ### `./required_dependencies`
 
 Output required dependencies for an extension or skin from its `extension.json` or `skin.json`. These are the extensions/skins listed in the `requires` field that must always be present.
@@ -194,7 +203,7 @@ These are sourced by other scripts and are not intended to be run directly.
 
 ### `lib/heartbeat`
 
-Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test`, `run_all`, and `minimal_dependencies` for silent mode progress feedback. Provides `run_with_dots` function.
+Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test`, `run_all`, `run_required`, and `minimal_dependencies` for silent mode progress feedback. Provides `run_with_dots` function.
 
 ### `lib/debug_info`
 
@@ -210,11 +219,11 @@ Sourced by scripts that need zuul config (`dependencies`, `gated`, `install`). E
 
 ### `lib/inhibit_sleep`
 
-Sourced by long-running scripts (`minimal_dependencies`, `run_all`, `test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+Sourced by long-running scripts (`minimal_dependencies`, `run_all`, `run_required`, `test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
 ### `lib/print_results`
 
-Sourced by scripts that track test/step results (`run_all`, `test`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
+Sourced by scripts that track test/step results (`run_all`, `run_required`, `test`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
 
 ## Further reading
 
