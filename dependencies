@@ -8,6 +8,9 @@
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
+# Ensure integration/config working copy exists (needed for zuul/dependencies.yaml)
+. "$(dirname "$0")"/lib/ensure_config
+
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then
   echo "Usage: ./dependencies extensions/EXTENSION or ./dependencies skins/SKIN"
