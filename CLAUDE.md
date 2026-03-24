@@ -52,3 +52,5 @@ There is no build step. There are no unit tests — `./test` is an integration t
 - `src/` — MediaWiki working copy (created by Quibble inside the container)
 - `cache/` — Quibble cache (composer, npm)
 - `log/` — Quibble logs
+
+**Do not read or search** `cache/`, `log/`, `ref/`, or `src/` unless explicitly asked. These are large runtime directories (gigabytes of cloned repos, build artifacts, and logs) that are not part of the project source code.
