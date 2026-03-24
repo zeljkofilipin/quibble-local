@@ -3,7 +3,8 @@
     "allow": [
       "Bash(./lint 2>&1)",
       "Bash(./lint)",
-      "Bash(echo \"exit: $?\")"
+      "Bash(echo \"exit: $?\")",
+      "Bash(shellcheck:*)"
     ]
   }
 }
