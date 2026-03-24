@@ -120,14 +120,21 @@ Output the list of gated repositories (extensions and skins) from `parameter_fun
     ./gated
     VERBOSE=1 ./gated
 
+### `./required_dependencies`
+
+Output required dependencies for an extension or skin from its `extension.json` or `skin.json`. These are the extensions/skins listed in the `requires` field that must always be present.
+
+    ./required_dependencies extensions/GrowthExperiments
+    ./required_dependencies skins/MinervaNeue
+
 ### `./minimal_dependencies`
 
-Find the minimum dependencies needed for a repository's Selenium tests to pass. Tests all possible combinations from smallest (0 deps) to largest (all deps), stopping at the first passing combination.
+Find the minimum dependencies needed for a repository's Selenium tests to pass. Splits dependencies into required (from `extension.json`/`skin.json`) and optional (remaining). Required deps are always included; only optional deps are varied, testing combinations from smallest (0 optional) to largest (all optional).
 
     ./minimal_dependencies extensions/Echo
     VERBOSE=1 ./minimal_dependencies extensions/Echo
 
-**Warning:** Tests up to 2^N combinations (N = number of dependencies). Each takes ~10 minutes. This script inhibits sleep to prevent the machine from suspending.
+**Warning:** Tests up to 2^N combinations (N = number of optional dependencies). Each takes ~10 minutes. This script inhibits sleep to prevent the machine from suspending.
 
 ### `./help`
 

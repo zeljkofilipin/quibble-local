@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+#
+# Output required dependencies for an extension or skin from its extension.json or skin.json.
+# These are the extensions/skins listed in the "requires" field that must always be present.
+# Output format matches ./dependencies (bare names for extensions, "skins/Name" for skins).
+#
+# Usage: ./required_dependencies extensions/GrowthExperiments
+#        ./required_dependencies skins/MinervaNeue
+#
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+
+# Show usage if no argument provided
+if [ $# -eq 0 ]; then # $# is the number of arguments
+  echo "Usage: ./required_dependencies extensions/EXTENSION or ./required_dependencies skins/SKIN"
+  exit 1
+fi
+
+component="$1" # e.g. "extensions/GrowthExperiments"
+
+# Determine the JSON file path: extension.json for extensions, skin.json for skins
+if [[ "$component" == skins/* ]]; then
+  json_file="src/${component}/skin.json" # e.g. src/skins/MinervaNeue/skin.json
+else
+  json_file="src/${component}/extension.json" # e.g. src/extensions/GrowthExperiments/extension.json
+fi
+
+# Exit silently if the JSON file doesn't exist (no required deps to report)
+if [ ! -f "$json_file" ]; then
+  exit 0
+fi
+
+# Parse the requires.extensions and requires.skins sections from the JSON file.
+# Uses simple state tracking: req=inside "requires", ext=inside "extensions", skin=inside "skins".
+# Extracts the first quoted string from each line inside those sections.
+# Output: bare name for extensions (e.g. "CommunityConfiguration"), "skins/Name" for skins.
+awk '
+/"requires"/ { req=1 }                                             # entering "requires" block
+req && /"extensions"/ { ext=1; next }                              # entering "extensions" sub-block
+req && /"skins"/ { skin=1; next }                                  # entering "skins" sub-block
+ext && /\}/ { ext=0; next }                                        # leaving "extensions" sub-block
+skin && /\}/ { skin=0; next }                                      # leaving "skins" sub-block
+req && /\}/ { req=0; next }                                        # leaving "requires" block
+ext && /"[^"]+"/ { gsub(/^[^"]*"/, ""); gsub(/".*/, ""); print }   # extract extension name
+skin && /"[^"]+"/ { gsub(/^[^"]*"/, ""); gsub(/".*/, ""); print "skins/" $0 }  # extract skin name with prefix
+' "$json_file"

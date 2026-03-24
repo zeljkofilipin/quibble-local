@@ -74,6 +74,7 @@ run_test ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPa
 run_test ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"  # test filtering by grep pattern
 run_test ./install extensions/Echo     # test installing an extension
 run_test ./dependencies extensions/Echo  # test listing extension dependencies
+run_test ./required_dependencies extensions/Echo  # test listing required dependencies
 run_test ./gated                       # test listing gated repos
 run_test ./selenium_tests_exist extensions/Echo  # test that extension has Selenium tests
 run_test ./run_selenium_tests extensions/Echo  # test running extension Selenium tests
