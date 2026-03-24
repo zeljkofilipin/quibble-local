@@ -1,12 +1,18 @@
 # shellcheck shell=bash
 # Shared setup sourced by scripts that run Docker commands.
 # Sources lib/debug_info for prerequisites and debug output, exports QUIBBLE_IMAGE
-# and QUIBBLE_VOLUMES, sets a custom debug prompt, and enables trace output (set -x).
+# and QUIBBLE_VOLUMES, sets a custom debug prompt, and enables trace output (set -x)
+# in verbose mode. Silent by default (no trace output, no debug info).
 # Not sourced by utility scripts (help, lint, test, etc.) where trace output would be noise.
 
 # Check prerequisites and print debug info
 # $0 is the top-level script (e.g. ./fresh_install), so dirname gives the project root
-. "$(dirname "$0")"/lib/debug_info
+# In silent mode, redirect stdout to /dev/null (errors still go to stderr via >&2).
+if [ "${QUIBBLE_VERBOSE:-}" = "1" ]; then
+  . "$(dirname "$0")"/lib/debug_info # verbose: show prerequisites and debug info
+else
+  . "$(dirname "$0")"/lib/debug_info > /dev/null # silent: check prerequisites only (errors still shown via stderr)
+fi
 
 # --- Shared variables ---
 export QUIBBLE_IMAGE="docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest" # Docker image for Quibble
@@ -30,6 +36,41 @@ else
   QUIBBLE_DOCKER_FLAGS=(-i)  # interactive only (no TTY = clean log output)
 fi
 
-# --- Trace output ---
-PS4=$'\n========================================\n= ${0##*/} is running: ' # custom prompt showing script name (uses parameter expansion, not $(basename) which breaks set -e in bash 3.2)
-set -x # print each command before running it
+# --- Trace output (verbose mode only) ---
+# In silent mode, skip set -x to keep output clean. Only show trace in verbose mode.
+if [ "${QUIBBLE_VERBOSE:-}" = "1" ]; then
+  PS4=$'\n========================================\n= ${0##*/} is running: ' # custom prompt showing script name (uses parameter expansion, not $(basename) which breaks set -e in bash 3.2)
+  set -x # print each command before running it
+fi
+
+# --- Output redirection (silent mode only) ---
+# In silent mode, save output to a log file and print a dot per line to the terminal.
+# [ -t 1 ] checks if stdout is a terminal — this naturally skips redirect when:
+#   - called from test/run_all (stdout is a pipe to run_with_dots)
+#   - called as a child script (stdout is parent's log file)
+# _QUIBBLE_OUTPUT_MANAGED: set by interactive scripts (shellto) to skip redirect.
+# shellcheck disable=SC2034 # _quibble_log used inside trap function
+if [ -z "${QUIBBLE_VERBOSE:-}" ] && [ -z "${_QUIBBLE_OUTPUT_MANAGED:-}" ] && [ -t 1 ]; then
+  mkdir -p log                       # ensure log directory exists
+  _quibble_log="log/${0##*/}.log"    # log file named after the script (e.g. log/fresh_install.log)
+  printf "%s " "${0##*/}"            # show script name on terminal (dots will follow on same line)
+  exec 3>&1 4>&2                     # save terminal stdout/stderr to fd 3/4
+  # Redirect output: save to log file and print a dot per line to terminal.
+  # >(...) is process substitution: creates a subshell connected via pipe.
+  # tee writes to both the log file and its stdout (the pipe to while).
+  # while loop reads each line and prints a dot to fd 3 (the saved terminal).
+  exec > >(tee "$_quibble_log" | while IFS= read -r _; do printf "." >&3; done) 2>&1
+  # On exit: close pipe (sends EOF to tee), wait for dots to finish, print result
+  _quibble_exit_handler() {
+    _quibble_exit_code=$?            # capture script's exit code before any command changes it
+    exec 1>&3 2>&4                   # restore terminal stdout/stderr (EOF to tee via pipe close)
+    wait 2>/dev/null || true         # wait for tee/dot background process to finish
+    if [ "$_quibble_exit_code" -eq 0 ]; then
+      printf " ok\n"                 # success
+    else
+      printf " FAIL (see %s)\n" "$_quibble_log" >&2  # failure with log location
+    fi
+    return "$_quibble_exit_code"     # preserve the original exit code
+  }
+  trap _quibble_exit_handler EXIT    # run handler when script exits (success or failure)
+fi

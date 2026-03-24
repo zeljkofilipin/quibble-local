@@ -4,8 +4,12 @@
 # This removes cache/, log/, src/, ref/ and the Docker image.
 # WARNING: This will delete everything including bare repos (slow to re-clone).
 #
+# Usage: ./deep_clean
+#        ./deep_clean --verbose
+#
 set -euo pipefail # exit on error, undefined vars, or pipe failures
-. "$(dirname "$0")"/lib/setup # source shared setup (enables trace output)
+. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
+. "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
 # Use Docker (as root) to remove files owned by the container user.
 # &>/dev/null: suppress both stdout and stderr from the inspect command

@@ -4,10 +4,14 @@
 # Pulls the Docker image, clones bare git repos as references,
 # and creates working directories.
 #
+# Usage: ./prepare
+#        ./prepare --verbose
+#
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
-. "$(dirname "$0")"/lib/setup # source shared setup (enables trace output)
+. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
+. "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
 # Get the latest Quibble Docker image
 docker pull "$QUIBBLE_IMAGE"

@@ -4,8 +4,10 @@
 # WARNING: This will take a very long time to run.
 #
 # Usage: ./deep_test
+#        ./deep_test --verbose
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
 
 # Remove everything quibble-local created
 "$(dirname "$0")"/deep_clean

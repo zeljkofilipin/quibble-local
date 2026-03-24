@@ -2,8 +2,12 @@
 #
 # Fetch the latest changes for all bare git repos in ref/ from Gerrit.
 #
+# Usage: ./fetch
+#        ./fetch --verbose
+#
 set -euo pipefail # exit on error, undefined vars, or pipe failures
-. "$(dirname "$0")"/lib/setup # source shared setup (enables trace output)
+. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
+. "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
 # Find all bare git repos (directories ending in .git) and fetch each one
 find ref -name '*.git' -type d | while read -r repo; do

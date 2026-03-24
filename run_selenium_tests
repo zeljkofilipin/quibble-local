@@ -12,6 +12,7 @@
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
 
 # Build optional ZUUL_PROJECT env var if an extension/skin was specified
 zuul_project=() # empty array by default
@@ -36,7 +37,7 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-. "$(dirname "$0")"/lib/setup # source shared setup (enables trace output)
+. "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
 # Decide how to run tests:
 # - with --spec + component: cd into component dir, then run specific test

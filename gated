@@ -5,7 +5,11 @@
 # Clones integration/config into src/config if needed.
 # Assumes ./prepare has been run first (needs ref/integration/config.git).
 #
+# Usage: ./gated
+#        ./gated --verbose
+#
 set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
 
 # Ensure integration/config working copy exists (needed for parameter_functions.py)
 . "$(dirname "$0")"/lib/ensure_config

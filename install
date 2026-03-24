@@ -6,10 +6,12 @@
 #
 # Usage: ./install extensions/Echo
 #        ./install skins/MinervaNeue
+#        ./install --verbose extensions/Echo
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
 
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then # $# is the number of arguments
@@ -22,7 +24,7 @@ component="$1"
 repo="mediawiki/${component}"       # e.g. "mediawiki/extensions/Echo"
 ref_dir="ref/${repo}.git"           # e.g. "ref/mediawiki/extensions/Echo.git"
 
-. "$(dirname "$0")"/lib/setup # source shared setup (enables trace output)
+. "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
 # Clone bare repo for the extension/skin if not already present
 if [ ! -d "$ref_dir" ]; then
@@ -60,7 +62,10 @@ while IFS= read -r dep_name; do
   fi
   deps+=("$dep_repo") # add to the dependencies array; += appends to bash arrays
 done < <("$(dirname "$0")"/dependencies "$component") # feed dependency names from ./dependencies
-set -x # re-enable trace output
+# Re-enable trace output only in verbose mode (in silent mode, set -x was never enabled)
+if [ "${QUIBBLE_VERBOSE:-}" = "1" ]; then
+  set -x # re-enable trace output
+fi
 
 # Install extension/skin with its dependencies
 # "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
