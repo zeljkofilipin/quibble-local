@@ -123,8 +123,8 @@ while IFS= read -r component <&3; do
       ;;
   esac
   if [ -z "$verbose" ]; then
-    # Print running tally after each component
-    printf "\n  (%d passed, %d failed, %d skipped)\n" "$pass_count" "$fail_count" "$skip_count"
+    # Print running tally with UTC timestamp after each component
+    printf "\n  (%d passed, %d failed, %d skipped) %s\n" "$pass_count" "$fail_count" "$skip_count" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
   fi
 done 3< <(./gated) # feed gated list via fd 3 (not stdin, which docker needs)
 
