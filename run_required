@@ -31,6 +31,9 @@ fi
 failed="" # newline-separated list of failed components
 passed="" # newline-separated list of passed components
 skipped="" # newline-separated list of components without Selenium tests
+pass_count=0   # running count of passed components
+fail_count=0   # running count of failed components
+skip_count=0   # running count of skipped components (no Selenium tests)
 
 # Run a command, print what it does, and record pass/fail
 run_step() {
@@ -51,15 +54,16 @@ run_step() {
       return 1 # step failed, caller can skip remaining steps
     fi
   else
-    # Silent: save output to log file, print a dot per line of output, then ok or FAIL
+    # Silent: print step label, save output to log file, print a dot per line, then ok or FAIL
     local log_file="log/silent/${component//\//-}--${step}.log" # e.g. log/silent/extensions-Echo--install.log
+    printf "%s " "$step" # print step name before dots (e.g. "fresh_install ")
     if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
       printf " ok " # success: mark step as passed
       return 0
     else
       printf " FAIL " # failure: mark step as failed
       failed="$failed
-  $component" # append component on a new indented line
+  $component ($step)" # append component and failed step on a new indented line
       return 1
     fi
   fi
@@ -93,21 +97,34 @@ while IFS= read -r component <&3; do
       if ./selenium_tests_exist "$component"; then # check if this component has Selenium tests
         run_step "$component" ./run_selenium_tests "$component" # run Selenium tests
       else
+        skip_count=$((skip_count + 1)) # increment skip counter
         skipped="$skipped
   $component" # append component on a new indented line
+        if [ -n "$verbose" ]; then
+          printf "\n%s: no Selenium tests, skipping\n" "$component"
+        else
+          printf " skipped (no Selenium tests)"
+        fi
       fi
     fi
     unset QUIBBLE_DEPS # clean up env var before next component
   fi
 
-  # Record as passed if not already in failed list
-  case "$failed" in
-    *"$component"*) ;; # already recorded as failed
-    *) passed="$passed
+  # Record component result: passed (if not already failed or skipped)
+  case "$skipped" in
+    *"$component"*) ;; # already recorded as skipped
+    *)
+      case "$failed" in
+        *"$component"*) fail_count=$((fail_count + 1)) ;; # count this failure
+        *) pass_count=$((pass_count + 1)) # increment pass counter
+           passed="$passed
   $component" ;; # append component on a new indented line
+      esac
+      ;;
   esac
   if [ -z "$verbose" ]; then
-    printf "\n" # end the dot/x line for this component
+    # Print running tally after each component
+    printf "\n  (%d passed, %d failed, %d skipped)\n" "$pass_count" "$fail_count" "$skip_count"
   fi
 done 3< <(./gated) # feed gated list via fd 3 (not stdin, which docker needs)
 
