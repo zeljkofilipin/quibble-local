@@ -30,6 +30,7 @@ fi
 # Track results for summary
 failed="" # newline-separated list of failed components
 passed="" # newline-separated list of passed components
+skipped="" # newline-separated list of components without Selenium tests
 
 # Run a command, print what it does, and record pass/fail
 run_step() {
@@ -91,6 +92,9 @@ while IFS= read -r component <&3; do
     if run_step "$component" ./install "$component"; then # install extension/skin; skip tests if this fails
       if ./selenium_tests_exist "$component"; then # check if this component has Selenium tests
         run_step "$component" ./run_selenium_tests "$component" # run Selenium tests
+      else
+        skipped="$skipped
+  $component" # append component on a new indented line
       fi
     fi
     unset QUIBBLE_DEPS # clean up env var before next component
@@ -106,6 +110,11 @@ while IFS= read -r component <&3; do
     printf "\n" # end the dot/x line for this component
   fi
 done 3< <(./gated) # feed gated list via fd 3 (not stdin, which docker needs)
+
+# Print skipped components (no Selenium tests) before the pass/fail summary
+if [ -n "$skipped" ]; then
+  printf "\nSKIPPED (no Selenium tests):%s\n" "$skipped"
+fi
 
 # Print pass/fail summary and exit with error if any component failed
 print_results
