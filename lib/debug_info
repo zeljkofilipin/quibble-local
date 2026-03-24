@@ -14,9 +14,13 @@ fi
 # a script's stdout is piped or captured (e.g. ./dependencies called from ./install via
 # process substitution, or child scripts whose output flows through run_with_dots).
 if [ -t 1 ]; then
-  # In silent mode, tell the user how to get full output
+  # In silent mode, tell the user how to get full output and where logs are saved
   if [ -z "${VERBOSE:-}" ]; then # only show hint when VERBOSE is not set
     echo "use VERBOSE=1 for full output"
+    # Show log location if the caller set _QUIBBLE_LOG (only scripts with silent mode set this)
+    if [ -n "${_QUIBBLE_LOG:-}" ]; then # _QUIBBLE_LOG is set by lib/setup or test/run_all
+      echo "logs: $_QUIBBLE_LOG"
+    fi
     echo                                   # blank line after hint
   fi
   echo "OS: $(uname -s) $(uname -r)"    # e.g. "Darwin 25.3.0" or "Linux 6.1.0"

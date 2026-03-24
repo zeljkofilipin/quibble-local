@@ -20,10 +20,10 @@ verbose="${VERBOSE:-}" # VERBOSE=1 enables verbose mode; empty string means sile
 
 # Create and clean log directory for silent mode
 if [ -z "$verbose" ]; then
+  _QUIBBLE_LOG="log/silent/" # tell lib/debug_info where silent mode logs are saved
   . "$(dirname "$0")"/lib/debug_info # check prerequisites and print debug info before output is redirected
   mkdir -p log/silent   # create log directory for captured output
   rm -f log/silent/*.log # clear old logs to avoid confusion from stale results
-  printf "Logs: log/silent/. To watch progress: tail -f log/silent/*.log\n\n"
 fi
 
 failed="" # newline-separated list of failed commands (with arguments)

@@ -7,6 +7,7 @@
 
 # Print debug info and check basic prerequisites (git)
 # $0 is the top-level script (e.g. ./fresh_install), so dirname gives the project root
+_QUIBBLE_LOG="log/${0##*/}.log" # tell lib/debug_info where silent mode logs are saved (e.g. log/fresh_install.log)
 . "$(dirname "$0")"/lib/debug_info
 
 # --- Docker prerequisite checks ---
