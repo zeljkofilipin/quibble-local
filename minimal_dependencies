@@ -147,7 +147,9 @@ run_step() {
   else
     # Silent: save output to log file, print a dot per line, then ok or FAIL
     local log_file
-    log_file=$(printf "log/silent/%03d-minimal_dependencies-%s.log" "$step_counter" "${label// /-}") # e.g. log/silent/001-minimal_dependencies-fresh_install.log
+    local safe_label="${label// /-}" # replace spaces with dashes
+    safe_label="${safe_label////-}"  # replace slashes with dashes (e.g. extensions/Echo -> extensions-Echo)
+    log_file=$(printf "log/silent/%03d-minimal_dependencies-%s.log" "$step_counter" "$safe_label") # e.g. log/silent/001-minimal_dependencies-fresh_install.log
     printf "%s " "$label" # print label without newline (dots will follow)
     if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
       printf " ok\n" # success

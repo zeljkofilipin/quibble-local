@@ -17,23 +17,32 @@ fi
 
 component="$1" # e.g. "extensions/GrowthExperiments"
 
-# Determine the JSON file path: extension.json for extensions, skin.json for skins
+# Determine the JSON filename: extension.json for extensions, skin.json for skins
 if [[ "$component" == skins/* ]]; then
-  json_file="src/${component}/skin.json" # e.g. src/skins/MinervaNeue/skin.json
+  json_name="skin.json" # e.g. skin.json for skins/MinervaNeue
 else
-  json_file="src/${component}/extension.json" # e.g. src/extensions/GrowthExperiments/extension.json
+  json_name="extension.json" # e.g. extension.json for extensions/GrowthExperiments
 fi
 
-# Exit silently if the JSON file doesn't exist (no required deps to report)
-if [ ! -f "$json_file" ]; then
-  exit 0
+# Try to read the JSON file from src/ first (working copy), then fall back to the bare repo
+# in ref/ via git show. The bare repo fallback is needed when called before ./install
+# (e.g. from ./minimal_dependencies which reads required deps before installing the extension).
+json_file="src/${component}/${json_name}" # e.g. src/extensions/GrowthExperiments/extension.json
+bare_repo="ref/mediawiki/${component}.git" # e.g. ref/mediawiki/extensions/GrowthExperiments.git
+
+if [ -f "$json_file" ]; then
+  json_content=$(cat "$json_file") # read from working copy
+elif [ -d "$bare_repo" ]; then
+  json_content=$(git -C "$bare_repo" show "HEAD:${json_name}" 2>/dev/null) || exit 0 # read from bare repo; exit silently if file not found
+else
+  exit 0 # neither source available, no required deps to report
 fi
 
-# Parse the requires.extensions and requires.skins sections from the JSON file.
+# Parse the requires.extensions and requires.skins sections from the JSON content.
 # Uses simple state tracking: req=inside "requires", ext=inside "extensions", skin=inside "skins".
 # Extracts the first quoted string from each line inside those sections.
 # Output: bare name for extensions (e.g. "CommunityConfiguration"), "skins/Name" for skins.
-awk '
+echo "$json_content" | awk '
 /"requires"/ { req=1 }                                             # entering "requires" block
 req && /"extensions"/ { ext=1; next }                              # entering "extensions" sub-block
 req && /"skins"/ { skin=1; next }                                  # entering "skins" sub-block
@@ -42,4 +51,4 @@ skin && /\}/ { skin=0; next }                                      # leaving "sk
 req && /\}/ { req=0; next }                                        # leaving "requires" block
 ext && /"[^"]+"/ { gsub(/^[^"]*"/, ""); gsub(/".*/, ""); print }   # extract extension name
 skin && /"[^"]+"/ { gsub(/^[^"]*"/, ""); gsub(/".*/, ""); print "skins/" $0 }  # extract skin name with prefix
-' "$json_file"
+'
