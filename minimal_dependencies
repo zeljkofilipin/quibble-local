@@ -1,0 +1,165 @@
+#!/usr/bin/env bash
+#
+# Find the minimum dependencies needed for a repository's Selenium tests to pass.
+# Gets all dependencies, generates every possible combination from smallest (0 deps)
+# to largest (all deps), and tests each until one passes.
+#
+# Usage: ./minimal_dependencies extensions/Echo
+#        VERBOSE=1 ./minimal_dependencies extensions/Echo
+#
+# WARNING: Tests up to 2^N combinations (N = number of dependencies). Each combination
+#          runs fresh_install + install + run_selenium_tests (~10 min per combination).
+# WARNING: This script inhibits sleep to prevent the machine from suspending.
+#
+
+# No set -euo pipefail: we want to continue after failures to test the next combination
+
+# Check verbose mode (default is silent)
+verbose="${VERBOSE:-}" # VERBOSE=1 enables verbose mode; empty string means silent
+
+. "$(dirname "$0")"/lib/inhibit_sleep # prevent the machine from suspending
+. "$(dirname "$0")"/lib/heartbeat     # provides run_with_dots function
+
+# Create and clean log directory for silent mode
+if [ -z "$verbose" ]; then
+  _QUIBBLE_LOG="log/silent/" # tell lib/debug_info where silent mode logs are saved
+  . "$(dirname "$0")"/lib/debug_info # check prerequisites and print debug info
+  mkdir -p log/silent   # create log directory for captured output
+  rm -f log/silent/*.log # clear old logs to avoid confusion from stale results
+fi
+
+# Show usage if no argument provided
+if [ $# -eq 0 ]; then # $# is the number of arguments
+  echo "Usage: ./minimal_dependencies extensions/EXTENSION or ./minimal_dependencies skins/SKIN"
+  exit 1
+fi
+
+component="$1" # e.g. "extensions/Echo"
+
+# Read dependencies into an array
+deps=() # indexed array of dependency names
+while IFS= read -r dep; do
+  [ -z "$dep" ] && continue # skip empty lines
+  deps+=("$dep") # += appends to bash arrays
+done < <("$(dirname "$0")"/dependencies "$component")
+
+n=${#deps[@]} # number of dependencies
+
+if [ "$n" -eq 0 ]; then
+  echo "No dependencies found for $component."
+  exit 0
+fi
+
+# Calculate total combinations: 2^n (includes the empty set)
+total=$(( 1 << n )) # bit shift: 1 << n = 2^n
+
+printf "Dependencies for %s (%d):\n" "$component" "$n"
+for dep in "${deps[@]}"; do
+  printf "  %s\n" "$dep"
+done
+printf "\nTotal combinations to test: %d (from 0 to %d dependencies)\n" "$total" "$n"
+
+# --- Helper: count set bits in a number ---
+# Used to determine the size (number of deps) of each combination.
+count_bits() {
+  local num=$1
+  local count=0
+  while [ "$num" -gt 0 ]; do
+    count=$(( count + (num & 1) )) # add lowest bit (0 or 1)
+    num=$(( num >> 1 ))            # shift right to check next bit
+  done
+  echo "$count"
+}
+
+# --- Helper: build space-separated dep list from a bitmask ---
+# Each bit position corresponds to a dependency in the deps array.
+# Bit 0 = deps[0], bit 1 = deps[1], etc.
+deps_from_mask() {
+  local mask=$1
+  local result=""
+  local i
+  for i in $(seq 0 $((n - 1))); do
+    if [ $(( (mask >> i) & 1 )) -eq 1 ]; then # check if bit i is set
+      result="${result:+$result }${deps[$i]}"  # append with space; ${var:+...} avoids leading space
+    fi
+  done
+  echo "$result"
+}
+
+# --- Helper: run a command with progress tracking ---
+step_counter=0 # counter for unique log file names
+run_step() {
+  local label="$1" # description for progress output
+  shift             # remaining args ("$@") are the command to run
+  step_counter=$((step_counter + 1)) # increment for unique log file names
+
+  if [ -n "$verbose" ]; then
+    # Verbose: print label and run command with full output
+    printf "\n--- %s ---\n" "$label"
+    "$@" # run the command
+  else
+    # Silent: save output to log file, print a dot per line, then ok or FAIL
+    local log_file
+    log_file=$(printf "log/silent/%03d-minimal_dependencies-%s.log" "$step_counter" "${label// /-}") # e.g. log/silent/001-minimal_dependencies-fresh_install.log
+    printf "%s " "$label" # print label without newline (dots will follow)
+    if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
+      printf " ok\n" # success
+      return 0
+    else
+      printf " FAIL\n" # failure
+      return 1
+    fi
+  fi
+}
+
+# --- Test all combinations, smallest first ---
+combo_num=0 # combination counter for progress display
+
+for size in $(seq 0 "$n"); do # iterate by size: 0 deps, 1 dep, 2 deps, ...
+  for mask in $(seq 0 $((total - 1))); do # iterate through all bitmasks
+    bits=$(count_bits "$mask") # count how many deps this mask selects
+    [ "$bits" -ne "$size" ] && continue # skip if not the current size
+
+    combo_num=$((combo_num + 1))
+    combo=$(deps_from_mask "$mask") # space-separated dep names for this combination
+
+    printf "\n=== Combination %d/%d (%d deps): %s ===\n" "$combo_num" "$total" "$size" "${combo:-(none)}"
+
+    # Fresh core install for clean state
+    if ! run_step "fresh_install" ./fresh_install; then
+      printf "SKIP (fresh_install failed)\n"
+      continue # try next combination
+    fi
+
+    # Install extension with this combination of deps
+    # QUIBBLE_DEPS overrides ./dependencies in ./install (see install script)
+    export QUIBBLE_DEPS="$combo"
+    if ! run_step "install $component" ./install "$component"; then
+      unset QUIBBLE_DEPS # clean up env var
+      printf "FAILED (install failed)\n"
+      continue # try next combination
+    fi
+    unset QUIBBLE_DEPS # clean up env var (run_selenium_tests doesn't need it)
+
+    # Run Selenium tests
+    if run_step "run_selenium_tests $component" ./run_selenium_tests "$component"; then
+      # Tests passed — this is the smallest working combination
+      printf "\n========================================\n"
+      printf "= FOUND: minimum dependencies for %s\n" "$component"
+      printf "========================================\n"
+      if [ "$size" -eq 0 ]; then
+        printf "\nNo dependencies needed.\n"
+      else
+        printf "\nMinimum dependencies (%d of %d):\n" "$size" "$n"
+        for dep in $combo; do # intentional word splitting on space-separated combo
+          printf "  %s\n" "$dep"
+        done
+      fi
+      exit 0
+    fi
+  done
+done
+
+# If we get here, no combination passed (shouldn't happen if the extension's tests work at all)
+printf "\nNo working combination found.\n"
+exit 1

@@ -120,6 +120,15 @@ Output the list of gated repositories (extensions and skins) from `parameter_fun
     ./gated
     VERBOSE=1 ./gated
 
+### `./minimal_dependencies`
+
+Find the minimum dependencies needed for a repository's Selenium tests to pass. Tests all possible combinations from smallest (0 deps) to largest (all deps), stopping at the first passing combination.
+
+    ./minimal_dependencies extensions/Echo
+    VERBOSE=1 ./minimal_dependencies extensions/Echo
+
+**Warning:** Tests up to 2^N combinations (N = number of dependencies). Each takes ~10 minutes. This script inhibits sleep to prevent the machine from suspending.
+
 ### `./help`
 
 List all scripts with their description and usage.
