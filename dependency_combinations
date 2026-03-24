@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+#
+# Output all possible combinations of dependencies for an extension or skin.
+# One combination per line (space-separated), starting with one dependency,
+# ending with all dependencies.
+#
+# Usage: ./dependency_combinations extensions/Echo
+#        ./dependency_combinations skins/MinervaNeue
+#
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+
+# Show usage if no argument provided
+if [ $# -eq 0 ]; then # $# is the number of arguments
+  echo "Usage: ./dependency_combinations extensions/EXTENSION or ./dependency_combinations skins/SKIN"
+  exit 1
+fi
+
+component="$1" # e.g. "extensions/Echo"
+
+# Read dependencies into an array
+deps=() # indexed array of dependency names
+while IFS= read -r dep; do
+  [ -z "$dep" ] && continue # skip empty lines
+  deps+=("$dep") # += appends to bash arrays
+done < <("$(dirname "$0")"/dependencies "$component")
+
+n=${#deps[@]} # number of dependencies
+
+# Nothing to output if there are no dependencies
+if [ "$n" -eq 0 ]; then
+  exit 0
+fi
+
+total=$(( 1 << n )) # 2^n: total number of subsets (bit shift: 1 << n = 2^n)
+
+# Count set bits in a number (determines the combination size)
+count_bits() {
+  local num=$1
+  local count=0
+  while [ "$num" -gt 0 ]; do
+    count=$(( count + (num & 1) )) # add lowest bit (0 or 1)
+    num=$(( num >> 1 ))            # shift right to check next bit
+  done
+  echo "$count"
+}
+
+# Generate combinations ordered by size: 1 dep, 2 deps, ..., n deps.
+# Each number from 1 to 2^n-1 represents a subset via its binary bits.
+# Bit i set means deps[i] is included in the combination.
+for size in $(seq 1 "$n"); do # iterate by combination size
+  for mask in $(seq 1 $((total - 1))); do # iterate through all non-empty bitmasks
+    bits=$(count_bits "$mask") # how many deps this mask selects
+    [ "$bits" -ne "$size" ] && continue # skip if not the current size
+
+    # Build space-separated list of deps for this combination
+    combo=""
+    for i in $(seq 0 $((n - 1))); do
+      if [ $(( (mask >> i) & 1 )) -eq 1 ]; then # check if bit i is set
+        combo="${combo:+$combo }${deps[$i]}" # append with space; ${var:+...} avoids leading space
+      fi
+    done
+    echo "$combo" # one combination per line
+  done
+done
