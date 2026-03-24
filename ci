@@ -3,10 +3,9 @@
 # Run the same lint check that GitLab CI runs, using Docker.
 # Does not require ShellCheck to be installed locally.
 # Usage: ./ci
-#        ./ci --verbose
+#        VERBOSE=1 ./ci
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
-. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
 
 # Run shellcheck inside the same Alpine image used in CI
 # --rm: remove container after it exits

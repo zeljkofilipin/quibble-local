@@ -7,13 +7,12 @@
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
 # Usage: ./run_all
-#        ./run_all --verbose
+#        VERBOSE=1 ./run_all
 #
 # No set -euo pipefail: we want to continue after failures to collect all results
 
-# Parse --verbose flag (default is silent mode)
-. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set and export QUIBBLE_VERBOSE
-verbose="$QUIBBLE_VERBOSE"     # local alias used by run_step for conditional output
+# Check verbose mode (default is silent)
+verbose="${VERBOSE:-}" # VERBOSE=1 enables verbose mode; empty string means silent
 
 . "$(dirname "$0")"/lib/inhibit_sleep # prevent the machine from suspending
 . "$(dirname "$0")"/lib/print_results # provides print_results function
@@ -24,7 +23,7 @@ if [ -z "$verbose" ]; then
   . "$(dirname "$0")"/lib/debug_info # check prerequisites and print debug info before output is redirected
   mkdir -p log/silent   # create log directory for captured output
   rm -f log/silent/*.log # clear old logs to avoid confusion from stale results
-  printf "\nRunning in silent mode (default). Use --verbose for full output.\n"
+  printf "\nRunning in silent mode (default). Use VERBOSE=1 for full output.\n"
   printf "Logs: log/silent/. To watch progress: tail -f log/silent/*.log\n\n"
 fi
 

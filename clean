@@ -5,10 +5,9 @@
 # WARNING: This will delete all MediaWiki source code in src/.
 #
 # Usage: ./clean
-#        ./clean --verbose
+#        VERBOSE=1 ./clean
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
-. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
 # Use Docker (as root) to remove files owned by the container user.

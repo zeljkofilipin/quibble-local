@@ -4,13 +4,12 @@
 # Prerequisites: Bash, Git, Docker. Optional: ShellCheck (for linting).
 #
 # Usage: ./help
-#        ./help --verbose
+#        VERBOSE=1 ./help
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
-. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
 
 # Print general note about silent/verbose modes
-printf "All commands are silent by default. Use --verbose for full output.\n\n"
+printf "All commands are silent by default. Use VERBOSE=1 for full output.\n\n"
 
 # Loop through all scripts in alphabetical order
 for script in ci clean deep_clean deep_test dependencies fetch fresh_install gated help install lint prepare run_all run_selenium_tests selenium_tests_exist shellto test; do

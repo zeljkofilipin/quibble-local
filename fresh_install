@@ -6,12 +6,11 @@
 # WARNING: This will delete and recreate src/.
 #
 # Usage: ./fresh_install
-#        ./fresh_install --verbose
+#        VERBOSE=1 ./fresh_install
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
-. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
 # Run prepare if bare repos haven't been cloned yet

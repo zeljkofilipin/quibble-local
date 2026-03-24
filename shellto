@@ -5,10 +5,9 @@
 # MediaWiki will be available at http://127.0.0.1:9413
 #
 # Usage: ./shellto
-#        ./shellto --verbose
+#        VERBOSE=1 ./shellto
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
-. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
 _QUIBBLE_OUTPUT_MANAGED=1 # interactive command: don't redirect output to log file
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 

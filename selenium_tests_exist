@@ -7,10 +7,9 @@
 # Usage: ./selenium_tests_exist
 #        ./selenium_tests_exist extensions/Echo
 #        ./selenium_tests_exist skins/MinervaNeue
-#        ./selenium_tests_exist --verbose extensions/Echo
+#        VERBOSE=1 ./selenium_tests_exist extensions/Echo
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
-. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
 
 # Build the path to package.json (core or component)
 if [ $# -gt 0 ]; then

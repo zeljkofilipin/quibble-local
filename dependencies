@@ -4,10 +4,9 @@
 #
 # Usage: ./dependencies extensions/Echo
 #        ./dependencies skins/MinervaNeue
-#        ./dependencies --verbose extensions/Echo
+#        VERBOSE=1 ./dependencies extensions/Echo
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
-. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
 
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then

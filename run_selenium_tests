@@ -12,7 +12,6 @@
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
-. "$(dirname "$0")"/lib/verbose # parse --verbose flag, set QUIBBLE_VERBOSE
 
 # Build optional ZUUL_PROJECT env var if an extension/skin was specified
 zuul_project=() # empty array by default
