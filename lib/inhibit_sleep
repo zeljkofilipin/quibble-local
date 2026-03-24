@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-# Sourced by long-running scripts to prevent the machine from suspending.
+# Sourced by long-running scripts (minimal_dependencies, run_all, test) to prevent the machine from suspending.
 # Uses caffeinate on macOS, systemd-inhibit on Linux.
 # The caller's PID ($$) is used so the inhibit ends when the caller exits.
 if [ "$(uname)" = "Darwin" ]; then # check if running on macOS

@@ -1,6 +1,6 @@
 # shellcheck shell=bash
 # Run a command, save output to a log file, print a dot for each line of output.
-# Sourced by test and run_all for silent mode progress feedback.
+# Sourced by test, run_all, and minimal_dependencies for silent mode progress feedback.
 #
 # Usage: run_with_dots LOG_FILE COMMAND [ARGS...]
 # Returns the command's exit code.

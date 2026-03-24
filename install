@@ -41,7 +41,7 @@ fi
 
 # Build list of dependency repos.
 # If QUIBBLE_DEPS is set (even if empty), use that instead of zuul/dependencies.yaml.
-# This allows callers like ./min_deps to test with a subset of dependencies.
+# This allows callers like ./minimal_dependencies to test with a subset of dependencies.
 set +x # disable trace output while processing dependencies (too noisy)
 deps=() # array to collect dependency repo paths
 # Read each dependency name from the dependency source.

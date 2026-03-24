@@ -194,7 +194,7 @@ These are sourced by other scripts and are not intended to be run directly.
 
 ### `lib/heartbeat`
 
-Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test` and `run_all` for silent mode progress feedback. Provides `run_with_dots` function.
+Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test`, `run_all`, and `minimal_dependencies` for silent mode progress feedback. Provides `run_with_dots` function.
 
 ### `lib/debug_info`
 
@@ -206,11 +206,11 @@ Shared setup sourced by scripts that run Docker commands. Sources `lib/debug_inf
 
 ### `lib/ensure_config`
 
-Sourced by scripts that need zuul config (`gated`, `install`). Ensures the `integration/config` working copy exists in `src/config` by cloning from the bare repo.
+Sourced by scripts that need zuul config (`dependencies`, `gated`, `install`). Ensures the `integration/config` working copy exists in `src/config` by cloning from the bare repo.
 
 ### `lib/inhibit_sleep`
 
-Sourced by long-running scripts (`run_all`, `test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+Sourced by long-running scripts (`minimal_dependencies`, `run_all`, `test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
 ### `lib/print_results`
 
