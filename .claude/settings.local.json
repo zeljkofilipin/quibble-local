@@ -4,7 +4,9 @@
       "Bash(./lint 2>&1)",
       "Bash(./lint)",
       "Bash(echo \"exit: $?\")",
-      "Bash(shellcheck:*)"
+      "Bash(shellcheck:*)",
+      "Bash(find /home/z/Documents/gitlab/zfilipin/quibble-local/src -name *.json -type f -exec grep -l \"\"skins\"\" {})",
+      "Bash(2)"
     ]
   }
 }
