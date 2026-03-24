@@ -9,5 +9,5 @@ if [ ! -d "$config_src_dir" ]; then # clone working copy if it doesn't exist yet
     echo "Error: $config_ref_dir not found. Run ./prepare first." # tell the user what went wrong
     exit 1 # exit with error
   fi
-  git clone "$config_ref_dir" "$config_src_dir" # create working copy from bare repo
+  git clone -q "$config_ref_dir" "$config_src_dir" # -q: suppress progress messages (errors still shown)
 fi
