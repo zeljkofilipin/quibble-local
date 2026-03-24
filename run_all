@@ -80,7 +80,7 @@ if run_step core ./fresh_install; then # install core; skip remaining steps if t
   core" # append core on a new indented line
 fi
 if [ -z "$verbose" ]; then
-  printf "\n" # end the dot/x line for core
+  printf " %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # end the line with UTC timestamp
 fi
 
 # --- Gated repositories ---
@@ -110,7 +110,7 @@ while IFS= read -r component <&3; do
   $component" ;; # append component on a new indented line
   esac
   if [ -z "$verbose" ]; then
-    printf "\n" # end the dot/x line for this component
+    printf " %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # end the line with UTC timestamp
   fi
 done 3< <(./gated) # feed gated list via fd 3 (not stdin, which docker needs)
 

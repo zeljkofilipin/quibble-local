@@ -180,7 +180,7 @@ for size in $(seq 0 "$n"); do # iterate by size: 0 optional, 1 optional, 2 optio
       full_combo="$optional_combo" # optional only (no required deps exist)
     fi
 
-    printf "\n=== Combination %d/%d (%d optional deps): %s ===\n" "$combo_num" "$total" "$size" "${full_combo:-(none)}"
+    printf "\n=== Combination %d/%d (%d optional deps): %s === %s\n" "$combo_num" "$total" "$size" "${full_combo:-(none)}" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 
     # Fresh core install for clean state
     if ! run_step "fresh_install" ./fresh_install; then

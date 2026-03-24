@@ -51,11 +51,11 @@ run_test() {
     log_file=$(printf "log/silent/%02d-%s.log" "$test_counter" "${1##*/}") # e.g. log/silent/03-prepare.log
     printf "%s " "$*" # print full command without newline
     if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
-      printf " ok\n" # success
+      printf " ok %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # success with UTC timestamp
       passed="$passed
   $*" # append full command on a new indented line
     else
-      printf " FAIL\n" # failure
+      printf " FAIL %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # failure with UTC timestamp
       failed="$failed
   $*" # append full command on a new indented line
     fi
