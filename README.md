@@ -106,6 +106,13 @@ Output dependencies for an extension or skin from `zuul/dependencies.yaml`.
     ./dependencies skins/MinervaNeue
     VERBOSE=1 ./dependencies extensions/Echo
 
+### `./dependency_combinations`
+
+Output all possible combinations of dependencies for an extension or skin. One combination per line (space-separated), starting with one dependency, ending with all dependencies.
+
+    ./dependency_combinations extensions/Echo
+    ./dependency_combinations skins/MinervaNeue
+
 ### `./gated`
 
 Output the list of gated repositories (extensions and skins) from `parameter_functions.py`. Clones `integration/config` into `src/config` if needed. Assumes `./prepare` has been run first.
