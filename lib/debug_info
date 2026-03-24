@@ -14,6 +14,11 @@ fi
 # a script's stdout is piped or captured (e.g. ./dependencies called from ./install via
 # process substitution, or child scripts whose output flows through run_with_dots).
 if [ -t 1 ]; then
+  # In silent mode, tell the user how to get full output
+  if [ -z "${VERBOSE:-}" ]; then # only show hint when VERBOSE is not set
+    echo "use VERBOSE=1 for full output"
+    echo                                   # blank line after hint
+  fi
   echo "OS: $(uname -s) $(uname -r)"    # e.g. "Darwin 25.3.0" or "Linux 6.1.0"
   echo "bash: ${BASH_VERSION}"           # e.g. "3.2.57(1)-release"
   echo "git: $(git --version)"           # e.g. "git version 2.43.0"
@@ -21,8 +26,5 @@ if [ -t 1 ]; then
   if command -v docker >/dev/null; then
     echo "docker: $(docker --version)"   # e.g. "Docker version 24.0.7"
   fi
-  # In silent mode, tell the user how to get full output
-  if [ -z "${VERBOSE:-}" ]; then # only show hint when VERBOSE is not set
-    echo "use VERBOSE=1 for full output"
-  fi
+  echo                                    # blank line after debug info
 fi
