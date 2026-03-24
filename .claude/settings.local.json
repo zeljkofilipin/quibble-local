@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(./lint 2>&1)"
+      "Bash(./lint 2>&1)",
+      "Bash(./lint)",
+      "Bash(echo \"exit: $?\")"
     ]
   }
 }
