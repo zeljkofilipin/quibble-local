@@ -103,7 +103,7 @@ while IFS= read -r component <&3; do
         if [ -n "$verbose" ]; then
           printf "\n%s: no Selenium tests, skipping\n" "$component"
         else
-          printf " skipped (no Selenium tests)"
+          printf "run_selenium_tests skipped (no Selenium tests) "
         fi
       fi
     fi
