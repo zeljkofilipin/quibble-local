@@ -28,7 +28,7 @@ while IFS= read -r component <&3; do
   if [ -n "$verbose" ]; then
     # print section header for this component
     printf "\n########################################\n"
-    printf "# %s\n" "$component"
+    printf "# %s %s\n" "$component" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
     printf "########################################\n"
   else
     printf "%s " "$component" # print component name, dots will follow on same line
@@ -73,10 +73,8 @@ while IFS= read -r component <&3; do
       esac
       ;;
   esac
-  if [ -z "$verbose" ]; then
-    # Print running tally with UTC timestamp after each component
-    printf "\n  (%d passed, %d failed, %d skipped) %s\n" "$pass_count" "$fail_count" "$skip_count" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-  fi
+  # Print running tally with UTC timestamp after each component
+  printf "\n  (%d passed, %d failed, %d skipped) %s\n" "$pass_count" "$fail_count" "$skip_count" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 # If a component argument was given, use it; otherwise run all gated repos.
 done 3< <(if [ $# -gt 0 ]; then echo "$1"; else ./gated; fi)
 

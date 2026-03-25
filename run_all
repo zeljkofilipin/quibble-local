@@ -18,7 +18,7 @@
 if [ -n "$verbose" ]; then
   # print section header for core
   printf "\n########################################\n"
-  printf "# Core\n"
+  printf "# Core %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
   printf "########################################\n"
 else
   printf "core " # print component name, dots will follow on same line
@@ -30,9 +30,7 @@ if run_step core ./fresh_install; then # install core; skip remaining steps if t
   passed="$passed
   core" # append core on a new indented line
 fi
-if [ -z "$verbose" ]; then
-  printf " %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # end the line with UTC timestamp
-fi
+printf " %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # print UTC timestamp after core
 
 # --- Gated repositories ---
 # IFS= preserves whitespace in component names; -r prevents backslash interpretation.
@@ -42,7 +40,7 @@ while IFS= read -r component <&3; do
   if [ -n "$verbose" ]; then
     # print section header for this component
     printf "\n########################################\n"
-    printf "# %s\n" "$component"
+    printf "# %s %s\n" "$component" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
     printf "########################################\n"
   else
     printf "%s " "$component" # print component name, dots will follow on same line
@@ -60,9 +58,7 @@ while IFS= read -r component <&3; do
     *) passed="$passed
   $component" ;; # append component on a new indented line
   esac
-  if [ -z "$verbose" ]; then
-    printf " %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # end the line with UTC timestamp
-  fi
+  printf " %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # print UTC timestamp after component
 # If a component argument was given, use it; otherwise run all gated repos.
 done 3< <(if [ $# -gt 0 ]; then echo "$1"; else ./gated; fi)
 

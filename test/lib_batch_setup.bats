@@ -68,6 +68,17 @@ teardown() {
   [[ "$output" == *"hello"* ]]
 }
 
+@test "run_step: prints UTC timestamp in verbose mode" {
+  run bash -c '
+    export _QUIBBLE_NO_INHIBIT=1
+    export VERBOSE=1
+    . lib/batch_setup
+    run_step core true
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"UTC"* ]]
+}
+
 @test "batch_setup: initializes passed and failed as empty" {
   run bash -c '
     export _QUIBBLE_NO_INHIBIT=1

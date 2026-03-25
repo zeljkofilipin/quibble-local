@@ -34,7 +34,7 @@ run_step() {
   if [ -n "$verbose" ]; then
     # Verbose: print separator and run command with full output
     printf "\n========================================\n"
-    printf "= %s: %s\n" "$component" "$*" # $* joins all args into a single string
+    printf "= %s: %s %s\n" "$component" "$*" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # $* joins all args into a single string
     printf "========================================\n"
     if "$@"; then # run the command (all remaining arguments)
       return 0 # step passed
