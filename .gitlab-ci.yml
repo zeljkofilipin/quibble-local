@@ -16,6 +16,12 @@ shellcheck:
   script:
     - ./lint
 
+bats:
+  stage: test
+  image: bats/bats:latest
+  script:
+    - bats test/
+
 sast:
   stage: test
 include:
