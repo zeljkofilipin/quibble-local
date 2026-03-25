@@ -196,12 +196,12 @@ Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo.
     ./lint
     VERBOSE=1 ./lint
 
-### `./deep_test`
+### `./deep_clean_test`
 
 Run `./deep_clean` first, then `./integration_test`. Slower but starts from a completely clean state.
 
-    ./deep_test
-    VERBOSE=1 ./deep_test
+    ./deep_clean_test
+    VERBOSE=1 ./deep_clean_test
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending (via `./integration_test`).
 
