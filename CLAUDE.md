@@ -8,7 +8,7 @@ Wrapper scripts for running [Quibble](https://doc.wikimedia.org/quibble/) (Media
 
 ## Prerequisites
 
-Bash, Git, and Docker. Optional: [ShellCheck](https://www.shellcheck.net/) (for linting).
+Bash, Git, and Docker. Optional: [ShellCheck](https://www.shellcheck.net/) (for linting), [Bats](https://github.com/bats-core/bats-core) (for unit tests). When adding a new dependency, also add it to the prerequisites section in `README.md`.
 
 ## CI
 
@@ -23,7 +23,7 @@ GitLab CI must pass for every commit. The pipeline runs ShellCheck (lint) and se
 - **CI:** `./ci` — runs ShellCheck in Docker (same image as GitLab CI). Run after every change.
 - **Test:** `./test` — runs all scripts end-to-end (slow; requires Docker, clones repos from Gerrit)
 
-There is no build step. There are no unit tests — `./test` is an integration test that exercises every script.
+There is no build step. `./test` is an integration test that exercises every script. Unit tests use [Bats](https://github.com/bats-core/bats-core) (Bash Automated Testing System). All scripts should have Bats tests where possible. Bats tests go in the `bats/` directory (since `test` is already a script).
 
 ## Script conventions
 
@@ -51,6 +51,7 @@ There is no build step. There are no unit tests — `./test` is an integration t
 - The `--entrypoint=quibble-with-supervisord` flag is used on all `docker run` commands that run Quibble (cleanup commands in `clean`, `deep_clean`, and `fresh_install` use `--entrypoint bash` instead)
 - Port 9413 is exposed via `-p 9413:9413` (macOS; not `--network host`)
 - All functionality shared across two or more files must be extracted into a helper file in `lib/` (like `lib/setup` and `lib/inhibit_sleep`)
+- When adding a new file type (e.g. `.bats`, `.awk`), add a corresponding `files.associations` entry in `.vscode/settings.json` so VS Code applies correct syntax highlighting
 
 ## Directory layout (runtime, all gitignored)
 

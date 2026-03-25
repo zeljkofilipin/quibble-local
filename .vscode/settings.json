@@ -9,6 +9,7 @@
     "**/lib/print_results": "shellscript",
     "**/lib/setup": "shellscript",
     "**/lib/silent_output": "shellscript",
-    "*.awk": "awk"
+    "*.awk": "awk",
+    "*.bats": "shellscript"
   }
 }

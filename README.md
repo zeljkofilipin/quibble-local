@@ -10,6 +10,7 @@ Inspired by [mediawiki-quickstart](https://gitlab.wikimedia.org/repos/test-platf
 - [Git](https://git-scm.com/)
 - [Docker](https://www.docker.com/)
 - [ShellCheck](https://www.shellcheck.net/) (optional, for linting)
+- [Bats](https://github.com/bats-core/bats-core) (optional, for unit tests)
 
 ## Silent and verbose modes
 
