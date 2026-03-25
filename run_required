@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 #
-# Run Selenium tests for all gated repositories using only required dependencies.
+# Run Selenium tests for all gated repositories (or a single component) using only required dependencies.
 # For each component: fresh_install, install with required deps only, run Selenium tests.
 # Skips core (core has no dependencies).
-# WARNING: This will take a very long time to run (50+ components).
+# WARNING: Without arguments, this will take a very long time to run (50+ components).
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
 # Usage: ./run_required
+#        ./run_required extensions/Echo
 #        VERBOSE=1 ./run_required
 #
 
@@ -76,7 +77,8 @@ while IFS= read -r component <&3; do
     # Print running tally with UTC timestamp after each component
     printf "\n  (%d passed, %d failed, %d skipped) %s\n" "$pass_count" "$fail_count" "$skip_count" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
   fi
-done 3< <(./gated) # feed gated list via fd 3 (not stdin, which docker needs)
+# If a component argument was given, use it; otherwise run all gated repos.
+done 3< <(if [ $# -gt 0 ]; then echo "$1"; else ./gated; fi)
 
 # Print skipped components (no Selenium tests) before the pass/fail summary
 if [ -n "$skipped" ]; then

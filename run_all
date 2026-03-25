@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 #
-# Run Selenium tests for core and all gated repositories.
+# Run Selenium tests for core and all gated repositories (or a single component).
 # For each component: fresh_install, install (if not core),
 # check if Selenium tests exist, and run them.
-# WARNING: This will take a very long time to run (50+ components).
+# WARNING: Without arguments, this will take a very long time to run (50+ components).
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
 # Usage: ./run_all
+#        ./run_all extensions/Echo
 #        VERBOSE=1 ./run_all
 #
 # No set -euo pipefail: we want to continue after failures to collect all results
@@ -62,7 +63,8 @@ while IFS= read -r component <&3; do
   if [ -z "$verbose" ]; then
     printf " %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # end the line with UTC timestamp
   fi
-done 3< <(./gated) # feed gated list via fd 3 (not stdin, which docker needs)
+# If a component argument was given, use it; otherwise run all gated repos.
+done 3< <(if [ $# -gt 0 ]; then echo "$1"; else ./gated; fi)
 
 # Print pass/fail summary and exit with error if any component failed
 print_results
