@@ -272,6 +272,14 @@ Awk script that parses a YAML list under a given key from `zuul/dependencies.yam
 
 Awk script that extracts entries from a Python list assignment in `parameter_functions.py`. Used by `gated`.
 
+### `lib/print_dep_summary`
+
+Prints a summary of all, required, and optional dependencies plus total combinations to test. Sourced by `minimal_dependencies`.
+
+### `lib/build_full_combo`
+
+Builds a full dependency combination from required + optional deps. Sets the `full_combo` variable. Sourced by `minimal_dependencies`.
+
 ## Further reading
 
 - [Quibble documentation](https://doc.wikimedia.org/quibble/)

@@ -1,0 +1,18 @@
+# shellcheck shell=bash
+# Build full dependency combination from required + optional deps.
+# Must be sourced, not run directly.
+# Expects these variables to be set by the caller:
+#   required_str    — space-separated list of required dependency names
+#   optional_combo  — space-separated list of optional deps for this combination
+# Sets:
+#   full_combo      — space-separated list of all deps for this combination
+# shellcheck disable=SC2154 # variables are set by the sourcing script
+# shellcheck disable=SC2034 # full_combo is used by the sourcing script
+
+if [ -n "$required_str" ] && [ -n "$optional_combo" ]; then
+  full_combo="$required_str $optional_combo" # both required and optional
+elif [ -n "$required_str" ]; then
+  full_combo="$required_str" # required only (no optional for this combination)
+else
+  full_combo="$optional_combo" # optional only (no required deps exist)
+fi

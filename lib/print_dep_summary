@@ -1,0 +1,38 @@
+# shellcheck shell=bash
+# Print a summary of all, required, and optional dependencies plus total combinations.
+# Must be sourced, not run directly.
+# Expects these variables to be set by the caller:
+#   component  — e.g. "extensions/Echo"
+#   all_deps   — indexed array of all dependency names
+#   required   — indexed array of required dependency names
+#   optional   — indexed array of optional dependency names
+#   total      — total number of combinations to test
+# shellcheck disable=SC2154 # variables are set by the sourcing script
+
+# Print all dependencies
+printf "All dependencies for %s (%d):\n" "$component" "${#all_deps[@]}"
+for dep in "${all_deps[@]}"; do
+  printf "  %s\n" "$dep"
+done
+
+# Print required dependencies (if any)
+if [ ${#required[@]} -gt 0 ]; then
+  printf "\nRequired dependencies (always included) (%d):\n" "${#required[@]}"
+  for dep in "${required[@]}"; do
+    printf "  %s\n" "$dep"
+  done
+fi
+
+# Print optional dependencies
+n=${#optional[@]} # number of optional dependencies
+printf "\nOptional dependencies to vary (%d):\n" "$n"
+if [ "$n" -eq 0 ]; then
+  printf "  (none)\n"
+else
+  for dep in "${optional[@]}"; do
+    printf "  %s\n" "$dep"
+  done
+fi
+
+# Print total combinations
+printf "\nTotal combinations to test: %d (from 0 to %d optional dependencies)\n" "$total" "$n"
