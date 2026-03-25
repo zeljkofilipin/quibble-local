@@ -24,7 +24,7 @@ When commands are called from `test` or `run_all`, the mode is inherited via the
 
 ### `./fresh_install`
 
-Set up MediaWiki (without running tests) and open a shell. MediaWiki will be available at http://127.0.0.1:9413. Runs `./prepare` first if needed, then `./clean` to ensure a fresh `src/`.
+Set up MediaWiki (without running tests). Runs `./prepare` first if needed, then `./clean` to ensure a fresh `src/`. Run `./shellto` afterwards to open a shell with MediaWiki running.
 
     ./fresh_install
     VERBOSE=1 ./fresh_install
@@ -33,7 +33,7 @@ See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run
 
 ### `./install`
 
-Install an extension or skin and open a shell. MediaWiki will be available at http://127.0.0.1:9413. Assumes `./fresh_install` has been run first.
+Install an extension or skin. Assumes `./fresh_install` has been run first. Run `./shellto` afterwards to open a shell with MediaWiki running.
 
     ./install extensions/Echo
     ./install skins/MinervaNeue

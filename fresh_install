@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
-# Installs MediaWiki core (without running tests) and opens a shell.
-# MediaWiki will be available at http://127.0.0.1:9413
+# Installs MediaWiki core (without running tests).
+# Run ./shellto afterwards to open a shell with MediaWiki running.
 # Runs ./prepare first if needed.
 # WARNING: This will delete and recreate src/.
 #
