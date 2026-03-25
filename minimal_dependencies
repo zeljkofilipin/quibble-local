@@ -44,23 +44,12 @@ while IFS= read -r dep; do
   required+=("$dep") # += appends to bash arrays
 done < <("$(dirname "$0")"/required_dependencies "$component")
 
-# Build the required deps as a lookup string for filtering.
-# Space-padded so " Name " substring match won't hit partial names.
-required_lookup=" " # space-padded string for substring matching
-for dep in "${required[@]+"${required[@]}"}"; do # ${arr[@]+"..."} is safe for empty arrays in bash 3.2
-  required_lookup="${required_lookup}${dep} " # e.g. " CommunityConfiguration VisualEditor "
-done
-
-# Split all_deps into required and optional
-# Required: listed in extension.json "requires" — always included in every combination
-# Optional: everything else — these are what we vary
+# Read optional dependencies (all deps minus required deps)
 optional=() # indexed array of optional dependency names
-for dep in "${all_deps[@]}"; do
-  if [[ "$required_lookup" == *" $dep "* ]]; then # check if dep is in the required lookup string
-    continue # skip required deps (they're always included)
-  fi
-  optional+=("$dep") # this dep is optional
-done
+while IFS= read -r dep; do
+  [ -z "$dep" ] && continue # skip empty lines
+  optional+=("$dep") # += appends to bash arrays
+done < <("$(dirname "$0")"/optional_dependencies "$component")
 
 n=${#optional[@]} # number of optional dependencies
 

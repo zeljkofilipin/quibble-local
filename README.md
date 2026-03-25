@@ -136,6 +136,13 @@ Output required dependencies for an extension or skin from its `extension.json` 
     ./required_dependencies extensions/GrowthExperiments
     ./required_dependencies skins/MinervaNeue
 
+### `./optional_dependencies`
+
+Output optional dependencies for an extension or skin. These are dependencies in `zuul/dependencies.yaml` that are NOT in `extension.json`/`skin.json` `requires` field. Complement of `./required_dependencies`.
+
+    ./optional_dependencies extensions/Echo
+    ./optional_dependencies skins/MinervaNeue
+
 ### `./minimal_dependencies`
 
 Find the minimum dependencies needed for a repository's Selenium tests to pass. Splits dependencies into required (from `extension.json`/`skin.json`) and optional (remaining). Required deps are always included; only optional deps are varied, testing combinations from smallest (0 optional) to largest (all optional).

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+#
+# Output optional dependencies for an extension or skin.
+# Optional dependencies are those in zuul's dependencies.yaml but NOT in
+# extension.json/skin.json "requires" field.
+# Complement of ./required_dependencies.
+#
+# Usage: ./optional_dependencies extensions/Echo
+#        ./optional_dependencies skins/MinervaNeue
+#
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+
+# Show usage if no argument provided
+if [ $# -eq 0 ]; then # $# is the number of arguments
+  echo "Usage: ./optional_dependencies extensions/EXTENSION or ./optional_dependencies skins/SKIN"
+  exit 1
+fi
+
+component="$1" # e.g. "extensions/Echo"
+
+# Read required dependencies into a lookup string for filtering.
+# Space-padded so " Name " substring match won't hit partial names.
+required_lookup=" " # space-padded string for substring matching
+while IFS= read -r dep; do
+  [ -z "$dep" ] && continue # skip empty lines
+  required_lookup="${required_lookup}${dep} " # e.g. " CommunityConfiguration VisualEditor "
+done < <("$(dirname "$0")"/required_dependencies "$component")
+
+# Read all dependencies and output only those NOT in the required list
+while IFS= read -r dep; do
+  [ -z "$dep" ] && continue # skip empty lines
+  if [[ "$required_lookup" == *" $dep "* ]]; then # check if dep is in the required lookup string
+    continue # skip required deps
+  fi
+  echo "$dep" # this dep is optional
+done < <("$(dirname "$0")"/dependencies "$component")
