@@ -225,6 +225,22 @@ Sourced by long-running scripts (`minimal_dependencies`, `run_all`, `run_require
 
 Sourced by scripts that track test/step results (`run_all`, `run_required`, `test`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
 
+### `lib/parse_requires.awk`
+
+Awk script that parses `requires.extensions` and `requires.skins` from `extension.json` or `skin.json`. Used by `required_dependencies`.
+
+### `lib/combinations.awk`
+
+Awk script that generates all bitmask combinations of dependencies, ordered by size. Used by `dependency_combinations`.
+
+### `lib/parse_yaml_list.awk`
+
+Awk script that parses a YAML list under a given key from `zuul/dependencies.yaml`. Used by `dependencies`.
+
+### `lib/parse_python_list.awk`
+
+Awk script that extracts entries from a Python list assignment in `parameter_functions.py`. Used by `gated`.
+
 ## Further reading
 
 - [Quibble documentation](https://doc.wikimedia.org/quibble/)

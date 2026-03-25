@@ -28,9 +28,6 @@ else
   dep_key="$component" # keep as-is (e.g. "skins/MinervaNeue")
 fi
 
-# Parse dependencies.yaml with awk:
+# Parse dependencies.yaml with awk. See lib/parse_yaml_list.awk for the parsing logic.
 # -v key="Name:" passes the dependency key as an awk variable
-# $0==key{f=1;next}     — when current line matches the key, set flag and skip to next line
-# f&&/^[^ ]/{exit}      — if flag set and line starts with non-space, we've left the list, stop
-# f&&/^ *- /{sub(...);print} — strip the "  - " YAML list prefix and print the dependency name
-awk -v key="${dep_key}:" '$0==key{f=1;next} f&&/^[^ ]/{exit} f&&/^ *- /{sub(/^ *- /,"");print}' src/config/zuul/dependencies.yaml
+awk -v key="${dep_key}:" -f "$(dirname "$0")"/lib/parse_yaml_list.awk src/config/zuul/dependencies.yaml
