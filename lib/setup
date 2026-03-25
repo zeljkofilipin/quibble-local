@@ -12,13 +12,16 @@ _QUIBBLE_LOG="log/${0##*/}.log" # tell lib/debug_info where silent mode logs are
 
 # --- Docker prerequisite checks ---
 # All scripts that source lib/setup run Docker commands, so docker must be available.
-if ! command -v docker >/dev/null; then # check if docker is installed
-  echo "Error: docker is not installed. See https://www.docker.com/" >&2 # >&2 prints to stderr
-  exit 1
-fi
-if ! docker info >/dev/null 2>&1; then # check if Docker daemon is running (suppress verbose output)
-  echo "Error: Docker is not running. Start Docker and try again." >&2
-  exit 1
+# Set _QUIBBLE_NO_DOCKER_CHECK=1 to skip (used in tests to avoid requiring Docker).
+if [ -z "${_QUIBBLE_NO_DOCKER_CHECK:-}" ]; then
+  if ! command -v docker >/dev/null; then # check if docker is installed
+    echo "Error: docker is not installed. See https://www.docker.com/" >&2 # >&2 prints to stderr
+    exit 1
+  fi
+  if ! docker info >/dev/null 2>&1; then # check if Docker daemon is running (suppress verbose output)
+    echo "Error: Docker is not running. Start Docker and try again." >&2
+    exit 1
+  fi
 fi
 
 # --- Shared variables ---
