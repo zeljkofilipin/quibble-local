@@ -1,3 +1,14 @@
 {
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "files.associations": {
+    "**/lib/batch_setup": "shellscript",
+    "**/lib/debug_info": "shellscript",
+    "**/lib/ensure_config": "shellscript",
+    "**/lib/heartbeat": "shellscript",
+    "**/lib/inhibit_sleep": "shellscript",
+    "**/lib/print_results": "shellscript",
+    "**/lib/setup": "shellscript",
+    "**/lib/silent_output": "shellscript",
+    "*.awk": "awk"
+  }
 }
