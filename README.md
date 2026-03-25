@@ -228,6 +228,10 @@ Shared setup sourced by scripts that run Docker commands. Sources `lib/debug_inf
 
 Output redirection for silent mode. Saves all output to a log file (e.g. `log/fresh_install.log`) and prints a dot per line to the terminal. On exit, prints "ok" or "FAIL" with the log file path. Sourced by `lib/setup`.
 
+### `lib/resolve_deps`
+
+Resolves dependency repos for a component, cloning bare repos as needed. Sets the `deps` array with repo paths. Reads from `QUIBBLE_DEPS` env var if set, otherwise from `./dependencies`. Sourced by `install`.
+
 ### `lib/ensure_config`
 
 Sourced by scripts that need zuul config (`dependencies`, `gated`, `install`). Ensures the `integration/config` working copy exists in `src/config` by cloning from the bare repo.

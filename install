@@ -39,44 +39,9 @@ fi
 # Ensure integration/config working copy exists (needed by ./dependencies)
 . "$(dirname "$0")"/lib/ensure_config
 
-# Build list of dependency repos.
-# If QUIBBLE_DEPS is set (even if empty), use that instead of zuul/dependencies.yaml.
-# This allows callers like ./minimal_dependencies to test with a subset of dependencies.
-set +x # disable trace output while processing dependencies (too noisy)
-deps=() # array to collect dependency repo paths
-# Read each dependency name from the dependency source.
-# IFS= prevents trimming whitespace; -r prevents backslash interpretation.
-# < <(...) is process substitution: feeds dependency names as stdin.
-while IFS= read -r dep_name; do
-  [ -z "$dep_name" ] && continue # skip empty lines (e.g. when QUIBBLE_DEPS is empty)
-  # Skins use "mediawiki/skins/Name", extensions use "mediawiki/extensions/Name"
-  if [[ "$dep_name" == skins/* ]]; then
-    dep_repo="mediawiki/${dep_name}"
-  else
-    dep_repo="mediawiki/extensions/${dep_name}"
-  fi
-  # Clone bare repo for dependency if not already present
-  dep_ref_dir="ref/${dep_repo}.git"
-  if [ ! -d "$dep_ref_dir" ]; then
-    echo "Cloning dependency: ${dep_name}"
-    mkdir -p "$(dirname "$dep_ref_dir")" # create parent directories
-    git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
-  fi
-  deps+=("$dep_repo") # add to the dependencies array; += appends to bash arrays
-done < <(
-  # ${QUIBBLE_DEPS+x} is set if QUIBBLE_DEPS is defined (even if empty string).
-  # This distinguishes "not set" (use dependencies.yaml) from "set to empty" (no deps).
-  if [ -n "${QUIBBLE_DEPS+x}" ]; then
-    # shellcheck disable=SC2086 # intentional word splitting: space-separated deps → one per line
-    printf '%s\n' ${QUIBBLE_DEPS}
-  else
-    "$(dirname "$0")"/dependencies "$component" # read from zuul/dependencies.yaml
-  fi
-)
-# Re-enable trace output only in verbose mode (in silent mode, set -x was never enabled)
-if [ "${VERBOSE:-}" = "1" ]; then
-  set -x # re-enable trace output
-fi
+# Resolve dependency repos and clone bare repos as needed.
+# Sets the deps array with repo paths (e.g. "mediawiki/extensions/Echo").
+. "$(dirname "$0")"/lib/resolve_deps
 
 # Install extension/skin with its dependencies
 # "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
