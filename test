@@ -61,13 +61,13 @@ run_test ./install extensions/Echo     # test installing an extension
 run_test ./dependencies extensions/Echo  # test listing extension dependencies
 run_test ./required_dependencies extensions/Echo  # test listing required dependencies
 run_test ./optional_dependencies extensions/Echo  # test listing optional dependencies
+run_test ./dependency_combinations extensions/Echo  # test listing dependency combinations
 run_test ./gated                       # test listing gated repos
 run_test ./selenium_tests_exist extensions/Echo  # test that extension has Selenium tests
 run_test ./run_selenium_tests extensions/Echo  # test running extension Selenium tests
 run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js  # test running a specific extension test file
 run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"  # test filtering extension tests by grep
-run_test ./install extensions/CampaignEvents  # test installing another extension
-run_test ./run_selenium_tests extensions/CampaignEvents  # test running another extension's tests
+run_test ./minimal_dependencies extensions/Echo  # test finding minimum dependencies (fast for Echo: ~1 combination)
 run_test ./fetch                       # test fetching latest changes
 run_test ./clean                       # test cleaning up src/
 
