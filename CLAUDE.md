@@ -42,7 +42,8 @@ There is no build step. There are no unit tests — `./test` is an integration t
 - All scripts must have a comment block at the top describing what the script does, with example usage if it takes arguments
 - Every line of code must have an inline comment explaining what it does. Comments should be plentiful, especially around bash quirks and non-obvious syntax (e.g. `${0##*/}`, `${arr[@]+"..."}`, `$@` vs `$*`, process substitution `< <(...)`, file descriptor redirection `<&3`, `set -euo pipefail` flags, docker flags). Most users and developers will not be familiar with bash.
 - When changing a script, check that all comments (header and inline) still accurately describe the code
-- When adding or updating a script, ensure `help`, `README.md`, `lint`, and `test` are kept in sync, and run `./lint`
+- When adding or updating a script, ensure `README.md` and `test` are kept in sync, and run `./lint`. `lint` and `help` auto-discover scripts (by checking the first line for a bash shebang or shellcheck directive), so they do not need manual updates when adding new scripts.
+- Do not explicitly list all scripts in code. Use auto-discovery (checking first line for shebang/shellcheck directive) instead, so new scripts are picked up automatically.
 - Internal scripts (sourced helpers in `lib/` like `lib/setup`, `lib/inhibit_sleep`) must be documented in a separate section in `README.md` to make it clear they are not intended to be run directly
 - Every new argument to a script must have a corresponding test in `test`
 - Docker container runs as a different user, so `chmod 777` is used on shared directories
