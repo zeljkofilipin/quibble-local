@@ -1,11 +1,25 @@
 #!/usr/bin/env bash
 #
 # Run shellcheck on all shell scripts in the repo.
+# Finds scripts automatically by checking the first line of each file
+# for a bash shebang (#!/usr/bin/env bash) or shellcheck directive (# shellcheck shell=bash).
 #
 # Usage: ./lint
 #        VERBOSE=1 ./lint
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
-# Check all scripts for shell scripting issues
-shellcheck ci clean deep_clean deep_test dependencies dependency_combinations fetch fresh_install gated help install lint minimal_dependencies optional_dependencies prepare required_dependencies run_all run_required run_selenium_tests selenium_tests_exist shellto test lib/batch_setup lib/debug_info lib/heartbeat lib/setup lib/ensure_config lib/inhibit_sleep lib/print_results
+# Find all shell scripts by checking the first line of each file
+scripts=() # array of shell script paths
+for f in * lib/*; do
+  [ -f "$f" ] || continue # skip non-files (directories, globs that didn't match)
+  # head -n 1: read only the first line of the file
+  # grep -qE: quiet extended regex match (exit code only, no output)
+  # Match bash shebang or shellcheck shell=bash directive
+  if head -n 1 "$f" | grep -qE '^(#!/usr/bin/env bash|# shellcheck shell=bash)$'; then
+    scripts+=("$f") # this file is a shell script
+  fi
+done
+
+# Check all found scripts for shell scripting issues
+shellcheck "${scripts[@]}"
