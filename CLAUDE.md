@@ -24,7 +24,7 @@ GitLab CI must pass for every commit. The pipeline runs ShellCheck (lint) and se
 - **Integration test:** `./integration_test` — runs all scripts end-to-end (slow; requires Docker, clones repos from Gerrit)
 - **Unit test:** `./unit_test` — runs Bats unit tests (fast, no Docker needed)
 
-There is no build step. `./integration_test` is an integration test that exercises every script. Unit tests use [Bats](https://github.com/bats-core/bats-core) (Bash Automated Testing System). All scripts should have Bats tests where possible. Bats tests go in the `test/` directory. Write code in a way that maximizes testability with Bats — extract logic into small scripts or `lib/` functions that can be tested without Docker or network access.
+There is no build step. `./integration_test` is an integration test that exercises every script. Unit tests use [Bats](https://github.com/bats-core/bats-core) (Bash Automated Testing System). All scripts should have Bats tests where possible. Bats tests go in the `test/` directory. Write code in a way that maximizes testability with Bats — extract logic into small scripts or `lib/` functions that can be tested without Docker or network access. All new features should have Bats tests if possible.
 
 ## Script conventions
 
