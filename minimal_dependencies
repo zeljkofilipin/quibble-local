@@ -54,13 +54,16 @@ done < <("$(dirname "$0")"/optional_dependencies "$component")
 n=${#optional[@]} # number of optional dependencies
 
 # Calculate total combinations: 2^n (includes the empty set of optional deps)
-total=$(( 1 << n )) # bit shift: 1 << n = 2^n
+# Calculate 2^n using awk (bash << in $(()) confuses VS Code's syntax highlighter)
+total=$(awk "BEGIN { print 2^$n }")
 
 # Build the required deps string (always included in QUIBBLE_DEPS)
 required_str="" # space-separated list of required dep names
-for dep in "${required[@]+"${required[@]}"}"; do # ${arr[@]+"..."} is safe for empty arrays in bash 3.2
-  required_str="${required_str:+$required_str }$dep" # append with space separator
-done
+if [ ${#required[@]} -gt 0 ]; then # only iterate if array is non-empty (bash 3.2 safe)
+  for dep in "${required[@]}"; do
+    required_str="${required_str:+$required_str }$dep" # append with space separator
+  done
+fi
 
 # Print summary
 printf "All dependencies for %s (%d):\n" "$component" "${#all_deps[@]}"
