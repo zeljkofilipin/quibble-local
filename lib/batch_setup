@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-# Shared setup for batch scripts (test, run_all, run_required, minimal_dependencies).
+# Shared setup for batch scripts (integration_test, run_all, run_required, minimal_dependencies).
 # Sets up verbose/silent mode, sources helper libraries, creates log directory.
 # Must be sourced, not run directly.
 

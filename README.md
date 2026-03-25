@@ -19,7 +19,7 @@ All commands run in **silent mode** by default (no trace output, no debug info).
     ./fresh_install            # silent (default)
     VERBOSE=1 ./fresh_install  # verbose (trace output)
 
-When commands are called from `test` or `run_all`, the mode is inherited via the `VERBOSE` environment variable.
+When commands are called from `integration_test` or `run_all`, the mode is inherited via the `VERBOSE` environment variable.
 
 ## Commands (same as mediawiki-quickstart)
 
@@ -63,12 +63,12 @@ Open a shell in the container with MediaWiki running at http://127.0.0.1:9413. A
     ./shellto
     VERBOSE=1 ./shellto
 
-### `./test`
+### `./integration_test`
 
 Run all scripts and report which ones passed or failed. Useful for detecting regressions after changes. Silent by default; use `VERBOSE=1` for full output.
 
-    ./test
-    VERBOSE=1 ./test
+    ./integration_test
+    VERBOSE=1 ./integration_test
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
 
@@ -198,12 +198,12 @@ Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo.
 
 ### `./deep_test`
 
-Run `./deep_clean` first, then `./test`. Slower but starts from a completely clean state.
+Run `./deep_clean` first, then `./integration_test`. Slower but starts from a completely clean state.
 
     ./deep_test
     VERBOSE=1 ./deep_test
 
-**Warning:** This script inhibits sleep to prevent the machine from suspending (via `./test`).
+**Warning:** This script inhibits sleep to prevent the machine from suspending (via `./integration_test`).
 
 ## Internal scripts (`lib/`)
 
@@ -211,11 +211,11 @@ These are sourced by other scripts and are not intended to be run directly.
 
 ### `lib/batch_setup`
 
-Shared setup for batch scripts (`test`, `run_all`, `run_required`, `minimal_dependencies`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
+Shared setup for batch scripts (`integration_test`, `run_all`, `run_required`, `minimal_dependencies`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
 
 ### `lib/heartbeat`
 
-Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test`, `run_all`, `run_required`, and `minimal_dependencies` for silent mode progress feedback. Provides `run_with_dots` function.
+Run a command, save output to a log file, and print a dot for each line of output. Sourced by `integration_test`, `run_all`, `run_required`, and `minimal_dependencies` for silent mode progress feedback. Provides `run_with_dots` function.
 
 ### `lib/debug_info`
 
@@ -239,11 +239,11 @@ Sourced by scripts that need zuul config (`dependencies`, `gated`, `install`). E
 
 ### `lib/inhibit_sleep`
 
-Sourced by long-running scripts (`minimal_dependencies`, `run_all`, `run_required`, `test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+Sourced by long-running scripts (`minimal_dependencies`, `run_all`, `run_required`, `integration_test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
 ### `lib/print_results`
 
-Sourced by scripts that track test/step results (`run_all`, `run_required`, `test`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
+Sourced by scripts that track test/step results (`run_all`, `run_required`, `integration_test`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
 
 ### `lib/parse_requires.awk`
 
