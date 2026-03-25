@@ -113,35 +113,8 @@ optional_from_mask() {
   echo "$result"
 }
 
-# --- Helper: run a command with progress tracking ---
-step_counter=0 # counter for unique log file names
-run_step() {
-  local label="$1" # description for progress output
-  shift             # remaining args ("$@") are the command to run
-  step_counter=$((step_counter + 1)) # increment for unique log file names
-
-  if [ -n "$verbose" ]; then
-    # Verbose: print label and run command with full output
-    printf "\n--- %s ---\n" "$label"
-    "$@" # run the command
-  else
-    # Silent: save output to log file, print a dot per line, then ok or FAIL
-    local log_file
-    local safe_label="${label// /-}" # replace spaces with dashes
-    safe_label="${safe_label////-}"  # replace slashes with dashes (e.g. extensions/Echo -> extensions-Echo)
-    log_file=$(printf "log/silent/%03d-minimal_dependencies-%s.log" "$step_counter" "$safe_label") # e.g. log/silent/001-minimal_dependencies-fresh_install.log
-    printf "%s " "$label" # print label without newline (dots will follow)
-    if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
-      printf " ok\n" # success
-      return 0
-    else
-      printf " FAIL\n" # failure
-      return 1
-    fi
-  fi
-}
-
 # --- Test all combinations, smallest first ---
+# Uses run_step from lib/batch_setup for progress tracking.
 # Required deps are always included. Only optional deps are varied.
 combo_num=0 # combination counter for progress display
 
@@ -165,7 +138,7 @@ for size in $(seq 0 "$n"); do # iterate by size: 0 optional, 1 optional, 2 optio
     printf "\n=== Combination %d/%d (%d optional deps): %s === %s\n" "$combo_num" "$total" "$size" "${full_combo:-(none)}" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 
     # Fresh core install for clean state
-    if ! run_step "fresh_install" ./fresh_install; then
+    if ! run_step "$component" ./fresh_install; then
       printf "SKIP (fresh_install failed)\n"
       continue # try next combination
     fi
@@ -173,7 +146,7 @@ for size in $(seq 0 "$n"); do # iterate by size: 0 optional, 1 optional, 2 optio
     # Install extension with this combination of deps
     # QUIBBLE_DEPS overrides ./dependencies in ./install (see install script)
     export QUIBBLE_DEPS="$full_combo"
-    if ! run_step "install $component" ./install "$component"; then
+    if ! run_step "$component" ./install "$component"; then
       unset QUIBBLE_DEPS # clean up env var
       printf "FAILED (install failed)\n"
       continue # try next combination
@@ -181,7 +154,7 @@ for size in $(seq 0 "$n"); do # iterate by size: 0 optional, 1 optional, 2 optio
     unset QUIBBLE_DEPS # clean up env var (run_selenium_tests doesn't need it)
 
     # Run Selenium tests
-    if run_step "run_selenium_tests $component" ./run_selenium_tests "$component"; then
+    if run_step "$component" ./run_selenium_tests "$component"; then
       # Tests passed — this is the smallest working combination
       printf "\n========================================\n"
       printf "= FOUND: minimum dependencies for %s\n" "$component"
