@@ -250,7 +250,11 @@ Awk script that parses `requires.extensions` and `requires.skins` from `extensio
 
 ### `lib/combinations.awk`
 
-Awk script that generates all bitmask combinations of dependencies, ordered by size. Used by `dependency_combinations`.
+Awk script that generates all bitmask combinations of dependencies, ordered by size (starting from 1). Used by `dependency_combinations`.
+
+### `lib/combinations_with_empty.awk`
+
+Awk script that generates all bitmask combinations including the empty set, ordered by size (starting from 0). Used by `minimal_dependencies`.
 
 ### `lib/parse_yaml_list.awk`
 

@@ -53,10 +53,6 @@ done < <("$(dirname "$0")"/optional_dependencies "$component")
 
 n=${#optional[@]} # number of optional dependencies
 
-# Calculate total combinations: 2^n (includes the empty set of optional deps)
-# Calculate 2^n using awk (bash << in $(()) confuses VS Code's syntax highlighter)
-total=$(awk "BEGIN { print 2^$n }")
-
 # Build the required deps string (always included in QUIBBLE_DEPS)
 required_str="" # space-separated list of required dep names
 if [ ${#required[@]} -gt 0 ]; then # only iterate if array is non-empty (bash 3.2 safe)
@@ -64,6 +60,18 @@ if [ ${#required[@]} -gt 0 ]; then # only iterate if array is non-empty (bash 3.
     required_str="${required_str:+$required_str }$dep" # append with space separator
   done
 fi
+
+# Generate all combinations of optional deps (including empty set), ordered by size.
+# See lib/combinations_with_empty.awk for the bitmask logic.
+combos=() # array of space-separated optional dep combinations
+if [ "$n" -gt 0 ]; then
+  while IFS= read -r combo; do
+    combos+=("$combo") # += appends to bash arrays
+  done < <(printf '%s\n' "${optional[@]}" | awk -f "$(dirname "$0")"/lib/combinations_with_empty.awk)
+else
+  combos=("") # only the empty set (no optional deps to vary)
+fi
+total=${#combos[@]} # total number of combinations
 
 # Print summary
 printf "All dependencies for %s (%d):\n" "$component" "${#all_deps[@]}"
@@ -86,99 +94,66 @@ else
 fi
 printf "\nTotal combinations to test: %d (from 0 to %d optional dependencies)\n" "$total" "$n"
 
-# --- Helper: count set bits in a number ---
-# Used to determine the size (number of optional deps) of each combination.
-count_bits() {
-  local num=$1
-  local count=0
-  while [ "$num" -gt 0 ]; do
-    count=$(( count + (num & 1) )) # add lowest bit (0 or 1)
-    num=$(( num >> 1 ))            # shift right to check next bit
-  done
-  echo "$count"
-}
-
-# --- Helper: build space-separated optional dep list from a bitmask ---
-# Each bit position corresponds to an optional dependency in the optional array.
-# Bit 0 = optional[0], bit 1 = optional[1], etc.
-optional_from_mask() {
-  local mask=$1
-  local result=""
-  local i
-  for i in $(seq 0 $((n - 1))); do
-    if [ $(( (mask >> i) & 1 )) -eq 1 ]; then # check if bit i is set
-      result="${result:+$result }${optional[$i]}"  # append with space; ${var:+...} avoids leading space
-    fi
-  done
-  echo "$result"
-}
-
 # --- Test all combinations, smallest first ---
 # Uses run_step from lib/batch_setup for progress tracking.
 # Required deps are always included. Only optional deps are varied.
 combo_num=0 # combination counter for progress display
 
-for size in $(seq 0 "$n"); do # iterate by size: 0 optional, 1 optional, 2 optional, ...
-  for mask in $(seq 0 $((total - 1))); do # iterate through all bitmasks
-    bits=$(count_bits "$mask") # count how many optional deps this mask selects
-    [ "$bits" -ne "$size" ] && continue # skip if not the current size
+for optional_combo in "${combos[@]}"; do
+  combo_num=$((combo_num + 1))
 
-    combo_num=$((combo_num + 1))
-    optional_combo=$(optional_from_mask "$mask") # space-separated optional dep names
+  # Build full combo: required deps + optional deps for this combination
+  if [ -n "$required_str" ] && [ -n "$optional_combo" ]; then
+    full_combo="$required_str $optional_combo" # both required and optional
+  elif [ -n "$required_str" ]; then
+    full_combo="$required_str" # required only (no optional for this combination)
+  else
+    full_combo="$optional_combo" # optional only (no required deps exist)
+  fi
 
-    # Build full combo: required deps + optional deps for this combination
-    if [ -n "$required_str" ] && [ -n "$optional_combo" ]; then
-      full_combo="$required_str $optional_combo" # both required and optional
-    elif [ -n "$required_str" ]; then
-      full_combo="$required_str" # required only (no optional for this combination)
+  printf "\n=== Combination %d/%d: %s === %s\n" "$combo_num" "$total" "${full_combo:-(none)}" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+
+  # Fresh core install for clean state
+  if ! run_step "$component" ./fresh_install; then
+    printf "SKIP (fresh_install failed)\n"
+    continue # try next combination
+  fi
+
+  # Install extension with this combination of deps
+  # QUIBBLE_DEPS overrides ./dependencies in ./install (see install script)
+  export QUIBBLE_DEPS="$full_combo"
+  if ! run_step "$component" ./install "$component"; then
+    unset QUIBBLE_DEPS # clean up env var
+    printf "FAILED (install failed)\n"
+    continue # try next combination
+  fi
+  unset QUIBBLE_DEPS # clean up env var (run_selenium_tests doesn't need it)
+
+  # Run Selenium tests
+  if run_step "$component" ./run_selenium_tests "$component"; then
+    # Tests passed — this is the smallest working combination
+    printf "\n========================================\n"
+    printf "= FOUND: minimum dependencies for %s\n" "$component"
+    printf "========================================\n"
+    if [ -z "$full_combo" ]; then
+      printf "\nNo dependencies needed.\n"
     else
-      full_combo="$optional_combo" # optional only (no required deps exist)
-    fi
-
-    printf "\n=== Combination %d/%d (%d optional deps): %s === %s\n" "$combo_num" "$total" "$size" "${full_combo:-(none)}" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-
-    # Fresh core install for clean state
-    if ! run_step "$component" ./fresh_install; then
-      printf "SKIP (fresh_install failed)\n"
-      continue # try next combination
-    fi
-
-    # Install extension with this combination of deps
-    # QUIBBLE_DEPS overrides ./dependencies in ./install (see install script)
-    export QUIBBLE_DEPS="$full_combo"
-    if ! run_step "$component" ./install "$component"; then
-      unset QUIBBLE_DEPS # clean up env var
-      printf "FAILED (install failed)\n"
-      continue # try next combination
-    fi
-    unset QUIBBLE_DEPS # clean up env var (run_selenium_tests doesn't need it)
-
-    # Run Selenium tests
-    if run_step "$component" ./run_selenium_tests "$component"; then
-      # Tests passed — this is the smallest working combination
-      printf "\n========================================\n"
-      printf "= FOUND: minimum dependencies for %s\n" "$component"
-      printf "========================================\n"
-      if [ -z "$full_combo" ]; then
-        printf "\nNo dependencies needed.\n"
-      else
-        printf "\nMinimum dependencies:\n"
-        if [ ${#required[@]} -gt 0 ]; then
-          printf "  Required (always needed):\n"
-          for dep in "${required[@]}"; do
-            printf "    %s\n" "$dep"
-          done
-        fi
-        if [ -n "$optional_combo" ]; then
-          printf "  Optional (minimum needed):\n"
-          for dep in $optional_combo; do # intentional word splitting on space-separated combo
-            printf "    %s\n" "$dep"
-          done
-        fi
+      printf "\nMinimum dependencies:\n"
+      if [ ${#required[@]} -gt 0 ]; then
+        printf "  Required (always needed):\n"
+        for dep in "${required[@]}"; do
+          printf "    %s\n" "$dep"
+        done
       fi
-      exit 0
+      if [ -n "$optional_combo" ]; then
+        printf "  Optional (minimum needed):\n"
+        for dep in $optional_combo; do # intentional word splitting on space-separated combo
+          printf "    %s\n" "$dep"
+        done
+      fi
     fi
-  done
+    exit 0
+  fi
 done
 
 # If we get here, no combination passed (shouldn't happen if the extension's tests work at all)
