@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#
+# Run Bats unit tests.
+# Requires Bats (https://github.com/bats-core/bats-core) in addition to the base prerequisites.
+#
+# Usage: ./unit_test
+#        ./unit_test test/lib_awk.bats
+#
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib/debug_info # print debug info, check prerequisites, show verbose hint
+
+# Check that bats is installed
+if ! command -v bats >/dev/null; then # command -v returns 0 if the command is found
+  echo "Error: bats is not installed. See https://github.com/bats-core/bats-core" >&2 # >&2 prints to stderr
+  exit 1
+fi
+
+# Run all tests or a specific test file if provided
+# ${@:-...} uses default value when no arguments given; "$@" passes arguments as-is
+bats "${@:-$(dirname "$0")/test/}"
