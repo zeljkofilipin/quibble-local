@@ -72,6 +72,13 @@ Run all scripts and report which ones passed or failed. Useful for detecting reg
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
 
+### `bats test/`
+
+Run unit tests. Fast, no Docker needed. Requires Bats in addition to the base prerequisites.
+
+    bats test/
+    bats test/lib_awk.bats  # run a single test file
+
 ## Commands (unique to quibble-local)
 
 ### `./prepare`
@@ -191,7 +198,7 @@ Run the same lint check that GitLab CI runs, using Docker. Does not require Shel
 
 ### `./lint`
 
-Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo.
+Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo. Requires ShellCheck in addition to the base prerequisites.
 
     ./lint
     VERBOSE=1 ./lint
