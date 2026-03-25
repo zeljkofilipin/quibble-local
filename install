@@ -87,7 +87,7 @@ fi
 # -e ZUUL_PROJECT: tell Quibble which extension/skin is the main project
 # --resolve-requires: let Quibble resolve and install PHP/extension dependencies
 # --command true: install only, don't run tests
-# "${deps[@]}": list of dependency repos to clone
+# ${deps[@]+"..."}: list of dependency repos to clone; ${arr[@]+"..."} is safe for empty arrays in bash 3.2
 docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm \
   --entrypoint=quibble-with-supervisord \
   -p 9413:9413 \
@@ -96,4 +96,4 @@ docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm \
   "$QUIBBLE_IMAGE" \
   --resolve-requires \
   --command true \
-  "${deps[@]}"
+  ${deps[@]+"${deps[@]}"}
