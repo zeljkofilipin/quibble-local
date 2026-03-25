@@ -201,6 +201,10 @@ Run `./deep_clean` first, then `./test`. Slower but starts from a completely cle
 
 These are sourced by other scripts and are not intended to be run directly.
 
+### `lib/batch_setup`
+
+Shared setup for batch scripts (`test`, `run_all`, `run_required`, `minimal_dependencies`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
+
 ### `lib/heartbeat`
 
 Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test`, `run_all`, `run_required`, and `minimal_dependencies` for silent mode progress feedback. Provides `run_with_dots` function.

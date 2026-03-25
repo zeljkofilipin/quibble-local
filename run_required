@@ -12,24 +12,8 @@
 
 # No set -euo pipefail: we want to continue after failures to collect all results
 
-# Check verbose mode (default is silent)
-verbose="${VERBOSE:-}" # VERBOSE=1 enables verbose mode; empty string means silent
+. "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
 
-. "$(dirname "$0")"/lib/inhibit_sleep # prevent the machine from suspending
-. "$(dirname "$0")"/lib/print_results # provides print_results function
-. "$(dirname "$0")"/lib/heartbeat     # provides run_with_dots function
-
-# Create and clean log directory for silent mode
-if [ -z "$verbose" ]; then
-  _QUIBBLE_LOG="log/silent/" # tell lib/debug_info where silent mode logs are saved
-  . "$(dirname "$0")"/lib/debug_info # check prerequisites and print debug info before output is redirected
-  mkdir -p log/silent   # create log directory for captured output
-  rm -f log/silent/*.log # clear old logs to avoid confusion from stale results
-fi
-
-# Track results for summary
-failed="" # newline-separated list of failed components
-passed="" # newline-separated list of passed components
 skipped="" # newline-separated list of components without Selenium tests
 pass_count=0   # running count of passed components
 fail_count=0   # running count of failed components
