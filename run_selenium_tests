@@ -36,8 +36,6 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-. "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
-
 # Decide how to run tests:
 # - with --spec + component: cd into component dir, then run specific test
 # - with --spec (no component): run specific test from repo root
@@ -54,6 +52,8 @@ else
   # Run all Selenium tests
   quibble_args=(--run selenium)
 fi
+
+. "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
 # Run Selenium tests in the container
 # "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
