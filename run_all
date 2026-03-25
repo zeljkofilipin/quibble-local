@@ -13,39 +13,6 @@
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
 
-# Run a command, print what it does, and record pass/fail
-run_step() {
-  local component="$1" # component name for tracking (e.g. "core" or "extensions/Echo")
-  shift                 # remove first arg; remaining args ("$@") are the command to run
-  local step="${1##*/}" # extract script name from path (e.g. ./fresh_install -> fresh_install)
-
-  if [ -n "$verbose" ]; then
-    # Verbose: print separator and run command with full output
-    printf "\n========================================\n"
-    printf "= %s: %s\n" "$component" "$*" # $* joins all args into a single string
-    printf "========================================\n"
-    if "$@"; then # run the command (all remaining arguments)
-      return 0 # step passed
-    else
-      failed="$failed
-  $component" # append component on a new indented line
-      return 1 # step failed, caller can skip remaining steps
-    fi
-  else
-    # Silent: save output to log file, print a dot per line of output, then ok or FAIL
-    local log_file="log/silent/${component//\//-}--${step}.log" # e.g. log/silent/extensions-Echo--install.log
-    if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
-      printf " ok " # success: mark step as passed
-      return 0
-    else
-      printf " FAIL " # failure: mark step as failed
-      failed="$failed
-  $component" # append component on a new indented line
-      return 1
-    fi
-  fi
-}
-
 # --- Core ---
 if [ -n "$verbose" ]; then
   # print section header for core
