@@ -51,6 +51,10 @@ Install an extension or skin. Assumes `./fresh_install` has been run first. Run 
     QUIBBLE_DEPS="" ./install extensions/Echo                    # no dependencies
     QUIBBLE_DEPS="EventLogging" ./install extensions/Echo        # only specific dependencies
 
+Environment variables:
+
+- `QUIBBLE_DEPS`: Override which dependencies to install (space-separated). When set, replaces the dependencies from `zuul/dependencies.yaml`. Set to empty string for no dependencies.
+
 See: [Install MediaWiki Core and an Extension](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension)
 
 ### `./run_selenium_tests`
@@ -183,9 +187,10 @@ Find the minimum dependencies needed for a repository's Selenium tests to pass. 
     PARALLEL=$(./suggested_parallel) ./minimal_dependencies extensions/Echo
     PARALLEL=4 FAST=1 ./minimal_dependencies extensions/Echo
 
-`GREEDY=1` starts with all dependencies and removes one at a time (O(N) instead of O(2^N)). Finds a minimal set but not necessarily the smallest possible. Combine with `FAST=1` for maximum speed.
+Environment variables:
 
-`PARALLEL=N` runs N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
+- `GREEDY=1`: Start with all dependencies and remove one at a time (O(N) instead of O(2^N)). Finds a minimal set but not necessarily the smallest possible. Combine with `FAST=1` for maximum speed.
+- `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 **Warning:** Tests up to 2^N combinations (N = number of optional dependencies). Each takes ~10 minutes. This script inhibits sleep to prevent the machine from suspending.
 
