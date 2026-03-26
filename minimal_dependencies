@@ -19,7 +19,7 @@
 # FAST=1: Runs fresh_install + install (with required deps) once, saves state, then restores.
 # GREEDY=1: Starts with all deps, removes one at a time. O(N) instead of O(2^N).
 # PARALLEL=N: Run N combinations in parallel (each in isolated src_worker_$i/ directory).
-#             Implies FAST=1. Use ./suggested_parallel to determine N for your machine.
+#             Use ./suggested_parallel to determine N for your machine.
 #
 
 # No set -euo pipefail: we want to continue after failures to test the next combination
@@ -29,10 +29,6 @@ fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-r
 greedy="${GREEDY:-}" # GREEDY=1 removes deps one at a time instead of testing all combinations
 parallel="${PARALLEL:-1}" # PARALLEL=N runs N combinations in parallel (default 1 = sequential)
 
-# PARALLEL implies FAST (parallel workers need save/restore for isolated src directories)
-if [ "$parallel" -gt 1 ]; then
-  fast=1
-fi
 
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then # $# is the number of arguments
@@ -340,19 +336,22 @@ else
   # --- Parallel mode (PARALLEL > 1) ---
   # Process combinations in waves of $parallel workers.
   # Each worker runs in an isolated src_worker_$i/ directory.
-  # FAST mode is implied: fresh_install once, save, then each worker restores.
+  # FAST mode: fresh_install + install once, save, then each worker restores.
+  # Normal mode: each worker runs fresh_install + install independently.
   printf "\nParallel mode: %d workers\n" "$parallel"
 
-  # Initial fresh_install + install + save (runs once, workers restore from src_save/)
-  if ! fresh_or_restore; then
-    printf "\nfresh_install/save failed. Cannot proceed.\n"
-    exit 1
-  fi
+  if [ -n "$fast" ]; then
+    # Fast mode: initial fresh_install + install + save (workers restore from src_save/)
+    if ! fresh_or_restore; then
+      printf "\nfresh_install/save failed. Cannot proceed.\n"
+      exit 1
+    fi
 
-  # Ensure src_save/ exists for workers to restore from
-  if [ ! -d src_save ]; then
-    printf "\nError: src_save/ missing after fresh_install+save. Cannot proceed.\n"
-    exit 1
+    # Ensure src_save/ exists for workers to restore from
+    if [ ! -d src_save ]; then
+      printf "\nError: src_save/ missing after fresh_install+save. Cannot proceed.\n"
+      exit 1
+    fi
   fi
 
   # Create result directory for workers to report pass/fail
@@ -394,7 +393,8 @@ else
       printf "  Worker %d: combo %d/%d: %s\n" "$((worker + 1))" "$((combo_idx + 1))" "$total" "${worker_full:-(none)}"
 
       # Launch worker in background subshell.
-      # Each worker: restore → install → run_selenium_tests in its own src directory.
+      # Fast mode: restore → install → run_selenium_tests in its own src directory.
+      # Normal mode: fresh_install → install → run_selenium_tests in its own src directory.
       # QUIBBLE_SRC: isolated src directory for this worker
       # QUIBBLE_EXPOSE_PORT=0: skip port mapping (avoid port conflicts between workers)
       # QUIBBLE_BACKGROUND=1: skip -i/-t Docker flags (no stdin in background)
@@ -409,10 +409,19 @@ else
         # Redirect all output to worker log file
         exec > "$worker_log/combination-$((combo_idx + 1)).log" 2>&1
 
-        # Restore core from saved state into worker's src directory
-        if ! ./restore; then
-          echo "fail" > "$result_dir/worker_$combo_idx"
-          exit 1
+        # Set up core MediaWiki + extension in worker's src directory
+        if [ -n "$fast" ]; then
+          # Fast mode: restore from saved state (includes MediaWiki + extension + required deps)
+          if ! ./restore; then
+            echo "fail" > "$result_dir/worker_$combo_idx"
+            exit 1
+          fi
+        else
+          # Normal mode: fresh_install + install extension from scratch
+          if ! ./fresh_install; then
+            echo "fail" > "$result_dir/worker_$combo_idx"
+            exit 1
+          fi
         fi
 
         # Install extension with this combination of deps
