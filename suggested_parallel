@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+#
+# Suggest the number of parallel workers for minimal_dependencies.
+# Outputs a single number based on available CPU and memory.
+# Each parallel worker needs ~2 CPU cores and ~2 GB of Docker memory.
+#
+# Usage: ./suggested_parallel
+#        PARALLEL=$(./suggested_parallel) ./minimal_dependencies extensions/Echo
+#
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+
+# Bytes per worker: ~2 GB (MariaDB + Chromium + PHP + MediaWiki per container)
+bytes_per_worker=2147483648 # 2 * 1024^3
+
+# Cores per worker: ~2 (Chromium and PHP are CPU-heavy during Selenium tests)
+cores_per_worker=2
+
+# --- Get CPU count ---
+# docker info reports CPUs available to the Docker daemon (works on macOS and Linux).
+# Fall back to OS-specific commands if docker info fails.
+if cpus=$(docker info --format '{{.NCPU}}' 2>/dev/null) && [ -n "$cpus" ]; then
+  : # cpus already set from docker info
+elif cpus=$(sysctl -n hw.ncpu 2>/dev/null) && [ -n "$cpus" ]; then
+  : # macOS: hw.ncpu gives total CPU count
+elif cpus=$(nproc 2>/dev/null) && [ -n "$cpus" ]; then
+  : # Linux: nproc gives available CPU count
+else
+  cpus=2 # safe fallback: assume 2 cores → suggest 1 worker
+fi
+
+# --- Get memory (bytes) ---
+# docker info reports memory available to the Docker daemon.
+# On macOS this is the Docker Desktop VM allocation (not total system RAM).
+# Fall back to OS-specific commands if docker info fails.
+if mem=$(docker info --format '{{.MemTotal}}' 2>/dev/null) && [ -n "$mem" ]; then
+  : # mem already set from docker info (bytes available to Docker)
+elif mem=$(sysctl -n hw.memsize 2>/dev/null) && [ -n "$mem" ]; then
+  : # macOS: hw.memsize gives total physical memory in bytes
+elif mem=$(awk '/MemTotal/ {print $2 * 1024}' /proc/meminfo 2>/dev/null) && [ -n "$mem" ]; then
+  : # Linux: /proc/meminfo gives total memory in kB, convert to bytes
+else
+  mem=4294967296 # safe fallback: assume 4 GB → suggest 2 workers
+fi
+
+# --- Calculate suggested parallel workers ---
+by_cpu=$((cpus / cores_per_worker))           # how many workers the CPUs can support
+by_mem=$((mem / bytes_per_worker))             # how many workers the memory can support
+
+# Use the smaller of the two (bottleneck determines the limit)
+if [ "$by_cpu" -lt "$by_mem" ]; then
+  suggested="$by_cpu"
+else
+  suggested="$by_mem"
+fi
+
+# Ensure at least 1 worker
+if [ "$suggested" -lt 1 ]; then
+  suggested=1
+fi
+
+echo "$suggested"

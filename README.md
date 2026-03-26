@@ -157,6 +157,13 @@ Output optional dependencies for an extension or skin. These are dependencies in
     ./optional_dependencies extensions/Echo
     ./optional_dependencies skins/MinervaNeue
 
+### `./suggested_parallel`
+
+Suggest the number of parallel workers for `./minimal_dependencies` based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number.
+
+    ./suggested_parallel
+    PARALLEL=$(./suggested_parallel) ./minimal_dependencies extensions/Echo
+
 ### `./minimal_dependencies`
 
 Find the minimum dependencies needed for a repository's Selenium tests to pass. Splits dependencies into required (from `extension.json`/`skin.json`) and optional (remaining). Required deps are always included; only optional deps are varied, testing combinations from smallest (0 optional) to largest (all optional).
