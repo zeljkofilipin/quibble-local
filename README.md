@@ -39,6 +39,8 @@ Install an extension or skin. Assumes `./fresh_install` has been run first. Run 
     ./install extensions/Echo
     ./install skins/MinervaNeue
     VERBOSE=1 ./install extensions/Echo
+    QUIBBLE_DEPS="" ./install extensions/Echo                    # no dependencies
+    QUIBBLE_DEPS="EventLogging" ./install extensions/Echo        # only specific dependencies
 
 See: [Install MediaWiki Core and an Extension](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension)
 
