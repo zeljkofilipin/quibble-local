@@ -12,7 +12,9 @@ Inspired by [mediawiki-quickstart](https://gitlab.wikimedia.org/repos/test-platf
 - [ShellCheck](https://www.shellcheck.net/) (optional, for linting)
 - [Bats](https://github.com/bats-core/bats-core) (optional, for unit tests)
 
-## Silent and verbose modes
+## Environment variables
+
+### `VERBOSE`
 
 All commands run in **silent mode** by default (no trace output, no debug info). Use `VERBOSE=1` for full output including trace output (`set -x`) and debug info.
 
@@ -20,6 +22,13 @@ All commands run in **silent mode** by default (no trace output, no debug info).
     VERBOSE=1 ./fresh_install  # verbose (trace output)
 
 When commands are called from `integration_test` or `run_all`, the mode is inherited via the `VERBOSE` environment variable.
+
+### `FAST`
+
+`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `run_all`, `run_required`, and `minimal_dependencies`.
+
+    FAST=1 ./run_all
+    FAST=1 ./minimal_dependencies extensions/Echo
 
 ## Commands (same as mediawiki-quickstart)
 
@@ -102,8 +111,6 @@ Run Selenium tests for core and all gated repositories. For each component: `./f
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
-`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component.
-
 ### `./fetch`
 
 Fetch the latest changes for all bare git repos in `ref/` from Gerrit.
@@ -143,8 +150,6 @@ Run Selenium tests for all gated repositories using only required dependencies (
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
-`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component.
-
 ### `./required_dependencies`
 
 Output required dependencies for an extension or skin from its `extension.json` or `skin.json`. These are the extensions/skins listed in the `requires` field that must always be present.
@@ -178,11 +183,9 @@ Find the minimum dependencies needed for a repository's Selenium tests to pass. 
     PARALLEL=$(./suggested_parallel) ./minimal_dependencies extensions/Echo
     PARALLEL=4 FAST=1 ./minimal_dependencies extensions/Echo
 
-`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each combination.
-
 `GREEDY=1` starts with all dependencies and removes one at a time (O(N) instead of O(2^N)). Finds a minimal set but not necessarily the smallest possible. Combine with `FAST=1` for maximum speed.
 
-`PARALLEL=N` runs N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Implies `FAST=1`. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
+`PARALLEL=N` runs N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 **Warning:** Tests up to 2^N combinations (N = number of optional dependencies). Each takes ~10 minutes. This script inhibits sleep to prevent the machine from suspending.
 
