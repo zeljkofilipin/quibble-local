@@ -19,6 +19,8 @@ shellcheck:
 bats:
   stage: test
   image: bats/bats:latest
+  before_script:
+    - apk add --no-cache bash git
   script:
     - bats test/
 
