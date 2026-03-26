@@ -12,6 +12,8 @@ create_bare_repo() {
 
   # Create a regular repo, add package.json, then clone it as bare
   git init --quiet "$tmp_repo"
+  git -C "$tmp_repo" config user.email "test@test"  # needed in CI where no global git identity exists
+  git -C "$tmp_repo" config user.name "test"         # needed in CI where no global git identity exists
   echo "$content" > "$tmp_repo/package.json"
   git -C "$tmp_repo" add package.json
   git -C "$tmp_repo" commit --quiet -m "add package.json"
