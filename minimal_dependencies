@@ -16,7 +16,7 @@
 # WARNING: Tests up to 2^N combinations (N = number of optional dependencies). Each
 #          combination runs fresh_install + install + run_selenium_tests (~10 min).
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
-# FAST=1: Runs fresh_install + install (with required deps) once, saves state, then restores.
+# FAST=1: Always runs fresh_install + install (with required deps) first, saves state, then restores.
 # GREEDY=1: Starts with all deps, removes one at a time. O(N) instead of O(2^N).
 # PARALLEL=N: Run N combinations in parallel (each in isolated src_worker_$i/ directory).
 #             Use ./suggested_parallel to determine N for your machine.
@@ -28,6 +28,7 @@
 fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-running
 greedy="${GREEDY:-}" # GREEDY=1 removes deps one at a time instead of testing all combinations
 parallel="${PARALLEL:-1}" # PARALLEL=N runs N combinations in parallel (default 1 = sequential)
+_first_run=1 # force fresh_install on first call (don't trust stale src_save/ from previous runs)
 
 
 # Show usage if no argument provided
@@ -92,11 +93,13 @@ total=${#combos[@]} # total number of combinations
 # Helper: run fresh_install or restore (if FAST=1 and saved state exists)
 # In fast mode, saves state after fresh_install + install (with required deps),
 # so restores include MediaWiki + extension. Only optional deps vary per combination.
+# First call always runs fresh_install (don't trust stale src_save/ from previous runs).
 fresh_or_restore() {
-  if [ -n "$fast" ] && [ -d src_save ]; then
+  if [ -n "$fast" ] && [ -d src_save ] && [ -z "$_first_run" ]; then
     # Fast mode: restore from saved state instead of running fresh_install
     run_step "$component" ./restore
   else
+    _first_run="" # clear after first run so subsequent calls can restore
     if run_step "$component" ./fresh_install; then
       # Save state after first successful fresh_install for fast mode
       if [ -n "$fast" ]; then
