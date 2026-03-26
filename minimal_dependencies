@@ -7,15 +7,18 @@
 #
 # Usage: ./minimal_dependencies extensions/Echo
 #        VERBOSE=1 ./minimal_dependencies extensions/Echo
+#        FAST=1 ./minimal_dependencies extensions/Echo
 #
 # WARNING: Tests up to 2^N combinations (N = number of optional dependencies). Each
 #          combination runs fresh_install + install + run_selenium_tests (~10 min).
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
+# FAST=1: Runs fresh_install once, saves state, then restores instead of re-running fresh_install.
 #
 
 # No set -euo pipefail: we want to continue after failures to test the next combination
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
+fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-running
 
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then # $# is the number of arguments
@@ -89,10 +92,22 @@ for optional_combo in "${combos[@]}"; do
 
   printf "\n=== Combination %d/%d: %s === %s\n" "$combo_num" "$total" "${full_combo:-(none)}" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 
-  # Fresh core install for clean state
-  if ! run_step "$component" ./fresh_install; then
-    printf "SKIP (fresh_install failed)\n"
-    continue # try next combination
+  # Fresh core install for clean state (or restore from saved state in fast mode)
+  if [ -n "$fast" ] && [ -d src_save ]; then
+    # Fast mode: restore from saved state instead of running fresh_install
+    if ! run_step "$component" ./restore; then
+      printf "SKIP (restore failed)\n"
+      continue # try next combination
+    fi
+  else
+    if ! run_step "$component" ./fresh_install; then
+      printf "SKIP (fresh_install failed)\n"
+      continue # try next combination
+    fi
+    # Save state after first successful fresh_install for fast mode
+    if [ -n "$fast" ]; then
+      run_step "$component" ./save
+    fi
   fi
 
   # Install extension with this combination of deps

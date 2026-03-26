@@ -9,10 +9,13 @@
 # Usage: ./run_all
 #        ./run_all extensions/Echo
 #        VERBOSE=1 ./run_all
+#        FAST=1 ./run_all
+# FAST=1: Runs fresh_install once, saves state, then restores instead of re-running fresh_install.
 #
 # No set -euo pipefail: we want to continue after failures to collect all results
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
+fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-running
 
 # --- Core ---
 if [ -n "$verbose" ]; then
@@ -24,6 +27,10 @@ else
   printf "core " # print component name, dots will follow on same line
 fi
 if run_step core ./fresh_install; then # install core; skip remaining steps if this fails
+  # Save state after first fresh_install for fast mode
+  if [ -n "$fast" ]; then
+    run_step core ./save
+  fi
   if ./selenium_tests_exist; then # check if core has Selenium tests
     run_step core ./run_selenium_tests # run core Selenium tests
   fi
@@ -45,7 +52,13 @@ while IFS= read -r component <&3; do
   else
     printf "%s " "$component" # print component name, dots will follow on same line
   fi
-  if run_step "$component" ./fresh_install; then # install core; skip remaining steps if this fails
+  # Restore from saved state in fast mode, or run fresh_install
+  if [ -n "$fast" ] && [ -d src_save ]; then
+    core_ok=false; run_step "$component" ./restore && core_ok=true
+  else
+    core_ok=false; run_step "$component" ./fresh_install && core_ok=true
+  fi
+  if [ "$core_ok" = true ]; then # skip remaining steps if core setup fails
     if run_step "$component" ./install "$component"; then # install extension/skin; skip tests if this fails
       if ./selenium_tests_exist "$component"; then # check if this component has Selenium tests
         run_step "$component" ./run_selenium_tests "$component" # run Selenium tests

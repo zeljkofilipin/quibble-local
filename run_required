@@ -9,11 +9,14 @@
 # Usage: ./run_required
 #        ./run_required extensions/Echo
 #        VERBOSE=1 ./run_required
+#        FAST=1 ./run_required
+# FAST=1: Runs fresh_install once, saves state, then restores instead of re-running fresh_install.
 #
 
 # No set -euo pipefail: we want to continue after failures to collect all results
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
+fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-running
 
 skipped="" # newline-separated list of components without Selenium tests
 pass_count=0   # running count of passed components
@@ -41,7 +44,17 @@ while IFS= read -r component <&3; do
     required_deps="${required_deps:+$required_deps }$dep" # space-separated list
   done < <("$(dirname "$0")"/required_dependencies "$component")
 
-  if run_step "$component" ./fresh_install; then # install core; skip remaining steps if this fails
+  # Restore from saved state in fast mode, or run fresh_install
+  if [ -n "$fast" ] && [ -d src_save ]; then
+    core_ok=false; run_step "$component" ./restore && core_ok=true
+  else
+    core_ok=false; run_step "$component" ./fresh_install && core_ok=true
+    # Save state after first successful fresh_install for fast mode
+    if [ "$core_ok" = true ] && [ -n "$fast" ]; then
+      run_step "$component" ./save
+    fi
+  fi
+  if [ "$core_ok" = true ]; then # skip remaining steps if core setup fails
     # Install with only required dependencies (QUIBBLE_DEPS overrides zuul's full dep list)
     export QUIBBLE_DEPS="$required_deps"
     if run_step "$component" ./install "$component"; then # install extension/skin; skip tests if this fails

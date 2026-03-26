@@ -96,8 +96,11 @@ Run Selenium tests for core and all gated repositories. For each component: `./f
 
     ./run_all
     VERBOSE=1 ./run_all
+    FAST=1 ./run_all
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
+
+`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component.
 
 ### `./fetch`
 
@@ -134,8 +137,11 @@ Run Selenium tests for all gated repositories using only required dependencies (
 
     ./run_required
     VERBOSE=1 ./run_required
+    FAST=1 ./run_required
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
+
+`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component.
 
 ### `./required_dependencies`
 
@@ -157,6 +163,9 @@ Find the minimum dependencies needed for a repository's Selenium tests to pass. 
 
     ./minimal_dependencies extensions/Echo
     VERBOSE=1 ./minimal_dependencies extensions/Echo
+    FAST=1 ./minimal_dependencies extensions/Echo
+
+`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each combination.
 
 **Warning:** Tests up to 2^N combinations (N = number of optional dependencies). Each takes ~10 minutes. This script inhibits sleep to prevent the machine from suspending.
 
@@ -174,6 +183,20 @@ Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
     ./selenium_tests_exist
     ./selenium_tests_exist extensions/Echo
     VERBOSE=1 ./selenium_tests_exist extensions/Echo
+
+### `./save`
+
+Save the current state of `src/` (MediaWiki installation) for fast restore later. Uses Docker-as-root to copy files (works on both macOS and Linux).
+
+    ./save
+    VERBOSE=1 ./save
+
+### `./restore`
+
+Restore `src/` from a previously saved state (created by `./save`). Much faster than running `./fresh_install` again.
+
+    ./restore
+    VERBOSE=1 ./restore
 
 ### `./clean`
 

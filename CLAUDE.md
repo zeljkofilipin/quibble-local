@@ -58,7 +58,8 @@ There is no build step. `./integration_test` is an integration test that exercis
 
 - `ref/` — bare git repos cloned from Gerrit, used as `--reference` to speed up clones
 - `src/` — MediaWiki working copy (created by Quibble inside the container)
+- `src_save/` — saved copy of `src/` for fast restore (created by `./save`)
 - `cache/` — Quibble cache (composer, npm)
 - `log/` — Quibble logs
 
-**Do not read or search** `cache/`, `log/`, `ref/`, or `src/` unless explicitly asked. These are large runtime directories (gigabytes of cloned repos, build artifacts, and logs) that are not part of the project source code.
+**Do not read or search** `cache/`, `log/`, `ref/`, `src/`, or `src_save/` unless explicitly asked. These are large runtime directories (gigabytes of cloned repos, build artifacts, and logs) that are not part of the project source code.

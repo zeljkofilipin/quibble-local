@@ -53,6 +53,8 @@ run_test ./lint                        # test that all scripts pass shellcheck
 run_test ./ci                          # test that CI lint passes in Docker
 run_test ./prepare                     # test that prepare pulls image and clones repos
 run_test ./fresh_install               # test fresh core install
+run_test ./save                        # test saving fresh_install state
+run_test ./restore                     # test restoring saved state
 run_test ./selenium_tests_exist        # test that core has Selenium tests
 run_test ./run_selenium_tests          # test running all core Selenium tests
 run_test ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js  # test running a specific test file

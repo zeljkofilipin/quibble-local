@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+#
+# Save the current state of src/ (MediaWiki installation) for fast restore later.
+# Uses Docker-as-root to copy files, so it works on both macOS and Linux
+# (where src/ files are owned by the container user).
+#
+# Usage: ./save
+#        VERBOSE=1 ./save
+#
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
+
+# Check that src/ exists and is not empty
+if [ ! -d src ] || [ -z "$(ls -A src 2>/dev/null)" ]; then
+  echo "Error: src/ is empty or missing. Run ./fresh_install first." >&2 # >&2 prints to stderr
+  exit 1
+fi
+
+# Create src_save/ with proper permissions for the container user
+mkdir -p src_save
+# chmod 777: container runs as a different user, so dir must be world-writable.
+# 2>/dev/null: suppress errors if dir is already root-owned.
+# ||: if chmod fails, fall back to Docker as root to set permissions.
+chmod 777 src_save 2>/dev/null || \
+  docker run --rm \
+    --entrypoint bash \
+    --user root \
+    -v "$QUIBBLE_DIR"/src_save:/workspace/src_save \
+    "$QUIBBLE_IMAGE" \
+    -c 'chmod 777 /workspace/src_save' # set permissions inside the container
+
+# Copy src/ to src_save/ using Docker-as-root.
+# --rm: remove container on exit
+# --entrypoint bash: override default entrypoint to run a shell command
+# --user root: run as root to have permission to read/write all files
+# -v: mount src/ (read-only) and src_save/ (writable)
+# cp -a: preserve permissions, ownership, timestamps
+# /workspace/src/.: copy contents (not the directory itself)
+docker run --rm \
+  --entrypoint bash \
+  --user root \
+  -v "$QUIBBLE_DIR"/src:/workspace/src:ro \
+  -v "$QUIBBLE_DIR"/src_save:/workspace/src_save \
+  "$QUIBBLE_IMAGE" \
+  -c 'find /workspace/src_save -mindepth 1 -delete && cp -a /workspace/src/. /workspace/src_save/' # clear old save, then copy
