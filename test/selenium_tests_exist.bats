@@ -2,13 +2,33 @@
 #
 # Tests for selenium_tests_exist script.
 
+# Create a bare git repo with a package.json file.
+# Usage: create_bare_repo <bare_repo_path> <package_json_content>
+create_bare_repo() {
+  local bare_repo="$1"   # path for the bare repo (e.g. ref/mediawiki/core.git)
+  local content="$2"     # package.json content
+  local tmp_repo
+  tmp_repo=$(mktemp -d)  # temporary regular repo to commit into
+
+  # Create a regular repo, add package.json, then clone it as bare
+  git init --quiet "$tmp_repo"
+  echo "$content" > "$tmp_repo/package.json"
+  git -C "$tmp_repo" add package.json
+  git -C "$tmp_repo" commit --quiet -m "add package.json"
+  mkdir -p "$(dirname "$bare_repo")" # create parent directories
+  git clone --quiet --bare "$tmp_repo" "$bare_repo"
+  rm -rf "$tmp_repo" # clean up temporary repo
+}
+
 setup() {
-  TEST_DIR=$(mktemp -d) # create a temp directory to simulate src/
+  TEST_DIR=$(mktemp -d) # create a temp directory to simulate the project root
 }
 
 teardown() {
   rm -rf "$TEST_DIR" # clean up temp directory
 }
+
+# --- Tests with src/ already present (e.g. after fresh_install/install) ---
 
 @test "selenium_tests_exist: exits 0 when core has selenium-test script" {
   mkdir -p "$TEST_DIR/src"
@@ -62,4 +82,49 @@ teardown() {
   cd "$TEST_DIR"
   run "$BATS_TEST_DIRNAME/../selenium_tests_exist" skins/MinervaNeue
   [ "$status" -eq 0 ]
+}
+
+# --- Tests that clone from ref/ bare repos (no src/ present) ---
+
+@test "selenium_tests_exist: clones core from ref and finds selenium-test" {
+  cd "$TEST_DIR"
+  create_bare_repo ref/mediawiki/core.git '{"scripts": {"selenium-test": "wdio"}}'
+  run "$BATS_TEST_DIRNAME/../selenium_tests_exist"
+  [ "$status" -eq 0 ]
+  [ -d "$TEST_DIR/src" ] # src/ should have been created by clone
+}
+
+@test "selenium_tests_exist: clones core from ref and exits 1 when no selenium-test" {
+  cd "$TEST_DIR"
+  create_bare_repo ref/mediawiki/core.git '{"scripts": {"test": "jest"}}'
+  run "$BATS_TEST_DIRNAME/../selenium_tests_exist"
+  [ "$status" -eq 1 ]
+}
+
+@test "selenium_tests_exist: clones extension from ref and finds selenium-test" {
+  cd "$TEST_DIR"
+  create_bare_repo ref/mediawiki/extensions/Echo.git '{"scripts": {"selenium-test": "wdio"}}'
+  run "$BATS_TEST_DIRNAME/../selenium_tests_exist" extensions/Echo
+  [ "$status" -eq 0 ]
+  [ -d "$TEST_DIR/src/extensions/Echo" ] # extension dir should have been created by clone
+}
+
+@test "selenium_tests_exist: clones skin from ref and finds selenium-test" {
+  cd "$TEST_DIR"
+  create_bare_repo ref/mediawiki/skins/MinervaNeue.git '{"scripts": {"selenium-test": "wdio"}}'
+  run "$BATS_TEST_DIRNAME/../selenium_tests_exist" skins/MinervaNeue
+  [ "$status" -eq 0 ]
+  [ -d "$TEST_DIR/src/skins/MinervaNeue" ] # skin dir should have been created by clone
+}
+
+@test "selenium_tests_exist: exits 1 when no ref and no src" {
+  cd "$TEST_DIR"
+  run "$BATS_TEST_DIRNAME/../selenium_tests_exist"
+  [ "$status" -eq 1 ]
+}
+
+@test "selenium_tests_exist: exits 1 for extension with no ref and no src" {
+  cd "$TEST_DIR"
+  run "$BATS_TEST_DIRNAME/../selenium_tests_exist" extensions/Echo
+  [ "$status" -eq 1 ]
 }
