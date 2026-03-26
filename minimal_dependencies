@@ -16,7 +16,7 @@
 # WARNING: Tests up to 2^N combinations (N = number of optional dependencies). Each
 #          combination runs fresh_install + install + run_selenium_tests (~10 min).
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
-# FAST=1: Runs fresh_install once, saves state, then restores instead of re-running fresh_install.
+# FAST=1: Runs fresh_install + install (with required deps) once, saves state, then restores.
 # GREEDY=1: Starts with all deps, removes one at a time. O(N) instead of O(2^N).
 # PARALLEL=N: Run N combinations in parallel (each in isolated src_worker_$i/ directory).
 #             Implies FAST=1. Use ./suggested_parallel to determine N for your machine.
@@ -94,7 +94,8 @@ total=${#combos[@]} # total number of combinations
 . "$(dirname "$0")"/lib/print_dep_summary
 
 # Helper: run fresh_install or restore (if FAST=1 and saved state exists)
-# Sets up core MediaWiki for a clean test run.
+# In fast mode, saves state after fresh_install + install (with required deps),
+# so restores include MediaWiki + extension. Only optional deps vary per combination.
 fresh_or_restore() {
   if [ -n "$fast" ] && [ -d src_save ]; then
     # Fast mode: restore from saved state instead of running fresh_install
@@ -103,6 +104,14 @@ fresh_or_restore() {
     if run_step "$component" ./fresh_install; then
       # Save state after first successful fresh_install for fast mode
       if [ -n "$fast" ]; then
+        # Install extension with required deps before saving, so restore includes
+        # MediaWiki + extension. Only optional deps vary per combination.
+        export QUIBBLE_DEPS="$required_str"
+        if ! run_step "$component" ./install "$component"; then
+          unset QUIBBLE_DEPS # clean up env var
+          return 1
+        fi
+        unset QUIBBLE_DEPS # clean up env var
         run_step "$component" ./save
       fi
       return 0
@@ -334,7 +343,7 @@ else
   # FAST mode is implied: fresh_install once, save, then each worker restores.
   printf "\nParallel mode: %d workers\n" "$parallel"
 
-  # Initial fresh_install + save (runs once, workers restore from src_save/)
+  # Initial fresh_install + install + save (runs once, workers restore from src_save/)
   if ! fresh_or_restore; then
     printf "\nfresh_install/save failed. Cannot proceed.\n"
     exit 1
