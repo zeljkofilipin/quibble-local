@@ -164,8 +164,12 @@ Find the minimum dependencies needed for a repository's Selenium tests to pass. 
     ./minimal_dependencies extensions/Echo
     VERBOSE=1 ./minimal_dependencies extensions/Echo
     FAST=1 ./minimal_dependencies extensions/Echo
+    GREEDY=1 ./minimal_dependencies extensions/Echo
+    GREEDY=1 FAST=1 ./minimal_dependencies extensions/Echo
 
 `FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each combination.
+
+`GREEDY=1` starts with all dependencies and removes one at a time (O(N) instead of O(2^N)). Finds a minimal set but not necessarily the smallest possible. Combine with `FAST=1` for maximum speed.
 
 **Warning:** Tests up to 2^N combinations (N = number of optional dependencies). Each takes ~10 minutes. This script inhibits sleep to prevent the machine from suspending.
 

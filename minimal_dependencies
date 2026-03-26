@@ -8,17 +8,21 @@
 # Usage: ./minimal_dependencies extensions/Echo
 #        VERBOSE=1 ./minimal_dependencies extensions/Echo
 #        FAST=1 ./minimal_dependencies extensions/Echo
+#        GREEDY=1 ./minimal_dependencies extensions/Echo
+#        GREEDY=1 FAST=1 ./minimal_dependencies extensions/Echo
 #
 # WARNING: Tests up to 2^N combinations (N = number of optional dependencies). Each
 #          combination runs fresh_install + install + run_selenium_tests (~10 min).
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 # FAST=1: Runs fresh_install once, saves state, then restores instead of re-running fresh_install.
+# GREEDY=1: Starts with all deps, removes one at a time. O(N) instead of O(2^N).
 #
 
 # No set -euo pipefail: we want to continue after failures to test the next combination
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
 fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-running
+greedy="${GREEDY:-}" # GREEDY=1 removes deps one at a time instead of testing all combinations
 
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then # $# is the number of arguments
@@ -79,7 +83,146 @@ total=${#combos[@]} # total number of combinations
 # Print summary of all, required, and optional dependencies
 . "$(dirname "$0")"/lib/print_dep_summary
 
-# --- Test all combinations, smallest first ---
+# Helper: run fresh_install or restore (if FAST=1 and saved state exists)
+# Sets up core MediaWiki for a clean test run.
+fresh_or_restore() {
+  if [ -n "$fast" ] && [ -d src_save ]; then
+    # Fast mode: restore from saved state instead of running fresh_install
+    run_step "$component" ./restore
+  else
+    if run_step "$component" ./fresh_install; then
+      # Save state after first successful fresh_install for fast mode
+      if [ -n "$fast" ]; then
+        run_step "$component" ./save
+      fi
+      return 0
+    else
+      return 1
+    fi
+  fi
+}
+
+if [ -n "$greedy" ]; then
+  # --- Greedy algorithm: start with all deps, remove one at a time ---
+  # O(N) instead of O(2^N). For each optional dep, try removing it.
+  # If tests still pass without it, it's not needed.
+  printf "\nGreedy mode: starting with all %d optional deps, removing one at a time.\n" "$n"
+
+  # Start with all optional deps as "kept" (indices into the optional array)
+  kept=() # indices of optional deps still included
+  for i in $(seq 0 $((n - 1))); do
+    kept+=("$i") # start with all optional deps
+  done
+
+  # First, verify tests pass with all dependencies
+  printf "\n=== Baseline: all dependencies === %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+  if ! fresh_or_restore; then
+    printf "SKIP (fresh_install/restore failed)\n"
+    printf "\nCannot establish baseline.\n"
+    exit 1
+  fi
+
+  # Build optional_combo from all optional deps for baseline test
+  optional_combo=""
+  if [ "$n" -gt 0 ]; then
+    for dep in "${optional[@]}"; do
+      optional_combo="${optional_combo:+$optional_combo }$dep" # space-separated
+    done
+  fi
+  . "$(dirname "$0")"/lib/build_full_combo
+
+  export QUIBBLE_DEPS="$full_combo"
+  if ! run_step "$component" ./install "$component"; then
+    unset QUIBBLE_DEPS
+    printf "\nBaseline install failed with all dependencies.\n"
+    exit 1
+  fi
+  unset QUIBBLE_DEPS
+
+  if ! run_step "$component" ./run_selenium_tests "$component"; then
+    printf "\nBaseline tests failed with all dependencies. Cannot determine minimum.\n"
+    exit 1
+  fi
+
+  # Try removing each optional dep one at a time
+  for i in $(seq 0 $((n - 1))); do
+    dep="${optional[$i]}"
+    printf "\n=== Try removing %s (%d/%d) === %s\n" "$dep" "$((i + 1))" "$n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+
+    # Build optional_combo without this dep (using kept indices, excluding i)
+    new_kept=() # candidate kept list without current dep
+    for k in "${kept[@]}"; do
+      [ "$k" -eq "$i" ] && continue # skip the dep we're trying to remove
+      new_kept+=("$k")
+    done
+
+    # Build optional_combo from new_kept indices
+    optional_combo=""
+    if [ ${#new_kept[@]} -gt 0 ]; then
+      for k in "${new_kept[@]}"; do
+        optional_combo="${optional_combo:+$optional_combo }${optional[k]}" # space-separated
+      done
+    fi
+    . "$(dirname "$0")"/lib/build_full_combo
+
+    if ! fresh_or_restore; then
+      printf "SKIP (fresh_install/restore failed), keeping %s\n" "$dep"
+      continue # keep this dep (can't test without it)
+    fi
+
+    export QUIBBLE_DEPS="$full_combo"
+    if ! run_step "$component" ./install "$component"; then
+      unset QUIBBLE_DEPS
+      printf "Install failed without %s, keeping it\n" "$dep"
+      continue # keep this dep
+    fi
+    unset QUIBBLE_DEPS
+
+    if run_step "$component" ./run_selenium_tests "$component"; then
+      printf "Tests passed without %s, removing it\n" "$dep"
+      kept=("${new_kept[@]}") # permanently remove this dep
+    else
+      printf "Tests failed without %s, keeping it\n" "$dep"
+      # kept stays unchanged (dep remains)
+    fi
+  done
+
+  # Print results
+  printf "\n========================================\n"
+  printf "= FOUND: minimum dependencies for %s\n" "$component"
+  printf "========================================\n"
+
+  # Build final optional_combo from kept indices
+  optional_combo=""
+  if [ ${#kept[@]} -gt 0 ]; then
+    for k in "${kept[@]}"; do
+      optional_combo="${optional_combo:+$optional_combo }${optional[k]}" # space-separated
+    done
+  fi
+
+  if [ -z "$required_str" ] && [ -z "$optional_combo" ]; then
+    printf "\nNo dependencies needed.\n"
+  else
+    printf "\nMinimum dependencies:\n"
+    if [ ${#required[@]} -gt 0 ]; then
+      printf "  Required (always needed):\n"
+      for dep in "${required[@]}"; do
+        printf "    %s\n" "$dep"
+      done
+    fi
+    if [ -n "$optional_combo" ]; then
+      printf "  Optional (minimum needed):\n"
+      for dep in $optional_combo; do # intentional word splitting on space-separated combo
+        printf "    %s\n" "$dep"
+      done
+    else
+      printf "  Optional: (none needed)\n"
+    fi
+  fi
+  exit 0
+fi
+
+# --- Exhaustive: test all combinations, smallest first ---
 # Uses run_step from lib/batch_setup for progress tracking.
 # Required deps are always included. Only optional deps are varied.
 combo_num=0 # combination counter for progress display
@@ -93,21 +236,9 @@ for optional_combo in "${combos[@]}"; do
   printf "\n=== Combination %d/%d: %s === %s\n" "$combo_num" "$total" "${full_combo:-(none)}" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 
   # Fresh core install for clean state (or restore from saved state in fast mode)
-  if [ -n "$fast" ] && [ -d src_save ]; then
-    # Fast mode: restore from saved state instead of running fresh_install
-    if ! run_step "$component" ./restore; then
-      printf "SKIP (restore failed)\n"
-      continue # try next combination
-    fi
-  else
-    if ! run_step "$component" ./fresh_install; then
-      printf "SKIP (fresh_install failed)\n"
-      continue # try next combination
-    fi
-    # Save state after first successful fresh_install for fast mode
-    if [ -n "$fast" ]; then
-      run_step "$component" ./save
-    fi
+  if ! fresh_or_restore; then
+    printf "SKIP (fresh_install/restore failed)\n"
+    continue # try next combination
   fi
 
   # Install extension with this combination of deps
