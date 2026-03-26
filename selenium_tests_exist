@@ -2,8 +2,8 @@
 #
 # Check if a component has Selenium tests.
 # Exits 0 if selenium-test script exists in package.json, 1 otherwise.
-# Clones the repo from ref/ to src/ if needed (no Docker or fresh_install required).
-# Assumes ./prepare has been run first (bare repos exist in ref/).
+# Clones the bare repo from Gerrit if needed, then clones from ref/ to src/.
+# No Docker or fresh_install required.
 #
 # Usage: ./selenium_tests_exist
 #        ./selenium_tests_exist extensions/Echo
@@ -12,23 +12,29 @@
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
-# Determine the bare repo path and clone destination
+# Determine the Gerrit repo, bare repo path, and clone destination
 if [ $# -gt 0 ]; then
   component="$1"                                # e.g. "extensions/Echo"
+  repo="mediawiki/${component}"                  # e.g. "mediawiki/extensions/Echo"
   bare_repo="ref/mediawiki/${component}.git"     # e.g. ref/mediawiki/extensions/Echo.git
   dest="src/${component}"                        # e.g. src/extensions/Echo
   package_json="src/${component}/package.json"   # e.g. src/extensions/Echo/package.json
 else
+  repo="mediawiki/core"                          # core Gerrit repo
   bare_repo="ref/mediawiki/core.git"             # core bare repo
   dest="src"                                     # clone core to src/
   package_json="src/package.json"                # core
 fi
 
 # Clone from bare repo to src/ if the directory doesn't exist yet
-# Uses local bare repo so no network access is needed
-if [ ! -d "$dest" ] && [ -d "$bare_repo" ]; then
+if [ ! -d "$dest" ]; then
+  # Clone bare repo from Gerrit if not already present
+  if [ ! -d "$bare_repo" ]; then
+    mkdir -p "$(dirname "$bare_repo")" # create parent directories
+    git clone --quiet --bare "https://gerrit.wikimedia.org/r/${repo}" "$bare_repo"
+  fi
   mkdir -p "$(dirname "$dest")" # create parent directories (no-op for core)
-  git clone --quiet "$bare_repo" "$dest" # clone from local bare repo
+  git clone --quiet "$bare_repo" "$dest" # clone from local bare repo (no network needed)
 fi
 
 # Check if package.json exists

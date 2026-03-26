@@ -116,15 +116,3 @@ teardown() {
   [ "$status" -eq 0 ]
   [ -d "$TEST_DIR/src/skins/MinervaNeue" ] # skin dir should have been created by clone
 }
-
-@test "selenium_tests_exist: exits 1 when no ref and no src" {
-  cd "$TEST_DIR"
-  run "$BATS_TEST_DIRNAME/../selenium_tests_exist"
-  [ "$status" -eq 1 ]
-}
-
-@test "selenium_tests_exist: exits 1 for extension with no ref and no src" {
-  cd "$TEST_DIR"
-  run "$BATS_TEST_DIRNAME/../selenium_tests_exist" extensions/Echo
-  [ "$status" -eq 1 ]
-}
