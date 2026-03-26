@@ -1,0 +1,28 @@
+# shellcheck shell=bash
+# Format elapsed seconds as human-readable duration string.
+# Provides _quibble_format_duration function.
+# Sourced by lib/duration_trap and lib/batch_setup.
+
+# Format seconds as human-readable duration string.
+# Omits zero-value days, hours, and minutes. Always shows seconds.
+# Usage: _quibble_format_duration SECONDS
+# Example: _quibble_format_duration 3661  →  "1h 1m 1s"
+_quibble_format_duration() {
+  local total="$1"                          # total elapsed seconds
+  local days=$((total / 86400))             # 86400 seconds per day
+  local hours=$(( (total % 86400) / 3600 )) # remaining hours after days
+  local minutes=$(( (total % 3600) / 60 ))  # remaining minutes after hours
+  local seconds=$((total % 60))             # remaining seconds after minutes
+  local result=""                            # build up the output string
+  if [ "$days" -gt 0 ]; then                # include days only if non-zero
+    result="${days}d "
+  fi
+  if [ "$hours" -gt 0 ]; then               # include hours only if non-zero
+    result="${result}${hours}h "
+  fi
+  if [ "$minutes" -gt 0 ]; then             # include minutes only if non-zero
+    result="${result}${minutes}m "
+  fi
+  result="${result}${seconds}s"              # always include seconds
+  printf "%s" "$result"                      # print without trailing newline
+}

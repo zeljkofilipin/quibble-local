@@ -68,5 +68,5 @@ if [ "${VERBOSE:-}" = "1" ]; then
 fi
 
 # --- Output redirection (silent mode only) ---
-# Saves output to log file, prints dots per line, shows ok/FAIL on exit.
+# Saves output to log file, prints dots per line, shows ok/FAIL with duration on exit.
 . "$(dirname "$0")"/lib/silent_output

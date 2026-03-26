@@ -1,14 +1,15 @@
 # shellcheck shell=bash
 # Shared setup for batch scripts (integration_test, run_all, run_required, minimal_dependencies).
-# Sets up verbose/silent mode, sources helper libraries, creates log directory.
+# Sets up verbose/silent mode, sources helper libraries (including duration tracking), creates log directory.
 # Must be sourced, not run directly.
 
 # Check verbose mode (default is silent)
 verbose="${VERBOSE:-}" # VERBOSE=1 enables verbose mode; empty string means silent
 
-. "$(dirname "$0")"/lib/inhibit_sleep # prevent the machine from suspending
-. "$(dirname "$0")"/lib/print_results # provides print_results function
-. "$(dirname "$0")"/lib/heartbeat     # provides run_with_dots function
+. "$(dirname "$0")"/lib/inhibit_sleep  # prevent the machine from suspending
+. "$(dirname "$0")"/lib/print_results  # provides print_results function
+. "$(dirname "$0")"/lib/heartbeat      # provides run_with_dots function
+. "$(dirname "$0")"/lib/duration_trap  # provides _quibble_format_duration and sets EXIT trap for total duration
 
 # Create and clean log directory for silent mode
 if [ -z "$verbose" ]; then
@@ -30,6 +31,7 @@ run_step() {
   local component="$1" # component name for tracking
   shift                 # remove first arg; remaining args ("$@") are the command to run
   local step="${1##*/}" # extract script name from path (e.g. ./fresh_install -> fresh_install)
+  local step_start=$SECONDS # capture start time for step duration
 
   if [ -n "$verbose" ]; then
     # Verbose: print separator and run command with full output
@@ -37,21 +39,23 @@ run_step() {
     printf "= %s: %s %s\n" "$component" "$*" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # $* joins all args into a single string
     printf "========================================\n"
     if "$@"; then # run the command (all remaining arguments)
+      printf "(%s)\n" "$(_quibble_format_duration "$((SECONDS - step_start))")" # print step duration
       return 0 # step passed
     else
+      printf "(%s)\n" "$(_quibble_format_duration "$((SECONDS - step_start))")" # print step duration
       failed="$failed
   $component ($step)" # append component and failed step on a new indented line
       return 1 # step failed, caller can skip remaining steps
     fi
   else
-    # Silent: print step label, save output to log file, print a dot per line, then ok or FAIL
+    # Silent: print step label, save output to log file, print a dot per line, then ok or FAIL with duration
     local log_file="log/silent/${component//\//-}--${step}.log" # e.g. log/silent/extensions-Echo--install.log
     printf "%s " "$step" # print step name before dots (e.g. "fresh_install ")
     if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
-      printf " ok " # success: mark step as passed
+      printf " ok (%s) " "$(_quibble_format_duration "$((SECONDS - step_start))")" # success with duration
       return 0
     else
-      printf " FAIL " # failure: mark step as failed
+      printf " FAIL (%s) " "$(_quibble_format_duration "$((SECONDS - step_start))")" # failure with duration
       failed="$failed
   $component ($step)" # append component and failed step on a new indented line
       return 1

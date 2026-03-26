@@ -264,7 +264,15 @@ Run a command, save output to a log file, and print a dot for each line of outpu
 
 ### `lib/debug_info`
 
-Outputs debug information (OS, bash, git, docker versions), checks basic prerequisites (git), and shows a "use VERBOSE=1 for full output" hint in silent mode. Sourced by all scripts.
+Outputs debug information (OS, bash, git, docker versions), checks basic prerequisites (git), shows a "use VERBOSE=1 for full output" hint in silent mode, and sets up duration tracking via `lib/duration_trap`. Sourced by all scripts.
+
+### `lib/format_duration`
+
+Provides `_quibble_format_duration` function that formats elapsed seconds as a human-readable duration string (e.g. "1h 5m 30s"). Omits zero-value days, hours, and minutes; always shows seconds. Sourced by `lib/duration_trap` and `lib/batch_setup`.
+
+### `lib/duration_trap`
+
+Sets an EXIT trap to print total script duration when the script exits. Only activates when stdout is a terminal. Sources `lib/format_duration`. Sourced by `lib/debug_info`, `lib/batch_setup`, and `lint`. `lib/silent_output` overrides this trap with its own handler that also includes duration.
 
 ### `lib/setup`
 
@@ -272,7 +280,7 @@ Shared setup sourced by scripts that run Docker commands. Sources `lib/debug_inf
 
 ### `lib/silent_output`
 
-Output redirection for silent mode. Saves all output to a log file (e.g. `log/fresh_install.log`) and prints a dot per line to the terminal. On exit, prints "ok" or "FAIL" with the log file path. Sourced by `lib/setup`.
+Output redirection for silent mode. Saves all output to a log file (e.g. `log/fresh_install.log`) and prints a dot per line to the terminal. On exit, prints "ok" or "FAIL" with elapsed time and the log file path. Sourced by `lib/setup`.
 
 ### `lib/resolve_deps`
 

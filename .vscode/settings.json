@@ -3,6 +3,8 @@
   "files.associations": {
     "**/lib/batch_setup": "shellscript",
     "**/lib/debug_info": "shellscript",
+    "**/lib/duration_trap": "shellscript",
+    "**/lib/format_duration": "shellscript",
     "**/lib/ensure_config": "shellscript",
     "**/lib/heartbeat": "shellscript",
     "**/lib/inhibit_sleep": "shellscript",

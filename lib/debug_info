@@ -1,6 +1,6 @@
 # shellcheck shell=bash
-# Outputs debug information, checks basic prerequisites, and shows a verbose mode hint.
-# Sourced by all scripts. Docker-specific prerequisite checks are in lib/setup.
+# Outputs debug information, checks basic prerequisites, shows a verbose mode hint,
+# and sets up duration tracking. Sourced by all scripts. Docker-specific prerequisite checks are in lib/setup.
 
 # --- Prerequisite checks ---
 # Check that git is installed (required by all scripts)
@@ -32,3 +32,9 @@ if [ -t 1 ]; then
   fi
   echo                                    # blank line after debug info
 fi
+
+# --- Duration tracking ---
+# Source duration trap to print elapsed time when the script exits.
+# The EXIT trap only activates when stdout is a terminal.
+# lib/silent_output overrides this trap with its own handler that includes duration.
+. "$(dirname "$0")"/lib/duration_trap
