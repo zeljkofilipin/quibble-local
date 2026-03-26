@@ -16,31 +16,32 @@ if [ ! -d src_save ] || [ -z "$(ls -A src_save 2>/dev/null)" ]; then
   exit 1
 fi
 
-# Ensure src/ exists with proper permissions
-mkdir -p src
+# Ensure target src directory exists with proper permissions.
+# Uses QUIBBLE_SRC from lib/setup (default "src", overridden for parallel workers).
+mkdir -p "$QUIBBLE_SRC"
 # chmod 777: container runs as a different user, so dir must be world-writable.
 # 2>/dev/null: suppress errors if dir is already root-owned.
 # ||: if chmod fails, fall back to Docker as root to set permissions.
-chmod 777 src 2>/dev/null || \
+chmod 777 "$QUIBBLE_SRC" 2>/dev/null || \
   docker run --rm \
     --entrypoint bash \
     --user root \
-    -v "$QUIBBLE_DIR"/src:/workspace/src \
+    -v "$QUIBBLE_DIR"/"$QUIBBLE_SRC":/workspace/src \
     "$QUIBBLE_IMAGE" \
     -c 'chmod 777 /workspace/src' # set permissions inside the container
 
-# Clear src/ and restore from src_save/ in one Docker command.
+# Clear target and restore from src_save/ in one Docker command.
 # --rm: remove container on exit
 # --entrypoint bash: override default entrypoint to run a shell command
 # --user root: run as root to have permission to delete/copy all files
-# -v: mount src/ (writable) and src_save/ (read-only)
-# find -delete: remove all contents of src/ but not the mount point
+# -v: mount target src (writable) and src_save/ (read-only)
+# find -delete: remove all contents of target but not the mount point
 # cp -a: preserve permissions, ownership, timestamps
 # /workspace/src_save/.: copy contents (not the directory itself)
 docker run --rm \
   --entrypoint bash \
   --user root \
-  -v "$QUIBBLE_DIR"/src:/workspace/src \
+  -v "$QUIBBLE_DIR"/"$QUIBBLE_SRC":/workspace/src \
   -v "$QUIBBLE_DIR"/src_save:/workspace/src_save:ro \
   "$QUIBBLE_IMAGE" \
   -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/' # clear and restore

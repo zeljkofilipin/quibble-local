@@ -27,20 +27,34 @@ fi
 # --- Shared variables ---
 export QUIBBLE_IMAGE="docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest" # Docker image for Quibble
 QUIBBLE_DIR="$(pwd)" # project root, captured before set -x to avoid noisy pwd trace
+QUIBBLE_SRC="${QUIBBLE_SRC:-src}" # source directory, override for parallel workers (e.g. src_worker_1)
 # Common Docker volume mounts for Quibble commands (cache, log, ref, src)
 # shellcheck disable=SC2034 # used by scripts that source this file
 QUIBBLE_VOLUMES=(
   -v "$QUIBBLE_DIR"/cache:/cache           # composer/npm cache
   -v "$QUIBBLE_DIR"/log:/workspace/log     # Quibble logs
   -v "$QUIBBLE_DIR"/ref:/srv/git:ro        # bare git repos as references
-  -v "$QUIBBLE_DIR"/src:/workspace/src     # MediaWiki source code
+  -v "$QUIBBLE_DIR"/"$QUIBBLE_SRC":/workspace/src     # MediaWiki source code (uses QUIBBLE_SRC for parallel workers)
 )
+
+# --- Port mapping ---
+# Expose MediaWiki port for interactive use. Skip in parallel mode to avoid port conflicts.
+# Set QUIBBLE_EXPOSE_PORT=0 to disable (parallel workers don't need host port access).
+# shellcheck disable=SC2034 # used by scripts that source this file
+if [ "${QUIBBLE_EXPOSE_PORT:-1}" = "1" ]; then
+  QUIBBLE_PORT_FLAGS=(-p 9413:9413) # map container port to host
+else
+  QUIBBLE_PORT_FLAGS=()             # no port mapping (parallel/automated mode)
+fi
 
 # --- Docker interactive flags ---
 # In verbose mode (or when run directly), use -it for interactive terminal + TTY.
 # In silent mode, drop -t to avoid TTY control characters in log files.
+# In background mode (parallel workers), drop both -i and -t (no stdin attached).
 # shellcheck disable=SC2034 # used by scripts that source this file
-if [ "${VERBOSE:-}" = "1" ]; then
+if [ "${QUIBBLE_BACKGROUND:-}" = "1" ]; then
+  QUIBBLE_DOCKER_FLAGS=()    # no interactive flags (background worker, no stdin)
+elif [ "${VERBOSE:-}" = "1" ]; then
   QUIBBLE_DOCKER_FLAGS=(-it) # interactive + TTY for terminal use
 else
   QUIBBLE_DOCKER_FLAGS=(-i)  # interactive only (no TTY = clean log output)

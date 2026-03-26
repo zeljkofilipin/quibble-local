@@ -10,12 +10,16 @@
 #        FAST=1 ./minimal_dependencies extensions/Echo
 #        GREEDY=1 ./minimal_dependencies extensions/Echo
 #        GREEDY=1 FAST=1 ./minimal_dependencies extensions/Echo
+#        PARALLEL=$(./suggested_parallel) ./minimal_dependencies extensions/Echo
+#        PARALLEL=4 FAST=1 ./minimal_dependencies extensions/Echo
 #
 # WARNING: Tests up to 2^N combinations (N = number of optional dependencies). Each
 #          combination runs fresh_install + install + run_selenium_tests (~10 min).
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 # FAST=1: Runs fresh_install once, saves state, then restores instead of re-running fresh_install.
 # GREEDY=1: Starts with all deps, removes one at a time. O(N) instead of O(2^N).
+# PARALLEL=N: Run N combinations in parallel (each in isolated src_worker_$i/ directory).
+#             Implies FAST=1. Use ./suggested_parallel to determine N for your machine.
 #
 
 # No set -euo pipefail: we want to continue after failures to test the next combination
@@ -23,6 +27,12 @@
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
 fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-running
 greedy="${GREEDY:-}" # GREEDY=1 removes deps one at a time instead of testing all combinations
+parallel="${PARALLEL:-1}" # PARALLEL=N runs N combinations in parallel (default 1 = sequential)
+
+# PARALLEL implies FAST (parallel workers need save/restore for isolated src directories)
+if [ "$parallel" -gt 1 ]; then
+  fast=1
+fi
 
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then # $# is the number of arguments
@@ -101,6 +111,23 @@ fresh_or_restore() {
     fi
   fi
 }
+
+# Pre-clone bare repos for all dependencies before testing.
+# Prevents race conditions when parallel workers try to clone the same repo simultaneously.
+# Also ensures network fetches don't slow down individual combination tests.
+for dep_name in "${all_deps[@]}"; do
+  if [[ "$dep_name" == skins/* ]]; then
+    dep_repo="mediawiki/${dep_name}"   # e.g. "mediawiki/skins/MinervaNeue"
+  else
+    dep_repo="mediawiki/extensions/${dep_name}" # e.g. "mediawiki/extensions/Echo"
+  fi
+  dep_ref_dir="ref/${dep_repo}.git"    # e.g. "ref/mediawiki/extensions/Echo.git"
+  if [ ! -d "$dep_ref_dir" ]; then
+    echo "Pre-cloning dependency: ${dep_name}"
+    mkdir -p "$(dirname "$dep_ref_dir")" # create parent directories
+    git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
+  fi
+done
 
 if [ -n "$greedy" ]; then
   # --- Greedy algorithm: start with all deps, remove one at a time ---
@@ -223,60 +250,207 @@ if [ -n "$greedy" ]; then
 fi
 
 # --- Exhaustive: test all combinations, smallest first ---
-# Uses run_step from lib/batch_setup for progress tracking.
 # Required deps are always included. Only optional deps are varied.
-combo_num=0 # combination counter for progress display
+# When PARALLEL > 1, combinations are tested in waves of $parallel workers.
 
-for optional_combo in "${combos[@]}"; do
-  combo_num=$((combo_num + 1))
+# print_found: output the found minimum dependencies and exit 0.
+# Arguments: optional_combo (space-separated string of optional dep names)
+print_found() {
+  local found_optional="$1" # optional deps in the winning combination
+  printf "\n========================================\n"
+  printf "= FOUND: minimum dependencies for %s\n" "$component"
+  printf "========================================\n"
 
-  # Build full combo: required deps + optional deps for this combination
-  . "$(dirname "$0")"/lib/build_full_combo
-
-  printf "\n=== Combination %d/%d: %s === %s\n" "$combo_num" "$total" "${full_combo:-(none)}" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-
-  # Fresh core install for clean state (or restore from saved state in fast mode)
-  if ! fresh_or_restore; then
-    printf "SKIP (fresh_install/restore failed)\n"
-    continue # try next combination
+  # Build full combo for display
+  local found_full=""
+  if [ -n "$required_str" ] && [ -n "$found_optional" ]; then
+    found_full="$required_str $found_optional"
+  elif [ -n "$required_str" ]; then
+    found_full="$required_str"
+  else
+    found_full="$found_optional"
   fi
 
-  # Install extension with this combination of deps
-  # QUIBBLE_DEPS overrides ./dependencies in ./install (see install script)
-  export QUIBBLE_DEPS="$full_combo"
-  if ! run_step "$component" ./install "$component"; then
-    unset QUIBBLE_DEPS # clean up env var
-    printf "FAILED (install failed)\n"
-    continue # try next combination
-  fi
-  unset QUIBBLE_DEPS # clean up env var (run_selenium_tests doesn't need it)
-
-  # Run Selenium tests
-  if run_step "$component" ./run_selenium_tests "$component"; then
-    # Tests passed — this is the smallest working combination
-    printf "\n========================================\n"
-    printf "= FOUND: minimum dependencies for %s\n" "$component"
-    printf "========================================\n"
-    if [ -z "$full_combo" ]; then
-      printf "\nNo dependencies needed.\n"
-    else
-      printf "\nMinimum dependencies:\n"
-      if [ ${#required[@]} -gt 0 ]; then
-        printf "  Required (always needed):\n"
-        for dep in "${required[@]}"; do
-          printf "    %s\n" "$dep"
-        done
-      fi
-      if [ -n "$optional_combo" ]; then
-        printf "  Optional (minimum needed):\n"
-        for dep in $optional_combo; do # intentional word splitting on space-separated combo
-          printf "    %s\n" "$dep"
-        done
-      fi
+  if [ -z "$found_full" ]; then
+    printf "\nNo dependencies needed.\n"
+  else
+    printf "\nMinimum dependencies:\n"
+    if [ ${#required[@]} -gt 0 ]; then
+      printf "  Required (always needed):\n"
+      for dep in "${required[@]}"; do
+        printf "    %s\n" "$dep"
+      done
     fi
-    exit 0
+    if [ -n "$found_optional" ]; then
+      printf "  Optional (minimum needed):\n"
+      # shellcheck disable=SC2086 # intentional word splitting on space-separated combo
+      for dep in $found_optional; do
+        printf "    %s\n" "$dep"
+      done
+    fi
   fi
-done
+}
+
+if [ "$parallel" -le 1 ]; then
+  # --- Sequential mode (PARALLEL=1, default) ---
+  # Uses run_step from lib/batch_setup for progress tracking.
+  combo_num=0 # combination counter for progress display
+
+  for optional_combo in "${combos[@]}"; do
+    combo_num=$((combo_num + 1))
+
+    # Build full combo: required deps + optional deps for this combination
+    . "$(dirname "$0")"/lib/build_full_combo
+
+    printf "\n=== Combination %d/%d: %s === %s\n" "$combo_num" "$total" "${full_combo:-(none)}" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+
+    # Fresh core install for clean state (or restore from saved state in fast mode)
+    if ! fresh_or_restore; then
+      printf "SKIP (fresh_install/restore failed)\n"
+      continue # try next combination
+    fi
+
+    # Install extension with this combination of deps
+    # QUIBBLE_DEPS overrides ./dependencies in ./install (see install script)
+    export QUIBBLE_DEPS="$full_combo"
+    if ! run_step "$component" ./install "$component"; then
+      unset QUIBBLE_DEPS # clean up env var
+      printf "FAILED (install failed)\n"
+      continue # try next combination
+    fi
+    unset QUIBBLE_DEPS # clean up env var (run_selenium_tests doesn't need it)
+
+    # Run Selenium tests
+    if run_step "$component" ./run_selenium_tests "$component"; then
+      print_found "$optional_combo"
+      exit 0
+    fi
+  done
+
+else
+  # --- Parallel mode (PARALLEL > 1) ---
+  # Process combinations in waves of $parallel workers.
+  # Each worker runs in an isolated src_worker_$i/ directory.
+  # FAST mode is implied: fresh_install once, save, then each worker restores.
+  printf "\nParallel mode: %d workers\n" "$parallel"
+
+  # Initial fresh_install + save (runs once, workers restore from src_save/)
+  if ! fresh_or_restore; then
+    printf "\nfresh_install/save failed. Cannot proceed.\n"
+    exit 1
+  fi
+
+  # Ensure src_save/ exists for workers to restore from
+  if [ ! -d src_save ]; then
+    printf "\nError: src_save/ missing after fresh_install+save. Cannot proceed.\n"
+    exit 1
+  fi
+
+  # Create result directory for workers to report pass/fail
+  result_dir=$(mktemp -d) # temp dir for worker result files
+
+  # Process combinations in waves
+  wave_start=0 # index into combos array for start of current wave
+  while [ "$wave_start" -lt "$total" ]; do
+    wave_end=$((wave_start + parallel)) # exclusive end index
+    if [ "$wave_end" -gt "$total" ]; then
+      wave_end="$total" # last wave may be smaller
+    fi
+    wave_size=$((wave_end - wave_start))
+
+    printf "\n--- Wave %d-%d of %d (%d workers) --- %s\n" \
+      "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+
+    # Launch workers for this wave
+    pids=() # array of background process IDs
+    worker=0 # worker index (0-based, used for src_worker_$worker/)
+    while [ "$worker" -lt "$wave_size" ]; do
+      combo_idx=$((wave_start + worker))
+      worker_optional="${combos[$combo_idx]}" # optional deps for this combination
+      worker_src="src_worker_$((worker + 1))" # isolated src directory (1-based for readability)
+      worker_log="log/silent/worker-$((worker + 1))" # per-worker log directory
+
+      # Build full combo for this worker
+      worker_full="" # full dep string for this worker
+      if [ -n "$required_str" ] && [ -n "$worker_optional" ]; then
+        worker_full="$required_str $worker_optional"
+      elif [ -n "$required_str" ]; then
+        worker_full="$required_str"
+      else
+        worker_full="$worker_optional"
+      fi
+
+      mkdir -p "$worker_src" "$worker_log" # create worker directories
+
+      printf "  Worker %d: combo %d/%d: %s\n" "$((worker + 1))" "$((combo_idx + 1))" "$total" "${worker_full:-(none)}"
+
+      # Launch worker in background subshell.
+      # Each worker: restore → install → run_selenium_tests in its own src directory.
+      # QUIBBLE_SRC: isolated src directory for this worker
+      # QUIBBLE_EXPOSE_PORT=0: skip port mapping (avoid port conflicts between workers)
+      # QUIBBLE_BACKGROUND=1: skip -i/-t Docker flags (no stdin in background)
+      # QUIBBLE_DEPS: dependency combination to test
+      # Worker writes "pass" or "fail" to a result file.
+      (
+        export QUIBBLE_SRC="$worker_src"
+        export QUIBBLE_EXPOSE_PORT=0
+        export QUIBBLE_BACKGROUND=1
+        export QUIBBLE_DEPS="$worker_full"
+
+        # Redirect all output to worker log file
+        exec > "$worker_log/combination-$((combo_idx + 1)).log" 2>&1
+
+        # Restore core from saved state into worker's src directory
+        if ! ./restore; then
+          echo "fail" > "$result_dir/worker_$combo_idx"
+          exit 1
+        fi
+
+        # Install extension with this combination of deps
+        if ! ./install "$component"; then
+          echo "fail" > "$result_dir/worker_$combo_idx"
+          exit 1
+        fi
+
+        # Run Selenium tests
+        if ./run_selenium_tests "$component"; then
+          echo "pass" > "$result_dir/worker_$combo_idx"
+        else
+          echo "fail" > "$result_dir/worker_$combo_idx"
+        fi
+      ) &
+      pids+=($!) # $! is the PID of the last background process
+
+      worker=$((worker + 1))
+    done
+
+    # Wait for all workers in this wave to finish
+    for pid in "${pids[@]}"; do
+      wait "$pid" 2>/dev/null || true # wait for each worker (ignore exit code, check result files)
+    done
+
+    # Check results: find the smallest-index passing combination in this wave.
+    # Combinations are already ordered by size, so the first pass is the answer.
+    combo_idx="$wave_start"
+    while [ "$combo_idx" -lt "$wave_end" ]; do
+      result_file="$result_dir/worker_$combo_idx"
+      if [ -f "$result_file" ] && [ "$(cat "$result_file")" = "pass" ]; then
+        winning_optional="${combos[$combo_idx]}" # optional deps of the winning combo
+        printf "\n  Combination %d/%d passed!\n" "$((combo_idx + 1))" "$total"
+        rm -rf "$result_dir" # clean up temp dir
+        print_found "$winning_optional"
+        exit 0
+      fi
+      combo_idx=$((combo_idx + 1))
+    done
+
+    printf "  All %d combinations in this wave failed.\n" "$wave_size"
+    wave_start="$wave_end" # advance to next wave
+  done
+
+  # Clean up
+  rm -rf "$result_dir"
+fi
 
 # If we get here, no combination passed (shouldn't happen if the extension's tests work at all)
 printf "\nNo working combination found.\n"

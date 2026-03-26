@@ -23,20 +23,21 @@ fi
 
 # Ensure working directories exist with proper permissions for the container user.
 # Docker creates missing mount dirs as root; chmod may fail if they're already root-owned.
-mkdir -p cache log src
+# Uses QUIBBLE_SRC from lib/setup (default "src", overridden for parallel workers).
+mkdir -p cache log "$QUIBBLE_SRC"
 # chmod 777: container runs as a different user, so dirs must be world-writable.
 # 2>/dev/null: suppress errors if dirs are already root-owned.
 # ||: if chmod fails, fall back to Docker as root to set permissions.
 # --rm: remove container on exit
 # --entrypoint bash: override default entrypoint to run a shell command
 # --user root: run as root to have permission to chmod
-chmod 777 cache log src 2>/dev/null || \
+chmod 777 cache log "$QUIBBLE_SRC" 2>/dev/null || \
   docker run --rm \
     --entrypoint bash \
     --user root \
     -v "$QUIBBLE_DIR"/cache:/cache \
     -v "$QUIBBLE_DIR"/log:/workspace/log \
-    -v "$QUIBBLE_DIR"/src:/workspace/src \
+    -v "$QUIBBLE_DIR"/"$QUIBBLE_SRC":/workspace/src \
     "$QUIBBLE_IMAGE" \
     -c 'chmod 777 /cache /workspace/log /workspace/src' # set permissions inside the container
 
@@ -44,12 +45,12 @@ chmod 777 cache log src 2>/dev/null || \
 # "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
 # --rm: remove container on exit
 # --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
-# -p 9413:9413: expose MediaWiki port from container to host
+# ${QUIBBLE_PORT_FLAGS[@]+"..."}: expose MediaWiki port (skipped in parallel mode)
 # "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
 # --command true: install only, don't run tests ("true" exits immediately)
 docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm \
   --entrypoint=quibble-with-supervisord \
-  -p 9413:9413 \
+  ${QUIBBLE_PORT_FLAGS[@]+"${QUIBBLE_PORT_FLAGS[@]}"} \
   "${QUIBBLE_VOLUMES[@]}" \
   "$QUIBBLE_IMAGE" \
   --command true

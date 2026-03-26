@@ -11,16 +11,17 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
 # Use Docker (as root) to remove files owned by the container user.
+# Uses QUIBBLE_SRC from lib/setup (default "src", overridden for parallel workers).
 # --rm: remove container on exit
 # --entrypoint bash: override default entrypoint to run a shell command
 # --user root: run as root to have permission to delete all files
-# -v: mount src/ so we can delete its contents from inside the container
+# -v: mount src dir so we can delete its contents from inside the container
 docker run --rm \
   --entrypoint bash \
   --user root \
-  -v "$QUIBBLE_DIR"/src:/workspace/src \
+  -v "$QUIBBLE_DIR"/"$QUIBBLE_SRC":/workspace/src \
   "$QUIBBLE_IMAGE" \
   -c 'find /workspace/src -mindepth 1 -delete' # delete contents but not the mount point itself
 
-# Remove the now-empty src/ directory from the host
-rm -rf src
+# Remove the now-empty directory from the host
+rm -rf "$QUIBBLE_SRC"
