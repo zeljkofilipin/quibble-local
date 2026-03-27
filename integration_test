@@ -76,6 +76,7 @@ run_test ./suggested_parallel              # test suggesting number of parallel 
 run_test ./minimal_dependencies extensions/Echo  # test finding minimum dependencies (fast for Echo: ~1 combination)
 run_test env GREEDY=1 ./minimal_dependencies extensions/Echo  # test greedy mode (removes deps one at a time)
 run_test env FAST=1 ./minimal_dependencies extensions/Echo  # test fast mode (save state, restore instead of fresh_install)
+run_test env PARALLEL=2 ./minimal_dependencies extensions/Echo  # test parallel mode (2 workers, exhaustive)
 run_test ./run_all extensions/Echo     # test run_all with a single extension
 run_test env FAST=1 ./run_all extensions/Echo  # test run_all with fast mode
 run_test ./run_required extensions/Echo  # test run_required with a single extension
