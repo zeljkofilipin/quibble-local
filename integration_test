@@ -74,6 +74,12 @@ run_test ./selenium_tests_exist extensions/Echo  # test that extension has Selen
 run_test ./run_selenium_tests extensions/Echo  # test running extension Selenium tests
 run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js  # test running a specific extension test file
 run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"  # test filtering extension tests by grep
+run_test ./install skins/MinervaNeue  # test installing a skin (exercises skins/ code path)
+run_test ./dependencies skins/MinervaNeue  # test listing skin dependencies
+run_test ./required_dependencies skins/MinervaNeue  # test listing required skin dependencies
+run_test ./optional_dependencies skins/MinervaNeue  # test listing optional skin dependencies
+run_test ./selenium_tests_exist skins/MinervaNeue  # test that skin has Selenium tests
+run_test ./run_selenium_tests skins/MinervaNeue  # test running skin Selenium tests
 run_test ./suggested_parallel              # test suggesting number of parallel workers
 run_test ./minimal_dependencies extensions/Echo  # test finding minimum dependencies (fast for Echo: ~1 combination)
 run_test env GREEDY=1 ./minimal_dependencies extensions/Echo  # test greedy mode (removes deps one at a time)
