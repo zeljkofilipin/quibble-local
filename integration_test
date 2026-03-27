@@ -74,6 +74,7 @@ run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifi
 run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"  # test filtering extension tests by grep
 run_test ./suggested_parallel              # test suggesting number of parallel workers
 run_test ./minimal_dependencies extensions/Echo  # test finding minimum dependencies (fast for Echo: ~1 combination)
+run_test env GREEDY=1 ./minimal_dependencies extensions/Echo  # test greedy mode (removes deps one at a time)
 run_test ./run_all extensions/Echo     # test run_all with a single extension
 run_test ./run_required extensions/Echo  # test run_required with a single extension
 run_test ./fetch                       # test fetching latest changes
