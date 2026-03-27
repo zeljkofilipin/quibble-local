@@ -6,6 +6,7 @@
     "**/lib/duration_trap": "shellscript",
     "**/lib/format_duration": "shellscript",
     "**/lib/ensure_config": "shellscript",
+    "**/lib/greedy": "shellscript",
     "**/lib/heartbeat": "shellscript",
     "**/lib/inhibit_sleep": "shellscript",
     "**/lib/print_dep_summary": "shellscript",
