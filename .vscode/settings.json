@@ -5,6 +5,7 @@
     "**/lib/debug_info": "shellscript",
     "**/lib/duration_trap": "shellscript",
     "**/lib/format_duration": "shellscript",
+    "**/lib/fresh_or_restore": "shellscript",
     "**/lib/ensure_config": "shellscript",
     "**/lib/greedy": "shellscript",
     "**/lib/heartbeat": "shellscript",

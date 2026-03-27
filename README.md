@@ -336,6 +336,10 @@ Prints a summary of all, required, and optional dependencies plus total combinat
 
 Builds a full dependency combination from required + optional deps. Sets the `full_combo` variable. Sourced by `minimal_dependencies`.
 
+### `lib/fresh_or_restore`
+
+Defines the `fresh_or_restore` function: runs `./fresh_install` or `./restore` depending on FAST mode. In fast mode, saves state after first `fresh_install` + `install` so subsequent calls restore instead. Sourced by `minimal_dependencies`.
+
 ### `lib/greedy`
 
 Greedy algorithm for `minimal_dependencies`: starts with all optional deps, removes one at a time. O(N) instead of O(2^N). Sourced by `minimal_dependencies` when `GREEDY=1`.

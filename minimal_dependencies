@@ -92,35 +92,8 @@ total=${#combos[@]} # total number of combinations
 # Print summary of all, required, and optional dependencies
 . "$(dirname "$0")"/lib/print_dep_summary
 
-# Helper: run fresh_install or restore (if FAST=1 and saved state exists)
-# In fast mode, saves state after fresh_install + install (with required deps),
-# so restores include MediaWiki + extension. Only optional deps vary per combination.
-# First call always runs fresh_install (don't trust stale src_save/ from previous runs).
-fresh_or_restore() {
-  if [ -n "$fast" ] && [ -d src_save ] && [ -z "$_first_run" ]; then
-    # Fast mode: restore from saved state instead of running fresh_install
-    run_step "$component" ./restore
-  else
-    _first_run="" # clear after first run so subsequent calls can restore
-    if run_step "$component" ./fresh_install; then
-      # Save state after first successful fresh_install for fast mode
-      if [ -n "$fast" ]; then
-        # Install extension with required deps before saving, so restore includes
-        # MediaWiki + extension. Only optional deps vary per combination.
-        export QUIBBLE_DEPS="$required_str"
-        if ! run_step "$component" ./install "$component"; then
-          unset QUIBBLE_DEPS # clean up env var
-          return 1
-        fi
-        unset QUIBBLE_DEPS # clean up env var
-        run_step "$component" ./save
-      fi
-      return 0
-    else
-      return 1
-    fi
-  fi
-}
+# Define fresh_or_restore function (shared by lib/greedy, lib/parallel, and sequential mode)
+. "$(dirname "$0")"/lib/fresh_or_restore
 
 # Pre-clone bare repos for all dependencies before testing.
 # Prevents race conditions when parallel workers try to clone the same repo simultaneously.

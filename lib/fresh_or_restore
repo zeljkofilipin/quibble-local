@@ -1,0 +1,41 @@
+# shellcheck shell=bash
+# Run fresh_install or restore (if FAST=1 and saved state exists).
+# In fast mode, saves state after fresh_install + install (with required deps),
+# so restores include MediaWiki + extension. Only optional deps vary per combination.
+# First call always runs fresh_install (don't trust stale src_save/ from previous runs).
+# Must be sourced, not run directly.
+# Expects these variables/functions to be set by the caller:
+#   fast            — FAST=1 flag (empty string or "1")
+#   _first_run      — "1" on first call, cleared after first fresh_install
+#   component       — e.g. "extensions/Echo"
+#   required_str    — space-separated list of required dependency names
+#   run_step        — function from lib/batch_setup for progress tracking
+# Defines:
+#   fresh_or_restore — function that returns 0 on success, 1 on failure
+# shellcheck disable=SC2154 # variables are set by the sourcing script
+
+fresh_or_restore() {
+  if [ -n "$fast" ] && [ -d src_save ] && [ -z "$_first_run" ]; then
+    # Fast mode: restore from saved state instead of running fresh_install
+    run_step "$component" ./restore
+  else
+    _first_run="" # clear after first run so subsequent calls can restore
+    if run_step "$component" ./fresh_install; then
+      # Save state after first successful fresh_install for fast mode
+      if [ -n "$fast" ]; then
+        # Install extension with required deps before saving, so restore includes
+        # MediaWiki + extension. Only optional deps vary per combination.
+        export QUIBBLE_DEPS="$required_str"
+        if ! run_step "$component" ./install "$component"; then
+          unset QUIBBLE_DEPS # clean up env var
+          return 1
+        fi
+        unset QUIBBLE_DEPS # clean up env var
+        run_step "$component" ./save
+      fi
+      return 0
+    else
+      return 1
+    fi
+  fi
+}
