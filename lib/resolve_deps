@@ -18,9 +18,11 @@ while IFS= read -r dep_name; do
   else
     dep_repo="mediawiki/extensions/${dep_name}"
   fi
-  # Clone bare repo for dependency if not already present
+  # Clone or fetch bare repo for dependency
   dep_ref_dir="ref/${dep_repo}.git"
-  if [ ! -d "$dep_ref_dir" ]; then
+  if [ -d "$dep_ref_dir" ]; then
+    git -C "$dep_ref_dir" fetch 2>/dev/null || true  # update existing bare repo (ignore errors if remote unreachable)
+  else
     echo "Cloning dependency: ${dep_name}"
     mkdir -p "$(dirname "$dep_ref_dir")" # create parent directories
     git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"

@@ -28,8 +28,10 @@ fi
 
 # Clone from bare repo to src/ if the directory doesn't exist yet
 if [ ! -d "$dest" ]; then
-  # Clone bare repo from Gerrit if not already present
-  if [ ! -d "$bare_repo" ]; then
+  # Clone or fetch bare repo
+  if [ -d "$bare_repo" ]; then
+    git -C "$bare_repo" fetch --quiet 2>/dev/null || true  # update existing bare repo (ignore errors if remote unreachable)
+  else
     mkdir -p "$(dirname "$bare_repo")" # create parent directories
     git clone --quiet --bare "https://gerrit.wikimedia.org/r/${repo}" "$bare_repo"
   fi

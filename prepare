@@ -15,14 +15,24 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 # Get the latest Quibble Docker image
 docker pull "$QUIBBLE_IMAGE"
 
-# Clone bare repos to use as local git references (avoids cloning from Gerrit each run)
+# Clone bare repos to use as local git references (avoids cloning from Gerrit each run).
+# If a repo already exists, fetch to update it.
 mkdir -p ref/mediawiki/skins # create directory structure for bare repos
 
-# Skip cloning if the bare repo already exists
-[ -d ref/mediawiki/core.git ] || git clone --bare https://gerrit.wikimedia.org/r/mediawiki/core ref/mediawiki/core.git
-[ -d ref/mediawiki/vendor.git ] || git clone --bare https://gerrit.wikimedia.org/r/mediawiki/vendor ref/mediawiki/vendor.git
-[ -d ref/mediawiki/skins/Vector.git ] || git clone --bare https://gerrit.wikimedia.org/r/mediawiki/skins/Vector ref/mediawiki/skins/Vector.git
-[ -d ref/integration/config.git ] || git clone --bare https://gerrit.wikimedia.org/r/integration/config ref/integration/config.git
+# Clone or fetch each core bare repo
+for ref_repo in \
+  "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" \
+  "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" \
+  "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" \
+  "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"; do
+  ref_dir="${ref_repo%% *}"  # first word: local path (e.g. ref/mediawiki/core.git)
+  ref_url="${ref_repo#* }"   # second word: Gerrit URL
+  if [ -d "$ref_dir" ]; then
+    git -C "$ref_dir" fetch || true  # update existing bare repo (ignore errors if remote unreachable)
+  else
+    git clone --bare "$ref_url" "$ref_dir" # clone new bare repo
+  fi
+done
 
 # Create working directories (chmod 777 because the container runs as a different user)
 mkdir -p cache log src

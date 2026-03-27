@@ -27,14 +27,18 @@ ref_dir="ref/${repo}.git"           # e.g. "ref/mediawiki/extensions/Echo.git"
 
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
-# Clone bare repo for the extension/skin if not already present
-if [ ! -d "$ref_dir" ]; then
+# Clone or fetch bare repo for the extension/skin
+if [ -d "$ref_dir" ]; then
+  git -C "$ref_dir" fetch || true  # update existing bare repo (ignore errors if remote unreachable)
+else
   mkdir -p "$(dirname "$ref_dir")"  # create parent directories
   git clone --bare "https://gerrit.wikimedia.org/r/${repo}" "$ref_dir"
 fi
 
-# Clone bare repo for integration/config if not already present
-if [ ! -d "ref/integration/config.git" ]; then
+# Clone or fetch bare repo for integration/config
+if [ -d "ref/integration/config.git" ]; then
+  git -C "ref/integration/config.git" fetch || true  # update existing bare repo (ignore errors if remote unreachable)
+else
   mkdir -p ref/integration # create parent directories
   git clone --bare "https://gerrit.wikimedia.org/r/integration/config" "ref/integration/config.git"
 fi
