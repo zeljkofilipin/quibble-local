@@ -18,7 +18,9 @@
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 # FAST=1: Always runs fresh_install + install (with required deps) first, saves state, then restores.
 # GREEDY=1: Starts with all deps, removes one at a time. O(N) instead of O(2^N).
+#            Always runs sequentially (ignores PARALLEL).
 # PARALLEL=N: Run N combinations in parallel (each in isolated src_worker_$i/ directory).
+#             Only applies to exhaustive (non-greedy) mode.
 #             Use ./suggested_parallel to determine N for your machine.
 #
 
