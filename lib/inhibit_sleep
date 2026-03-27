@@ -1,6 +1,6 @@
 # shellcheck shell=bash
 # Sourced by long-running scripts (minimal_dependencies, run_all, run_required, integration_test) to prevent the machine from suspending.
-# Uses caffeinate on macOS, systemd-inhibit on Linux.
+# Uses caffeinate on macOS; on Linux tries gnome-session-inhibit (GNOME desktop), then systemd-inhibit (headless/other).
 # The caller's PID ($$) is used so the inhibit ends when the caller exits.
 # Set _QUIBBLE_NO_INHIBIT=1 to skip (used in tests to avoid background processes).
 if [ -n "${_QUIBBLE_NO_INHIBIT:-}" ]; then
@@ -8,8 +8,19 @@ if [ -n "${_QUIBBLE_NO_INHIBIT:-}" ]; then
 fi
 if [ "$(uname)" = "Darwin" ]; then # check if running on macOS
   caffeinate -s -w $$ & # macOS: prevent sleep while the caller is alive
-else # Linux: use systemd-inhibit to block sleep
-  systemd-inhibit --what=sleep --who="$(basename "$0")" --why="Quibble tests running" sleep infinity &
+elif command -v gnome-session-inhibit >/dev/null 2>&1 && [ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]; then
+  # GNOME desktop: gnome-session-inhibit talks to GNOME's power manager via D-Bus.
+  # This is more reliable than systemd-inhibit on GNOME desktops, which may auto-suspend
+  # based on idle timeout regardless of systemd inhibitor locks.
+  # --inhibit suspend: prevent automatic suspend
+  # --reason: human-readable reason shown in GNOME power settings
+  gnome-session-inhibit --inhibit suspend --reason "Quibble tests running" sleep infinity &
+  inhibit_sleep_pid=$!                                    # $! is the PID of the last background process
+  trap 'kill $inhibit_sleep_pid 2>/dev/null' EXIT         # clean up the inhibit process when the script exits
+else # Linux without GNOME: use systemd-inhibit to block sleep and idle
+  # --what=sleep:idle: inhibit both sleep (manual/lid) and idle (auto-suspend after inactivity)
+  # --mode=block: block suspend entirely (not just delay it); may require polkit rule for non-root users
+  systemd-inhibit --what=sleep:idle --mode=block --who="$(basename "$0")" --why="Quibble tests running" sleep infinity &
   # sleep infinity keeps the inhibit process alive in the background until killed
   inhibit_sleep_pid=$!                                    # $! is the PID of the last background process
   trap 'kill $inhibit_sleep_pid 2>/dev/null' EXIT         # clean up the inhibit process when the script exits
