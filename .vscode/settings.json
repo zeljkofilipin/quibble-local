@@ -9,6 +9,7 @@
     "**/lib/greedy": "shellscript",
     "**/lib/heartbeat": "shellscript",
     "**/lib/inhibit_sleep": "shellscript",
+    "**/lib/parallel": "shellscript",
     "**/lib/print_dep_summary": "shellscript",
     "**/lib/print_results": "shellscript",
     "**/lib/build_full_combo": "shellscript",

@@ -1,0 +1,148 @@
+# shellcheck shell=bash
+# Parallel exhaustive search: test combinations in waves of $parallel workers.
+# Each worker runs in an isolated src_worker_$i/ directory.
+# FAST mode: fresh_install + install once, save, then each worker restores.
+# Normal mode: each worker runs fresh_install + install independently.
+# Must be sourced, not run directly.
+# Expects these variables/functions to be set by the caller:
+#   component       — e.g. "extensions/Echo"
+#   combos          — indexed array of space-separated optional dep combinations
+#   total           — total number of combinations
+#   parallel        — number of parallel workers
+#   fast            — FAST=1 flag (empty string or "1")
+#   required_str    — space-separated list of required dependency names
+#   required        — indexed array of required dependency names
+#   fresh_or_restore — function to set up core MediaWiki (fresh_install or restore)
+# shellcheck disable=SC2154 # variables are set by the sourcing script
+
+printf "\nParallel mode: %d workers\n" "$parallel"
+
+if [ -n "$fast" ]; then
+  # Fast mode: initial fresh_install + install + save (workers restore from src_save/)
+  if ! fresh_or_restore; then
+    printf "\nfresh_install/save failed. Cannot proceed.\n"
+    exit 1
+  fi
+
+  # Ensure src_save/ exists for workers to restore from
+  if [ ! -d src_save ]; then
+    printf "\nError: src_save/ missing after fresh_install+save. Cannot proceed.\n"
+    exit 1
+  fi
+fi
+
+# Create result directory for workers to report pass/fail
+result_dir=$(mktemp -d) # temp dir for worker result files
+
+# Process combinations in waves
+wave_start=0 # index into combos array for start of current wave
+while [ "$wave_start" -lt "$total" ]; do
+  wave_end=$((wave_start + parallel)) # exclusive end index
+  if [ "$wave_end" -gt "$total" ]; then
+    wave_end="$total" # last wave may be smaller
+  fi
+  wave_size=$((wave_end - wave_start))
+
+  printf "\n--- Wave %d-%d of %d (%d workers) --- %s\n" \
+    "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+
+  # Launch workers for this wave
+  pids=() # array of background process IDs
+  worker=0 # worker index (0-based, used for src_worker_$worker/)
+  while [ "$worker" -lt "$wave_size" ]; do
+    combo_idx=$((wave_start + worker))
+    worker_optional="${combos[$combo_idx]}" # optional deps for this combination
+    worker_src="src_worker_$((worker + 1))" # isolated src directory (1-based for readability)
+    worker_log="log/silent/worker-$((worker + 1))" # per-worker log directory
+
+    # Build full combo for this worker
+    worker_full="" # full dep string for this worker
+    if [ -n "$required_str" ] && [ -n "$worker_optional" ]; then
+      worker_full="$required_str $worker_optional"
+    elif [ -n "$required_str" ]; then
+      worker_full="$required_str"
+    else
+      worker_full="$worker_optional"
+    fi
+
+    mkdir -p "$worker_src" "$worker_log" # create worker directories
+
+    printf "  Worker %d: combo %d/%d: %s\n" "$((worker + 1))" "$((combo_idx + 1))" "$total" "${worker_full:-(none)}"
+
+    # Launch worker in background subshell.
+    # Fast mode: restore → install → run_selenium_tests in its own src directory.
+    # Normal mode: fresh_install → install → run_selenium_tests in its own src directory.
+    # QUIBBLE_SRC: isolated src directory for this worker
+    # QUIBBLE_EXPOSE_PORT=0: skip port mapping (avoid port conflicts between workers)
+    # QUIBBLE_BACKGROUND=1: skip -i/-t Docker flags (no stdin in background)
+    # QUIBBLE_DEPS: dependency combination to test
+    # Worker writes "pass" or "fail" to a result file.
+    (
+      export QUIBBLE_SRC="$worker_src"
+      export QUIBBLE_EXPOSE_PORT=0
+      export QUIBBLE_BACKGROUND=1
+      export QUIBBLE_DEPS="$worker_full"
+
+      # Redirect all output to worker log file
+      exec > "$worker_log/combination-$((combo_idx + 1)).log" 2>&1
+
+      # Set up core MediaWiki + extension in worker's src directory
+      if [ -n "$fast" ]; then
+        # Fast mode: restore from saved state (includes MediaWiki + extension + required deps)
+        if ! ./restore; then
+          echo "fail" > "$result_dir/worker_$combo_idx"
+          exit 1
+        fi
+      else
+        # Normal mode: fresh_install + install extension from scratch
+        if ! ./fresh_install; then
+          echo "fail" > "$result_dir/worker_$combo_idx"
+          exit 1
+        fi
+      fi
+
+      # Install extension with this combination of deps
+      if ! ./install "$component"; then
+        echo "fail" > "$result_dir/worker_$combo_idx"
+        exit 1
+      fi
+
+      # Run Selenium tests
+      if ./run_selenium_tests "$component"; then
+        echo "pass" > "$result_dir/worker_$combo_idx"
+      else
+        echo "fail" > "$result_dir/worker_$combo_idx"
+      fi
+    ) &
+    pids+=($!) # $! is the PID of the last background process
+
+    worker=$((worker + 1))
+  done
+
+  # Wait for all workers in this wave to finish
+  for pid in "${pids[@]}"; do
+    wait "$pid" 2>/dev/null || true # wait for each worker (ignore exit code, check result files)
+  done
+
+  # Check results: find the smallest-index passing combination in this wave.
+  # Combinations are already ordered by size, so the first pass is the answer.
+  combo_idx="$wave_start"
+  while [ "$combo_idx" -lt "$wave_end" ]; do
+    result_file="$result_dir/worker_$combo_idx"
+    if [ -f "$result_file" ] && [ "$(cat "$result_file")" = "pass" ]; then
+      winning_optional="${combos[$combo_idx]}" # optional deps of the winning combo
+      printf "\n  Combination %d/%d passed!\n" "$((combo_idx + 1))" "$total"
+      rm -rf "$result_dir" # clean up temp dir
+      optional_combo="$winning_optional" # set for lib/print_found
+      . "$(dirname "$0")"/lib/print_found # print the winning combination
+      exit 0
+    fi
+    combo_idx=$((combo_idx + 1))
+  done
+
+  printf "  All %d combinations in this wave failed.\n" "$wave_size"
+  wave_start="$wave_end" # advance to next wave
+done
+
+# Clean up
+rm -rf "$result_dir"

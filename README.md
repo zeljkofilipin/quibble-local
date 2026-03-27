@@ -340,6 +340,10 @@ Builds a full dependency combination from required + optional deps. Sets the `fu
 
 Greedy algorithm for `minimal_dependencies`: starts with all optional deps, removes one at a time. O(N) instead of O(2^N). Sourced by `minimal_dependencies` when `GREEDY=1`.
 
+### `lib/parallel`
+
+Parallel exhaustive search for `minimal_dependencies`: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory. Sourced by `minimal_dependencies` when `PARALLEL > 1`.
+
 ### `lib/print_found`
 
 Prints the "minimum dependencies found" results (header, required deps, optional deps). Sourced by `minimal_dependencies` (greedy, sequential, and parallel modes).
