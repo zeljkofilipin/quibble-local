@@ -131,9 +131,16 @@ for dep_name in "${all_deps[@]}"; do
   fi
   dep_ref_dir="ref/${dep_repo}.git"    # e.g. "ref/mediawiki/extensions/Echo.git"
   if [ ! -d "$dep_ref_dir" ]; then
-    echo "Pre-cloning dependency: ${dep_name}"
     mkdir -p "$(dirname "$dep_ref_dir")" # create parent directories
-    git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
+    if [ -n "$verbose" ]; then
+      echo "Pre-cloning dependency: ${dep_name}" # print status message in verbose mode
+      git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
+    else
+      printf "pre-clone(%s) " "$dep_name" # print step label before dots
+      run_with_dots "log/silent/pre-clone--${dep_name//\//-}.log" \
+        git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
+      printf "\n" # newline after dots
+    fi
   fi
 done
 
