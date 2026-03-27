@@ -117,9 +117,11 @@ Run Selenium tests for core and all gated repositories. For each component: `./f
 
 ### `./fetch`
 
-Fetch the latest changes for all bare git repos in `ref/` from Gerrit.
+Fetch the latest changes for bare git repos in `ref/` from Gerrit. With no arguments, fetches all repos. With arguments, fetches only the specified repos.
 
     ./fetch
+    ./fetch ref/mediawiki/core.git
+    ./fetch ref/mediawiki/extensions/Echo.git ref/mediawiki/skins/Vector.git
     VERBOSE=1 ./fetch
 
 ### `./dependencies`

@@ -55,6 +55,8 @@ run_test ./help                        # test that help output works
 run_test ./lint                        # test that all scripts pass shellcheck
 run_test ./ci                          # test that CI lint passes in Docker
 run_test ./prepare                     # test that prepare pulls image and clones repos
+run_test ./fetch                       # test fetching all bare repos (update stale repos before use)
+run_test ./fetch ref/mediawiki/core.git  # test fetching a specific repo
 run_test ./fresh_install               # test fresh core install
 run_test ./save                        # test saving fresh_install state
 run_test ./restore                     # test restoring saved state
@@ -92,7 +94,6 @@ run_test ./run_all extensions/Echo     # test run_all with a single extension
 run_test env FAST=1 ./run_all extensions/Echo  # test run_all with fast mode
 run_test ./run_required extensions/Echo  # test run_required with a single extension
 run_test env FAST=1 ./run_required extensions/Echo  # test run_required with fast mode
-run_test ./fetch                       # test fetching latest changes
 run_test ./clean                       # test cleaning up src/
 
 # Print pass/fail summary and exit with error if any script failed

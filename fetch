@@ -1,14 +1,28 @@
 #!/usr/bin/env bash
 #
-# Fetch the latest changes for all bare git repos in ref/ from Gerrit.
+# Fetch the latest changes for bare git repos in ref/ from Gerrit.
+# With no arguments, fetches all repos. With arguments, fetches only the specified repos.
 #
 # Usage: ./fetch
+#        ./fetch ref/mediawiki/core.git
+#        ./fetch ref/mediawiki/extensions/Echo.git ref/mediawiki/skins/Vector.git
 #        VERBOSE=1 ./fetch
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
-# Find all bare git repos (directories ending in .git) and fetch each one
-find ref -name '*.git' -type d | while read -r repo; do
-  git -C "$repo" fetch # -C runs git in the repo's directory
-done
+if [ $# -gt 0 ]; then
+  # Fetch only the specified repos
+  for repo in "$@"; do
+    if [ -d "$repo" ]; then
+      git -C "$repo" fetch # -C runs git in the repo's directory
+    else
+      echo "Warning: $repo does not exist, skipping" >&2 # >&2 prints to stderr
+    fi
+  done
+else
+  # Fetch all bare git repos (directories ending in .git)
+  find ref -name '*.git' -type d | while read -r repo; do
+    git -C "$repo" fetch # -C runs git in the repo's directory
+  done
+fi
