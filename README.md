@@ -336,6 +336,10 @@ Prints a summary of all, required, and optional dependencies plus total combinat
 
 Builds a full dependency combination from required + optional deps. Sets the `full_combo` variable. Sourced by `minimal_dependencies`.
 
+### `lib/print_found`
+
+Prints the "minimum dependencies found" results (header, required deps, optional deps). Sourced by `minimal_dependencies` (greedy, sequential, and parallel modes).
+
 ## Further reading
 
 - [Quibble documentation](https://doc.wikimedia.org/quibble/)

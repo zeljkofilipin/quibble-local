@@ -231,11 +231,6 @@ if [ -n "$greedy" ]; then
     fi
   done
 
-  # Print results
-  printf "\n========================================\n"
-  printf "= FOUND: minimum dependencies for %s\n" "$component"
-  printf "========================================\n"
-
   # Build final optional_combo from kept indices
   optional_combo=""
   if [ ${#kept[@]} -gt 0 ]; then
@@ -244,69 +239,14 @@ if [ -n "$greedy" ]; then
     done
   fi
 
-  if [ -z "$required_str" ] && [ -z "$optional_combo" ]; then
-    printf "\nNo dependencies needed.\n"
-  else
-    printf "\nMinimum dependencies:\n"
-    if [ ${#required[@]} -gt 0 ]; then
-      printf "  Required (always needed):\n"
-      for dep in "${required[@]}"; do
-        printf "    %s\n" "$dep"
-      done
-    fi
-    if [ -n "$optional_combo" ]; then
-      printf "  Optional (minimum needed):\n"
-      for dep in $optional_combo; do # intentional word splitting on space-separated combo
-        printf "    %s\n" "$dep"
-      done
-    else
-      printf "  Optional: (none needed)\n"
-    fi
-  fi
+  # Print results
+  . "$(dirname "$0")"/lib/print_found
   exit 0
 fi
 
 # --- Exhaustive: test all combinations, smallest first ---
 # Required deps are always included. Only optional deps are varied.
 # When PARALLEL > 1, combinations are tested in waves of $parallel workers.
-
-# print_found: output the found minimum dependencies and exit 0.
-# Arguments: optional_combo (space-separated string of optional dep names)
-print_found() {
-  local found_optional="$1" # optional deps in the winning combination
-  printf "\n========================================\n"
-  printf "= FOUND: minimum dependencies for %s\n" "$component"
-  printf "========================================\n"
-
-  # Build full combo for display
-  local found_full=""
-  if [ -n "$required_str" ] && [ -n "$found_optional" ]; then
-    found_full="$required_str $found_optional"
-  elif [ -n "$required_str" ]; then
-    found_full="$required_str"
-  else
-    found_full="$found_optional"
-  fi
-
-  if [ -z "$found_full" ]; then
-    printf "\nNo dependencies needed.\n"
-  else
-    printf "\nMinimum dependencies:\n"
-    if [ ${#required[@]} -gt 0 ]; then
-      printf "  Required (always needed):\n"
-      for dep in "${required[@]}"; do
-        printf "    %s\n" "$dep"
-      done
-    fi
-    if [ -n "$found_optional" ]; then
-      printf "  Optional (minimum needed):\n"
-      # shellcheck disable=SC2086 # intentional word splitting on space-separated combo
-      for dep in $found_optional; do
-        printf "    %s\n" "$dep"
-      done
-    fi
-  fi
-}
 
 if [ "$parallel" -le 1 ]; then
   # --- Sequential mode (PARALLEL=1, default) ---
@@ -339,7 +279,7 @@ if [ "$parallel" -le 1 ]; then
 
     # Run Selenium tests
     if run_step "$component" ./run_selenium_tests "$component"; then
-      print_found "$optional_combo"
+      . "$(dirname "$0")"/lib/print_found # print the winning combination
       exit 0
     fi
   done
@@ -468,7 +408,8 @@ else
         winning_optional="${combos[$combo_idx]}" # optional deps of the winning combo
         printf "\n  Combination %d/%d passed!\n" "$((combo_idx + 1))" "$total"
         rm -rf "$result_dir" # clean up temp dir
-        print_found "$winning_optional"
+        optional_combo="$winning_optional" # set for lib/print_found
+        . "$(dirname "$0")"/lib/print_found # print the winning combination
         exit 0
       fi
       combo_idx=$((combo_idx + 1))
