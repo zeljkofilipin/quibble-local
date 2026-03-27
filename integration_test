@@ -78,6 +78,7 @@ run_test ./install skins/MinervaNeue  # test installing a skin (exercises skins/
 run_test ./dependencies skins/MinervaNeue  # test listing skin dependencies
 run_test ./required_dependencies skins/MinervaNeue  # test listing required skin dependencies
 run_test ./optional_dependencies skins/MinervaNeue  # test listing optional skin dependencies
+run_test ./dependency_combinations skins/MinervaNeue  # test listing skin dependency combinations
 run_test ./selenium_tests_exist skins/MinervaNeue  # test that skin has Selenium tests
 run_test ./run_selenium_tests skins/MinervaNeue  # test running skin Selenium tests
 run_test ./suggested_parallel              # test suggesting number of parallel workers
