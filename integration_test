@@ -63,6 +63,8 @@ run_test ./run_selenium_tests          # test running all core Selenium tests
 run_test ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js  # test running a specific test file
 run_test ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"  # test filtering by grep pattern
 run_test ./install extensions/Echo     # test installing an extension
+run_test env QUIBBLE_DEPS="" ./install extensions/Echo  # test installing with no dependencies
+run_test env QUIBBLE_DEPS="EventLogging" ./install extensions/Echo  # test installing with specific dependencies
 run_test ./dependencies extensions/Echo  # test listing extension dependencies
 run_test ./required_dependencies extensions/Echo  # test listing required dependencies
 run_test ./optional_dependencies extensions/Echo  # test listing optional dependencies
