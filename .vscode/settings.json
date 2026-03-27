@@ -11,6 +11,7 @@
     "**/lib/print_dep_summary": "shellscript",
     "**/lib/print_results": "shellscript",
     "**/lib/build_full_combo": "shellscript",
+    "**/lib/resolve_deps": "shellscript",
     "**/lib/setup": "shellscript",
     "**/lib/silent_output": "shellscript",
     "*.awk": "awk",
