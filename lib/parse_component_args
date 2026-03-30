@@ -1,0 +1,36 @@
+# shellcheck shell=bash
+# Parse optional component and extra arguments from the command line.
+# Separates the component path (extensions/X or skins/X) from remaining arguments.
+# Must be sourced, not run directly. Consumes the caller's positional parameters via shift.
+# shellcheck disable=SC2034 # variables are used by the sourcing script
+#
+# Sets these variables:
+#   component    — component path if provided (e.g. "extensions/Echo"), empty otherwise
+#   zuul_project — array: (-e "ZUUL_PROJECT=mediawiki/...") if component given, empty otherwise
+#   extra_args   — array of remaining arguments (e.g. --spec, --filter, etc.)
+#
+# Usage (in a script):
+#   . "$(dirname "$0")"/lib/parse_component_args
+#   # Now $component, $zuul_project, and $extra_args are set
+
+component="" # no component by default
+zuul_project=() # empty array by default
+extra_args=() # extra arguments to pass through to the test runner
+
+# Parse arguments: first arg may be a component (extensions/X or skins/X),
+# remaining args are passed through.
+# $# is the number of arguments remaining.
+while [ $# -gt 0 ]; do
+  case "$1" in
+    extensions/* | skins/*) # component path (e.g. extensions/Echo)
+      component="$1"
+      # Tell Quibble which extension/skin to target via -e (env var) flag
+      zuul_project=(-e "ZUUL_PROJECT=mediawiki/${component}")
+      shift # remove this argument from $@
+      ;;
+    *) # everything else is a test runner argument (e.g. --spec, --filter)
+      extra_args+=("$1") # += appends to bash arrays
+      shift # remove this argument from $@
+      ;;
+  esac
+done

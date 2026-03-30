@@ -14,40 +14,20 @@
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
-# Build optional ZUUL_PROJECT env var if an extension/skin was specified
-zuul_project=() # empty array by default
-wdio_args=() # extra arguments to pass to wdio (e.g. --spec)
-
-# Parse arguments: first arg may be a component (extensions/X or skins/X),
-# remaining args are passed through to wdio.
-# $# is the number of arguments remaining.
-while [ $# -gt 0 ]; do
-  case "$1" in
-    extensions/* | skins/*) # component path (e.g. extensions/Echo)
-      component="$1"
-      repo="mediawiki/${component}"
-      # Tell Quibble which extension/skin to target via -e (env var) flag
-      zuul_project=(-e "ZUUL_PROJECT=${repo}")
-      shift # remove this argument from $@
-      ;;
-    *) # everything else is a wdio argument (e.g. --spec file.js)
-      wdio_args+=("$1") # += appends to bash arrays
-      shift # remove this argument from $@
-      ;;
-  esac
-done
+# Parse optional component (extensions/X or skins/X) and extra arguments (e.g. --spec).
+# Sets: component, zuul_project, extra_args
+. "$(dirname "$0")"/lib/parse_component_args
 
 # Decide how to run tests:
 # - with --spec + component: cd into component dir, then run specific test
 # - with --spec (no component): run specific test from repo root
 # - without --spec: use --run selenium to run all tests
 # ${#arr[@]} gets the number of elements in the array
-if [ ${#wdio_args[@]} -gt 0 ]; then
-  # ${component:-} expands to empty string if $component is unset (avoids set -u error)
-  if [ -n "${component:-}" ]; then # for extensions/skins, cd into the component directory first
-    quibble_args=(--command "cd ${component} && npm run selenium-test -- ${wdio_args[*]}")
+if [ ${#extra_args[@]} -gt 0 ]; then
+  if [ -n "$component" ]; then # for extensions/skins, cd into the component directory first
+    quibble_args=(--command "cd ${component} && npm run selenium-test -- ${extra_args[*]}")
   else
-    quibble_args=(--command "npm run selenium-test -- ${wdio_args[*]}")
+    quibble_args=(--command "npm run selenium-test -- ${extra_args[*]}")
   fi
 else
   # Run all Selenium tests

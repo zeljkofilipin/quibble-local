@@ -343,6 +343,10 @@ Output redirection for silent mode. Saves all output to a log file (e.g. `log/fr
 
 Provides `docker_chmod` function that sets directories to world-writable (`chmod 777`), falling back to Docker-as-root when directories are owned by root from previous container runs. Sourced by `fresh_install`, `save`, and `restore`.
 
+### `lib/parse_component_args`
+
+Parses optional component path (`extensions/X` or `skins/X`) and extra arguments from the command line. Sets `component`, `zuul_project`, and `extra_args` variables. Sourced by `run_selenium_tests` and `run_php_unit_tests`.
+
 ### `lib/clone_or_fetch`
 
 Provides `clone_or_fetch` function that clones or fetches a bare repo from Gerrit into `ref/`. If the repo already exists, fetches updates; otherwise clones it. Accepts optional `--quiet` flag. Sourced by `install`, `selenium_tests_exist`, and `lib/resolve_deps`.
