@@ -37,14 +37,7 @@ fi
 printf " %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # print UTC timestamp after core
 
 # --- Build list of gated components ---
-components=() # array of component names to process
-if [ $# -gt 0 ]; then
-  components+=("$1") # single component from argument
-else
-  while IFS= read -r component; do
-    components+=("$component") # += appends to bash arrays
-  done < <("$(dirname "$0")"/gated)
-fi
+. "$(dirname "$0")"/lib/build_component_list # sets components[] from $1 or ./gated
 
 if [ "$parallel" -le 1 ]; then
   # --- Sequential mode ---
