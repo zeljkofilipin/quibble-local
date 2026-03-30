@@ -8,6 +8,8 @@ verbose="${VERBOSE:-}" # VERBOSE=1 enables verbose mode; empty string means sile
 
 . "$(dirname "$0")"/lib/inhibit_sleep  # prevent the machine from suspending
 . "$(dirname "$0")"/lib/print_results  # provides print_results function
+. "$(dirname "$0")"/lib/print_header   # provides print_header function
+. "$(dirname "$0")"/lib/record_passed  # provides record_passed function
 . "$(dirname "$0")"/lib/heartbeat      # provides run_with_dots function
 . "$(dirname "$0")"/lib/duration_trap  # provides _quibble_format_duration and sets EXIT trap for total duration
 

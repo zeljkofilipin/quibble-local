@@ -1,0 +1,17 @@
+# shellcheck shell=bash
+# Record a component as passed (if not already in the failed list).
+# Must be sourced, not run directly.
+# Expects $failed and $passed to be set by the caller (from lib/batch_setup).
+# Usage: record_passed "component"
+#        record_passed "core"
+#        record_passed "extensions/Echo"
+# shellcheck disable=SC2154 # failed and passed are set by lib/batch_setup
+
+record_passed() {
+  local component="$1" # e.g. "core", "extensions/Echo"
+  case "$failed" in
+    *"$component"*) ;; # already recorded as failed
+    *) passed="$passed
+  $component" ;; # append component on a new indented line
+  esac
+}

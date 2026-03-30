@@ -16,13 +16,7 @@
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
 
 # --- Core ---
-if [ -n "$verbose" ]; then
-  printf "\n########################################\n"
-  printf "# Core %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-  printf "########################################\n"
-else
-  printf "core " # print component name, dots will follow on same line
-fi
+print_header "core"
 if ! run_step core ./fresh_install; then # install core; abort if this fails
   printf " %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
   print_results
@@ -36,13 +30,7 @@ components=() # array of successfully installed components
 # <&3 reads from file descriptor 3 instead of stdin, because docker's -it flag needs stdin.
 # 3< <(...) is process substitution: runs ./gated and connects its output to fd 3.
 while IFS= read -r component <&3; do
-  if [ -n "$verbose" ]; then
-    printf "\n########################################\n"
-    printf "# Install %s %s\n" "$component" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-    printf "########################################\n"
-  else
-    printf "%s " "$component" # print component name, dots will follow on same line
-  fi
+  print_header "Install $component"
   if run_step "$component" ./install "$component"; then
     components+=("$component") # track successfully installed components
   fi
@@ -51,42 +39,20 @@ done 3< <("$(dirname "$0")"/gated)
 
 # --- Run Selenium tests for all installed components ---
 # Core first
-if [ -n "$verbose" ]; then
-  printf "\n########################################\n"
-  printf "# Selenium: core %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-  printf "########################################\n"
-else
-  printf "core(selenium) " # print component name, dots will follow on same line
-fi
+print_header "core(selenium)"
 if ./selenium_tests_exist; then # check if core has Selenium tests
   run_step core ./run_selenium_tests
 fi
-# Record core result
-case "$failed" in
-  *"core"*) ;; # already recorded as failed
-  *) passed="$passed
-  core" ;; # append core on a new indented line
-esac
+record_passed "core"
 printf " %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 
 # Then each gated component
 for component in "${components[@]}"; do
-  if [ -n "$verbose" ]; then
-    printf "\n########################################\n"
-    printf "# Selenium: %s %s\n" "$component" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-    printf "########################################\n"
-  else
-    printf "%s(selenium) " "$component" # print component name, dots will follow on same line
-  fi
+  print_header "$component(selenium)"
   if ./selenium_tests_exist "$component"; then # check if this component has Selenium tests
     run_step "$component" ./run_selenium_tests "$component"
   fi
-  # Record as passed if not already in failed list
-  case "$failed" in
-    *"$component"*) ;; # already recorded as failed
-    *) passed="$passed
-  $component" ;; # append component on a new indented line
-  esac
+  record_passed "$component"
   printf " %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 done
 

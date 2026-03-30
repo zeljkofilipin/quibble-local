@@ -28,14 +28,7 @@ skip_count=0   # running count of skipped components (no Selenium tests)
 # <&3 reads from file descriptor 3 instead of stdin, because docker's -it flag needs stdin.
 # 3< <(...) is process substitution: runs ./gated and connects its output to fd 3.
 while IFS= read -r component <&3; do
-  if [ -n "$verbose" ]; then
-    # print section header for this component
-    printf "\n########################################\n"
-    printf "# %s %s\n" "$component" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-    printf "########################################\n"
-  else
-    printf "%s " "$component" # print component name, dots will follow on same line
-  fi
+  print_header "$component"
 
   # Get required dependencies for this component (from extension.json/skin.json)
   required_deps=""

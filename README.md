@@ -323,6 +323,14 @@ Sourced by long-running scripts (`minimal_dependencies`, `run_all`, `run_gated`,
 
 Sourced by scripts that track test/step results (`run_all`, `run_gated`, `run_required`, `integration_test`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
 
+### `lib/print_header`
+
+Provides `print_header` function that prints a section header for a component in batch scripts. In verbose mode: separator box with label and UTC timestamp. In silent mode: label followed by a space. Sourced by `lib/batch_setup`.
+
+### `lib/record_passed`
+
+Provides `record_passed` function that records a component as passed (if not already in the failed list). Sourced by `lib/batch_setup`.
+
 ### `lib/parse_requires.awk`
 
 Awk script that parses `requires.extensions` and `requires.skins` from `extension.json` or `skin.json`. Used by `required_dependencies`.

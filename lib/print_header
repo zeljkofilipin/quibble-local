@@ -1,0 +1,21 @@
+# shellcheck shell=bash
+# Print a section header for a component in batch scripts.
+# In verbose mode: prints a separator box with the label and UTC timestamp.
+# In silent mode: prints the label followed by a space (dots will follow).
+# Must be sourced, not run directly.
+# Expects $verbose to be set by the caller (from lib/batch_setup).
+# Usage: print_header "label"
+#        print_header "Core"
+#        print_header "extensions/Echo"
+#        print_header "Install extensions/Echo"
+
+print_header() {
+  local label="$1" # e.g. "Core", "extensions/Echo", "Install extensions/Echo"
+  if [ -n "$verbose" ]; then
+    printf "\n########################################\n"
+    printf "# %s %s\n" "$label" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # label with UTC timestamp
+    printf "########################################\n"
+  else
+    printf "%s " "$label" # print label, dots will follow on same line
+  fi
+}
