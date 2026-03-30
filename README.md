@@ -347,6 +347,10 @@ Provides `docker_chmod` function that sets directories to world-writable (`chmod
 
 Parses optional component path (`extensions/X` or `skins/X`) and extra arguments from the command line. Sets `component`, `zuul_project`, and `extra_args` variables. Sourced by `run_selenium_tests` and `run_php_unit_tests`.
 
+### `lib/run_quibble_test`
+
+Provides `run_quibble_test` function that runs a Quibble test command in Docker with `--skip-zuul` and `--skip-deps`. Takes Quibble arguments (e.g. `--run selenium`). Expects `lib/setup` and `lib/parse_component_args` to be sourced first. Sourced by `run_selenium_tests` and `run_php_unit_tests`.
+
 ### `lib/build_component_list`
 
 Builds the `components` array from either `$1` (single component) or `./gated` (all gated extensions/skins). Sourced by `run_all` and `run_required`.

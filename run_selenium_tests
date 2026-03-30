@@ -35,23 +35,7 @@ else
 fi
 
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
+. "$(dirname "$0")"/lib/run_quibble_test # provides run_quibble_test function
 
 # Run Selenium tests in the container
-# "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
-# --rm: remove container on exit
-# --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
-# "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
-# -e CI=true: tell Quibble this is a CI run
-# ${zuul_project[@]+"${zuul_project[@]}"}: bash 3.2 workaround to expand array
-#   only if non-empty (empty array with set -u would cause "unbound variable" error)
-# --skip-zuul: don't clone repos (already in src/)
-# --skip-deps: don't install dependencies (already installed)
-docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm \
-  --entrypoint=quibble-with-supervisord \
-  "${QUIBBLE_VOLUMES[@]}" \
-  -e CI=true \
-  ${zuul_project[@]+"${zuul_project[@]}"} \
-  "$QUIBBLE_IMAGE" \
-  --skip-zuul \
-  --skip-deps \
-  "${quibble_args[@]}"
+run_quibble_test "${quibble_args[@]}"
