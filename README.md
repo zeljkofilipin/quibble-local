@@ -338,6 +338,14 @@ Provides `print_header` function that prints a section header for a component in
 
 Provides `record_passed` function that records a component as passed (if not already in the failed list). Sourced by `lib/batch_setup`.
 
+### `lib/run_waves`
+
+Generic wave-based parallel worker orchestration. Processes an array of items in waves of `$parallel` workers, each in an isolated `src_worker_N/` directory. The caller defines `_run_worker` and `_collect_result` functions to customize worker behavior and result handling. Sourced by `run_all` and `run_required` in parallel mode.
+
+### `lib/worker_init`
+
+Common setup for parallel worker subshells. Sets `QUIBBLE_SRC` and `QUIBBLE_BACKGROUND`, redirects output to a log file, and runs `./restore` (fast mode) or `./fresh_install`. Sourced inside worker subshells by `run_all`, `run_required`, and `lib/parallel`.
+
 ### `lib/parse_requires.awk`
 
 Awk script that parses `requires.extensions` and `requires.skins` from `extension.json` or `skin.json`. Used by `required_dependencies`.

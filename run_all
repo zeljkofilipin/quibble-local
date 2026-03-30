@@ -45,7 +45,6 @@ else
     components+=("$component") # += appends to bash arrays
   done < <("$(dirname "$0")"/gated)
 fi
-total=${#components[@]} # total number of gated components
 
 if [ "$parallel" -le 1 ]; then
   # --- Sequential mode ---
@@ -81,111 +80,55 @@ else
     exit 1
   fi
 
-  # Create result directory for workers to report pass/fail
-  result_dir=$(mktemp -d) # temp dir for worker result files
+  # Define worker function: restore/fresh_install → install → run_selenium_tests.
+  # Runs inside a background subshell via lib/run_waves.
+  # $1: result_file path to write pass/fail
+  # $2: component name (e.g. "extensions/Echo")
+  _run_worker() {
+    local result_file="$1" # path to write "pass" or "fail"
+    local component="$2"   # e.g. "extensions/Echo"
 
-  # Process components in waves of $parallel workers
-  wave_start=0 # index into components array for start of current wave
-  while [ "$wave_start" -lt "$total" ]; do
-    wave_end=$((wave_start + parallel)) # exclusive end index
-    if [ "$wave_end" -gt "$total" ]; then
-      wave_end="$total" # last wave may be smaller
+    # Common worker setup: set environment, redirect output, restore/fresh_install
+    . lib/worker_init
+
+    # Install extension/skin
+    if ! ./install "$component"; then
+      echo "fail" > "$result_file"
+      exit 1
     fi
-    wave_size=$((wave_end - wave_start))
 
-    printf "\n--- Wave %d-%d of %d (%d workers) --- %s\n" \
-      "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-
-    # Launch workers for this wave
-    pids=() # array of background process IDs
-    worker=0 # worker index (0-based, used for src_worker_$worker/)
-    while [ "$worker" -lt "$wave_size" ]; do
-      comp_idx=$((wave_start + worker))
-      component="${components[$comp_idx]}"
-      worker_src="src_worker_$((worker + 1))" # isolated src directory (1-based for readability)
-      worker_log="log/silent/worker-$((worker + 1))" # per-worker log directory
-
-      mkdir -p "$worker_src" "$worker_log" # create worker directories
-
-      printf "  Worker %d: %s\n" "$((worker + 1))" "$component"
-
-      # Launch worker in background subshell.
-      # Each worker runs in its own src directory: restore/fresh_install → install → run_selenium_tests.
-      # QUIBBLE_SRC: isolated src directory for this worker
-      # QUIBBLE_BACKGROUND=1: skip -i/-t Docker flags (no stdin in background)
-      # Worker writes "pass" or "fail" to a result file.
-      (
-        export QUIBBLE_SRC="$worker_src"
-        export QUIBBLE_BACKGROUND=1
-
-        # Redirect all output to worker log file
-        exec > "$worker_log/${component//\//-}.log" 2>&1
-
-        # Set up core MediaWiki
-        if [ -n "$fast" ]; then
-          # Fast mode: restore from saved state
-          if ! ./restore; then
-            echo "fail" > "$result_dir/worker_$comp_idx"
-            exit 1
-          fi
-        else
-          # Normal mode: fresh_install from scratch
-          if ! ./fresh_install; then
-            echo "fail" > "$result_dir/worker_$comp_idx"
-            exit 1
-          fi
-        fi
-
-        # Install extension/skin
-        if ! ./install "$component"; then
-          echo "fail" > "$result_dir/worker_$comp_idx"
-          exit 1
-        fi
-
-        # Run Selenium tests if they exist
-        if ./selenium_tests_exist "$component"; then
-          if ./run_selenium_tests "$component"; then
-            echo "pass" > "$result_dir/worker_$comp_idx"
-          else
-            echo "fail" > "$result_dir/worker_$comp_idx"
-          fi
-        else
-          echo "pass" > "$result_dir/worker_$comp_idx" # no tests = pass
-        fi
-      ) &
-      pids+=($!) # $! is the PID of the last background process
-
-      worker=$((worker + 1))
-    done
-
-    # Wait for all workers in this wave to finish
-    for pid in "${pids[@]}"; do
-      wait "$pid" 2>/dev/null || true # wait for each worker (ignore exit code, check result files)
-    done
-
-    # Collect results from this wave
-    worker=0
-    while [ "$worker" -lt "$wave_size" ]; do
-      comp_idx=$((wave_start + worker))
-      component="${components[$comp_idx]}"
-      result_file="$result_dir/worker_$comp_idx"
-      if [ -f "$result_file" ] && [ "$(cat "$result_file")" = "pass" ]; then
-        printf "  %s: ok\n" "$component"
-        passed="$passed
-  $component" # append component on a new indented line
+    # Run Selenium tests if they exist
+    if ./selenium_tests_exist "$component"; then
+      if ./run_selenium_tests "$component"; then
+        echo "pass" > "$result_file"
       else
-        printf "  %s: FAIL (see log/silent/worker-%d/%s.log)\n" "$component" "$((worker + 1))" "${component//\//-}"
-        failed="$failed
-  $component" # append component on a new indented line
+        echo "fail" > "$result_file"
       fi
-      worker=$((worker + 1))
-    done
+    else
+      echo "pass" > "$result_file" # no tests = pass
+    fi
+  }
 
-    wave_start="$wave_end" # advance to next wave
-  done
+  # Define result collector: record pass/fail for each component.
+  # $1: component name
+  # $2: result string (pass/fail/empty)
+  # $3: worker number (1-based)
+  _collect_result() {
+    local component="$1" result="$2" worker_num="$3"
+    if [ "$result" = "pass" ]; then
+      printf "  %s: ok\n" "$component"
+      passed="$passed
+  $component" # append component on a new indented line
+    else
+      printf "  %s: FAIL (see log/silent/worker-%d/%s.log)\n" "$component" "$worker_num" "${component//\//-}"
+      failed="$failed
+  $component" # append component on a new indented line
+    fi
+  }
 
-  # Clean up temp dir
-  rm -rf "$result_dir"
+  # Run all components in parallel waves
+  items=("${components[@]}") # lib/run_waves expects items[] array
+  . "$(dirname "$0")"/lib/run_waves
 fi
 
 # Print pass/fail summary and exit with error if any component failed

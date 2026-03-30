@@ -72,44 +72,27 @@ while [ "$wave_start" -lt "$total" ]; do
     # Launch worker in background subshell.
     # Fast mode: restore → install → run_selenium_tests in its own src directory.
     # Normal mode: fresh_install → install → run_selenium_tests in its own src directory.
-    # QUIBBLE_SRC: isolated src directory for this worker
-    # QUIBBLE_BACKGROUND=1: skip -i/-t Docker flags (no stdin in background)
     # QUIBBLE_DEPS: dependency combination to test
     # Worker writes "pass" or "fail" to a result file.
     (
-      export QUIBBLE_SRC="$worker_src"
-      export QUIBBLE_BACKGROUND=1
       export QUIBBLE_DEPS="$worker_full"
+      result_file="$result_dir/worker_$combo_idx"  # path for worker_init to write "fail"
+      worker_log_file="$worker_log/combination-$((combo_idx + 1)).log" # path for worker_init to redirect output
 
-      # Redirect all output to worker log file
-      exec > "$worker_log/combination-$((combo_idx + 1)).log" 2>&1
-
-      # Set up core MediaWiki + extension in worker's src directory
-      if [ -n "$fast" ]; then
-        # Fast mode: restore from saved state (includes MediaWiki + extension + required deps)
-        if ! ./restore; then
-          echo "fail" > "$result_dir/worker_$combo_idx"
-          exit 1
-        fi
-      else
-        # Normal mode: fresh_install + install extension from scratch
-        if ! ./fresh_install; then
-          echo "fail" > "$result_dir/worker_$combo_idx"
-          exit 1
-        fi
-      fi
+      # Common worker setup: set environment, redirect output, restore/fresh_install
+      . lib/worker_init
 
       # Install extension with this combination of deps
       if ! ./install "$component"; then
-        echo "fail" > "$result_dir/worker_$combo_idx"
+        echo "fail" > "$result_file"
         exit 1
       fi
 
       # Run Selenium tests
       if ./run_selenium_tests "$component"; then
-        echo "pass" > "$result_dir/worker_$combo_idx"
+        echo "pass" > "$result_file"
       else
-        echo "fail" > "$result_dir/worker_$combo_idx"
+        echo "fail" > "$result_file"
       fi
     ) &
     pids+=($!) # $! is the PID of the last background process

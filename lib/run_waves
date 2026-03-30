@@ -1,0 +1,82 @@
+# shellcheck shell=bash
+# Generic wave-based parallel worker orchestration.
+# Processes an array of items in waves of $parallel workers.
+# Must be sourced, not run directly.
+#
+# Expects these variables to be set by the caller:
+#   items[]   — array of items to process (e.g. component names)
+#   parallel  — number of workers per wave
+#
+# Expects these functions to be defined by the caller:
+#   _run_worker RESULT_FILE ITEM — runs inside a worker subshell, writes pass/fail/skip to RESULT_FILE
+#   _collect_result ITEM RESULT WORKER_NUM — called for each completed worker to record its result
+# shellcheck disable=SC2154 # variables and functions are set by the sourcing script
+
+_total=${#items[@]} # total number of items to process
+
+# Create result directory for workers to report results
+_result_dir=$(mktemp -d) # temp dir for worker result files
+
+# Process items in waves of $parallel workers
+_wave_start=0 # index into items array for start of current wave
+while [ "$_wave_start" -lt "$_total" ]; do
+  _wave_end=$((_wave_start + parallel)) # exclusive end index
+  if [ "$_wave_end" -gt "$_total" ]; then
+    _wave_end="$_total" # last wave may be smaller
+  fi
+  _wave_size=$((_wave_end - _wave_start))
+
+  printf "\n--- Wave %d-%d of %d (%d workers) --- %s\n" \
+    "$((_wave_start + 1))" "$_wave_end" "$_total" "$_wave_size" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+
+  # Launch workers for this wave
+  _pids=() # array of background process IDs
+  _worker=0 # worker index (0-based, used for src_worker_$worker/)
+  while [ "$_worker" -lt "$_wave_size" ]; do
+    _item_idx=$((_wave_start + _worker))
+    _item="${items[$_item_idx]}"
+    worker_src="src_worker_$((_worker + 1))" # isolated src directory (1-based for readability)
+    _worker_log="log/silent/worker-$((_worker + 1))" # per-worker log directory
+    # shellcheck disable=SC2034 # worker_log_file and result_file are used by _run_worker / lib/worker_init
+    worker_log_file="$_worker_log/${_item//\//-}.log" # full path to worker log file
+    result_file="$_result_dir/worker_$_item_idx" # path for worker to write its result
+
+    mkdir -p "$worker_src" "$_worker_log" # create worker directories
+
+    printf "  Worker %d: %s\n" "$((_worker + 1))" "$_item"
+
+    # Launch worker in background subshell.
+    # _run_worker is defined by the caller and runs the actual work.
+    # It writes "pass", "fail", or "skip" to result_file.
+    (
+      _run_worker "$result_file" "$_item"
+    ) &
+    _pids+=($!) # $! is the PID of the last background process
+
+    _worker=$((_worker + 1))
+  done
+
+  # Wait for all workers in this wave to finish
+  for _pid in "${_pids[@]}"; do
+    wait "$_pid" 2>/dev/null || true # wait for each worker (ignore exit code, check result files)
+  done
+
+  # Collect results from this wave
+  _worker=0
+  while [ "$_worker" -lt "$_wave_size" ]; do
+    _item_idx=$((_wave_start + _worker))
+    _item="${items[$_item_idx]}"
+    _result_file="$_result_dir/worker_$_item_idx"
+    _result="" # default empty
+    if [ -f "$_result_file" ]; then
+      _result=$(cat "$_result_file")
+    fi
+    _collect_result "$_item" "$_result" "$((_worker + 1))"
+    _worker=$((_worker + 1))
+  done
+
+  _wave_start="$_wave_end" # advance to next wave
+done
+
+# Clean up temp dir
+rm -rf "$_result_dir"
