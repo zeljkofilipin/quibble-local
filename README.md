@@ -119,8 +119,11 @@ See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run
 Run Selenium tests for core and all gated repositories. For each component: `./fresh_install`, `./install` (if not core), check if Selenium tests exist, and run them. Silent by default; use `VERBOSE=1` for full output.
 
     ./run_all
+    ./run_all extensions/Echo
     VERBOSE=1 ./run_all
     FAST=1 ./run_all
+    PARALLEL=$(./suggested_parallel) ./run_all
+    PARALLEL=4 FAST=1 ./run_all
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
