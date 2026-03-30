@@ -6,6 +6,7 @@
 # WARNING: This will delete and recreate src/.
 #
 # Usage: ./fresh_install
+#        ENVIRONMENT=0 ./fresh_install
 #        VERBOSE=1 ./fresh_install
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core

@@ -96,6 +96,43 @@
 }
 
 
+@test "setup: ENVIRONMENT sets QUIBBLE_SRC and QUIBBLE_SAVE" {
+  run bash -c '
+    export _QUIBBLE_NO_DOCKER_CHECK=1
+    export VERBOSE=1
+    export ENVIRONMENT=0
+    . lib/setup 2>/dev/null
+    echo "src:$QUIBBLE_SRC save:$QUIBBLE_SAVE"
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"src:src_0"* ]]
+  [[ "$output" == *"save:src_save_0"* ]]
+}
+
+@test "setup: ENVIRONMENT does not override explicit QUIBBLE_SRC" {
+  run bash -c '
+    export _QUIBBLE_NO_DOCKER_CHECK=1
+    export VERBOSE=1
+    export ENVIRONMENT=0
+    export QUIBBLE_SRC=my_src
+    . lib/setup 2>/dev/null
+    echo "$QUIBBLE_SRC"
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"my_src"* ]]
+}
+
+@test "setup: QUIBBLE_SAVE defaults to src_save" {
+  run bash -c '
+    export _QUIBBLE_NO_DOCKER_CHECK=1
+    export VERBOSE=1
+    . lib/setup 2>/dev/null
+    echo "$QUIBBLE_SAVE"
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"src_save"* ]]
+}
+
 @test "setup: QUIBBLE_DOCKER_FLAGS empty in background mode" {
   run bash -c '
     export _QUIBBLE_NO_DOCKER_CHECK=1

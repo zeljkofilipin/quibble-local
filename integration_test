@@ -62,6 +62,10 @@ run_test env PARALLEL=2 ./fetch        # test parallel fetch
 run_test ./fresh_install               # test fresh core install
 run_test ./save                        # test saving fresh_install state
 run_test ./restore                     # test restoring saved state
+run_test env ENVIRONMENT=0 ./fresh_install  # test environment isolation
+run_test env ENVIRONMENT=0 ./save           # test saving with environment
+run_test env ENVIRONMENT=0 ./restore        # test restoring with environment
+run_test env ENVIRONMENT=0 ./clean          # test cleaning with environment
 run_test ./selenium_tests_exist        # test that core has Selenium tests
 run_test ./run_selenium_tests          # test running all core Selenium tests
 run_test ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js  # test running a specific test file

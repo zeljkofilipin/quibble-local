@@ -24,9 +24,9 @@ if [ -n "$fast" ]; then
     exit 1
   fi
 
-  # Ensure src_save/ exists for workers to restore from
-  if [ ! -d src_save ]; then
-    printf "\nError: src_save/ missing after fresh_install+save. Cannot proceed.\n"
+  # Ensure save directory exists for workers to restore from
+  if [ ! -d "${QUIBBLE_SAVE:-src_save}" ]; then
+    printf "\nError: %s/ missing after fresh_install+save. Cannot proceed.\n" "${QUIBBLE_SAVE:-src_save}"
     exit 1
   fi
 fi

@@ -6,6 +6,7 @@
 #
 # Usage: ./install extensions/Echo
 #        ./install skins/MinervaNeue
+#        ENVIRONMENT=0 ./install extensions/Echo
 #        VERBOSE=1 ./install extensions/Echo
 #        QUIBBLE_DEPS="" ./install extensions/Echo                    # no dependencies
 #        QUIBBLE_DEPS="EventLogging" ./install extensions/Echo        # only specific dependencies

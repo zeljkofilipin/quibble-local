@@ -5,14 +5,16 @@
 # Uses Docker-as-root to handle files owned by the container user (works on macOS and Linux).
 #
 # Usage: ./restore
+#        ENVIRONMENT=0 ./restore
 #        VERBOSE=1 ./restore
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
-# Check that src_save/ exists and is not empty
-if [ ! -d src_save ] || [ -z "$(ls -A src_save 2>/dev/null)" ]; then
-  echo "Error: src_save/ is empty or missing. Run ./save first." >&2 # >&2 prints to stderr
+# Check that save directory exists and is not empty.
+# Uses QUIBBLE_SAVE from lib/setup (default "src_save", overridden by ENVIRONMENT).
+if [ ! -d "$QUIBBLE_SAVE" ] || [ -z "$(ls -A "$QUIBBLE_SAVE" 2>/dev/null)" ]; then
+  echo "Error: $QUIBBLE_SAVE/ is empty or missing. Run ./save first." >&2 # >&2 prints to stderr
   exit 1
 fi
 
@@ -42,6 +44,6 @@ docker run --rm \
   --entrypoint bash \
   --user root \
   -v "$QUIBBLE_DIR"/"$QUIBBLE_SRC":/workspace/src \
-  -v "$QUIBBLE_DIR"/src_save:/workspace/src_save:ro \
+  -v "$QUIBBLE_DIR"/"$QUIBBLE_SAVE":/workspace/src_save:ro \
   "$QUIBBLE_IMAGE" \
   -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/' # clear and restore

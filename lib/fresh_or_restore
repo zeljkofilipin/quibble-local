@@ -15,7 +15,7 @@
 # shellcheck disable=SC2154 # variables are set by the sourcing script
 
 fresh_or_restore() {
-  if [ -n "$fast" ] && [ -d src_save ] && [ -z "$_first_run" ]; then
+  if [ -n "$fast" ] && [ -d "${QUIBBLE_SAVE:-src_save}" ] && [ -z "$_first_run" ]; then
     # Fast mode: restore from saved state instead of running fresh_install
     run_step "$component" ./restore
   else

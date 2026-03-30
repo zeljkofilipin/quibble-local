@@ -5,6 +5,7 @@
 # MediaWiki will be available at http://127.0.0.1:9413
 #
 # Usage: ./shellto
+#        ENVIRONMENT=0 ./shellto
 #        VERBOSE=1 ./shellto
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures

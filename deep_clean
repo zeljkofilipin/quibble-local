@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Remove everything quibble-local created, leaving only the git repo itself.
-# This removes cache/, log/, src/, src_save/, ref/ and the Docker image.
+# This removes cache/, log/, src/, src_save/, src_N/, src_save_N/, ref/ and the Docker image.
 # WARNING: This will delete everything including bare repos (slow to re-clone).
 #
 # Usage: ./deep_clean
@@ -29,9 +29,9 @@ if docker image inspect "$QUIBBLE_IMAGE" &>/dev/null; then # check if the Docker
     -c 'find /cache /workspace/log /workspace/src /workspace/src_save /workspace/ref -mindepth 1 -delete' # delete contents but not mount points
 fi
 
-# Remove the now-empty directories and any parallel worker directories from the host
-# shellcheck disable=SC2046 # intentional word splitting: glob expansion of src_worker_* paths
-rm -rf cache log src src_save ref $(printf '%s ' src_worker_* 2>/dev/null)
+# Remove the now-empty directories, parallel worker directories, and environment directories from the host
+# shellcheck disable=SC2046 # intentional word splitting: glob expansion of src_* paths
+rm -rf cache log src src_save ref $(printf '%s ' src_worker_* src_[0-9]* src_save_[0-9]* 2>/dev/null)
 
 # Remove the Docker image (ignore errors if already removed)
 docker rmi "$QUIBBLE_IMAGE" 2>/dev/null || true

@@ -32,6 +32,20 @@ Override the Docker image used by all commands. Useful when developing or testin
 
 Default: `docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest`
 
+### `ENVIRONMENT`
+
+Run multiple independent sessions on the same machine simultaneously. Each environment uses isolated directories (`src_N/`, `src_save_N/`) so they don't conflict.
+
+    # Terminal 1: install and test Echo
+    ENVIRONMENT=0 ./fresh_install
+    ENVIRONMENT=0 ./install extensions/Echo
+    ENVIRONMENT=0 ./run_selenium_tests extensions/Echo
+
+    # Terminal 2 (at the same time): run minimal_dependencies for MinervaNeue
+    ENVIRONMENT=1 ./minimal_dependencies skins/MinervaNeue
+
+Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directories are shared (safe for concurrent use).
+
 ### `FAST`
 
 `FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `run_all`, `run_required`, and `minimal_dependencies`.

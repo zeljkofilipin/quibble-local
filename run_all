@@ -54,7 +54,7 @@ if [ "$parallel" -le 1 ]; then
   while IFS= read -r component <&3; do
     print_header "$component"
     # Restore from saved state in fast mode, or run fresh_install
-    if [ -n "$fast" ] && [ -d src_save ]; then
+    if [ -n "$fast" ] && [ -d "${QUIBBLE_SAVE:-src_save}" ]; then
       core_ok=false; run_step "$component" ./restore && core_ok=true
     else
       core_ok=false; run_step "$component" ./fresh_install && core_ok=true
@@ -74,9 +74,9 @@ else
   # --- Parallel mode ---
   printf "\nParallel mode: %d workers\n" "$parallel"
 
-  if [ -n "$fast" ] && [ ! -d src_save ]; then
-    # Ensure src_save/ exists for workers to restore from (core was already installed above)
-    printf "\nError: FAST mode requires src_save/ (run ./save first or let core step create it).\n"
+  if [ -n "$fast" ] && [ ! -d "${QUIBBLE_SAVE:-src_save}" ]; then
+    # Ensure save directory exists for workers to restore from (core was already installed above)
+    printf "\nError: FAST mode requires %s/ (run ./save first or let core step create it).\n" "${QUIBBLE_SAVE:-src_save}"
     exit 1
   fi
 
