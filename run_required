@@ -10,79 +10,243 @@
 #        ./run_required extensions/Echo
 #        VERBOSE=1 ./run_required
 #        FAST=1 ./run_required
+#        PARALLEL=$(./suggested_parallel) ./run_required
+#        PARALLEL=4 FAST=1 ./run_required
 # FAST=1: Runs fresh_install once, saves state, then restores instead of re-running fresh_install.
+# PARALLEL=N: Run N components in parallel (each in isolated src_worker_$i/ directory).
+#             Use ./suggested_parallel to determine N for your machine.
 #
 
 # No set -euo pipefail: we want to continue after failures to collect all results
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
 fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-running
+parallel="${PARALLEL:-1}" # PARALLEL=N runs N components in parallel (default 1 = sequential)
 
 skipped="" # newline-separated list of components without Selenium tests
 pass_count=0   # running count of passed components
 fail_count=0   # running count of failed components
 skip_count=0   # running count of skipped components (no Selenium tests)
 
-# --- Gated repositories ---
-# IFS= preserves whitespace in component names; -r prevents backslash interpretation.
-# <&3 reads from file descriptor 3 instead of stdin, because docker's -it flag needs stdin.
-# 3< <(...) is process substitution: runs ./gated and connects its output to fd 3.
-while IFS= read -r component <&3; do
-  print_header "$component"
+# --- Build list of gated components ---
+components=() # array of component names to process
+if [ $# -gt 0 ]; then
+  components+=("$1") # single component from argument
+else
+  while IFS= read -r component; do
+    components+=("$component") # += appends to bash arrays
+  done < <("$(dirname "$0")"/gated)
+fi
+total=${#components[@]} # total number of gated components
 
-  # Get required dependencies for this component (from extension.json/skin.json)
-  required_deps=""
-  while IFS= read -r dep; do
-    [ -z "$dep" ] && continue # skip empty lines
-    required_deps="${required_deps:+$required_deps }$dep" # space-separated list
-  done < <("$(dirname "$0")"/required_dependencies "$component")
+if [ "$parallel" -le 1 ]; then
+  # --- Sequential mode ---
+  # IFS= preserves whitespace in component names; -r prevents backslash interpretation.
+  # <&3 reads from file descriptor 3 instead of stdin, because docker's -it flag needs stdin.
+  # 3< <(...) is process substitution: connects array output to fd 3.
+  while IFS= read -r component <&3; do
+    print_header "$component"
 
-  # Restore from saved state in fast mode, or run fresh_install
-  if [ -n "$fast" ] && [ -d src_save ]; then
-    core_ok=false; run_step "$component" ./restore && core_ok=true
-  else
-    core_ok=false; run_step "$component" ./fresh_install && core_ok=true
-    # Save state after first successful fresh_install for fast mode
-    if [ "$core_ok" = true ] && [ -n "$fast" ]; then
-      run_step "$component" ./save
-    fi
-  fi
-  if [ "$core_ok" = true ]; then # skip remaining steps if core setup fails
-    # Install with only required dependencies (QUIBBLE_DEPS overrides zuul's full dep list)
-    export QUIBBLE_DEPS="$required_deps"
-    if run_step "$component" ./install "$component"; then # install extension/skin; skip tests if this fails
-      if ./selenium_tests_exist "$component"; then # check if this component has Selenium tests
-        run_step "$component" ./run_selenium_tests "$component" # run Selenium tests
-      else
-        skip_count=$((skip_count + 1)) # increment skip counter
-        skipped="$skipped
-  $component" # append component on a new indented line
-        if [ -n "$verbose" ]; then
-          printf "\n%s: no Selenium tests, skipping\n" "$component"
-        else
-          printf "run_selenium_tests skipped (no Selenium tests) "
-        fi
+    # Get required dependencies for this component (from extension.json/skin.json)
+    required_deps=""
+    while IFS= read -r dep; do
+      [ -z "$dep" ] && continue # skip empty lines
+      required_deps="${required_deps:+$required_deps }$dep" # space-separated list
+    done < <("$(dirname "$0")"/required_dependencies "$component")
+
+    # Restore from saved state in fast mode, or run fresh_install
+    if [ -n "$fast" ] && [ -d src_save ]; then
+      core_ok=false; run_step "$component" ./restore && core_ok=true
+    else
+      core_ok=false; run_step "$component" ./fresh_install && core_ok=true
+      # Save state after first successful fresh_install for fast mode
+      if [ "$core_ok" = true ] && [ -n "$fast" ]; then
+        run_step "$component" ./save
       fi
     fi
-    unset QUIBBLE_DEPS # clean up env var before next component
+    if [ "$core_ok" = true ]; then # skip remaining steps if core setup fails
+      # Install with only required dependencies (QUIBBLE_DEPS overrides zuul's full dep list)
+      export QUIBBLE_DEPS="$required_deps"
+      if run_step "$component" ./install "$component"; then # install extension/skin; skip tests if this fails
+        if ./selenium_tests_exist "$component"; then # check if this component has Selenium tests
+          run_step "$component" ./run_selenium_tests "$component" # run Selenium tests
+        else
+          skip_count=$((skip_count + 1)) # increment skip counter
+          skipped="$skipped
+  $component" # append component on a new indented line
+          if [ -n "$verbose" ]; then
+            printf "\n%s: no Selenium tests, skipping\n" "$component"
+          else
+            printf "run_selenium_tests skipped (no Selenium tests) "
+          fi
+        fi
+      fi
+      unset QUIBBLE_DEPS # clean up env var before next component
+    fi
+
+    # Record component result: passed (if not already failed or skipped)
+    case "$skipped" in
+      *"$component"*) ;; # already recorded as skipped
+      *)
+        case "$failed" in
+          *"$component"*) fail_count=$((fail_count + 1)) ;; # count this failure
+          *) pass_count=$((pass_count + 1)) # increment pass counter
+             passed="$passed
+  $component" ;; # append component on a new indented line
+        esac
+        ;;
+    esac
+    # Print running tally with UTC timestamp after each component
+    printf "\n  (%d passed, %d failed, %d skipped) %s\n" "$pass_count" "$fail_count" "$skip_count" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+  done 3< <(printf '%s\n' "${components[@]}")
+
+else
+  # --- Parallel mode ---
+  printf "\nParallel mode: %d workers\n" "$parallel"
+
+  if [ -n "$fast" ] && [ ! -d src_save ]; then
+    # Fast mode needs a saved state. Run fresh_install + save first.
+    print_header "setup (fresh_install + save)"
+    if run_step setup ./fresh_install; then
+      run_step setup ./save
+    else
+      printf "\nfresh_install failed. Cannot proceed.\n"
+      exit 1
+    fi
+    printf " %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
   fi
 
-  # Record component result: passed (if not already failed or skipped)
-  case "$skipped" in
-    *"$component"*) ;; # already recorded as skipped
-    *)
-      case "$failed" in
-        *"$component"*) fail_count=$((fail_count + 1)) ;; # count this failure
-        *) pass_count=$((pass_count + 1)) # increment pass counter
-           passed="$passed
-  $component" ;; # append component on a new indented line
+  # Create result directory for workers to report pass/fail/skip
+  result_dir=$(mktemp -d) # temp dir for worker result files
+
+  # Process components in waves of $parallel workers
+  wave_start=0 # index into components array for start of current wave
+  while [ "$wave_start" -lt "$total" ]; do
+    wave_end=$((wave_start + parallel)) # exclusive end index
+    if [ "$wave_end" -gt "$total" ]; then
+      wave_end="$total" # last wave may be smaller
+    fi
+    wave_size=$((wave_end - wave_start))
+
+    printf "\n--- Wave %d-%d of %d (%d workers) --- %s\n" \
+      "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+
+    # Launch workers for this wave
+    pids=() # array of background process IDs
+    worker=0 # worker index (0-based, used for src_worker_$worker/)
+    while [ "$worker" -lt "$wave_size" ]; do
+      comp_idx=$((wave_start + worker))
+      component="${components[$comp_idx]}"
+      worker_src="src_worker_$((worker + 1))" # isolated src directory (1-based for readability)
+      worker_log="log/silent/worker-$((worker + 1))" # per-worker log directory
+
+      mkdir -p "$worker_src" "$worker_log" # create worker directories
+
+      printf "  Worker %d: %s\n" "$((worker + 1))" "$component"
+
+      # Launch worker in background subshell.
+      # Each worker runs in its own src directory: restore/fresh_install → install → run_selenium_tests.
+      # QUIBBLE_SRC: isolated src directory for this worker
+      # QUIBBLE_BACKGROUND=1: skip -i/-t Docker flags (no stdin in background)
+      # QUIBBLE_DEPS: only required dependencies for this component
+      # Worker writes "pass", "fail", or "skip" to a result file.
+      (
+        export QUIBBLE_SRC="$worker_src"
+        export QUIBBLE_BACKGROUND=1
+
+        # Redirect all output to worker log file
+        exec > "$worker_log/${component//\//-}.log" 2>&1
+
+        # Get required dependencies for this component
+        required_deps=""
+        while IFS= read -r dep; do
+          [ -z "$dep" ] && continue # skip empty lines
+          required_deps="${required_deps:+$required_deps }$dep"
+        done < <(./required_dependencies "$component")
+
+        # Set up core MediaWiki
+        if [ -n "$fast" ]; then
+          if ! ./restore; then
+            echo "fail" > "$result_dir/worker_$comp_idx"
+            exit 1
+          fi
+        else
+          if ! ./fresh_install; then
+            echo "fail" > "$result_dir/worker_$comp_idx"
+            exit 1
+          fi
+        fi
+
+        # Install with only required dependencies
+        export QUIBBLE_DEPS="$required_deps"
+        if ! ./install "$component"; then
+          echo "fail" > "$result_dir/worker_$comp_idx"
+          exit 1
+        fi
+
+        # Run Selenium tests if they exist
+        if ./selenium_tests_exist "$component"; then
+          if ./run_selenium_tests "$component"; then
+            echo "pass" > "$result_dir/worker_$comp_idx"
+          else
+            echo "fail" > "$result_dir/worker_$comp_idx"
+          fi
+        else
+          echo "skip" > "$result_dir/worker_$comp_idx" # no Selenium tests
+        fi
+      ) &
+      pids+=($!) # $! is the PID of the last background process
+
+      worker=$((worker + 1))
+    done
+
+    # Wait for all workers in this wave to finish
+    for pid in "${pids[@]}"; do
+      wait "$pid" 2>/dev/null || true # wait for each worker (ignore exit code, check result files)
+    done
+
+    # Collect results from this wave
+    worker=0
+    while [ "$worker" -lt "$wave_size" ]; do
+      comp_idx=$((wave_start + worker))
+      component="${components[$comp_idx]}"
+      result_file="$result_dir/worker_$comp_idx"
+      result="" # default empty
+      if [ -f "$result_file" ]; then
+        result=$(cat "$result_file")
+      fi
+      case "$result" in
+        pass)
+          printf "  %s: ok\n" "$component"
+          pass_count=$((pass_count + 1))
+          passed="$passed
+  $component"
+          ;;
+        skip)
+          printf "  %s: skipped (no Selenium tests)\n" "$component"
+          skip_count=$((skip_count + 1))
+          skipped="$skipped
+  $component"
+          ;;
+        *)
+          printf "  %s: FAIL (see log/silent/worker-%d/%s.log)\n" "$component" "$((worker + 1))" "${component//\//-}"
+          fail_count=$((fail_count + 1))
+          failed="$failed
+  $component"
+          ;;
       esac
-      ;;
-  esac
-  # Print running tally with UTC timestamp after each component
-  printf "\n  (%d passed, %d failed, %d skipped) %s\n" "$pass_count" "$fail_count" "$skip_count" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-# If a component argument was given, use it; otherwise run all gated repos.
-done 3< <(if [ $# -gt 0 ]; then echo "$1"; else ./gated; fi)
+      worker=$((worker + 1))
+    done
+
+    # Print running tally after each wave
+    printf "  (%d passed, %d failed, %d skipped) %s\n" "$pass_count" "$fail_count" "$skip_count" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+
+    wave_start="$wave_end" # advance to next wave
+  done
+
+  # Clean up temp dir
+  rm -rf "$result_dir"
+fi
 
 # Print skipped components (no Selenium tests) before the pass/fail summary
 if [ -n "$skipped" ]; then

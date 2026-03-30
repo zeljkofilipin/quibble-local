@@ -171,8 +171,11 @@ Output the list of gated repositories (extensions and skins) from `parameter_fun
 Run Selenium tests for all gated repositories using only required dependencies (from `extension.json`/`skin.json`). For each component: `./fresh_install`, `./install` with required deps only, check if Selenium tests exist, and run them. Silent by default; use `VERBOSE=1` for full output.
 
     ./run_required
+    ./run_required extensions/Echo
     VERBOSE=1 ./run_required
     FAST=1 ./run_required
+    PARALLEL=$(./suggested_parallel) ./run_required
+    PARALLEL=4 FAST=1 ./run_required
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
