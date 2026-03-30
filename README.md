@@ -94,6 +94,17 @@ Run Selenium tests. Assumes `./fresh_install` (or `./install`) has been run firs
 
 See: [Run tests targeting Quibble](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble)
 
+### `./run_php_unit_tests`
+
+Run PHPUnit tests. Assumes `./fresh_install` (or `./install`) has been run first.
+
+    ./run_php_unit_tests
+    ./run_php_unit_tests extensions/Echo
+    ./run_php_unit_tests extensions/Echo --filter testNotificationCount
+    VERBOSE=1 ./run_php_unit_tests extensions/Echo
+
+See: [Run tests targeting Quibble](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble)
+
 ### `./shellto`
 
 Open a shell in the container with MediaWiki running at http://127.0.0.1:9413. Assumes `./fresh_install` (or `./install`) has been run first.

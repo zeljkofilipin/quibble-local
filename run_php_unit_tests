@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+#
+# Run PHPUnit tests. Skips installation (assumes ./fresh_install or ./install has been run first).
+#
+# Usage: ./run_php_unit_tests
+#        ./run_php_unit_tests extensions/Echo
+#        ENVIRONMENT=0 ./run_php_unit_tests extensions/Echo
+#        ./run_php_unit_tests extensions/Echo --filter testNotificationCount
+#
+# See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble
+#
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+
+# Build optional ZUUL_PROJECT env var if an extension/skin was specified
+zuul_project=() # empty array by default
+phpunit_args=() # extra arguments to pass to phpunit (e.g. --filter)
+
+# Parse arguments: first arg may be a component (extensions/X or skins/X),
+# remaining args are passed through to phpunit.
+# $# is the number of arguments remaining.
+while [ $# -gt 0 ]; do
+  case "$1" in
+    extensions/* | skins/*) # component path (e.g. extensions/Echo)
+      component="$1"
+      repo="mediawiki/${component}"
+      # Tell Quibble which extension/skin to target via -e (env var) flag
+      zuul_project=(-e "ZUUL_PROJECT=${repo}")
+      shift # remove this argument from $@
+      ;;
+    *) # everything else is a phpunit argument (e.g. --filter testName)
+      phpunit_args+=("$1") # += appends to bash arrays
+      shift # remove this argument from $@
+      ;;
+  esac
+done
+
+# Decide how to run tests:
+# - with extra args: pass them through to phpunit via --command
+# - without extra args: use --run phpunit to run all tests
+# ${#arr[@]} gets the number of elements in the array
+if [ ${#phpunit_args[@]} -gt 0 ]; then
+  # Run phpunit with specific arguments (e.g. --filter)
+  quibble_args=(--command "php tests/phpunit/phpunit.php ${phpunit_args[*]}")
+else
+  # Run all PHPUnit tests
+  quibble_args=(--run phpunit)
+fi
+
+. "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
+
+# Run PHPUnit tests in the container
+# "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
+# --rm: remove container on exit
+# --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
+# "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
+# -e CI=true: tell Quibble this is a CI run
+# ${zuul_project[@]+"${zuul_project[@]}"}: bash 3.2 workaround to expand array
+#   only if non-empty (empty array with set -u would cause "unbound variable" error)
+# --skip-zuul: don't clone repos (already in src/)
+# --skip-deps: don't install dependencies (already installed)
+docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm \
+  --entrypoint=quibble-with-supervisord \
+  "${QUIBBLE_VOLUMES[@]}" \
+  -e CI=true \
+  ${zuul_project[@]+"${zuul_project[@]}"} \
+  "$QUIBBLE_IMAGE" \
+  --skip-zuul \
+  --skip-deps \
+  "${quibble_args[@]}"
