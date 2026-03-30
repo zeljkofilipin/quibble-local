@@ -53,7 +53,6 @@ fi
 # "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
 # --rm: remove container on exit
 # --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
-# ${QUIBBLE_PORT_FLAGS[@]+"..."}: expose MediaWiki port (skipped in parallel mode)
 # "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
 # -e ZUUL_PROJECT: tell Quibble which extension/skin is the main project
 # --resolve-requires: let Quibble resolve and install PHP/extension dependencies
@@ -61,7 +60,6 @@ fi
 # ${deps[@]+"..."}: list of dependency repos to clone; ${arr[@]+"..."} is safe for empty arrays in bash 3.2
 docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm \
   --entrypoint=quibble-with-supervisord \
-  ${QUIBBLE_PORT_FLAGS[@]+"${QUIBBLE_PORT_FLAGS[@]}"} \
   "${QUIBBLE_VOLUMES[@]}" \
   -e ZUUL_PROJECT="${repo}" \
   "$QUIBBLE_IMAGE" \

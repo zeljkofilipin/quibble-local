@@ -73,13 +73,11 @@ while [ "$wave_start" -lt "$total" ]; do
     # Fast mode: restore → install → run_selenium_tests in its own src directory.
     # Normal mode: fresh_install → install → run_selenium_tests in its own src directory.
     # QUIBBLE_SRC: isolated src directory for this worker
-    # QUIBBLE_EXPOSE_PORT=0: skip port mapping (avoid port conflicts between workers)
     # QUIBBLE_BACKGROUND=1: skip -i/-t Docker flags (no stdin in background)
     # QUIBBLE_DEPS: dependency combination to test
     # Worker writes "pass" or "fail" to a result file.
     (
       export QUIBBLE_SRC="$worker_src"
-      export QUIBBLE_EXPOSE_PORT=0
       export QUIBBLE_BACKGROUND=1
       export QUIBBLE_DEPS="$worker_full"
 

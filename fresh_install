@@ -45,12 +45,10 @@ chmod 777 cache log "$QUIBBLE_SRC" 2>/dev/null || \
 # "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
 # --rm: remove container on exit
 # --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
-# ${QUIBBLE_PORT_FLAGS[@]+"..."}: expose MediaWiki port (skipped in parallel mode)
 # "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
 # --command true: install only, don't run tests ("true" exits immediately)
 docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm \
   --entrypoint=quibble-with-supervisord \
-  ${QUIBBLE_PORT_FLAGS[@]+"${QUIBBLE_PORT_FLAGS[@]}"} \
   "${QUIBBLE_VOLUMES[@]}" \
   "$QUIBBLE_IMAGE" \
   --command true

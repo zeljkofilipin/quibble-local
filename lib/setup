@@ -37,16 +37,6 @@ QUIBBLE_VOLUMES=(
   -v "$QUIBBLE_DIR"/"$QUIBBLE_SRC":/workspace/src     # MediaWiki source code (uses QUIBBLE_SRC for parallel workers)
 )
 
-# --- Port mapping ---
-# Expose MediaWiki port for interactive use. Skip in parallel mode to avoid port conflicts.
-# Set QUIBBLE_EXPOSE_PORT=0 to disable (parallel workers don't need host port access).
-# shellcheck disable=SC2034 # used by scripts that source this file
-if [ "${QUIBBLE_EXPOSE_PORT:-1}" = "1" ]; then
-  QUIBBLE_PORT_FLAGS=(-p 9413:9413) # map container port to host
-else
-  QUIBBLE_PORT_FLAGS=()             # no port mapping (parallel/automated mode)
-fi
-
 # --- Docker interactive flags ---
 # In verbose mode (or when run directly), use -it for interactive terminal + TTY.
 # In silent mode, drop -t to avoid TTY control characters in log files.
