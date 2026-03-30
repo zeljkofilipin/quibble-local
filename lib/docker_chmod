@@ -1,0 +1,35 @@
+# shellcheck shell=bash
+# Set directories to world-writable (chmod 777), falling back to Docker-as-root.
+# Docker containers run as a different user, so shared directories must be world-writable.
+# If the local chmod fails (dirs owned by root from previous Docker runs), falls back
+# to running chmod inside a Docker container as root.
+# Must be sourced, not run directly. Expects $QUIBBLE_DIR and $QUIBBLE_IMAGE from lib/setup.
+#
+# Usage: docker_chmod DIR [DIR...]
+# shellcheck disable=SC2154 # $QUIBBLE_DIR and $QUIBBLE_IMAGE are set by lib/setup
+
+docker_chmod() {
+  # Try local chmod first (fast path, works when dirs are user-owned)
+  # 2>/dev/null: suppress errors if dirs are root-owned
+  chmod 777 "$@" 2>/dev/null && return 0
+
+  # Fall back to Docker as root (needed when dirs are root-owned from previous container runs)
+  local volumes=() # -v flags for docker run
+  local container_paths=() # paths inside the container to chmod
+  local i=0 # counter for unique mount point names
+  for dir in "$@"; do
+    local container_path="/workspace/chmod_${i}" # generic mount point inside container
+    volumes+=(-v "${QUIBBLE_DIR}/${dir}:${container_path}")
+    container_paths+=("$container_path")
+    i=$((i + 1)) # increment counter
+  done
+  # --rm: remove container on exit
+  # --entrypoint bash: override default entrypoint to run a shell command
+  # --user root: run as root to have permission to chmod
+  docker run --rm \
+    --entrypoint bash \
+    --user root \
+    "${volumes[@]}" \
+    "$QUIBBLE_IMAGE" \
+    -c "chmod 777 ${container_paths[*]}" # set permissions inside the container
+}

@@ -10,6 +10,7 @@
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
+. "$(dirname "$0")"/lib/docker_chmod # provides docker_chmod function
 
 # Check that src/ exists and is not empty
 # Uses QUIBBLE_SRC from lib/setup (default "src", overridden by ENVIRONMENT or parallel workers).
@@ -21,16 +22,7 @@ fi
 # Create save directory with proper permissions for the container user.
 # Uses QUIBBLE_SAVE from lib/setup (default "src_save", overridden by ENVIRONMENT).
 mkdir -p "$QUIBBLE_SAVE"
-# chmod 777: container runs as a different user, so dir must be world-writable.
-# 2>/dev/null: suppress errors if dir is already root-owned.
-# ||: if chmod fails, fall back to Docker as root to set permissions.
-chmod 777 "$QUIBBLE_SAVE" 2>/dev/null || \
-  docker run --rm \
-    --entrypoint bash \
-    --user root \
-    -v "$QUIBBLE_DIR"/"$QUIBBLE_SAVE":/workspace/src_save \
-    "$QUIBBLE_IMAGE" \
-    -c 'chmod 777 /workspace/src_save' # set permissions inside the container
+docker_chmod "$QUIBBLE_SAVE" # make dir world-writable for the container user
 
 # Copy src/ to save directory using Docker-as-root.
 # --rm: remove container on exit
