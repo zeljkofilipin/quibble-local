@@ -8,7 +8,6 @@
 # Usage: ./selenium_tests_exist
 #        ./selenium_tests_exist extensions/Echo
 #        ./selenium_tests_exist skins/MinervaNeue
-#        VERBOSE=1 ./selenium_tests_exist extensions/Echo
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 

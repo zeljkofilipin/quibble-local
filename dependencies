@@ -4,7 +4,6 @@
 #
 # Usage: ./dependencies extensions/Echo
 #        ./dependencies skins/MinervaNeue
-#        VERBOSE=1 ./dependencies extensions/Echo
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 

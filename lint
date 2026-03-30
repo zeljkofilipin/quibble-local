@@ -5,7 +5,6 @@
 # for a bash shebang (#!/usr/bin/env bash) or shellcheck directive (# shellcheck shell=bash).
 #
 # Usage: ./lint
-#        VERBOSE=1 ./lint
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/duration_trap # print elapsed time on exit

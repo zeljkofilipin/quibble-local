@@ -7,7 +7,6 @@
 # Usage: ./help
 #        ./help install
 #        ./help ./install
-#        VERBOSE=1 ./help
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/debug_info # print debug info, check prerequisites, show verbose hint

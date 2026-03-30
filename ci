@@ -4,7 +4,6 @@
 # Runs shellcheck (lint) and bats (unit tests) in the same images as CI.
 # Does not require ShellCheck or Bats to be installed locally.
 # Usage: ./ci
-#        VERBOSE=1 ./ci
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/debug_info # print debug info, check prerequisites, show verbose hint

@@ -139,7 +139,6 @@ Output dependencies for an extension or skin from `zuul/dependencies.yaml`.
 
     ./dependencies extensions/Echo
     ./dependencies skins/MinervaNeue
-    VERBOSE=1 ./dependencies extensions/Echo
 
 ### `./dependency_combinations`
 
@@ -153,7 +152,6 @@ Output all possible combinations of dependencies for an extension or skin. One c
 Output the list of gated repositories (extensions and skins) from `parameter_functions.py`. Clones `integration/config` into `src/config` if needed. Assumes `./prepare` has been run first.
 
     ./gated
-    VERBOSE=1 ./gated
 
 ### `./run_required`
 
@@ -210,7 +208,8 @@ Environment variables:
 List all scripts with their description and usage.
 
     ./help
-    VERBOSE=1 ./help
+    ./help install
+    ./help ./install
 
 ### `./selenium_tests_exist`
 
@@ -218,7 +217,6 @@ Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
 
     ./selenium_tests_exist
     ./selenium_tests_exist extensions/Echo
-    VERBOSE=1 ./selenium_tests_exist extensions/Echo
 
 ### `./save`
 
@@ -253,21 +251,18 @@ Remove everything created by quibble-local, including bare git repos in `ref/` a
 Run the same lint check that GitLab CI runs, using Docker. Does not require ShellCheck to be installed locally.
 
     ./ci
-    VERBOSE=1 ./ci
 
 ### `./lint`
 
 Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo. Requires ShellCheck in addition to the base prerequisites.
 
     ./lint
-    VERBOSE=1 ./lint
 
 ### `./deep_clean_test`
 
 Run `./deep_clean` first, then `./integration_test`. Slower but starts from a completely clean state.
 
     ./deep_clean_test
-    VERBOSE=1 ./deep_clean_test
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending (via `./integration_test`).
 

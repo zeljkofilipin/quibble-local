@@ -4,7 +4,6 @@
 # WARNING: This will take a very long time to run.
 #
 # Usage: ./deep_clean_test
-#        VERBOSE=1 ./deep_clean_test
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/debug_info # print debug info, check prerequisites, show verbose hint
