@@ -95,6 +95,7 @@ run_test ./run_all extensions/Echo     # test run_all with a single extension
 run_test env FAST=1 ./run_all extensions/Echo  # test run_all with fast mode
 run_test ./run_required extensions/Echo  # test run_required with a single extension
 run_test env FAST=1 ./run_required extensions/Echo  # test run_required with fast mode
+run_test ./run_gated                   # test run_gated (installs all gated, runs all selenium tests)
 run_test ./clean                       # test cleaning up src/
 
 # Print pass/fail summary and exit with error if any script failed

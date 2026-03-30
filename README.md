@@ -124,6 +124,15 @@ Run Selenium tests for core and all gated repositories. For each component: `./f
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
+### `./run_gated`
+
+Install all gated extensions and skins into a single MediaWiki, then run all Selenium tests. Unlike `./run_all` (which does `./fresh_install` per component), this installs everything together into one `src/`.
+
+    ./run_gated
+    VERBOSE=1 ./run_gated
+
+**Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a long time to run (50+ components).
+
 ### `./fetch`
 
 Fetch the latest changes for bare git repos in `ref/` from Gerrit. With no arguments, fetches all repos. With arguments, fetches only the specified repos.
@@ -272,11 +281,11 @@ These are sourced by other scripts and are not intended to be run directly.
 
 ### `lib/batch_setup`
 
-Shared setup for batch scripts (`integration_test`, `run_all`, `run_required`, `minimal_dependencies`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
+Shared setup for batch scripts (`integration_test`, `run_all`, `run_gated`, `run_required`, `minimal_dependencies`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
 
 ### `lib/heartbeat`
 
-Run a command, save output to a log file, and print a dot for each line of output. Sourced by `integration_test`, `run_all`, `run_required`, and `minimal_dependencies` for silent mode progress feedback. Provides `run_with_dots` function.
+Run a command, save output to a log file, and print a dot for each line of output. Sourced by `integration_test`, `run_all`, `run_gated`, `run_required`, and `minimal_dependencies` for silent mode progress feedback. Provides `run_with_dots` function.
 
 ### `lib/debug_info`
 
@@ -308,11 +317,11 @@ Sourced by scripts that need zuul config (`dependencies`, `gated`, `install`). E
 
 ### `lib/inhibit_sleep`
 
-Sourced by long-running scripts (`minimal_dependencies`, `run_all`, `run_required`, `integration_test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+Sourced by long-running scripts (`minimal_dependencies`, `run_all`, `run_gated`, `run_required`, `integration_test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
 ### `lib/print_results`
 
-Sourced by scripts that track test/step results (`run_all`, `run_required`, `integration_test`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
+Sourced by scripts that track test/step results (`run_all`, `run_gated`, `run_required`, `integration_test`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
 
 ### `lib/parse_requires.awk`
 
