@@ -23,6 +23,15 @@ All commands run in **silent mode** by default (no trace output, no debug info).
 
 When commands are called from `integration_test` or `run_all`, the mode is inherited via the `VERBOSE` environment variable.
 
+### `QUIBBLE_IMAGE`
+
+Override the Docker image used by all commands. Useful when developing or testing changes to Quibble itself.
+
+    QUIBBLE_IMAGE=my-quibble:dev ./fresh_install
+    QUIBBLE_IMAGE=docker-registry.wikimedia.org/releng/quibble-bullseye-php83:1.2.3 ./install extensions/Echo
+
+Default: `docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest`
+
 ### `FAST`
 
 `FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `run_all`, `run_required`, and `minimal_dependencies`.

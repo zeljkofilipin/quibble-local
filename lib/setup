@@ -25,7 +25,7 @@ if [ -z "${_QUIBBLE_NO_DOCKER_CHECK:-}" ]; then
 fi
 
 # --- Shared variables ---
-export QUIBBLE_IMAGE="docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest" # Docker image for Quibble
+export QUIBBLE_IMAGE="${QUIBBLE_IMAGE:-docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest}" # Docker image for Quibble (override to test local builds)
 QUIBBLE_DIR="$(pwd)" # project root, captured before set -x to avoid noisy pwd trace
 QUIBBLE_SRC="${QUIBBLE_SRC:-src}" # source directory, override for parallel workers (e.g. src_worker_1)
 # Common Docker volume mounts for Quibble commands (cache, log, ref, src)

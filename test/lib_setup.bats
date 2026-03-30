@@ -13,6 +13,18 @@
   [[ "$output" == *"quibble-bullseye-php83"* ]]
 }
 
+@test "setup: QUIBBLE_IMAGE can be overridden" {
+  run bash -c '
+    export _QUIBBLE_NO_DOCKER_CHECK=1
+    export VERBOSE=1
+    export QUIBBLE_IMAGE=my-custom-quibble:dev
+    . lib/setup 2>/dev/null
+    echo "$QUIBBLE_IMAGE"
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"my-custom-quibble:dev"* ]]
+}
+
 @test "setup: sets QUIBBLE_VOLUMES array" {
   run bash -c '
     export _QUIBBLE_NO_DOCKER_CHECK=1
