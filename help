@@ -1,13 +1,51 @@
 #!/usr/bin/env bash
 #
 # List all scripts with their description and usage.
+# With an argument, show detailed help for a specific script.
 # Prerequisites: Bash, Git, Docker. Optional: ShellCheck (for linting).
 #
 # Usage: ./help
+#        ./help install
+#        ./help ./install
 #        VERBOSE=1 ./help
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/debug_info # print debug info, check prerequisites, show verbose hint
+
+# If an argument is provided, show detailed help for that script
+if [ $# -gt 0 ]; then
+  script="${1#./}" # strip leading "./" if present (e.g. "./install" -> "install")
+
+  # Check that the script exists and is a bash script
+  if [ ! -f "$script" ]; then
+    echo "Error: script '$script' not found" >&2 # >&2 prints to stderr
+    exit 1
+  fi
+
+  # Verify it's a bash script (first line must be a bash shebang)
+  # head -n 1: read only the first line; grep -q: check for bash shebang
+  if ! head -n 1 "$script" | grep -q '^#!/usr/bin/env bash$'; then
+    echo "Error: '$script' is not a bash script" >&2 # >&2 prints to stderr
+    exit 1
+  fi
+
+  # Print the full comment header block from the script
+  printf "./%s\n\n" "$script"
+  while IFS= read -r line; do
+    # Skip shebang (e.g. #!/usr/bin/env bash)
+    [[ "$line" == "#!"* ]] && continue
+    # Stop at the first non-comment line (end of header)
+    [[ "$line" != "#"* ]] && break
+
+    text="${line#\#}"   # strip leading '#'
+    text="${text# }"    # strip one leading space (preserves further indentation)
+
+    # Print the comment line (empty lines become blank lines for readability)
+    printf "  %s\n" "$text"
+  done < "$script" # read from the script file
+
+  exit 0
+fi
 
 # Print general note about silent/verbose modes
 printf "All commands are silent by default. Use VERBOSE=1 for full output.\n\n"

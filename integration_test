@@ -52,6 +52,7 @@ run_test() {
 
 # Run each script in order (some depend on earlier ones)
 run_test ./help                        # test that help output works
+run_test ./help install                # test detailed help for a specific script
 run_test ./lint                        # test that all scripts pass shellcheck
 run_test ./ci                          # test that CI lint passes in Docker
 run_test ./prepare                     # test that prepare pulls image and clones repos

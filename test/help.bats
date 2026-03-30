@@ -31,3 +31,31 @@
   run ./help
   [[ "$output" == *"silent by default"* ]]
 }
+
+@test "help SCRIPT: shows detailed help for a script" {
+  run ./help install
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"./install"* ]]
+  # detailed mode shows the full comment header including multi-line usage
+  [[ "$output" == *"Installs an extension or skin"* ]]
+  [[ "$output" == *"./install extensions/Echo"* ]]
+  [[ "$output" == *"./install skins/MinervaNeue"* ]]
+}
+
+@test "help SCRIPT: accepts ./ prefix" {
+  run ./help ./install
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"./install"* ]]
+}
+
+@test "help SCRIPT: fails for nonexistent script" {
+  run ./help nonexistent
+  [ "$status" -eq 1 ]
+  [[ "$output" == *"not found"* ]]
+}
+
+@test "help SCRIPT: fails for non-bash file" {
+  run ./help README.md
+  [ "$status" -eq 1 ]
+  [[ "$output" == *"not a bash script"* ]]
+}
