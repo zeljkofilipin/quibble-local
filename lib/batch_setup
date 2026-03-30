@@ -8,6 +8,7 @@ verbose="${VERBOSE:-}" # VERBOSE=1 enables verbose mode; empty string means sile
 
 . "$(dirname "$0")"/lib/inhibit_sleep  # prevent the machine from suspending
 . "$(dirname "$0")"/lib/print_results  # provides print_results function
+. "$(dirname "$0")"/lib/utc_timestamp  # provides utc_timestamp function
 . "$(dirname "$0")"/lib/print_header   # provides print_header function
 . "$(dirname "$0")"/lib/record_passed  # provides record_passed function
 . "$(dirname "$0")"/lib/heartbeat      # provides run_with_dots function
@@ -38,7 +39,7 @@ run_step() {
   if [ -n "$verbose" ]; then
     # Verbose: print separator and run command with full output
     printf "\n========================================\n"
-    printf "= %s: %s %s\n" "$component" "$*" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')" # $* joins all args into a single string
+    printf "= %s: %s %s\n" "$component" "$*" "$(utc_timestamp)" # $* joins all args into a single string
     printf "========================================\n"
     if "$@"; then # run the command (all remaining arguments)
       printf "(%s)\n" "$(_quibble_format_duration "$((SECONDS - step_start))")" # print step duration

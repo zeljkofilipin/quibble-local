@@ -89,7 +89,7 @@ if [ "$parallel" -le 1 ]; then
         ;;
     esac
     # Print running tally with UTC timestamp after each component
-    printf "\n  (%d passed, %d failed, %d skipped) %s\n" "$pass_count" "$fail_count" "$skip_count" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+    printf "\n  (%d passed, %d failed, %d skipped) %s\n" "$pass_count" "$fail_count" "$skip_count" "$(utc_timestamp)"
   done 3< <(printf '%s\n' "${components[@]}")
 
 else
@@ -105,7 +105,7 @@ else
       printf "\nfresh_install failed. Cannot proceed.\n"
       exit 1
     fi
-    printf " %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+    printf " %s\n" "$(utc_timestamp)"
   fi
 
   # Define worker function: restore/fresh_install → install with required deps → run_selenium_tests.
@@ -179,7 +179,7 @@ else
   . "$(dirname "$0")"/lib/run_waves
 
   # Print running tally after all waves
-  printf "  (%d passed, %d failed, %d skipped) %s\n" "$pass_count" "$fail_count" "$skip_count" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+  printf "  (%d passed, %d failed, %d skipped) %s\n" "$pass_count" "$fail_count" "$skip_count" "$(utc_timestamp)"
 fi
 
 # Print skipped components (no Selenium tests) before the pass/fail summary

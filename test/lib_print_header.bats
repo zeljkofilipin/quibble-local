@@ -5,6 +5,7 @@
 @test "print_header: prints separator in verbose mode" {
   run bash -c '
     verbose=1
+    . lib/utc_timestamp
     . lib/print_header
     print_header "core"
   '
@@ -16,6 +17,7 @@
 @test "print_header: prints label only in silent mode" {
   run bash -c '
     verbose=""
+    . lib/utc_timestamp
     . lib/print_header
     print_header "core"
   '
@@ -26,6 +28,7 @@
 @test "print_header: includes UTC timestamp in verbose mode" {
   run bash -c '
     verbose=1
+    . lib/utc_timestamp
     . lib/print_header
     print_header "extensions/Echo"
   '

@@ -152,7 +152,7 @@ if [ "$parallel" -le 1 ]; then
     # Build full combo: required deps + optional deps for this combination
     . "$(dirname "$0")"/lib/build_full_combo
 
-    printf "\n=== Combination %d/%d: %s === %s\n" "$combo_num" "$total" "${full_combo:-(none)}" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+    printf "\n=== Combination %d/%d: %s === %s\n" "$combo_num" "$total" "${full_combo:-(none)}" "$(utc_timestamp)"
 
     # Fresh core install for clean state (or restore from saved state in fast mode)
     if ! fresh_or_restore; then

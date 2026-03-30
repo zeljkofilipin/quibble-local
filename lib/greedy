@@ -24,7 +24,7 @@ for i in $(seq 0 $((n - 1))); do
 done
 
 # First, verify tests pass with all dependencies
-printf "\n=== Baseline: all dependencies === %s\n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+printf "\n=== Baseline: all dependencies === %s\n" "$(utc_timestamp)"
 if ! fresh_or_restore; then
   printf "SKIP (fresh_install/restore failed)\n"
   printf "\nCannot establish baseline.\n"
@@ -56,7 +56,7 @@ fi
 # Try removing each optional dep one at a time
 for i in $(seq 0 $((n - 1))); do
   dep="${optional[$i]}"
-  printf "\n=== Try removing %s (%d/%d) === %s\n" "$dep" "$((i + 1))" "$n" "$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+  printf "\n=== Try removing %s (%d/%d) === %s\n" "$dep" "$((i + 1))" "$n" "$(utc_timestamp)"
 
   # Build optional_combo without this dep (using kept indices, excluding i)
   new_kept=() # candidate kept list without current dep

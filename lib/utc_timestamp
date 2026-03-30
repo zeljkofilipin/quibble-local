@@ -1,0 +1,9 @@
+# shellcheck shell=bash
+# Provides utc_timestamp function that prints the current UTC time.
+# Format: YYYY-MM-DD HH:MM:SS UTC
+# Must be sourced, not run directly.
+# Usage: printf "%s\n" "$(utc_timestamp)"
+
+utc_timestamp() {
+  date -u '+%Y-%m-%d %H:%M:%S UTC' # e.g. "2026-03-30 12:34:56 UTC"
+}
