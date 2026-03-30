@@ -83,6 +83,8 @@ run_test ./selenium_tests_exist extensions/Echo  # test that extension has Selen
 run_test ./run_selenium_tests extensions/Echo  # test running extension Selenium tests
 run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js  # test running a specific extension test file
 run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"  # test filtering extension tests by grep
+run_test ./run_php_unit_tests extensions/Echo  # test running extension PHPUnit tests
+run_test ./run_php_unit_tests extensions/Echo --filter testNotificationCount  # test filtering PHPUnit tests
 run_test ./install skins/MinervaNeue  # test installing a skin (exercises skins/ code path)
 run_test ./dependencies skins/MinervaNeue  # test listing skin dependencies
 run_test ./required_dependencies skins/MinervaNeue  # test listing required skin dependencies
