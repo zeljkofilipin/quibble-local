@@ -27,13 +27,9 @@ fi
 
 # Clone from bare repo to src/ if the directory doesn't exist yet
 if [ ! -d "$dest" ]; then
-  # Clone or fetch bare repo
-  if [ -d "$bare_repo" ]; then
-    git -C "$bare_repo" fetch --quiet 2>/dev/null || true  # update existing bare repo (ignore errors if remote unreachable)
-  else
-    mkdir -p "$(dirname "$bare_repo")" # create parent directories
-    git clone --quiet --bare "https://gerrit.wikimedia.org/r/${repo}" "$bare_repo"
-  fi
+  # Clone or fetch bare repo (--quiet: this is a data script, suppress progress output)
+  . "$(dirname "$0")"/lib/clone_or_fetch
+  clone_or_fetch --quiet "$repo"
   mkdir -p "$(dirname "$dest")" # create parent directories (no-op for core)
   git clone --quiet "$bare_repo" "$dest" # clone from local bare repo (no network needed)
 fi

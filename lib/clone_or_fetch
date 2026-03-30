@@ -1,0 +1,29 @@
+# shellcheck shell=bash
+# Clone or fetch a bare repo from Gerrit.
+# Stores bare repos in ref/ (e.g. ref/mediawiki/extensions/Echo.git).
+# If the repo already exists locally, fetches updates. Otherwise clones it.
+# Must be sourced, not run directly.
+#
+# Usage: clone_or_fetch REPO
+#        clone_or_fetch --quiet REPO
+#   REPO: Gerrit repo path (e.g. "mediawiki/extensions/Echo", "integration/config")
+#   --quiet: suppress git progress output (useful for data scripts)
+
+clone_or_fetch() {
+  local quiet="" # optional --quiet flag for git commands
+  if [ "${1:-}" = "--quiet" ]; then # check for optional --quiet flag
+    quiet="--quiet" # suppress git progress output
+    shift # remove --quiet from arguments
+  fi
+  local repo="$1"                     # e.g. "mediawiki/extensions/Echo"
+  local ref_dir="ref/${repo}.git"     # e.g. "ref/mediawiki/extensions/Echo.git"
+  if [ -d "$ref_dir" ]; then
+    # Update existing bare repo (ignore errors if remote is unreachable)
+    # 2>/dev/null: suppress stderr noise from network errors
+    git -C "$ref_dir" fetch ${quiet:+"$quiet"} 2>/dev/null || true
+  else
+    mkdir -p "$(dirname "$ref_dir")"  # create parent directories
+    # Clone bare repo from Gerrit
+    git clone ${quiet:+"$quiet"} --bare "https://gerrit.wikimedia.org/r/${repo}" "$ref_dir"
+  fi
+}

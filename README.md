@@ -339,6 +339,10 @@ Shared setup sourced by scripts that run Docker commands. Sources `lib/debug_inf
 
 Output redirection for silent mode. Saves all output to a log file (e.g. `log/fresh_install.log`) and prints a dot per line to the terminal. On exit, prints "ok" or "FAIL" with elapsed time and the log file path. Sourced by `lib/setup`.
 
+### `lib/clone_or_fetch`
+
+Provides `clone_or_fetch` function that clones or fetches a bare repo from Gerrit into `ref/`. If the repo already exists, fetches updates; otherwise clones it. Accepts optional `--quiet` flag. Sourced by `install`, `selenium_tests_exist`, and `lib/resolve_deps`.
+
 ### `lib/resolve_deps`
 
 Resolves dependency repos for a component, cloning bare repos as needed. Sets the `deps` array with repo paths. Reads from `QUIBBLE_DEPS` env var if set, otherwise from `./dependencies`. Sourced by `install`.

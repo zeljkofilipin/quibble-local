@@ -6,6 +6,11 @@
 # shellcheck disable=SC2154 # $component is set by the sourcing script
 
 set +x # disable trace output while processing dependencies (too noisy)
+# Source clone_or_fetch function.
+# Uses BASH_SOURCE (not $0) because this file is sourced by other scripts,
+# and $0 refers to the calling script, not this file.
+# shellcheck source=lib/clone_or_fetch
+. "$(dirname "${BASH_SOURCE[0]}")"/clone_or_fetch
 deps=() # array to collect dependency repo paths
 # Read each dependency name from the dependency source.
 # IFS= prevents trimming whitespace; -r prevents backslash interpretation.
@@ -18,15 +23,11 @@ while IFS= read -r dep_name; do
   else
     dep_repo="mediawiki/extensions/${dep_name}"
   fi
-  # Clone or fetch bare repo for dependency
-  dep_ref_dir="ref/${dep_repo}.git"
-  if [ -d "$dep_ref_dir" ]; then
-    git -C "$dep_ref_dir" fetch 2>/dev/null || true  # update existing bare repo (ignore errors if remote unreachable)
-  else
+  # Print status for new clones (not updates of existing repos)
+  if [ ! -d "ref/${dep_repo}.git" ]; then
     echo "Cloning dependency: ${dep_name}"
-    mkdir -p "$(dirname "$dep_ref_dir")" # create parent directories
-    git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
   fi
+  clone_or_fetch "$dep_repo" # clone or fetch bare repo for dependency
   deps+=("$dep_repo") # add to the dependencies array; += appends to bash arrays
 done < <(
   # ${QUIBBLE_DEPS+x} is set if QUIBBLE_DEPS is defined (even if empty string).
