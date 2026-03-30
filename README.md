@@ -140,6 +140,7 @@ Fetch the latest changes for bare git repos in `ref/` from Gerrit. With no argum
     ./fetch
     ./fetch ref/mediawiki/core.git
     ./fetch ref/mediawiki/extensions/Echo.git ref/mediawiki/skins/Vector.git
+    PARALLEL=4 ./fetch
     VERBOSE=1 ./fetch
 
 ### `./dependencies`

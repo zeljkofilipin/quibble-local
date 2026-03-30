@@ -2,27 +2,69 @@
 #
 # Fetch the latest changes for bare git repos in ref/ from Gerrit.
 # With no arguments, fetches all repos. With arguments, fetches only the specified repos.
+# PARALLEL=N fetches N repos at a time (default: sequential).
 #
 # Usage: ./fetch
 #        ./fetch ref/mediawiki/core.git
 #        ./fetch ref/mediawiki/extensions/Echo.git ref/mediawiki/skins/Vector.git
+#        PARALLEL=4 ./fetch
 #        VERBOSE=1 ./fetch
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
+parallel="${PARALLEL:-1}" # PARALLEL=N fetches N repos at a time (default 1 = sequential)
+
+# Build list of repos to fetch
+repos=() # array of repo paths
 if [ $# -gt 0 ]; then
   # Fetch only the specified repos
   for repo in "$@"; do
     if [ -d "$repo" ]; then
-      git -C "$repo" fetch # -C runs git in the repo's directory
+      repos+=("$repo")
     else
       echo "Warning: $repo does not exist, skipping" >&2 # >&2 prints to stderr
     fi
   done
 else
   # Fetch all bare git repos (directories ending in .git)
-  find ref -name '*.git' -type d | while read -r repo; do
+  while IFS= read -r repo; do
+    repos+=("$repo") # += appends to bash arrays
+  done < <(find ref -name '*.git' -type d)
+fi
+
+if [ ${#repos[@]} -eq 0 ]; then
+  echo "No repos to fetch."
+  exit 0
+fi
+
+if [ "$parallel" -le 1 ]; then
+  # --- Sequential mode ---
+  for repo in "${repos[@]}"; do
     git -C "$repo" fetch # -C runs git in the repo's directory
+  done
+else
+  # --- Parallel mode ---
+  pids=() # array of background process IDs
+  pid_repos=() # array of repo paths, indexed same as pids (for error reporting)
+
+  for repo in "${repos[@]}"; do
+    git -C "$repo" fetch &  # run fetch in background
+    pids+=($!) # $! is the PID of the last background process
+    pid_repos+=("$repo") # track which repo this PID is fetching
+
+    # When we have $parallel workers running, wait for all to finish before launching more
+    if [ ${#pids[@]} -ge "$parallel" ]; then
+      for i in "${!pids[@]}"; do
+        wait "${pids[$i]}" || echo "Warning: fetch failed for ${pid_repos[$i]}" >&2
+      done
+      pids=() # reset for next batch
+      pid_repos=()
+    fi
+  done
+
+  # Wait for any remaining workers
+  for i in "${!pids[@]}"; do
+    wait "${pids[$i]}" || echo "Warning: fetch failed for ${pid_repos[$i]}" >&2
   done
 fi

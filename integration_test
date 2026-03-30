@@ -58,6 +58,7 @@ run_test ./ci                          # test that CI lint passes in Docker
 run_test ./prepare                     # test that prepare pulls image and clones repos
 run_test ./fetch                       # test fetching all bare repos (update stale repos before use)
 run_test ./fetch ref/mediawiki/core.git  # test fetching a specific repo
+run_test env PARALLEL=2 ./fetch        # test parallel fetch
 run_test ./fresh_install               # test fresh core install
 run_test ./save                        # test saving fresh_install state
 run_test ./restore                     # test restoring saved state
