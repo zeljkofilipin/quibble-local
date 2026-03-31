@@ -4,14 +4,14 @@
 # These are the extensions/skins listed in the "requires" field that must always be present.
 # Output format matches ./dependencies (bare names for extensions, "skins/Name" for skins).
 #
-# Usage: ./required_dependencies extensions/GrowthExperiments
-#        ./required_dependencies skins/MinervaNeue
+# Usage: ./dependencies_required extensions/GrowthExperiments
+#        ./dependencies_required skins/MinervaNeue
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then # $# is the number of arguments
-  echo "Usage: ./required_dependencies extensions/EXTENSION or ./required_dependencies skins/SKIN"
+  echo "Usage: ./dependencies_required extensions/EXTENSION or ./dependencies_required skins/SKIN"
   exit 1
 fi
 
@@ -26,7 +26,7 @@ fi
 
 # Try to read the JSON file from src/ first (working copy), then fall back to the bare repo
 # in ref/ via git show. The bare repo fallback is needed when called before ./install
-# (e.g. from ./minimal_dependencies which reads required deps before installing the extension).
+# (e.g. from ./dependencies_minimal which reads required deps before installing the extension).
 json_file="src/${component}/${json_name}" # e.g. src/extensions/GrowthExperiments/extension.json
 bare_repo="ref/mediawiki/${component}.git" # e.g. ref/mediawiki/extensions/GrowthExperiments.git
 

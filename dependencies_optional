@@ -3,16 +3,16 @@
 # Output optional dependencies for an extension or skin.
 # Optional dependencies are those in zuul's dependencies.yaml but NOT in
 # extension.json/skin.json "requires" field.
-# Complement of ./required_dependencies.
+# Complement of ./dependencies_required.
 #
-# Usage: ./optional_dependencies extensions/Echo
-#        ./optional_dependencies skins/MinervaNeue
+# Usage: ./dependencies_optional extensions/Echo
+#        ./dependencies_optional skins/MinervaNeue
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then # $# is the number of arguments
-  echo "Usage: ./optional_dependencies extensions/EXTENSION or ./optional_dependencies skins/SKIN"
+  echo "Usage: ./dependencies_optional extensions/EXTENSION or ./dependencies_optional skins/SKIN"
   exit 1
 fi
 
@@ -24,7 +24,7 @@ required_lookup=" " # space-padded string for substring matching
 while IFS= read -r dep; do
   [ -z "$dep" ] && continue # skip empty lines
   required_lookup="${required_lookup}${dep} " # e.g. " CommunityConfiguration VisualEditor "
-done < <("$(dirname "$0")"/required_dependencies "$component")
+done < <("$(dirname "$0")"/dependencies_required "$component")
 
 # Read all dependencies and output only those NOT in the required list
 while IFS= read -r dep; do

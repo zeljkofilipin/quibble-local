@@ -44,7 +44,7 @@ if [ "$parallel" -le 1 ]; then
     while IFS= read -r dep; do
       [ -z "$dep" ] && continue # skip empty lines
       required_deps="${required_deps:+$required_deps }$dep" # space-separated list
-    done < <("$(dirname "$0")"/required_dependencies "$component")
+    done < <("$(dirname "$0")"/dependencies_required "$component")
 
     # Restore from saved state in fast mode, or run fresh_install
     if [ -n "$fast" ] && [ -d "${QUIBBLE_SAVE:-src_save}" ]; then
@@ -125,7 +125,7 @@ else
     while IFS= read -r dep; do
       [ -z "$dep" ] && continue # skip empty lines
       required_deps="${required_deps:+$required_deps }$dep"
-    done < <(./required_dependencies "$component")
+    done < <(./dependencies_required "$component")
 
     # Install with only required dependencies
     export QUIBBLE_DEPS="$required_deps"

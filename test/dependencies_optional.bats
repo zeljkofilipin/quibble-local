@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 #
-# Tests for optional_dependencies script.
+# Tests for dependencies_optional script.
 
 setup() {
   TEST_DIR=$(mktemp -d) # create temp dir to simulate project root
@@ -11,13 +11,13 @@ teardown() {
   rm -rf "$TEST_DIR" # clean up temp directory
 }
 
-@test "optional_dependencies: shows usage with no arguments" {
-  run ./optional_dependencies
+@test "dependencies_optional: shows usage with no arguments" {
+  run ./dependencies_optional
   [ "$status" -eq 1 ]
   [[ "$output" == *"Usage:"* ]]
 }
 
-@test "optional_dependencies: filters out required deps" {
+@test "dependencies_optional: filters out required deps" {
   # dependencies.yaml lists A, B, C as deps
   cat > "$TEST_DIR/src/config/zuul/dependencies.yaml" <<'YAML'
 Echo:
@@ -37,13 +37,13 @@ YAML
 }
 JSON
   cd "$TEST_DIR"
-  run "$BATS_TEST_DIRNAME/../optional_dependencies" extensions/Echo
+  run "$BATS_TEST_DIRNAME/../dependencies_optional" extensions/Echo
   [ "$status" -eq 0 ]
   expected=$(printf "B\nC")
   [ "$output" = "$expected" ]
 }
 
-@test "optional_dependencies: all deps optional when no requires" {
+@test "dependencies_optional: all deps optional when no requires" {
   cat > "$TEST_DIR/src/config/zuul/dependencies.yaml" <<'YAML'
 Echo:
   - A
@@ -52,13 +52,13 @@ YAML
   mkdir -p "$TEST_DIR/src/extensions/Echo"
   echo '{"name": "Echo"}' > "$TEST_DIR/src/extensions/Echo/extension.json"
   cd "$TEST_DIR"
-  run "$BATS_TEST_DIRNAME/../optional_dependencies" extensions/Echo
+  run "$BATS_TEST_DIRNAME/../dependencies_optional" extensions/Echo
   [ "$status" -eq 0 ]
   expected=$(printf "A\nB")
   [ "$output" = "$expected" ]
 }
 
-@test "optional_dependencies: no optional deps when all are required" {
+@test "dependencies_optional: no optional deps when all are required" {
   cat > "$TEST_DIR/src/config/zuul/dependencies.yaml" <<'YAML'
 Echo:
   - A
@@ -74,7 +74,7 @@ YAML
 }
 JSON
   cd "$TEST_DIR"
-  run "$BATS_TEST_DIRNAME/../optional_dependencies" extensions/Echo
+  run "$BATS_TEST_DIRNAME/../dependencies_optional" extensions/Echo
   [ "$status" -eq 0 ]
   [ -z "$output" ]
 }

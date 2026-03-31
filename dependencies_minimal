@@ -5,13 +5,13 @@
 # (remaining deps from zuul). Required deps are always included. Only optional deps
 # are varied, testing combinations from smallest (0 optional) to largest (all optional).
 #
-# Usage: ./minimal_dependencies extensions/Echo
-#        VERBOSE=1 ./minimal_dependencies extensions/Echo
-#        FAST=1 ./minimal_dependencies extensions/Echo
-#        GREEDY=1 ./minimal_dependencies extensions/Echo
-#        GREEDY=1 FAST=1 ./minimal_dependencies extensions/Echo
-#        PARALLEL=$(./suggested_parallel) ./minimal_dependencies extensions/Echo
-#        PARALLEL=4 FAST=1 ./minimal_dependencies extensions/Echo
+# Usage: ./dependencies_minimal extensions/Echo
+#        VERBOSE=1 ./dependencies_minimal extensions/Echo
+#        FAST=1 ./dependencies_minimal extensions/Echo
+#        GREEDY=1 ./dependencies_minimal extensions/Echo
+#        GREEDY=1 FAST=1 ./dependencies_minimal extensions/Echo
+#        PARALLEL=$(./suggested_parallel) ./dependencies_minimal extensions/Echo
+#        PARALLEL=4 FAST=1 ./dependencies_minimal extensions/Echo
 #
 # WARNING: Tests up to 2^N combinations (N = number of optional dependencies). Each
 #          combination runs fresh_install + install + run_selenium_tests (~10 min).
@@ -35,7 +35,7 @@ _first_run=1 # force fresh_install on first call (don't trust stale src_save/ fr
 
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then # $# is the number of arguments
-  echo "Usage: ./minimal_dependencies extensions/EXTENSION or ./minimal_dependencies skins/SKIN"
+  echo "Usage: ./dependencies_minimal extensions/EXTENSION or ./dependencies_minimal skins/SKIN"
   exit 1
 fi
 
@@ -58,14 +58,14 @@ required=() # indexed array of required dependency names
 while IFS= read -r dep; do
   [ -z "$dep" ] && continue # skip empty lines
   required+=("$dep") # += appends to bash arrays
-done < <("$(dirname "$0")"/required_dependencies "$component")
+done < <("$(dirname "$0")"/dependencies_required "$component")
 
 # Read optional dependencies (all deps minus required deps)
 optional=() # indexed array of optional dependency names
 while IFS= read -r dep; do
   [ -z "$dep" ] && continue # skip empty lines
   optional+=("$dep") # += appends to bash arrays
-done < <("$(dirname "$0")"/optional_dependencies "$component")
+done < <("$(dirname "$0")"/dependencies_optional "$component")
 
 n=${#optional[@]} # number of optional dependencies
 

@@ -75,9 +75,9 @@ run_test ./install extensions/Echo     # test installing an extension
 run_test env QUIBBLE_DEPS="" ./install extensions/Echo  # test installing with no dependencies
 run_test env QUIBBLE_DEPS="EventLogging" ./install extensions/Echo  # test installing with specific dependencies
 run_test ./dependencies extensions/Echo  # test listing extension dependencies
-run_test ./required_dependencies extensions/Echo  # test listing required dependencies
-run_test ./optional_dependencies extensions/Echo  # test listing optional dependencies
-run_test ./dependency_combinations extensions/Echo  # test listing dependency combinations
+run_test ./dependencies_required extensions/Echo  # test listing required dependencies
+run_test ./dependencies_optional extensions/Echo  # test listing optional dependencies
+run_test ./dependencies_combinations extensions/Echo  # test listing dependency combinations
 run_test ./gated                       # test listing gated repos
 run_test ./selenium_tests_exist extensions/Echo  # test that extension has Selenium tests
 run_test ./run_selenium_tests extensions/Echo  # test running extension Selenium tests
@@ -87,18 +87,18 @@ run_test ./run_php_unit_tests extensions/Echo  # test running extension PHPUnit 
 run_test ./run_php_unit_tests extensions/Echo --filter testNotificationCount  # test filtering PHPUnit tests
 run_test ./install skins/MinervaNeue  # test installing a skin (exercises skins/ code path)
 run_test ./dependencies skins/MinervaNeue  # test listing skin dependencies
-run_test ./required_dependencies skins/MinervaNeue  # test listing required skin dependencies
-run_test ./optional_dependencies skins/MinervaNeue  # test listing optional skin dependencies
-run_test ./dependency_combinations skins/MinervaNeue  # test listing skin dependency combinations
+run_test ./dependencies_required skins/MinervaNeue  # test listing required skin dependencies
+run_test ./dependencies_optional skins/MinervaNeue  # test listing optional skin dependencies
+run_test ./dependencies_combinations skins/MinervaNeue  # test listing skin dependency combinations
 run_test ./selenium_tests_exist skins/MinervaNeue  # test that skin has Selenium tests
 run_test ./run_selenium_tests skins/MinervaNeue  # test running skin Selenium tests
 run_test ./suggested_parallel              # test suggesting number of parallel workers
-run_test ./minimal_dependencies extensions/Echo  # test finding minimum dependencies (fast for Echo: ~1 combination)
-run_test env GREEDY=1 ./minimal_dependencies extensions/Echo  # test greedy mode (removes deps one at a time)
-run_test env FAST=1 ./minimal_dependencies extensions/Echo  # test fast mode (save state, restore instead of fresh_install)
-run_test env GREEDY=1 FAST=1 ./minimal_dependencies extensions/Echo  # test greedy + fast mode combined
-run_test env PARALLEL=2 ./minimal_dependencies extensions/Echo  # test parallel mode (2 workers, exhaustive)
-run_test env PARALLEL=2 FAST=1 ./minimal_dependencies extensions/Echo  # test parallel + fast mode combined
+run_test ./dependencies_minimal extensions/Echo  # test finding minimum dependencies (fast for Echo: ~1 combination)
+run_test env GREEDY=1 ./dependencies_minimal extensions/Echo  # test greedy mode (removes deps one at a time)
+run_test env FAST=1 ./dependencies_minimal extensions/Echo  # test fast mode (save state, restore instead of fresh_install)
+run_test env GREEDY=1 FAST=1 ./dependencies_minimal extensions/Echo  # test greedy + fast mode combined
+run_test env PARALLEL=2 ./dependencies_minimal extensions/Echo  # test parallel mode (2 workers, exhaustive)
+run_test env PARALLEL=2 FAST=1 ./dependencies_minimal extensions/Echo  # test parallel + fast mode combined
 run_test ./run_all extensions/Echo     # test run_all with a single extension
 run_test env FAST=1 ./run_all extensions/Echo  # test run_all with fast mode
 run_test env PARALLEL=2 ./run_all extensions/Echo  # test run_all with parallel mode

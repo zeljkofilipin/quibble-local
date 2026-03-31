@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-# Sourced by long-running scripts (minimal_dependencies, run_all, run_required, integration_test) to prevent the machine from suspending.
+# Sourced by long-running scripts (dependencies_minimal, run_all, run_required, integration_test) to prevent the machine from suspending.
 # Uses caffeinate on macOS; on Linux tries gnome-session-inhibit (GNOME desktop), then systemd-inhibit (headless/other).
 # The caller's PID ($$) is used so the inhibit ends when the caller exits.
 # Set _QUIBBLE_NO_INHIBIT=1 to skip (used in tests to avoid background processes).

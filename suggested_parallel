@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #
-# Suggest the number of parallel workers for minimal_dependencies.
+# Suggest the number of parallel workers for dependencies_minimal.
 # Outputs a single number based on available CPU and memory.
 # Each parallel worker needs ~2 CPU cores and ~2 GB of Docker memory.
 #
 # Usage: ./suggested_parallel
-#        PARALLEL=$(./suggested_parallel) ./minimal_dependencies extensions/Echo
+#        PARALLEL=$(./suggested_parallel) ./dependencies_minimal extensions/Echo
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 

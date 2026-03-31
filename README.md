@@ -42,18 +42,18 @@ Run multiple independent sessions on the same machine simultaneously. Each envir
     ENVIRONMENT=0 ./run_selenium_tests extensions/Echo
     ENVIRONMENT=0 ./remove
 
-    # Terminal 2 (at the same time): run minimal_dependencies for MinervaNeue
-    ENVIRONMENT=1 ./minimal_dependencies skins/MinervaNeue
+    # Terminal 2 (at the same time): run dependencies_minimal for MinervaNeue
+    ENVIRONMENT=1 ./dependencies_minimal skins/MinervaNeue
     ENVIRONMENT=1 ./remove
 
 Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directories are shared (safe for concurrent use). Use `./remove_src` to remove all environments at once.
 
 ### `FAST`
 
-`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `run_all`, `run_required`, and `minimal_dependencies`.
+`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `run_all`, `run_required`, and `dependencies_minimal`.
 
     FAST=1 ./run_all
-    FAST=1 ./minimal_dependencies extensions/Echo
+    FAST=1 ./dependencies_minimal extensions/Echo
 
 ## Commands (same as mediawiki-quickstart)
 
@@ -187,12 +187,12 @@ Output dependencies for an extension or skin from `zuul/dependencies.yaml`.
     ./dependencies extensions/Echo
     ./dependencies skins/MinervaNeue
 
-### `./dependency_combinations`
+### `./dependencies_combinations`
 
 Output all possible combinations of dependencies for an extension or skin. One combination per line (space-separated), starting with one dependency, ending with all dependencies.
 
-    ./dependency_combinations extensions/Echo
-    ./dependency_combinations skins/MinervaNeue
+    ./dependencies_combinations extensions/Echo
+    ./dependencies_combinations skins/MinervaNeue
 
 ### `./gated`
 
@@ -213,38 +213,38 @@ Run Selenium tests for all gated repositories using only required dependencies (
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
-### `./required_dependencies`
+### `./dependencies_required`
 
 Output required dependencies for an extension or skin from its `extension.json` or `skin.json`. These are the extensions/skins listed in the `requires` field that must always be present.
 
-    ./required_dependencies extensions/GrowthExperiments
-    ./required_dependencies skins/MinervaNeue
+    ./dependencies_required extensions/GrowthExperiments
+    ./dependencies_required skins/MinervaNeue
 
-### `./optional_dependencies`
+### `./dependencies_optional`
 
-Output optional dependencies for an extension or skin. These are dependencies in `zuul/dependencies.yaml` that are NOT in `extension.json`/`skin.json` `requires` field. Complement of `./required_dependencies`.
+Output optional dependencies for an extension or skin. These are dependencies in `zuul/dependencies.yaml` that are NOT in `extension.json`/`skin.json` `requires` field. Complement of `./dependencies_required`.
 
-    ./optional_dependencies extensions/Echo
-    ./optional_dependencies skins/MinervaNeue
+    ./dependencies_optional extensions/Echo
+    ./dependencies_optional skins/MinervaNeue
 
 ### `./suggested_parallel`
 
-Suggest the number of parallel workers for `./minimal_dependencies` based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number.
+Suggest the number of parallel workers for `./dependencies_minimal` based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number.
 
     ./suggested_parallel
-    PARALLEL=$(./suggested_parallel) ./minimal_dependencies extensions/Echo
+    PARALLEL=$(./suggested_parallel) ./dependencies_minimal extensions/Echo
 
-### `./minimal_dependencies`
+### `./dependencies_minimal`
 
 Find the minimum dependencies needed for a repository's Selenium tests to pass. Splits dependencies into required (from `extension.json`/`skin.json`) and optional (remaining). Required deps are always included; only optional deps are varied, testing combinations from smallest (0 optional) to largest (all optional).
 
-    ./minimal_dependencies extensions/Echo
-    VERBOSE=1 ./minimal_dependencies extensions/Echo
-    FAST=1 ./minimal_dependencies extensions/Echo
-    GREEDY=1 ./minimal_dependencies extensions/Echo
-    GREEDY=1 FAST=1 ./minimal_dependencies extensions/Echo
-    PARALLEL=$(./suggested_parallel) ./minimal_dependencies extensions/Echo
-    PARALLEL=4 FAST=1 ./minimal_dependencies extensions/Echo
+    ./dependencies_minimal extensions/Echo
+    VERBOSE=1 ./dependencies_minimal extensions/Echo
+    FAST=1 ./dependencies_minimal extensions/Echo
+    GREEDY=1 ./dependencies_minimal extensions/Echo
+    GREEDY=1 FAST=1 ./dependencies_minimal extensions/Echo
+    PARALLEL=$(./suggested_parallel) ./dependencies_minimal extensions/Echo
+    PARALLEL=4 FAST=1 ./dependencies_minimal extensions/Echo
 
 Environment variables:
 
@@ -329,11 +329,11 @@ These are sourced by other scripts and are not intended to be run directly.
 
 ### `lib/batch_setup`
 
-Shared setup for batch scripts (`integration_test`, `run_all`, `run_gated`, `run_required`, `minimal_dependencies`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
+Shared setup for batch scripts (`integration_test`, `run_all`, `run_gated`, `run_required`, `dependencies_minimal`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
 
 ### `lib/heartbeat`
 
-Run a command, save output to a log file, and print a dot for each line of output. Sourced by `integration_test`, `run_all`, `run_gated`, `run_required`, and `minimal_dependencies` for silent mode progress feedback. Provides `run_with_dots` function.
+Run a command, save output to a log file, and print a dot for each line of output. Sourced by `integration_test`, `run_all`, `run_gated`, `run_required`, and `dependencies_minimal` for silent mode progress feedback. Provides `run_with_dots` function.
 
 ### `lib/debug_info`
 
@@ -377,7 +377,7 @@ Provides `clone_or_fetch` function that clones or fetches a bare repo from Gerri
 
 ### `lib/dep_repo_path`
 
-Provides `dep_repo_path` function that converts a dependency name to a Gerrit repo path. Extensions (e.g. `Echo`) map to `mediawiki/extensions/Echo`. Skins (e.g. `skins/MinervaNeue`) map to `mediawiki/skins/MinervaNeue`. Sourced by `lib/resolve_deps` and `minimal_dependencies`.
+Provides `dep_repo_path` function that converts a dependency name to a Gerrit repo path. Extensions (e.g. `Echo`) map to `mediawiki/extensions/Echo`. Skins (e.g. `skins/MinervaNeue`) map to `mediawiki/skins/MinervaNeue`. Sourced by `lib/resolve_deps` and `dependencies_minimal`.
 
 ### `lib/resolve_deps`
 
@@ -389,7 +389,7 @@ Sourced by scripts that need zuul config (`dependencies`, `gated`, `install`). E
 
 ### `lib/inhibit_sleep`
 
-Sourced by long-running scripts (`minimal_dependencies`, `run_all`, `run_gated`, `run_required`, `integration_test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+Sourced by long-running scripts (`dependencies_minimal`, `run_all`, `run_gated`, `run_required`, `integration_test`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
 ### `lib/print_results`
 
@@ -421,15 +421,15 @@ Common setup for parallel worker subshells. Sets `QUIBBLE_SRC` and `QUIBBLE_BACK
 
 ### `lib/parse_requires.awk`
 
-Awk script that parses `requires.extensions` and `requires.skins` from `extension.json` or `skin.json`. Used by `required_dependencies`.
+Awk script that parses `requires.extensions` and `requires.skins` from `extension.json` or `skin.json`. Used by `dependencies_required`.
 
 ### `lib/combinations.awk`
 
-Awk script that generates all bitmask combinations of dependencies, ordered by size (starting from 1). Used by `dependency_combinations`.
+Awk script that generates all bitmask combinations of dependencies, ordered by size (starting from 1). Used by `dependencies_combinations`.
 
 ### `lib/combinations_with_empty.awk`
 
-Awk script that generates all bitmask combinations including the empty set, ordered by size (starting from 0). Used by `minimal_dependencies`.
+Awk script that generates all bitmask combinations including the empty set, ordered by size (starting from 0). Used by `dependencies_minimal`.
 
 ### `lib/parse_yaml_list.awk`
 
@@ -441,27 +441,27 @@ Awk script that extracts entries from a Python list assignment in `parameter_fun
 
 ### `lib/print_dep_summary`
 
-Prints a summary of all, required, and optional dependencies plus total combinations to test. Sourced by `minimal_dependencies`.
+Prints a summary of all, required, and optional dependencies plus total combinations to test. Sourced by `dependencies_minimal`.
 
 ### `lib/build_full_combo`
 
-Builds a full dependency combination from required + optional deps. Sets the `full_combo` variable. Sourced by `minimal_dependencies`.
+Builds a full dependency combination from required + optional deps. Sets the `full_combo` variable. Sourced by `dependencies_minimal`.
 
 ### `lib/fresh_or_restore`
 
-Defines the `fresh_or_restore` function: runs `./fresh_install` or `./restore` depending on FAST mode. In fast mode, saves state after first `fresh_install` + `install` so subsequent calls restore instead. Sourced by `minimal_dependencies`.
+Defines the `fresh_or_restore` function: runs `./fresh_install` or `./restore` depending on FAST mode. In fast mode, saves state after first `fresh_install` + `install` so subsequent calls restore instead. Sourced by `dependencies_minimal`.
 
 ### `lib/greedy`
 
-Greedy algorithm for `minimal_dependencies`: starts with all optional deps, removes one at a time. O(N) instead of O(2^N). Sourced by `minimal_dependencies` when `GREEDY=1`.
+Greedy algorithm for `dependencies_minimal`: starts with all optional deps, removes one at a time. O(N) instead of O(2^N). Sourced by `dependencies_minimal` when `GREEDY=1`.
 
 ### `lib/parallel`
 
-Parallel exhaustive search for `minimal_dependencies`: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory. Sourced by `minimal_dependencies` when `PARALLEL > 1`.
+Parallel exhaustive search for `dependencies_minimal`: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory. Sourced by `dependencies_minimal` when `PARALLEL > 1`.
 
 ### `lib/print_found`
 
-Prints the "minimum dependencies found" results (header, required deps, optional deps). Sourced by `minimal_dependencies` (greedy, sequential, and parallel modes).
+Prints the "minimum dependencies found" results (header, required deps, optional deps). Sourced by `dependencies_minimal` (greedy, sequential, and parallel modes).
 
 ## Further reading
 
