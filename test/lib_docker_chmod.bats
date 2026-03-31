@@ -31,7 +31,7 @@ teardown() {
   '
   [ "$status" -eq 0 ]
   # Verify permissions were changed (stat format differs on macOS vs Linux)
-  perms=$(stat -f "%Lp" "$TEST_DIR/mydir" 2>/dev/null || stat -c "%a" "$TEST_DIR/mydir" 2>/dev/null)
+  perms=$(stat -c "%a" "$TEST_DIR/mydir" 2>/dev/null || stat -f "%Lp" "$TEST_DIR/mydir" 2>/dev/null)
   [ "$perms" = "777" ]
 }
 
@@ -47,7 +47,7 @@ teardown() {
   '
   [ "$status" -eq 0 ]
   for d in dir1 dir2 dir3; do
-    perms=$(stat -f "%Lp" "$TEST_DIR/$d" 2>/dev/null || stat -c "%a" "$TEST_DIR/$d" 2>/dev/null)
+    perms=$(stat -c "%a" "$TEST_DIR/$d" 2>/dev/null || stat -f "%Lp" "$TEST_DIR/$d" 2>/dev/null)
     [ "$perms" = "777" ]
   done
 }
