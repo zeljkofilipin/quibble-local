@@ -5,8 +5,8 @@
 # WARNING: This will take a long time to run.
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
-# Usage: ./integration_test
-#        VERBOSE=1 ./integration_test
+# Usage: ./test_integration
+#        VERBOSE=1 ./test_integration
 #
 
 # No set -euo pipefail: we want to continue after failures to collect all results
