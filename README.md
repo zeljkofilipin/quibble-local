@@ -359,6 +359,10 @@ Builds the `components` array from either `$1` (single component) or `./gated` (
 
 Provides `clone_or_fetch` function that clones or fetches a bare repo from Gerrit into `ref/`. If the repo already exists, fetches updates; otherwise clones it. Accepts optional `--quiet` flag. Sourced by `install`, `selenium_tests_exist`, and `lib/resolve_deps`.
 
+### `lib/dep_repo_path`
+
+Provides `dep_repo_path` function that converts a dependency name to a Gerrit repo path. Extensions (e.g. `Echo`) map to `mediawiki/extensions/Echo`. Skins (e.g. `skins/MinervaNeue`) map to `mediawiki/skins/MinervaNeue`. Sourced by `lib/resolve_deps` and `minimal_dependencies`.
+
 ### `lib/resolve_deps`
 
 Resolves dependency repos for a component, cloning bare repos as needed. Sets the `deps` array with repo paths. Reads from `QUIBBLE_DEPS` env var if set, otherwise from `./dependencies`. Sourced by `install`.

@@ -90,6 +90,7 @@ fi
 total=${#combos[@]} # total number of combinations
 
 # Print summary of all, required, and optional dependencies
+. "$(dirname "$0")"/lib/dep_repo_path   # provides dep_repo_path function
 . "$(dirname "$0")"/lib/print_dep_summary
 
 # Define fresh_or_restore function (shared by lib/greedy, lib/parallel, and sequential mode)
@@ -99,11 +100,7 @@ total=${#combos[@]} # total number of combinations
 # Prevents race conditions when parallel workers try to clone the same repo simultaneously.
 # Also ensures network fetches don't slow down individual combination tests.
 for dep_name in "${all_deps[@]}"; do
-  if [[ "$dep_name" == skins/* ]]; then
-    dep_repo="mediawiki/${dep_name}"   # e.g. "mediawiki/skins/MinervaNeue"
-  else
-    dep_repo="mediawiki/extensions/${dep_name}" # e.g. "mediawiki/extensions/Echo"
-  fi
+  dep_repo=$(dep_repo_path "$dep_name") # e.g. "mediawiki/extensions/Echo" or "mediawiki/skins/MinervaNeue"
   dep_ref_dir="ref/${dep_repo}.git"    # e.g. "ref/mediawiki/extensions/Echo.git"
   if [ -d "$dep_ref_dir" ]; then
     # Fetch to update existing bare repo

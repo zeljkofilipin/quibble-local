@@ -11,18 +11,15 @@ set +x # disable trace output while processing dependencies (too noisy)
 # and $0 refers to the calling script, not this file.
 # shellcheck source=lib/clone_or_fetch
 . "$(dirname "${BASH_SOURCE[0]}")"/clone_or_fetch
+# shellcheck source=lib/dep_repo_path
+. "$(dirname "${BASH_SOURCE[0]}")"/dep_repo_path
 deps=() # array to collect dependency repo paths
 # Read each dependency name from the dependency source.
 # IFS= prevents trimming whitespace; -r prevents backslash interpretation.
 # < <(...) is process substitution: feeds dependency names as stdin.
 while IFS= read -r dep_name; do
   [ -z "$dep_name" ] && continue # skip empty lines (e.g. when QUIBBLE_DEPS is empty)
-  # Skins use "mediawiki/skins/Name", extensions use "mediawiki/extensions/Name"
-  if [[ "$dep_name" == skins/* ]]; then
-    dep_repo="mediawiki/${dep_name}"
-  else
-    dep_repo="mediawiki/extensions/${dep_name}"
-  fi
+  dep_repo=$(dep_repo_path "$dep_name") # e.g. "mediawiki/extensions/Echo" or "mediawiki/skins/MinervaNeue"
   # Print status for new clones (not updates of existing repos)
   if [ ! -d "ref/${dep_repo}.git" ]; then
     echo "Cloning dependency: ${dep_name}"

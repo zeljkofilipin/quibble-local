@@ -1,0 +1,16 @@
+# shellcheck shell=bash
+# Provides dep_repo_path function that converts a dependency name to a Gerrit repo path.
+# Skins (e.g. "skins/MinervaNeue") map to "mediawiki/skins/MinervaNeue".
+# Extensions (e.g. "Echo") map to "mediawiki/extensions/Echo".
+# Must be sourced, not run directly.
+# Usage: dep_repo=$(dep_repo_path "Echo")         # → "mediawiki/extensions/Echo"
+#        dep_repo=$(dep_repo_path "skins/Minerva") # → "mediawiki/skins/Minerva"
+
+dep_repo_path() {
+  local dep_name="$1" # e.g. "Echo" or "skins/MinervaNeue"
+  if [[ "$dep_name" == skins/* ]]; then
+    printf "%s" "mediawiki/${dep_name}"       # e.g. "mediawiki/skins/MinervaNeue"
+  else
+    printf "%s" "mediawiki/extensions/${dep_name}" # e.g. "mediawiki/extensions/Echo"
+  fi
+}
