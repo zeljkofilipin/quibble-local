@@ -2,6 +2,8 @@
 # Greedy algorithm: start with all deps, remove one at a time.
 # O(N) instead of O(2^N). For each optional dep, try removing it.
 # If tests still pass without it, it's not needed.
+# Repeats until a full pass removes nothing — removing a later dep may
+# make an earlier dep (kept in a previous pass) removable.
 # Must be sourced, not run directly.
 # Expects these variables/functions to be set by the caller:
 #   component       — e.g. "extensions/Echo"
@@ -53,47 +55,62 @@ if ! run_step "$component" ./run_selenium_tests "$component"; then
   exit 1
 fi
 
-# Try removing each optional dep one at a time
-for i in $(seq 0 $((n - 1))); do
-  dep="${optional[$i]}"
-  printf "\n=== Try removing %s (%d/%d) === %s\n" "$dep" "$((i + 1))" "$n" "$(utc_timestamp)"
+# Try removing each optional dep one at a time.
+# Repeat until a full pass removes nothing — removing a later dep may make
+# an earlier dep (kept in a previous pass) removable.
+pass=0 # pass counter
+removed=1 # track if any dep was removed in the current pass (1 = yes to enter loop)
+while [ "$removed" -eq 1 ]; do
+  removed=0 # reset for this pass
+  pass=$((pass + 1)) # increment pass counter
+  if [ "$pass" -gt 1 ]; then
+    printf "\n--- Verification pass %d (re-checking %d remaining deps) ---\n" "$pass" "${#kept[@]}"
+  fi
 
-  # Build optional_combo without this dep (using kept indices, excluding i)
-  new_kept=() # candidate kept list without current dep
-  for k in "${kept[@]}"; do
-    [ "$k" -eq "$i" ] && continue # skip the dep we're trying to remove
-    new_kept+=("$k")
-  done
+  # Iterate over a copy of kept indices (kept may shrink during the loop)
+  kept_snapshot=("${kept[@]}") # snapshot so we can modify kept during iteration
+  for i in "${kept_snapshot[@]}"; do
+    dep="${optional[$i]}"
+    printf "\n=== Try removing %s (%d/%d, pass %d) === %s\n" "$dep" "$((i + 1))" "$n" "$pass" "$(utc_timestamp)"
 
-  # Build optional_combo from new_kept indices
-  optional_combo=""
-  if [ ${#new_kept[@]} -gt 0 ]; then
-    for k in "${new_kept[@]}"; do
-      optional_combo="${optional_combo:+$optional_combo }${optional[k]}" # space-separated
+    # Build optional_combo without this dep (using kept indices, excluding i)
+    new_kept=() # candidate kept list without current dep
+    for k in "${kept[@]}"; do
+      [ "$k" -eq "$i" ] && continue # skip the dep we're trying to remove
+      new_kept+=("$k")
     done
-  fi
-  . "$(dirname "$0")"/lib/build_full_combo
 
-  if ! fresh_or_restore; then
-    printf "SKIP (fresh_install/restore failed), keeping %s\n" "$dep"
-    continue # keep this dep (can't test without it)
-  fi
+    # Build optional_combo from new_kept indices
+    optional_combo=""
+    if [ ${#new_kept[@]} -gt 0 ]; then
+      for k in "${new_kept[@]}"; do
+        optional_combo="${optional_combo:+$optional_combo }${optional[k]}" # space-separated
+      done
+    fi
+    . "$(dirname "$0")"/lib/build_full_combo
 
-  export QUIBBLE_DEPS="$full_combo"
-  if ! run_step "$component" ./install "$component"; then
+    if ! fresh_or_restore; then
+      printf "SKIP (fresh_install/restore failed), keeping %s\n" "$dep"
+      continue # keep this dep (can't test without it)
+    fi
+
+    export QUIBBLE_DEPS="$full_combo"
+    if ! run_step "$component" ./install "$component"; then
+      unset QUIBBLE_DEPS
+      printf "Install failed without %s, keeping it\n" "$dep"
+      continue # keep this dep
+    fi
     unset QUIBBLE_DEPS
-    printf "Install failed without %s, keeping it\n" "$dep"
-    continue # keep this dep
-  fi
-  unset QUIBBLE_DEPS
 
-  if run_step "$component" ./run_selenium_tests "$component"; then
-    printf "Tests passed without %s, removing it\n" "$dep"
-    kept=("${new_kept[@]}") # permanently remove this dep
-  else
-    printf "Tests failed without %s, keeping it\n" "$dep"
-    # kept stays unchanged (dep remains)
-  fi
+    if run_step "$component" ./run_selenium_tests "$component"; then
+      printf "Tests passed without %s, removing it\n" "$dep"
+      kept=("${new_kept[@]}") # permanently remove this dep
+      removed=1 # flag that we removed something, so we need another pass
+    else
+      printf "Tests failed without %s, keeping it\n" "$dep"
+      # kept stays unchanged (dep remains)
+    fi
+  done
 done
 
 # Build final optional_combo from kept indices
