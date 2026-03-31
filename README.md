@@ -280,12 +280,12 @@ Remove `src/` (MediaWiki source code). Cache, logs, bare git repos, and the Dock
     ./clean
     VERBOSE=1 ./clean
 
-### `./deep_clean`
+### `./clean_deep`
 
 Remove everything created by quibble-local, including bare git repos in `ref/` and the Docker image.
 
-    ./deep_clean
-    VERBOSE=1 ./deep_clean
+    ./clean_deep
+    VERBOSE=1 ./clean_deep
 
 ### `./ci`
 
@@ -299,11 +299,11 @@ Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo. 
 
     ./lint
 
-### `./deep_clean_test`
+### `./clean_deep_test`
 
-Run `./deep_clean` first, then `./integration_test`. Slower but starts from a completely clean state.
+Run `./clean_deep` first, then `./integration_test`. Slower but starts from a completely clean state.
 
-    ./deep_clean_test
+    ./clean_deep_test
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending (via `./integration_test`).
 

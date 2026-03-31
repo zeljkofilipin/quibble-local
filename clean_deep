@@ -4,8 +4,8 @@
 # This removes cache/, log/, src/, src_save/, src_N/, src_save_N/, ref/ and the Docker image.
 # WARNING: This will delete everything including bare repos (slow to re-clone).
 #
-# Usage: ./deep_clean
-#        VERBOSE=1 ./deep_clean
+# Usage: ./clean_deep
+#        VERBOSE=1 ./clean_deep
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
