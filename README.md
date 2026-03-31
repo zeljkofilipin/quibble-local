@@ -395,6 +395,10 @@ Provides `record_passed` function that records a component as passed (if not alr
 
 Generic wave-based parallel worker orchestration. Processes an array of items in waves of `$parallel` workers, each in an isolated `src_worker_N/` directory. The caller defines `_run_worker` and `_collect_result` functions to customize worker behavior and result handling. Sourced by `run_all` and `run_required` in parallel mode.
 
+### `lib/clean_worker_dirs`
+
+Cleans up `src_worker_*` directories created by parallel execution. Tries `rm -rf` first (works on macOS). Falls back to Docker-as-root for container-owned files (Linux). Sourced by `lib/run_waves` and `lib/parallel` after parallel runs complete.
+
 ### `lib/worker_init`
 
 Common setup for parallel worker subshells. Sets `QUIBBLE_SRC` and `QUIBBLE_BACKGROUND`, redirects output to a log file, and runs `./restore` (fast mode) or `./fresh_install`. Sourced inside worker subshells by `run_all`, `run_required`, and `lib/parallel`.

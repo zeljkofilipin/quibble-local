@@ -78,5 +78,6 @@ while [ "$_wave_start" -lt "$_total" ]; do
   _wave_start="$_wave_end" # advance to next wave
 done
 
-# Clean up temp dir
+# Clean up temp dir and worker directories
 rm -rf "$_result_dir"
+. "$(dirname "$0")"/lib/clean_worker_dirs # remove src_worker_* directories

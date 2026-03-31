@@ -1,0 +1,23 @@
+# shellcheck shell=bash
+# Clean up src_worker_* directories created by parallel execution.
+# These are ephemeral directories used for isolated parallel workers.
+# Tries rm -rf first (works on macOS where Docker files are host-owned).
+# Falls back to Docker-as-root for container-owned files (Linux).
+# Must be sourced, not run directly.
+
+for _cleanup_dir in src_worker_*; do
+  [ -d "$_cleanup_dir" ] || continue # skip if glob matched nothing (literal "src_worker_*")
+  rm -rf "$_cleanup_dir" 2>/dev/null || true # try native delete first (works on macOS)
+  if [ -d "$_cleanup_dir" ]; then
+    # Directory still exists — files likely owned by Docker container user (Linux)
+    # --rm: remove container on exit
+    # --entrypoint bash: override default entrypoint to run a shell command
+    # --user root: run as root to have permission to delete all files
+    # -v: mount worker dir so we can delete its contents from inside the container
+    docker run --rm --entrypoint bash --user root \
+      -v "$PWD/$_cleanup_dir":/workspace/worker \
+      "${QUIBBLE_IMAGE:-docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest}" \
+      -c 'find /workspace/worker -mindepth 1 -delete' 2>/dev/null || true # ignore errors if image missing
+    rm -rf "$_cleanup_dir" 2>/dev/null || true # remove the now-empty directory
+  fi
+done
