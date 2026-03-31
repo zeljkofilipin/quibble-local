@@ -11,7 +11,7 @@
   run ./help
   [[ "$output" == *"./fresh_install"* ]]
   [[ "$output" == *"./install"* ]]
-  [[ "$output" == *"./clean"* ]]
+  [[ "$output" == *"./remove"* ]]
   [[ "$output" == *"./help"* ]]
 }
 
