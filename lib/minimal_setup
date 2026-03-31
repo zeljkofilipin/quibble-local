@@ -1,0 +1,106 @@
+# shellcheck shell=bash
+# Shared setup for dependencies_minimal and dependencies_minimal_thorough.
+# Reads dependencies, classifies them into required/optional, pre-clones bare repos.
+# Must be sourced, not run directly.
+# Expects:
+#   $1 — component (e.g. "extensions/Echo")
+# Sets:
+#   component       — e.g. "extensions/Echo"
+#   all_deps        — indexed array of all dependency names
+#   required        — indexed array of required dependency names
+#   optional        — indexed array of optional dependency names
+#   n               — number of optional dependencies
+#   total           — total number of combinations (2^n)
+#   required_str    — space-separated list of required dependency names
+#   fast            — always "1" (save/restore is always used)
+#   _first_run      — "1" (force fresh_install on first call)
+#   fresh_or_restore — function to set up core MediaWiki
+# shellcheck disable=SC2154 # verbose and run_with_dots are set by lib/batch_setup
+
+. "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
+fast=1 # always use save/restore for speed
+_first_run=1 # force fresh_install on first call (don't trust stale src_save/ from previous runs)
+
+# Show usage if no argument provided
+if [ $# -eq 0 ]; then # $# is the number of arguments
+  echo "Usage: ./${0##*/} extensions/EXTENSION or ./${0##*/} skins/SKIN"
+  exit 1
+fi
+
+component="$1" # e.g. "extensions/Echo"
+
+# Read all dependencies (from zuul's dependencies.yaml)
+all_deps=() # indexed array of all dependency names
+while IFS= read -r dep; do
+  [ -z "$dep" ] && continue # skip empty lines
+  all_deps+=("$dep") # += appends to bash arrays
+done < <("$(dirname "$0")"/dependencies "$component")
+
+if [ ${#all_deps[@]} -eq 0 ]; then
+  echo "No dependencies found for $component."
+  exit 0
+fi
+
+# Read required dependencies (from extension.json/skin.json "requires" field)
+required=() # indexed array of required dependency names
+while IFS= read -r dep; do
+  [ -z "$dep" ] && continue # skip empty lines
+  required+=("$dep") # += appends to bash arrays
+done < <("$(dirname "$0")"/dependencies_required "$component")
+
+# Read optional dependencies (all deps minus required deps)
+optional=() # indexed array of optional dependency names
+while IFS= read -r dep; do
+  [ -z "$dep" ] && continue # skip empty lines
+  optional+=("$dep") # += appends to bash arrays
+done < <("$(dirname "$0")"/dependencies_optional "$component")
+
+n=${#optional[@]} # number of optional dependencies
+total=$((1 << n)) # 2^n total combinations of optional deps
+
+# Build the required deps string (always included in QUIBBLE_DEPS)
+required_str="" # space-separated list of required dep names
+if [ ${#required[@]} -gt 0 ]; then # only iterate if array is non-empty (bash 3.2 safe)
+  for dep in "${required[@]}"; do
+    required_str="${required_str:+$required_str }$dep" # append with space separator
+  done
+fi
+
+# Print summary of all, required, and optional dependencies
+. "$(dirname "$0")"/lib/dep_repo_path   # provides dep_repo_path function
+. "$(dirname "$0")"/lib/print_dep_summary
+
+# Define fresh_or_restore function (shared by lib/greedy and lib/parallel)
+. "$(dirname "$0")"/lib/fresh_or_restore
+
+# Pre-clone or fetch bare repos for all dependencies before testing.
+# Prevents race conditions when parallel workers try to clone the same repo simultaneously.
+# Also ensures network fetches don't slow down individual combination tests.
+for dep_name in "${all_deps[@]}"; do
+  dep_repo=$(dep_repo_path "$dep_name") # e.g. "mediawiki/extensions/Echo" or "mediawiki/skins/MinervaNeue"
+  dep_ref_dir="ref/${dep_repo}.git"    # e.g. "ref/mediawiki/extensions/Echo.git"
+  if [ -d "$dep_ref_dir" ]; then
+    # Fetch to update existing bare repo
+    if [ -n "$verbose" ]; then
+      echo "Fetching dependency: ${dep_name}" # print status message in verbose mode
+      git -C "$dep_ref_dir" fetch || true  # ignore errors if remote unreachable
+    else
+      printf "fetch(%s) " "$dep_name" # print step label before dots
+      run_with_dots "log/silent/fetch--${dep_name//\//-}.log" \
+        git -C "$dep_ref_dir" fetch || true  # ignore errors if remote unreachable
+      printf "\n" # newline after dots
+    fi
+  else
+    # Clone new bare repo
+    mkdir -p "$(dirname "$dep_ref_dir")" # create parent directories
+    if [ -n "$verbose" ]; then
+      echo "Pre-cloning dependency: ${dep_name}" # print status message in verbose mode
+      git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
+    else
+      printf "pre-clone(%s) " "$dep_name" # print step label before dots
+      run_with_dots "log/silent/pre-clone--${dep_name//\//-}.log" \
+        git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
+      printf "\n" # newline after dots
+    fi
+  fi
+done

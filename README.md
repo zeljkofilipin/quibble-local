@@ -50,10 +50,9 @@ Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directorie
 
 ### `FAST`
 
-`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `run_selenium_tests_all`, `run_selenium_tests_required`, and `dependencies_minimal`.
+`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `run_selenium_tests_all` and `run_selenium_tests_required`. (`dependencies_minimal` always uses save/restore automatically.)
 
     FAST=1 ./run_selenium_tests_all
-    FAST=1 ./dependencies_minimal extensions/Echo
 
 ## Commands (same as mediawiki-quickstart)
 
@@ -213,22 +212,12 @@ Output all possible combinations of dependencies for an extension or skin. One c
 
 ### `./dependencies_minimal`
 
-Find the minimum dependencies needed for a repository's Selenium tests to pass. Splits dependencies into required (from `extension.json`/`skin.json`) and optional (remaining). Required deps are always included; only optional deps are varied, testing combinations from smallest (0 optional) to largest (all optional).
+Find the minimum dependencies needed for a repository's Selenium tests to pass. Uses a greedy algorithm: starts with all optional deps, removes one at a time. O(N) instead of O(2^N). Repeats until stable to catch order-dependent removals.
 
     ./dependencies_minimal extensions/Echo
     VERBOSE=1 ./dependencies_minimal extensions/Echo
-    FAST=1 ./dependencies_minimal extensions/Echo
-    GREEDY=1 ./dependencies_minimal extensions/Echo
-    GREEDY=1 FAST=1 ./dependencies_minimal extensions/Echo
-    PARALLEL=$(./suggested_parallel) ./dependencies_minimal extensions/Echo
-    PARALLEL=4 FAST=1 ./dependencies_minimal extensions/Echo
 
-Environment variables:
-
-- `GREEDY=1`: Start with all dependencies and remove one at a time (O(N) instead of O(2^N)). Finds a minimal set but not necessarily the smallest possible. Always runs sequentially (ignores `PARALLEL`). Combine with `FAST=1` for maximum speed.
-- `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Only applies to exhaustive (non-greedy) mode. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
-
-**Warning:** Tests up to 2^N combinations (N = number of optional dependencies). Each takes ~10 minutes. This script inhibits sleep to prevent the machine from suspending.
+**Warning:** This script inhibits sleep to prevent the machine from suspending.
 
 ### `./remove`
 
@@ -276,10 +265,10 @@ Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
 
 ### `./suggested_parallel`
 
-Suggest the number of parallel workers for `./dependencies_minimal` based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number.
+Suggest the number of parallel workers based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number. Used by `run_selenium_tests_all` and `run_selenium_tests_required`.
 
     ./suggested_parallel
-    PARALLEL=$(./suggested_parallel) ./dependencies_minimal extensions/Echo
+    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all
 
 ### `./save`
 
@@ -329,11 +318,11 @@ These are sourced by other scripts and are not intended to be run directly.
 
 ### `lib/batch_setup`
 
-Shared setup for batch scripts (`test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
+Shared setup for batch scripts (`test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, `dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
 
 ### `lib/heartbeat`
 
-Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, and `dependencies_minimal` for silent mode progress feedback. Provides `run_with_dots` function.
+Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, and `dependencies_minimal_thorough` for silent mode progress feedback. Provides `run_with_dots` function.
 
 ### `lib/debug_info`
 
@@ -377,7 +366,7 @@ Provides `clone_or_fetch` function that clones or fetches a bare repo from Gerri
 
 ### `lib/dep_repo_path`
 
-Provides `dep_repo_path` function that converts a dependency name to a Gerrit repo path. Extensions (e.g. `Echo`) map to `mediawiki/extensions/Echo`. Skins (e.g. `skins/MinervaNeue`) map to `mediawiki/skins/MinervaNeue`. Sourced by `lib/resolve_deps` and `dependencies_minimal`.
+Provides `dep_repo_path` function that converts a dependency name to a Gerrit repo path. Extensions (e.g. `Echo`) map to `mediawiki/extensions/Echo`. Skins (e.g. `skins/MinervaNeue`) map to `mediawiki/skins/MinervaNeue`. Sourced by `lib/resolve_deps` and `lib/minimal_setup`.
 
 ### `lib/resolve_deps`
 
@@ -389,7 +378,7 @@ Sourced by scripts that need zuul config (`dependencies`, `gated`, `install`). E
 
 ### `lib/inhibit_sleep`
 
-Sourced by long-running scripts (`dependencies_minimal`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `test_integration`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+Sourced by long-running scripts (`dependencies_minimal`, `dependencies_minimal_thorough`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `test_integration`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
 ### `lib/print_results`
 
@@ -429,7 +418,7 @@ Awk script that generates all bitmask combinations of dependencies, ordered by s
 
 ### `lib/combinations_with_empty.awk`
 
-Awk script that generates all bitmask combinations including the empty set, ordered by size (starting from 0). Used by `dependencies_minimal`.
+Awk script that generates all bitmask combinations including the empty set, ordered by size (starting from 0). Used by `dependencies_minimal_thorough`.
 
 ### `lib/parse_yaml_list.awk`
 
@@ -439,29 +428,33 @@ Awk script that parses a YAML list under a given key from `zuul/dependencies.yam
 
 Awk script that extracts entries from a Python list assignment in `parameter_functions.py`. Used by `gated`.
 
+### `lib/minimal_setup`
+
+Shared setup for `dependencies_minimal` and `dependencies_minimal_thorough`. Reads dependencies, classifies them into required/optional, pre-clones bare repos. Sets up `fresh_or_restore` function and all shared variables.
+
 ### `lib/print_dep_summary`
 
-Prints a summary of all, required, and optional dependencies plus total combinations to test. Sourced by `dependencies_minimal`.
+Prints a summary of all, required, and optional dependencies plus total combinations to test. Sourced by `lib/minimal_setup`.
 
 ### `lib/build_full_combo`
 
-Builds a full dependency combination from required + optional deps. Sets the `full_combo` variable. Sourced by `dependencies_minimal`.
+Builds a full dependency combination from required + optional deps. Sets the `full_combo` variable. Sourced by `lib/greedy`.
 
 ### `lib/fresh_or_restore`
 
-Defines the `fresh_or_restore` function: runs `./fresh_install` or `./restore` depending on FAST mode. In fast mode, saves state after first `fresh_install` + `install` so subsequent calls restore instead. Sourced by `dependencies_minimal`.
+Defines the `fresh_or_restore` function: runs `./fresh_install` or `./restore` depending on FAST mode. In fast mode, saves state after first `fresh_install` + `install` so subsequent calls restore instead. Sourced by `lib/minimal_setup`.
 
 ### `lib/greedy`
 
-Greedy algorithm for `dependencies_minimal`: starts with all optional deps, removes one at a time. O(N) instead of O(2^N). Sourced by `dependencies_minimal` when `GREEDY=1`.
+Greedy algorithm for `dependencies_minimal`: starts with all optional deps, removes one at a time. O(N) instead of O(2^N). Repeats until stable to catch order-dependent removals. Sourced by `dependencies_minimal`.
 
 ### `lib/parallel`
 
-Parallel exhaustive search for `dependencies_minimal`: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory. Sourced by `dependencies_minimal` when `PARALLEL > 1`.
+Parallel exhaustive search: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory. Sourced by `dependencies_minimal_thorough` when `PARALLEL > 1`.
 
 ### `lib/print_found`
 
-Prints the "minimum dependencies found" results (header, required deps, optional deps). Sourced by `dependencies_minimal` (greedy, sequential, and parallel modes).
+Prints the "minimum dependencies found" results (header, required deps, optional deps). Sourced by `dependencies_minimal` and `dependencies_minimal_thorough`.
 
 ## Further reading
 

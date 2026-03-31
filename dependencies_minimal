@@ -1,184 +1,21 @@
 #!/usr/bin/env bash
 #
 # Find the minimum dependencies needed for a repository's Selenium tests to pass.
-# Splits dependencies into required (from extension.json/skin.json) and optional
-# (remaining deps from zuul). Required deps are always included. Only optional deps
-# are varied, testing combinations from smallest (0 optional) to largest (all optional).
+# Uses a greedy algorithm: starts with all optional deps, removes one at a time.
+# O(N) instead of O(2^N). Repeats until stable to catch order-dependent removals.
 #
 # Usage: ./dependencies_minimal extensions/Echo
 #        VERBOSE=1 ./dependencies_minimal extensions/Echo
-#        FAST=1 ./dependencies_minimal extensions/Echo
-#        GREEDY=1 ./dependencies_minimal extensions/Echo
-#        GREEDY=1 FAST=1 ./dependencies_minimal extensions/Echo
-#        PARALLEL=$(./suggested_parallel) ./dependencies_minimal extensions/Echo
-#        PARALLEL=4 FAST=1 ./dependencies_minimal extensions/Echo
 #
-# WARNING: Tests up to 2^N combinations (N = number of optional dependencies). Each
-#          combination runs fresh_install + install + run_selenium_tests (~10 min).
+# See also: ./dependencies_minimal_thorough for exhaustive verification.
+#
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
-# FAST=1: Always runs fresh_install + install (with required deps) first, saves state, then restores.
-# GREEDY=1: Starts with all deps, removes one at a time. O(N) instead of O(2^N).
-#            Always runs sequentially (ignores PARALLEL).
-# PARALLEL=N: Run N combinations in parallel (each in isolated src_worker_$i/ directory).
-#             Only applies to exhaustive (non-greedy) mode.
-#             Use ./suggested_parallel to determine N for your machine.
 #
 
 # No set -euo pipefail: we want to continue after failures to test the next combination
 
-. "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
-fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-running
-greedy="${GREEDY:-}" # GREEDY=1 removes deps one at a time instead of testing all combinations
-parallel="${PARALLEL:-1}" # PARALLEL=N runs N combinations in parallel (default 1 = sequential)
-_first_run=1 # force fresh_install on first call (don't trust stale src_save/ from previous runs)
+. "$(dirname "$0")"/lib/minimal_setup "$@" # shared setup: read deps, classify, pre-clone
 
+. "$(dirname "$0")"/lib/greedy # greedy algorithm: remove one dep at a time, repeat until stable
 
-# Show usage if no argument provided
-if [ $# -eq 0 ]; then # $# is the number of arguments
-  echo "Usage: ./dependencies_minimal extensions/EXTENSION or ./dependencies_minimal skins/SKIN"
-  exit 1
-fi
-
-component="$1" # e.g. "extensions/Echo"
-
-# Read all dependencies (from zuul's dependencies.yaml)
-all_deps=() # indexed array of all dependency names
-while IFS= read -r dep; do
-  [ -z "$dep" ] && continue # skip empty lines
-  all_deps+=("$dep") # += appends to bash arrays
-done < <("$(dirname "$0")"/dependencies "$component")
-
-if [ ${#all_deps[@]} -eq 0 ]; then
-  echo "No dependencies found for $component."
-  exit 0
-fi
-
-# Read required dependencies (from extension.json/skin.json "requires" field)
-required=() # indexed array of required dependency names
-while IFS= read -r dep; do
-  [ -z "$dep" ] && continue # skip empty lines
-  required+=("$dep") # += appends to bash arrays
-done < <("$(dirname "$0")"/dependencies_required "$component")
-
-# Read optional dependencies (all deps minus required deps)
-optional=() # indexed array of optional dependency names
-while IFS= read -r dep; do
-  [ -z "$dep" ] && continue # skip empty lines
-  optional+=("$dep") # += appends to bash arrays
-done < <("$(dirname "$0")"/dependencies_optional "$component")
-
-n=${#optional[@]} # number of optional dependencies
-
-# Build the required deps string (always included in QUIBBLE_DEPS)
-required_str="" # space-separated list of required dep names
-if [ ${#required[@]} -gt 0 ]; then # only iterate if array is non-empty (bash 3.2 safe)
-  for dep in "${required[@]}"; do
-    required_str="${required_str:+$required_str }$dep" # append with space separator
-  done
-fi
-
-# Generate all combinations of optional deps (including empty set), ordered by size.
-# See lib/combinations_with_empty.awk for the bitmask logic.
-combos=() # array of space-separated optional dep combinations
-if [ "$n" -gt 0 ]; then
-  while IFS= read -r combo; do
-    combos+=("$combo") # += appends to bash arrays
-  done < <(printf '%s\n' "${optional[@]}" | awk -f "$(dirname "$0")"/lib/combinations_with_empty.awk)
-else
-  combos=("") # only the empty set (no optional deps to vary)
-fi
-total=${#combos[@]} # total number of combinations
-
-# Print summary of all, required, and optional dependencies
-. "$(dirname "$0")"/lib/dep_repo_path   # provides dep_repo_path function
-. "$(dirname "$0")"/lib/print_dep_summary
-
-# Define fresh_or_restore function (shared by lib/greedy, lib/parallel, and sequential mode)
-. "$(dirname "$0")"/lib/fresh_or_restore
-
-# Pre-clone or fetch bare repos for all dependencies before testing.
-# Prevents race conditions when parallel workers try to clone the same repo simultaneously.
-# Also ensures network fetches don't slow down individual combination tests.
-for dep_name in "${all_deps[@]}"; do
-  dep_repo=$(dep_repo_path "$dep_name") # e.g. "mediawiki/extensions/Echo" or "mediawiki/skins/MinervaNeue"
-  dep_ref_dir="ref/${dep_repo}.git"    # e.g. "ref/mediawiki/extensions/Echo.git"
-  if [ -d "$dep_ref_dir" ]; then
-    # Fetch to update existing bare repo
-    if [ -n "$verbose" ]; then
-      echo "Fetching dependency: ${dep_name}" # print status message in verbose mode
-      git -C "$dep_ref_dir" fetch || true  # ignore errors if remote unreachable
-    else
-      printf "fetch(%s) " "$dep_name" # print step label before dots
-      run_with_dots "log/silent/fetch--${dep_name//\//-}.log" \
-        git -C "$dep_ref_dir" fetch || true  # ignore errors if remote unreachable
-      printf "\n" # newline after dots
-    fi
-  else
-    # Clone new bare repo
-    mkdir -p "$(dirname "$dep_ref_dir")" # create parent directories
-    if [ -n "$verbose" ]; then
-      echo "Pre-cloning dependency: ${dep_name}" # print status message in verbose mode
-      git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
-    else
-      printf "pre-clone(%s) " "$dep_name" # print step label before dots
-      run_with_dots "log/silent/pre-clone--${dep_name//\//-}.log" \
-        git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
-      printf "\n" # newline after dots
-    fi
-  fi
-done
-
-if [ -n "$greedy" ]; then
-  # Greedy algorithm: see lib/greedy for implementation
-  . "$(dirname "$0")"/lib/greedy
-  exit 0
-fi
-
-# --- Exhaustive: test all combinations, smallest first ---
-# Required deps are always included. Only optional deps are varied.
-# When PARALLEL > 1, combinations are tested in waves of $parallel workers.
-
-if [ "$parallel" -le 1 ]; then
-  # --- Sequential mode (PARALLEL=1, default) ---
-  # Uses run_step from lib/batch_setup for progress tracking.
-  combo_num=0 # combination counter for progress display
-
-  for optional_combo in "${combos[@]}"; do
-    combo_num=$((combo_num + 1))
-
-    # Build full combo: required deps + optional deps for this combination
-    . "$(dirname "$0")"/lib/build_full_combo
-
-    printf "\n=== Combination %d/%d: %s === %s\n" "$combo_num" "$total" "${full_combo:-(none)}" "$(utc_timestamp)"
-
-    # Fresh core install for clean state (or restore from saved state in fast mode)
-    if ! fresh_or_restore; then
-      printf "SKIP (fresh_install/restore failed)\n"
-      continue # try next combination
-    fi
-
-    # Install extension with this combination of deps
-    # QUIBBLE_DEPS overrides ./dependencies in ./install (see install script)
-    export QUIBBLE_DEPS="$full_combo"
-    if ! run_step "$component" ./install "$component"; then
-      unset QUIBBLE_DEPS # clean up env var
-      printf "FAILED (install failed)\n"
-      continue # try next combination
-    fi
-    unset QUIBBLE_DEPS # clean up env var (run_selenium_tests doesn't need it)
-
-    # Run Selenium tests
-    if run_step "$component" ./run_selenium_tests "$component"; then
-      . "$(dirname "$0")"/lib/print_found # print the winning combination
-      exit 0
-    fi
-  done
-
-else
-  # Parallel mode: see lib/parallel for implementation
-  . "$(dirname "$0")"/lib/parallel
-fi
-
-# If we get here, no combination passed (shouldn't happen if the extension's tests work at all)
-printf "\nNo working combination found.\n"
-exit 1
+exit 0
