@@ -40,11 +40,13 @@ Run multiple independent sessions on the same machine simultaneously. Each envir
     ENVIRONMENT=0 ./fresh_install
     ENVIRONMENT=0 ./install extensions/Echo
     ENVIRONMENT=0 ./run_selenium_tests extensions/Echo
+    ENVIRONMENT=0 ./clean
 
     # Terminal 2 (at the same time): run minimal_dependencies for MinervaNeue
     ENVIRONMENT=1 ./minimal_dependencies skins/MinervaNeue
+    ENVIRONMENT=1 ./clean
 
-Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directories are shared (safe for concurrent use).
+Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directories are shared (safe for concurrent use). Use `./clean_src` to remove all environments at once.
 
 ### `FAST`
 
