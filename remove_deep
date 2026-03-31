@@ -10,28 +10,40 @@
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
+# Collect all directories that need cleaning (src-related + cache, log, ref).
+# printf '%s ' ... 2>/dev/null: suppress "no matches found" error if glob matches nothing.
+# shellcheck disable=SC2046 # intentional word splitting: glob expansion of src_* paths
+all_dirs=$(printf '%s ' cache log ref src src_save $(printf '%s ' src_[0-9]* src_save_[0-9]* src_worker_* 2>/dev/null))
+
+# Build Docker volume mount flags for directories that exist
+volumes="" # -v flags for docker run
+paths="" # container paths for find command
+for dir in $all_dirs; do
+  # shellcheck disable=SC2086 # intentional word splitting of all_dirs
+  [ -d "$dir" ] || continue # skip directories that don't exist
+  volumes="$volumes -v $QUIBBLE_DIR/$dir:/workspace/$dir"
+  paths="$paths /workspace/$dir"
+done
+
 # Use Docker (as root) to remove files owned by the container user.
 # &>/dev/null: suppress both stdout and stderr from the inspect command
-if docker image inspect "$QUIBBLE_IMAGE" &>/dev/null; then # check if the Docker image exists locally
+if [ -n "$paths" ] && docker image inspect "$QUIBBLE_IMAGE" &>/dev/null; then # check if directories and Docker image exist
   # --rm: remove container on exit
   # --entrypoint bash: override default entrypoint to run a shell command
   # --user root: run as root to have permission to delete all files
   # -v: mount each directory so we can delete its contents from inside the container
+  # shellcheck disable=SC2086 # intentional word splitting of volume flags and paths
   docker run --rm \
     --entrypoint bash \
     --user root \
-    -v "$QUIBBLE_DIR"/cache:/cache \
-    -v "$QUIBBLE_DIR"/log:/workspace/log \
-    -v "$QUIBBLE_DIR"/src:/workspace/src \
-    -v "$QUIBBLE_DIR"/src_save:/workspace/src_save \
-    -v "$QUIBBLE_DIR"/ref:/workspace/ref \
+    $volumes \
     "$QUIBBLE_IMAGE" \
-    -c 'find /cache /workspace/log /workspace/src /workspace/src_save /workspace/ref -mindepth 1 -delete' # delete contents but not mount points
+    -c "find $paths -mindepth 1 -delete" # delete contents but not mount points
 fi
 
-# Remove the now-empty directories, parallel worker directories, and environment directories from the host
-# shellcheck disable=SC2046 # intentional word splitting: glob expansion of src_* paths
-rm -rf cache log src src_save ref $(printf '%s ' src_worker_* src_[0-9]* src_save_[0-9]* 2>/dev/null)
+# Remove the now-empty directories from the host
+# shellcheck disable=SC2086 # intentional word splitting of all_dirs
+rm -rf $all_dirs
 
 # Remove the Docker image (ignore errors if already removed)
 docker rmi "$QUIBBLE_IMAGE" 2>/dev/null || true
