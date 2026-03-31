@@ -170,36 +170,6 @@ Install all gated extensions and skins into a single MediaWiki, then run all Sel
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a long time to run (50+ components).
 
-### `./fetch`
-
-Fetch the latest changes for bare git repos in `ref/` from Gerrit. With no arguments, fetches all repos. With arguments, fetches only the specified repos.
-
-    ./fetch
-    ./fetch ref/mediawiki/core.git
-    ./fetch ref/mediawiki/extensions/Echo.git ref/mediawiki/skins/Vector.git
-    PARALLEL=4 ./fetch
-    VERBOSE=1 ./fetch
-
-### `./dependencies`
-
-Output dependencies for an extension or skin from `zuul/dependencies.yaml`.
-
-    ./dependencies extensions/Echo
-    ./dependencies skins/MinervaNeue
-
-### `./dependencies_combinations`
-
-Output all possible combinations of dependencies for an extension or skin. One combination per line (space-separated), starting with one dependency, ending with all dependencies.
-
-    ./dependencies_combinations extensions/Echo
-    ./dependencies_combinations skins/MinervaNeue
-
-### `./gated`
-
-Output the list of gated repositories (extensions and skins) from `parameter_functions.py`. Clones `integration/config` into `src/config` if needed. Assumes `./prepare` has been run first.
-
-    ./gated
-
 ### `./run_selenium_tests_required`
 
 Run Selenium tests for all gated repositories using only required dependencies (from `extension.json`/`skin.json`). For each component: `./fresh_install`, `./install` with required deps only, check if Selenium tests exist, and run them. Silent by default; use `VERBOSE=1` for full output.
@@ -212,6 +182,13 @@ Run Selenium tests for all gated repositories using only required dependencies (
     PARALLEL=4 FAST=1 ./run_selenium_tests_required
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
+
+### `./dependencies`
+
+Output dependencies for an extension or skin from `zuul/dependencies.yaml`.
+
+    ./dependencies extensions/Echo
+    ./dependencies skins/MinervaNeue
 
 ### `./dependencies_required`
 
@@ -227,12 +204,12 @@ Output optional dependencies for an extension or skin. These are dependencies in
     ./dependencies_optional extensions/Echo
     ./dependencies_optional skins/MinervaNeue
 
-### `./suggested_parallel`
+### `./dependencies_combinations`
 
-Suggest the number of parallel workers for `./dependencies_minimal` based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number.
+Output all possible combinations of dependencies for an extension or skin. One combination per line (space-separated), starting with one dependency, ending with all dependencies.
 
-    ./suggested_parallel
-    PARALLEL=$(./suggested_parallel) ./dependencies_minimal extensions/Echo
+    ./dependencies_combinations extensions/Echo
+    ./dependencies_combinations skins/MinervaNeue
 
 ### `./dependencies_minimal`
 
@@ -252,35 +229,6 @@ Environment variables:
 - `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Only applies to exhaustive (non-greedy) mode. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 **Warning:** Tests up to 2^N combinations (N = number of optional dependencies). Each takes ~10 minutes. This script inhibits sleep to prevent the machine from suspending.
-
-### `./help`
-
-List all scripts with their description and usage.
-
-    ./help
-    ./help install
-    ./help ./install
-
-### `./selenium_tests_exist`
-
-Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
-
-    ./selenium_tests_exist
-    ./selenium_tests_exist extensions/Echo
-
-### `./save`
-
-Save the current state of `src/` (MediaWiki installation) for fast restore later. Uses Docker-as-root to copy files (works on both macOS and Linux).
-
-    ./save
-    VERBOSE=1 ./save
-
-### `./restore`
-
-Restore `src/` from a previously saved state (created by `./save`). Much faster than running `./fresh_install` again.
-
-    ./restore
-    VERBOSE=1 ./restore
 
 ### `./remove`
 
@@ -302,6 +250,58 @@ Remove everything created by quibble-local, including bare git repos in `ref/` a
 
     ./remove_deep
     VERBOSE=1 ./remove_deep
+
+### `./fetch`
+
+Fetch the latest changes for bare git repos in `ref/` from Gerrit. With no arguments, fetches all repos. With arguments, fetches only the specified repos.
+
+    ./fetch
+    ./fetch ref/mediawiki/core.git
+    ./fetch ref/mediawiki/extensions/Echo.git ref/mediawiki/skins/Vector.git
+    PARALLEL=4 ./fetch
+    VERBOSE=1 ./fetch
+
+### `./gated`
+
+Output the list of gated repositories (extensions and skins) from `parameter_functions.py`. Clones `integration/config` into `src/config` if needed. Assumes `./prepare` has been run first.
+
+    ./gated
+
+### `./selenium_tests_exist`
+
+Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
+
+    ./selenium_tests_exist
+    ./selenium_tests_exist extensions/Echo
+
+### `./suggested_parallel`
+
+Suggest the number of parallel workers for `./dependencies_minimal` based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number.
+
+    ./suggested_parallel
+    PARALLEL=$(./suggested_parallel) ./dependencies_minimal extensions/Echo
+
+### `./save`
+
+Save the current state of `src/` (MediaWiki installation) for fast restore later. Uses Docker-as-root to copy files (works on both macOS and Linux).
+
+    ./save
+    VERBOSE=1 ./save
+
+### `./restore`
+
+Restore `src/` from a previously saved state (created by `./save`). Much faster than running `./fresh_install` again.
+
+    ./restore
+    VERBOSE=1 ./restore
+
+### `./help`
+
+List all scripts with their description and usage.
+
+    ./help
+    ./help install
+    ./help ./install
 
 ### `./ci`
 
