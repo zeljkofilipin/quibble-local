@@ -3,12 +3,12 @@
 # Remove all src directories across all environments.
 # This removes src/, src_save/, src_N/, src_save_N/, and src_worker_N/.
 # Keeps ref/ (bare repos), cache/, log/, and the Docker image.
-# Use ./clean to remove only the current environment's src/.
-# Use ./clean_deep to remove everything quibble-local created.
+# Use ./remove to remove only the current environment's src/.
+# Use ./remove_deep to remove everything quibble-local created.
 # WARNING: This will delete all MediaWiki source code in all environments.
 #
-# Usage: ./clean_src
-#        VERBOSE=1 ./clean_src
+# Usage: ./remove_src
+#        VERBOSE=1 ./remove_src
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)

@@ -40,13 +40,13 @@ Run multiple independent sessions on the same machine simultaneously. Each envir
     ENVIRONMENT=0 ./fresh_install
     ENVIRONMENT=0 ./install extensions/Echo
     ENVIRONMENT=0 ./run_selenium_tests extensions/Echo
-    ENVIRONMENT=0 ./clean
+    ENVIRONMENT=0 ./remove
 
     # Terminal 2 (at the same time): run minimal_dependencies for MinervaNeue
     ENVIRONMENT=1 ./minimal_dependencies skins/MinervaNeue
-    ENVIRONMENT=1 ./clean
+    ENVIRONMENT=1 ./remove
 
-Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directories are shared (safe for concurrent use). Use `./clean_src` to remove all environments at once.
+Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directories are shared (safe for concurrent use). Use `./remove_src` to remove all environments at once.
 
 ### `FAST`
 
@@ -59,7 +59,7 @@ Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directorie
 
 ### `./fresh_install`
 
-Set up MediaWiki (without running tests). Runs `./prepare` first if needed, then `./clean` to ensure a fresh `src/`. Run `./shellto` afterwards to open a shell with MediaWiki running.
+Set up MediaWiki (without running tests). Runs `./prepare` first if needed, then `./remove` to ensure a fresh `src/`. Run `./shellto` afterwards to open a shell with MediaWiki running.
 
     ./fresh_install
     VERBOSE=1 ./fresh_install
@@ -275,26 +275,26 @@ Restore `src/` from a previously saved state (created by `./save`). Much faster 
     ./restore
     VERBOSE=1 ./restore
 
-### `./clean`
+### `./remove`
 
 Remove `src/` (MediaWiki source code). Cache, logs, bare git repos, and the Docker image are kept.
 
-    ./clean
-    VERBOSE=1 ./clean
+    ./remove
+    VERBOSE=1 ./remove
 
-### `./clean_src`
+### `./remove_src`
 
 Remove all `src/` directories across all environments (`src/`, `src_save/`, `src_N/`, `src_save_N/`, `src_worker_N/`). Keeps `ref/`, `cache/`, `log/`, and the Docker image.
 
-    ./clean_src
-    VERBOSE=1 ./clean_src
+    ./remove_src
+    VERBOSE=1 ./remove_src
 
-### `./clean_deep`
+### `./remove_deep`
 
 Remove everything created by quibble-local, including bare git repos in `ref/` and the Docker image.
 
-    ./clean_deep
-    VERBOSE=1 ./clean_deep
+    ./remove_deep
+    VERBOSE=1 ./remove_deep
 
 ### `./ci`
 
@@ -308,11 +308,11 @@ Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo. 
 
     ./lint
 
-### `./clean_deep_test`
+### `./remove_deep_test`
 
-Run `./clean_deep` first, then `./integration_test`. Slower but starts from a completely clean state.
+Run `./remove_deep` first, then `./integration_test`. Slower but starts from a completely clean state.
 
-    ./clean_deep_test
+    ./remove_deep_test
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending (via `./integration_test`).
 
@@ -404,7 +404,7 @@ Provides `record_passed` function that records a component as passed (if not alr
 
 Generic wave-based parallel worker orchestration. Processes an array of items in waves of `$parallel` workers, each in an isolated `src_worker_N/` directory. The caller defines `_run_worker` and `_collect_result` functions to customize worker behavior and result handling. Sourced by `run_all` and `run_required` in parallel mode.
 
-### `lib/clean_worker_dirs`
+### `lib/remove_worker_dirs`
 
 Cleans up `src_worker_*` directories created by parallel execution. Tries `rm -rf` first (works on macOS). Falls back to Docker-as-root for container-owned files (Linux). Sourced by `lib/run_waves` and `lib/parallel` after parallel runs complete.
 

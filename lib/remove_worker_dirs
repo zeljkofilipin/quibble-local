@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-# Clean up src_worker_* directories created by parallel execution.
+# Remove src_worker_* directories created by parallel execution.
 # These are ephemeral directories used for isolated parallel workers.
 # Tries rm -rf first (works on macOS where Docker files are host-owned).
 # Falls back to Docker-as-root for container-owned files (Linux).

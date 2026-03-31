@@ -80,4 +80,4 @@ done
 
 # Clean up temp dir and worker directories
 rm -rf "$_result_dir"
-. "$(dirname "$0")"/lib/clean_worker_dirs # remove src_worker_* directories
+. "$(dirname "$0")"/lib/remove_worker_dirs # remove src_worker_* directories

@@ -114,7 +114,7 @@ while [ "$wave_start" -lt "$total" ]; do
       winning_optional="${combos[$combo_idx]}" # optional deps of the winning combo
       printf "\n  Combination %d/%d passed!\n" "$((combo_idx + 1))" "$total"
       rm -rf "$result_dir" # clean up temp dir
-      . "$(dirname "$0")"/lib/clean_worker_dirs # remove src_worker_* directories
+      . "$(dirname "$0")"/lib/remove_worker_dirs # remove src_worker_* directories
       optional_combo="$winning_optional" # set for lib/print_found
       . "$(dirname "$0")"/lib/print_found # print the winning combination
       exit 0
@@ -128,4 +128,4 @@ done
 
 # Clean up temp dir and worker directories
 rm -rf "$result_dir"
-. "$(dirname "$0")"/lib/clean_worker_dirs # remove src_worker_* directories
+. "$(dirname "$0")"/lib/remove_worker_dirs # remove src_worker_* directories

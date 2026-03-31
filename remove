@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #
 # Remove src/ (MediaWiki source code).
-# Use ./clean_deep to remove everything quibble-local created.
+# Use ./remove_deep to remove everything quibble-local created.
 # WARNING: This will delete all MediaWiki source code in src/.
 #
-# Usage: ./clean
-#        ENVIRONMENT=0 ./clean
-#        VERBOSE=1 ./clean
+# Usage: ./remove
+#        ENVIRONMENT=0 ./remove
+#        VERBOSE=1 ./remove
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
