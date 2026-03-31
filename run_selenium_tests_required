@@ -6,12 +6,12 @@
 # WARNING: Without arguments, this will take a very long time to run (50+ components).
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
-# Usage: ./run_required
-#        ./run_required extensions/Echo
-#        VERBOSE=1 ./run_required
-#        FAST=1 ./run_required
-#        PARALLEL=$(./suggested_parallel) ./run_required
-#        PARALLEL=4 FAST=1 ./run_required
+# Usage: ./run_selenium_tests_required
+#        ./run_selenium_tests_required extensions/Echo
+#        VERBOSE=1 ./run_selenium_tests_required
+#        FAST=1 ./run_selenium_tests_required
+#        PARALLEL=$(./suggested_parallel) ./run_selenium_tests_required
+#        PARALLEL=4 FAST=1 ./run_selenium_tests_required
 # FAST=1: Runs fresh_install once, saves state, then restores instead of re-running fresh_install.
 # PARALLEL=N: Run N components in parallel (each in isolated src_worker_$i/ directory).
 #             Use ./suggested_parallel to determine N for your machine.

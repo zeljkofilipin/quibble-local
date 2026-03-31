@@ -99,15 +99,15 @@ run_test env FAST=1 ./dependencies_minimal extensions/Echo  # test fast mode (sa
 run_test env GREEDY=1 FAST=1 ./dependencies_minimal extensions/Echo  # test greedy + fast mode combined
 run_test env PARALLEL=2 ./dependencies_minimal extensions/Echo  # test parallel mode (2 workers, exhaustive)
 run_test env PARALLEL=2 FAST=1 ./dependencies_minimal extensions/Echo  # test parallel + fast mode combined
-run_test ./run_all extensions/Echo     # test run_all with a single extension
-run_test env FAST=1 ./run_all extensions/Echo  # test run_all with fast mode
-run_test env PARALLEL=2 ./run_all extensions/Echo  # test run_all with parallel mode
-run_test env PARALLEL=2 FAST=1 ./run_all extensions/Echo  # test run_all with parallel + fast mode
-run_test ./run_required extensions/Echo  # test run_required with a single extension
-run_test env FAST=1 ./run_required extensions/Echo  # test run_required with fast mode
-run_test env PARALLEL=2 ./run_required extensions/Echo  # test run_required with parallel mode
-run_test env PARALLEL=2 FAST=1 ./run_required extensions/Echo  # test run_required with parallel + fast mode
-run_test ./run_gated                   # test run_gated (installs all gated, runs all selenium tests; also tests install_all_gated)
+run_test ./run_selenium_tests_all extensions/Echo     # test run_selenium_tests_all with a single extension
+run_test env FAST=1 ./run_selenium_tests_all extensions/Echo  # test run_selenium_tests_all with fast mode
+run_test env PARALLEL=2 ./run_selenium_tests_all extensions/Echo  # test run_selenium_tests_all with parallel mode
+run_test env PARALLEL=2 FAST=1 ./run_selenium_tests_all extensions/Echo  # test run_selenium_tests_all with parallel + fast mode
+run_test ./run_selenium_tests_required extensions/Echo  # test run_selenium_tests_required with a single extension
+run_test env FAST=1 ./run_selenium_tests_required extensions/Echo  # test run_selenium_tests_required with fast mode
+run_test env PARALLEL=2 ./run_selenium_tests_required extensions/Echo  # test run_selenium_tests_required with parallel mode
+run_test env PARALLEL=2 FAST=1 ./run_selenium_tests_required extensions/Echo  # test run_selenium_tests_required with parallel + fast mode
+run_test ./run_selenium_tests_gated                   # test run_selenium_tests_gated (installs all gated, runs all selenium tests; also tests install_all_gated)
 run_test ./remove                       # test cleaning up src/
 
 # Print pass/fail summary and exit with error if any script failed

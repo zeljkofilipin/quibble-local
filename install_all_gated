@@ -2,7 +2,7 @@
 #
 # Install all gated extensions and skins into a single MediaWiki.
 # Runs fresh_install for core, then installs each gated component on top.
-# Unlike run_all (which does fresh_install per component), this stacks everything together.
+# Unlike run_selenium_tests_all (which does fresh_install per component), this stacks everything together.
 # Run ./shellto afterwards to open a shell with MediaWiki running.
 # WARNING: This will take a long time to run (50+ components).
 #

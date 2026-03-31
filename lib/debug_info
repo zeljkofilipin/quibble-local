@@ -18,7 +18,7 @@ if [ -t 1 ]; then
   if [ -z "${VERBOSE:-}" ]; then # only show hint when VERBOSE is not set
     echo "use VERBOSE=1 for full output"
     # Show log location if the caller set _QUIBBLE_LOG (only scripts with silent mode set this)
-    if [ -n "${_QUIBBLE_LOG:-}" ]; then # _QUIBBLE_LOG is set by lib/setup or test/run_all
+    if [ -n "${_QUIBBLE_LOG:-}" ]; then # _QUIBBLE_LOG is set by lib/setup
       echo "logs: $_QUIBBLE_LOG"
     fi
     echo                                   # blank line after hint

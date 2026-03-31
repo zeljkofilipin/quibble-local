@@ -1,7 +1,7 @@
 # shellcheck shell=bash
 # Prints pass/fail summary and exits with error if any failures.
 # Expects $passed and $failed variables to be set by the caller.
-# Sourced by scripts that track test/step results (run_all, run_required, test_integration).
+# Sourced by scripts that track test/step results (run_selenium_tests_all, run_selenium_tests_required, test_integration).
 print_results() {
   # print results section header
   printf "\n========================================\n"
