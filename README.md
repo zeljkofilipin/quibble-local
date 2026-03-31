@@ -130,12 +130,12 @@ Run all scripts and report which ones passed or failed. Useful for detecting reg
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
 
-### `./unit_test`
+### `./test_unit`
 
 Run Bats unit tests. Fast, no Docker needed. Requires Bats in addition to the base prerequisites.
 
-    ./unit_test
-    ./unit_test test/lib_awk.bats  # run a single test file
+    ./test_unit
+    ./test_unit test/lib_awk.bats  # run a single test file
 
 ## Commands (unique to quibble-local)
 

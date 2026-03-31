@@ -12,17 +12,17 @@ Bash, Git, and Docker. Optional: [ShellCheck](https://www.shellcheck.net/) (for 
 
 ## CI
 
-GitLab CI must pass for every commit. The pipeline runs ShellCheck (lint) and security scans. Test CI locally before pushing:
+GitLab CI must pass for every commit. The pipeline runs ShellCheck (lint), Bats (unit tests), and security scans. Test CI locally before pushing:
 
-- **Local lint (requires ShellCheck installed):** `./lint`
-- **Local lint (Docker, same image as CI):** `./ci`
+- **Local:** `./lint` (ShellCheck) and `./test_unit` (Bats) — fast, requires local installs
+- **Docker (same images as CI):** `./ci` — authoritative check, run after every change
 
 ## Lint and test
 
-- **Lint:** `./lint` — runs ShellCheck on all scripts (CI also runs this). Run after every change.
-- **CI:** `./ci` — runs ShellCheck in Docker (same image as GitLab CI). Run after every change.
+- **Lint:** `./lint` — runs ShellCheck on all scripts locally (requires ShellCheck installed)
+- **Unit test:** `./test_unit` — runs Bats unit tests locally (fast, no Docker needed, requires Bats installed)
+- **CI:** `./ci` — runs ShellCheck and Bats in Docker (same images as GitLab CI). Run after every change. This is the authoritative check — if `./ci` passes, GitLab CI will pass.
 - **Integration test:** `./integration_test` — runs all scripts end-to-end (slow; requires Docker, clones repos from Gerrit)
-- **Unit test:** `./unit_test` — runs Bats unit tests (fast, no Docker needed)
 
 There is no build step. `./integration_test` is an integration test that exercises every script. Unit tests use [Bats](https://github.com/bats-core/bats-core) (Bash Automated Testing System). All scripts should have Bats tests where possible. Bats tests go in the `test/` directory. Write code in a way that maximizes testability with Bats — extract logic into small scripts or `lib/` functions that can be tested without Docker or network access. Every new feature (script, environment variable, flag, etc.) should have both a unit test and an integration test, if possible.
 
@@ -35,7 +35,7 @@ There is no build step. `./integration_test` is an integration test that exercis
 - When refactoring, make small incremental changes so each step can be a separate git commit. Do not batch multiple independent changes together — complete one change fully (including lint and tests), then stop and let the user commit before starting the next change.
 - Do not embed awk (or sed, python, perl, etc.) code inline as strings in bash scripts. Extract them into separate files in `lib/` (e.g. `lib/parse_requires.awk`) and call them with `awk -f`. Inline tool code gets no syntax highlighting and cannot be linted.
 - One executable file per command, no `.sh` extensions
-- Most scripts source `lib/debug_info` which outputs debug information (OS, bash, git, docker versions) and a hint on how to enable verbose mode. Exception: data scripts (`dependencies`, `dependencies_combinations`, `gated`, `dependencies_optional`, `dependencies_required`, `selenium_tests_exist`) skip `lib/debug_info` because their stdout is consumed by other scripts and debug output would corrupt the data. Scripts that run Docker commands also source `lib/setup` (which checks Docker prerequisites, sets up Docker config, and in verbose mode enables `set -x` with a custom `PS4`). Exception: utility scripts (`ci`, `help`, `lint`, `unit_test`, `integration_test`, `remove_deep_test`, `dependencies`, `dependencies_combinations`, `gated`, `dependencies_minimal`, `dependencies_optional`, `dependencies_required`, `run_all`, `run_required`, `selenium_tests_exist`, `suggested_parallel`) skip `lib/setup` because trace output would bury their actual output in noise.
+- Most scripts source `lib/debug_info` which outputs debug information (OS, bash, git, docker versions) and a hint on how to enable verbose mode. Exception: data scripts (`dependencies`, `dependencies_combinations`, `gated`, `dependencies_optional`, `dependencies_required`, `selenium_tests_exist`) skip `lib/debug_info` because their stdout is consumed by other scripts and debug output would corrupt the data. Scripts that run Docker commands also source `lib/setup` (which checks Docker prerequisites, sets up Docker config, and in verbose mode enables `set -x` with a custom `PS4`). Exception: utility scripts (`ci`, `help`, `lint`, `test_unit`, `integration_test`, `remove_deep_test`, `dependencies`, `dependencies_combinations`, `gated`, `dependencies_minimal`, `dependencies_optional`, `dependencies_required`, `run_all`, `run_required`, `selenium_tests_exist`, `suggested_parallel`) skip `lib/setup` because trace output would bury their actual output in noise.
 - Batch scripts (`integration_test`, `run_all`, `run_required`, `dependencies_minimal`) source `lib/batch_setup` for shared verbose/silent mode setup, log directory creation, and result tracking variables.
 - All scripts have silent and verbose modes. Silent mode is the default. In silent mode, scripts output debug information (OS, bash, git, docker versions) and a "use VERBOSE=1 for full output" hint, then every line of output produces a dot on the terminal for progress feedback, and full output is saved to a log file (e.g. `log/fresh_install.log`). Use `VERBOSE=1` for full output including trace output (`set -x`) and debug info (e.g. `VERBOSE=1 ./fresh_install`). `shellto` is an exception: it is interactive and always shows output. Verbose mode is controlled by the `VERBOSE` environment variable (matching mediawiki-quickstart's convention).
 - `lib/debug_info` checks basic prerequisites (git) and outputs debug information only when stdout is a terminal (`[ -t 1 ]`). This prevents debug output from corrupting data when a script's stdout is piped or captured (e.g. `./dependencies` called from `./install` via process substitution). `lib/setup` additionally checks Docker-specific prerequisites (docker installed, docker running)

@@ -3,8 +3,8 @@
 # Run Bats unit tests.
 # Requires Bats (https://github.com/bats-core/bats-core) in addition to the base prerequisites.
 #
-# Usage: ./unit_test
-#        ./unit_test test/lib_awk.bats
+# Usage: ./test_unit
+#        ./test_unit test/lib_awk.bats
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/debug_info # print debug info, check prerequisites, show verbose hint
