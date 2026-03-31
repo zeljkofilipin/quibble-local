@@ -82,6 +82,13 @@ Environment variables:
 
 See: [Install MediaWiki Core and an Extension](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension)
 
+### `./install_all_gated`
+
+Install all gated extensions and skins into a single MediaWiki. Runs `./fresh_install` for core, then installs each gated component on top. Run `./shellto` afterwards to open a shell with MediaWiki running.
+
+    ./install_all_gated
+    VERBOSE=1 ./install_all_gated
+
 ### `./run_selenium_tests`
 
 Run Selenium tests. Assumes `./fresh_install` (or `./install`) has been run first.

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#
+# Install all gated extensions and skins into a single MediaWiki.
+# Runs fresh_install for core, then installs each gated component on top.
+# Unlike run_all (which does fresh_install per component), this stacks everything together.
+# Run ./shellto afterwards to open a shell with MediaWiki running.
+# WARNING: This will take a long time to run (50+ components).
+#
+# Usage: ./install_all_gated
+#        VERBOSE=1 ./install_all_gated
+#
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib/debug_info # print debug info, check prerequisites, show verbose hint
+
+# --- Core ---
+"$(dirname "$0")"/fresh_install
+
+# --- Install all gated repositories ---
+# IFS= preserves whitespace in component names; -r prevents backslash interpretation.
+# <&3 reads from file descriptor 3 instead of stdin, because docker's -it flag needs stdin.
+# 3< <(...) is process substitution: runs ./gated and connects its output to fd 3.
+while IFS= read -r component <&3; do
+  "$(dirname "$0")"/install "$component"
+done 3< <("$(dirname "$0")"/gated)

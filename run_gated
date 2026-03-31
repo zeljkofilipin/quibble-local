@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 #
 # Install all gated extensions and skins into a single MediaWiki, then run all Selenium tests.
-# Unlike run_all (which does fresh_install per component), this installs everything together.
-# For each gated component: install it (stacking on the same src/). Then for each component
-# that has Selenium tests: run them.
+# Uses ./install_all_gated for installation, then runs Selenium tests for each component.
 # WARNING: This will take a long time to run (50+ components).
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
@@ -15,27 +13,20 @@
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
 
-# --- Core ---
-print_header "core"
-if ! run_step core ./fresh_install; then # install core; abort if this fails
+# --- Install core and all gated repositories ---
+print_header "install_all_gated"
+if ! run_step install ./install_all_gated; then # install core + all gated; abort if this fails
   printf " %s\n" "$(utc_timestamp)"
   print_results
   exit 1
 fi
-printf " %s\n" "$(utc_timestamp)" # print UTC timestamp after core
+printf " %s\n" "$(utc_timestamp)" # print UTC timestamp after install
 
-# --- Install all gated repositories ---
-components=() # array of successfully installed components
-# IFS= preserves whitespace in component names; -r prevents backslash interpretation.
-# <&3 reads from file descriptor 3 instead of stdin, because docker's -it flag needs stdin.
-# 3< <(...) is process substitution: runs ./gated and connects its output to fd 3.
-while IFS= read -r component <&3; do
-  print_header "Install $component"
-  if run_step "$component" ./install "$component"; then
-    components+=("$component") # track successfully installed components
-  fi
-  printf " %s\n" "$(utc_timestamp)" # print UTC timestamp after component
-done 3< <("$(dirname "$0")"/gated)
+# --- Build list of gated components for test phase ---
+components=() # array of gated components
+while IFS= read -r component; do
+  components+=("$component")
+done < <("$(dirname "$0")"/gated)
 
 # --- Run Selenium tests for all installed components ---
 # Core first
