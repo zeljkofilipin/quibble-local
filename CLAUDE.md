@@ -47,6 +47,7 @@ There is no build step. `./integration_test` is an integration test that exercis
 - Do not explicitly list all scripts in code. Use auto-discovery (checking first line for shebang/shellcheck directive) instead, so new scripts are picked up automatically.
 - Internal scripts (sourced helpers in `lib/` like `lib/setup`, `lib/inhibit_sleep`) must be documented in a separate section in `README.md` to make it clear they are not intended to be run directly
 - Every new argument to a script must have a corresponding test in `integration_test`
+- Scripts that are destructive across environments (e.g. `clean_src`, `clean_deep`) must NOT be in `integration_test`, so it can run safely while other environments are active
 - Docker container runs as a different user, so `chmod 777` is used on shared directories
 - `clean` and `clean_deep` use Docker (as root) to remove container-owned files before `rm -rf`
 - The `--entrypoint=quibble-with-supervisord` flag is used on all `docker run` commands that run Quibble (cleanup commands in `clean`, `clean_deep`, and `fresh_install` use `--entrypoint bash` instead)
