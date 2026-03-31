@@ -280,6 +280,13 @@ Remove `src/` (MediaWiki source code). Cache, logs, bare git repos, and the Dock
     ./clean
     VERBOSE=1 ./clean
 
+### `./clean_src`
+
+Remove all `src/` directories across all environments (`src/`, `src_save/`, `src_N/`, `src_save_N/`, `src_worker_N/`). Keeps `ref/`, `cache/`, `log/`, and the Docker image.
+
+    ./clean_src
+    VERBOSE=1 ./clean_src
+
 ### `./clean_deep`
 
 Remove everything created by quibble-local, including bare git repos in `ref/` and the Docker image.
