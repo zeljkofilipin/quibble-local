@@ -48,6 +48,7 @@ There is no build step. `./integration_test` is an integration test that exercis
 - Internal scripts (sourced helpers in `lib/` like `lib/setup`, `lib/inhibit_sleep`) must be documented in a separate section in `README.md` to make it clear they are not intended to be run directly
 - Every new argument to a script must have a corresponding test in `integration_test`
 - Scripts that are destructive across environments (e.g. `remove_src`, `remove_deep`) must NOT be in `integration_test`, so it can run safely while other environments are active
+- Long-running scripts that can be scoped to a single component should be tested with one component (e.g. `./run_all extensions/Echo`). Scripts that cannot be scoped and are already tested implicitly by another integration test entry do not need their own entry (e.g. `install_all_gated` is tested by `run_gated`)
 - Docker container runs as a different user, so `chmod 777` is used on shared directories
 - `remove` and `remove_deep` use Docker (as root) to remove container-owned files before `rm -rf`
 - The `--entrypoint=quibble-with-supervisord` flag is used on all `docker run` commands that run Quibble (cleanup commands in `remove`, `remove_deep`, and `fresh_install` use `--entrypoint bash` instead)
