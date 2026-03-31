@@ -315,11 +315,11 @@ Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo. 
 
     ./lint
 
-### `./remove_deep_test`
+### `./test_remove_deep`
 
 Run `./remove_deep` first, then `./test_integration`. Slower but starts from a completely clean state.
 
-    ./remove_deep_test
+    ./test_remove_deep
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending (via `./test_integration`).
 
