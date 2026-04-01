@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-# Shared setup for dependencies_minimal and dependencies_minimal_thorough.
+# Shared setup for dependencies_minimal, dependencies_minimal_bottom_up, and dependencies_minimal_thorough.
 # Reads dependencies, classifies them into required/optional, pre-clones bare repos.
 # Must be sourced, not run directly.
 # Expects:

@@ -50,7 +50,7 @@ Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directorie
 
 ### `FAST`
 
-`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `run_selenium_tests_all` and `run_selenium_tests_required`. (`dependencies_minimal` always uses save/restore automatically.)
+`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `run_selenium_tests_all` and `run_selenium_tests_required`. (`dependencies_minimal`, `dependencies_minimal_bottom_up`, and `dependencies_minimal_thorough` always use save/restore automatically.)
 
     FAST=1 ./run_selenium_tests_all
 
@@ -212,20 +212,43 @@ Output all possible combinations of dependencies for an extension or skin. One c
 
 ### `./dependencies_minimal`
 
-Find the minimum dependencies needed for a repository's Selenium tests to pass. Uses a greedy algorithm: starts with all optional deps, removes one at a time. O(N) instead of O(2^N). Repeats until stable to catch order-dependent removals.
+Find the minimum dependencies using a greedy algorithm: starts with all optional deps, removes one at a time. O(N). Repeats until stable to catch order-dependent removals. Good general-purpose choice.
 
     ./dependencies_minimal extensions/Echo
     VERBOSE=1 ./dependencies_minimal extensions/Echo
+
+- **Fast for extensions/GrowthExperiments** (17 deps, ~8 needed): ~17 tests regardless of how many are needed.
+- **Slower for extensions/Echo** (4 deps, 0 needed): tests all 4 before concluding none are needed, while `dependencies_minimal_bottom_up` finds the answer in 1 test.
+
+**Warning:** This script inhibits sleep to prevent the machine from suspending.
+
+### `./dependencies_minimal_bottom_up`
+
+Find the minimum dependencies by testing combinations from smallest (0 deps) to largest. Stops at the first passing combination — guaranteed smallest.
+
+    ./dependencies_minimal_bottom_up extensions/Echo
+    VERBOSE=1 ./dependencies_minimal_bottom_up extensions/Echo
+    PARALLEL=$(./suggested_parallel) ./dependencies_minimal_bottom_up extensions/Echo
+
+- **Fast for extensions/Echo** (4 deps, 0 needed): tests empty set first, passes in 1 test.
+- **Extremely slow for extensions/GrowthExperiments** (17 deps, ~8 needed): tests up to 2^17 = 131,072 combinations (~10 min each).
+
+Environment variables:
+
+- `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
 
 ### `./dependencies_minimal_thorough`
 
-Find and verify the minimum dependencies. Phase 1: greedy algorithm for a fast estimate. Phase 2: exhaustive verification of all smaller combinations to confirm the minimum. Much faster than testing all 2^N combinations — only tests combinations smaller than the greedy result.
+Find and verify the minimum dependencies. Phase 1: greedy for a fast estimate. Phase 2: exhaustive verification of all smaller combinations. Confirms the result is truly minimal.
 
     ./dependencies_minimal_thorough extensions/Echo
     VERBOSE=1 ./dependencies_minimal_thorough extensions/Echo
     PARALLEL=$(./suggested_parallel) ./dependencies_minimal_thorough extensions/Echo
+
+- **Fast for extensions/Echo** (4 deps, 0 needed): greedy finds 0 in ~4 tests, verification confirms immediately.
+- **Moderate for extensions/GrowthExperiments** (17 deps, ~8 needed): greedy finds ~8 in ~17 tests, then verifies by testing combinations of size 0–7 only (not all 131,072).
 
 Environment variables:
 
@@ -279,7 +302,7 @@ Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
 
 ### `./suggested_parallel`
 
-Suggest the number of parallel workers based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number. Used by `dependencies_minimal_thorough`, `run_selenium_tests_all`, and `run_selenium_tests_required`.
+Suggest the number of parallel workers based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number. Used by `dependencies_minimal_bottom_up`, `dependencies_minimal_thorough`, `run_selenium_tests_all`, and `run_selenium_tests_required`.
 
     ./suggested_parallel
     PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all
@@ -332,11 +355,11 @@ These are sourced by other scripts and are not intended to be run directly.
 
 ### `lib/batch_setup`
 
-Shared setup for batch scripts (`test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, `dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
+Shared setup for batch scripts (`test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
 
 ### `lib/heartbeat`
 
-Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, and `dependencies_minimal_thorough` for silent mode progress feedback. Provides `run_with_dots` function.
+Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, and `dependencies_minimal_thorough` for silent mode progress feedback. Provides `run_with_dots` function.
 
 ### `lib/debug_info`
 
@@ -392,7 +415,7 @@ Sourced by scripts that need zuul config (`dependencies`, `gated`, `install`). E
 
 ### `lib/inhibit_sleep`
 
-Sourced by long-running scripts (`dependencies_minimal`, `dependencies_minimal_thorough`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `test_integration`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+Sourced by long-running scripts (`dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_thorough`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `test_integration`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
 ### `lib/print_results`
 
@@ -432,7 +455,7 @@ Awk script that generates all bitmask combinations of dependencies, ordered by s
 
 ### `lib/combinations_with_empty.awk`
 
-Awk script that generates all bitmask combinations including the empty set, ordered by size (starting from 0). Used by `dependencies_minimal_thorough`.
+Awk script that generates all bitmask combinations including the empty set, ordered by size (starting from 0). Used by `dependencies_minimal_bottom_up` and `dependencies_minimal_thorough`.
 
 ### `lib/parse_yaml_list.awk`
 
@@ -444,7 +467,7 @@ Awk script that extracts entries from a Python list assignment in `parameter_fun
 
 ### `lib/minimal_setup`
 
-Shared setup for `dependencies_minimal` and `dependencies_minimal_thorough`. Reads dependencies, classifies them into required/optional, pre-clones bare repos. Sets up `fresh_or_restore` function and all shared variables.
+Shared setup for `dependencies_minimal`, `dependencies_minimal_bottom_up`, and `dependencies_minimal_thorough`. Reads dependencies, classifies them into required/optional, pre-clones bare repos. Sets up `fresh_or_restore` function and all shared variables.
 
 ### `lib/print_dep_summary`
 
@@ -464,11 +487,11 @@ Greedy algorithm for `dependencies_minimal`: starts with all optional deps, remo
 
 ### `lib/parallel`
 
-Parallel exhaustive search: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory. Sourced by `dependencies_minimal_thorough` when `PARALLEL > 1`.
+Parallel exhaustive search: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory. Sourced by `dependencies_minimal_bottom_up` and `dependencies_minimal_thorough` when `PARALLEL > 1`.
 
 ### `lib/print_found`
 
-Prints the "minimum dependencies found" results (header, required deps, optional deps). Sourced by `dependencies_minimal` and `dependencies_minimal_thorough`.
+Prints the "minimum dependencies found" results (header, required deps, optional deps). Sourced by `dependencies_minimal`, `dependencies_minimal_bottom_up`, and `dependencies_minimal_thorough`.
 
 ## Further reading
 
