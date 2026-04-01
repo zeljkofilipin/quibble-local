@@ -15,6 +15,7 @@
 #
 # PARALLEL=N: Run N combinations in parallel (each in isolated src_worker_$i/ directory).
 #             Use ./suggested_parallel to determine N for your machine.
+#             Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 #
 # WARNING: Tests up to 2^N combinations (N = number of optional dependencies). Each
 #          combination runs fresh_install + install + run_selenium_tests (~10 min).

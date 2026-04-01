@@ -3,6 +3,12 @@
 # Find the minimum dependencies needed for a repository's Selenium tests to pass.
 # Uses a greedy algorithm: starts with all optional deps, removes one at a time.
 # O(N) instead of O(2^N). Repeats until stable to catch order-dependent removals.
+# Good general-purpose choice.
+#
+# Fast for extensions/GrowthExperiments (17 deps, ~8 needed): ~17 tests regardless of
+# how many are needed. Slower for extensions/Echo (4 deps, 0 needed): tests all 4 before
+# concluding none are needed, while ./dependencies_minimal_bottom_up finds the answer in
+# 1 test.
 #
 # Usage: ./dependencies_minimal extensions/Echo
 #        VERBOSE=1 ./dependencies_minimal extensions/Echo

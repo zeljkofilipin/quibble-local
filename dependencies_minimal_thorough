@@ -6,12 +6,18 @@
 # Much faster than testing all 2^N combinations — only tests combinations smaller than
 # the greedy result.
 #
+# Fast for extensions/Echo (4 deps, 0 needed): greedy finds 0 in ~4 tests, verification
+# confirms immediately. Moderate for extensions/GrowthExperiments (17 deps, ~8 needed):
+# greedy finds ~8 in ~17 tests, then verifies by testing combinations of size 0-7 only
+# (not all 131,072).
+#
 # Usage: ./dependencies_minimal_thorough extensions/Echo
 #        VERBOSE=1 ./dependencies_minimal_thorough extensions/Echo
 #        PARALLEL=$(./suggested_parallel) ./dependencies_minimal_thorough extensions/Echo
 #
 # PARALLEL=N: Run N combinations in parallel (each in isolated src_worker_$i/ directory).
 #             Use ./suggested_parallel to determine N for your machine.
+#             Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 #
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
