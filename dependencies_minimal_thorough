@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+#
+# Find and verify the minimum dependencies needed for a repository's Selenium tests to pass.
+# Phase 1: Greedy algorithm for a fast estimate (O(N)).
+# Phase 2: Exhaustive verification of all smaller combinations to confirm the minimum.
+# Much faster than testing all 2^N combinations — only tests combinations smaller than
+# the greedy result.
+#
+# Usage: ./dependencies_minimal_thorough extensions/Echo
+#        VERBOSE=1 ./dependencies_minimal_thorough extensions/Echo
+#        PARALLEL=$(./suggested_parallel) ./dependencies_minimal_thorough extensions/Echo
+#
+# PARALLEL=N: Run N combinations in parallel (each in isolated src_worker_$i/ directory).
+#             Use ./suggested_parallel to determine N for your machine.
+#
+# WARNING: This script inhibits sleep to prevent the machine from suspending.
+#
+
+# No set -euo pipefail: we want to continue after failures to test the next combination
+
+. "$(dirname "$0")"/lib/minimal_setup "$@" # shared setup: read deps, classify, pre-clone
+
+parallel="${PARALLEL:-1}" # PARALLEL=N runs N combinations in parallel (default 1 = sequential)
+
+# --- Phase 1: Greedy algorithm for fast upper bound ---
+printf "\n=== Phase 1: Greedy estimate ===\n"
+. "$(dirname "$0")"/lib/greedy
+# After lib/greedy, optional_combo contains the greedy result (space-separated optional dep names)
+
+# Save greedy result and count deps in it
+greedy_combo="$optional_combo" # save for later comparison
+greedy_count=0 # number of optional deps in greedy result
+if [ -n "$greedy_combo" ]; then
+  # shellcheck disable=SC2086 # intentional word splitting to count words
+  for _ in $greedy_combo; do
+    greedy_count=$((greedy_count + 1)) # count each word
+  done
+fi
+
+# If greedy found 0 optional deps, that's already the minimum
+if [ "$greedy_count" -eq 0 ]; then
+  printf "\nNo optional dependencies needed (confirmed).\n"
+  exit 0
+fi
+
+# --- Phase 2: Exhaustive verification of smaller combinations ---
+printf "\n=== Phase 2: Verifying greedy result (testing combinations with fewer than %d optional deps) === %s\n" \
+  "$greedy_count" "$(utc_timestamp)"
+
+# Generate only combinations smaller than greedy result (ordered by size).
+# See lib/combinations_with_empty.awk for the bitmask logic.
+combos=() # array of space-separated optional dep combinations to verify
+if [ "$n" -gt 0 ]; then
+  while IFS= read -r combo; do
+    # Count deps in this combination
+    combo_count=0 # number of deps in this combo
+    if [ -n "$combo" ]; then
+      # shellcheck disable=SC2086 # intentional word splitting to count words
+      for _ in $combo; do
+        combo_count=$((combo_count + 1)) # count each word
+      done
+    fi
+    # Only include combinations smaller than greedy result
+    if [ "$combo_count" -lt "$greedy_count" ]; then
+      combos+=("$combo") # += appends to bash arrays
+    fi
+  done < <(printf '%s\n' "${optional[@]}" | awk -f "$(dirname "$0")"/lib/combinations_with_empty.awk)
+fi
+total=${#combos[@]} # total combinations to verify
+
+printf "Testing %d combinations (size 0 to %d)...\n" "$total" "$((greedy_count - 1))"
+
+if [ "$parallel" -le 1 ]; then
+  # --- Sequential verification ---
+  combo_num=0 # combination counter for progress display
+
+  for optional_combo in "${combos[@]}"; do
+    combo_num=$((combo_num + 1))
+
+    # Build full combo: required deps + optional deps for this combination
+    . "$(dirname "$0")"/lib/build_full_combo
+
+    printf "\n=== Combination %d/%d: %s === %s\n" "$combo_num" "$total" "${full_combo:-(none)}" "$(utc_timestamp)"
+
+    # Restore saved state for clean environment
+    if ! fresh_or_restore; then
+      printf "SKIP (restore failed)\n"
+      continue # try next combination
+    fi
+
+    # Install extension with this combination of deps
+    # QUIBBLE_DEPS overrides ./dependencies in ./install (see install script)
+    export QUIBBLE_DEPS="$full_combo"
+    if ! run_step "$component" ./install "$component"; then
+      unset QUIBBLE_DEPS # clean up env var
+      continue # try next combination
+    fi
+    unset QUIBBLE_DEPS # clean up env var (run_selenium_tests doesn't need it)
+
+    # Run Selenium tests
+    if run_step "$component" ./run_selenium_tests "$component"; then
+      printf "\nFound smaller combination than greedy!\n"
+      . "$(dirname "$0")"/lib/print_found # print the winning combination
+      exit 0
+    fi
+  done
+
+else
+  # --- Parallel verification: see lib/parallel for implementation ---
+  . "$(dirname "$0")"/lib/parallel
+  # If lib/parallel found a winner, it already called exit 0.
+  # If we get here, no smaller combination passed.
+fi
+
+# No smaller combination found — greedy result is the minimum
+printf "\nGreedy result confirmed as minimum.\n"
+optional_combo="$greedy_combo" # restore greedy result for print_found
+. "$(dirname "$0")"/lib/print_found
+exit 0

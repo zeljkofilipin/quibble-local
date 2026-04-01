@@ -219,6 +219,20 @@ Find the minimum dependencies needed for a repository's Selenium tests to pass. 
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
 
+### `./dependencies_minimal_thorough`
+
+Find and verify the minimum dependencies. Phase 1: greedy algorithm for a fast estimate. Phase 2: exhaustive verification of all smaller combinations to confirm the minimum. Much faster than testing all 2^N combinations — only tests combinations smaller than the greedy result.
+
+    ./dependencies_minimal_thorough extensions/Echo
+    VERBOSE=1 ./dependencies_minimal_thorough extensions/Echo
+    PARALLEL=$(./suggested_parallel) ./dependencies_minimal_thorough extensions/Echo
+
+Environment variables:
+
+- `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
+
+**Warning:** This script inhibits sleep to prevent the machine from suspending.
+
 ### `./remove`
 
 Remove `src/` (MediaWiki source code). Cache, logs, bare git repos, and the Docker image are kept.
@@ -265,7 +279,7 @@ Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
 
 ### `./suggested_parallel`
 
-Suggest the number of parallel workers based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number. Used by `run_selenium_tests_all` and `run_selenium_tests_required`.
+Suggest the number of parallel workers based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number. Used by `dependencies_minimal_thorough`, `run_selenium_tests_all`, and `run_selenium_tests_required`.
 
     ./suggested_parallel
     PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all
