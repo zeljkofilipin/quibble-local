@@ -129,7 +129,7 @@ Run Bats unit tests. Fast, no Docker needed. Requires Bats in addition to the ba
     ./test_unit
     ./test_unit test/lib_awk.bats  # run a single test file
 
-## Commands (unique to quibble-local)
+## Setup and cleanup
 
 ### `./prepare`
 
@@ -139,6 +139,55 @@ Prepare the local environment for running Quibble. Pulls the Docker image, clone
     VERBOSE=1 ./prepare
 
 See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
+
+### `./save`
+
+Save the current state of `src/` (MediaWiki installation) for fast restore later. Uses Docker-as-root to copy files (works on both macOS and Linux).
+
+    ./save
+    VERBOSE=1 ./save
+
+### `./restore`
+
+Restore `src/` from a previously saved state (created by `./save`). Much faster than running `./fresh_install` again.
+
+    ./restore
+    VERBOSE=1 ./restore
+
+### `./fetch`
+
+Fetch the latest changes for bare git repos in `ref/` from Gerrit. With no arguments, fetches all repos. With arguments, fetches only the specified repos.
+
+    ./fetch
+    ./fetch ref/mediawiki/core.git
+    ./fetch ref/mediawiki/extensions/Echo.git ref/mediawiki/skins/Vector.git
+    PARALLEL=4 ./fetch
+    VERBOSE=1 ./fetch
+
+### `./remove`
+
+Remove `src/` (MediaWiki source code). Cache, logs, bare git repos, and the Docker image are kept.
+
+    ./remove
+    VERBOSE=1 ./remove
+
+### `./remove_src`
+
+Remove all `src/` directories across all environments (`src/`, `src_save/`, `src_N/`, `src_save_N/`, `src_worker_N/`). Keeps `ref/`, `cache/`, `log/`, and the Docker image.
+
+    ./remove_src
+    VERBOSE=1 ./remove_src
+
+### `./remove_deep`
+
+Remove everything created by quibble-local, including bare git repos in `ref/` and the Docker image.
+
+    ./remove_deep
+    VERBOSE=1 ./remove_deep
+
+## Data queries
+
+These scripts output information and don't run Docker containers.
 
 ### `./dependencies`
 
@@ -167,6 +216,30 @@ Output all possible combinations of dependencies for an extension or skin. One c
 
     ./dependencies_combinations extensions/Echo
     ./dependencies_combinations skins/MinervaNeue
+
+### `./gated`
+
+Output the list of gated repositories (extensions and skins) from `parameter_functions.py`. Clones `integration/config` into `src/config` if needed. Assumes `./prepare` has been run first.
+
+    ./gated
+
+### `./selenium_tests_exist`
+
+Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
+
+    ./selenium_tests_exist
+    ./selenium_tests_exist extensions/Echo
+
+### `./suggested_parallel`
+
+Suggest the number of parallel workers based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number. Used by `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated`.
+
+    ./suggested_parallel
+    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all_gated
+
+## Finding minimum dependencies
+
+These scripts find which optional dependencies are actually needed for Selenium tests to pass. They are long-running.
 
 ### `./dependencies_minimal`
 
@@ -284,70 +357,7 @@ See also: `./dependencies_minimal` for single-component usage.
 
 **Warning:** Without arguments, this will take a very long time to run (50+ components). This script inhibits sleep to prevent the machine from suspending.
 
-### `./remove`
-
-Remove `src/` (MediaWiki source code). Cache, logs, bare git repos, and the Docker image are kept.
-
-    ./remove
-    VERBOSE=1 ./remove
-
-### `./remove_src`
-
-Remove all `src/` directories across all environments (`src/`, `src_save/`, `src_N/`, `src_save_N/`, `src_worker_N/`). Keeps `ref/`, `cache/`, `log/`, and the Docker image.
-
-    ./remove_src
-    VERBOSE=1 ./remove_src
-
-### `./remove_deep`
-
-Remove everything created by quibble-local, including bare git repos in `ref/` and the Docker image.
-
-    ./remove_deep
-    VERBOSE=1 ./remove_deep
-
-### `./fetch`
-
-Fetch the latest changes for bare git repos in `ref/` from Gerrit. With no arguments, fetches all repos. With arguments, fetches only the specified repos.
-
-    ./fetch
-    ./fetch ref/mediawiki/core.git
-    ./fetch ref/mediawiki/extensions/Echo.git ref/mediawiki/skins/Vector.git
-    PARALLEL=4 ./fetch
-    VERBOSE=1 ./fetch
-
-### `./gated`
-
-Output the list of gated repositories (extensions and skins) from `parameter_functions.py`. Clones `integration/config` into `src/config` if needed. Assumes `./prepare` has been run first.
-
-    ./gated
-
-### `./selenium_tests_exist`
-
-Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
-
-    ./selenium_tests_exist
-    ./selenium_tests_exist extensions/Echo
-
-### `./suggested_parallel`
-
-Suggest the number of parallel workers based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number. Used by `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated`.
-
-    ./suggested_parallel
-    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all_gated
-
-### `./save`
-
-Save the current state of `src/` (MediaWiki installation) for fast restore later. Uses Docker-as-root to copy files (works on both macOS and Linux).
-
-    ./save
-    VERBOSE=1 ./save
-
-### `./restore`
-
-Restore `src/` from a previously saved state (created by `./save`). Much faster than running `./fresh_install` again.
-
-    ./restore
-    VERBOSE=1 ./restore
+## Development and CI
 
 ### `./help`
 
