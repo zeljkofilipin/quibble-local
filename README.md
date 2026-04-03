@@ -81,13 +81,6 @@ Environment variables:
 
 See: [Install MediaWiki Core and an Extension](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension)
 
-### `./install_all_gated`
-
-Install all gated extensions and skins into a single MediaWiki. Runs `./fresh_install` for core, then installs each gated component on top. Run `./shellto` afterwards to open a shell with MediaWiki running.
-
-    ./install_all_gated
-    VERBOSE=1 ./install_all_gated
-
 ### `./run_selenium_tests`
 
 Run Selenium tests. Assumes `./fresh_install` (or `./install`) has been run first.
@@ -146,48 +139,6 @@ Prepare the local environment for running Quibble. Pulls the Docker image, clone
     VERBOSE=1 ./prepare
 
 See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
-
-### `./prepare_gated`
-
-Clone or fetch bare repos for all gated repositories. Extends `./prepare` by cloning bare repos for all gated extensions and skins. Assumes `./prepare` has been run first (needs `ref/integration/config.git`).
-
-    ./prepare_gated
-    VERBOSE=1 ./prepare_gated
-
-### `./run_selenium_tests_all_gated`
-
-Run Selenium tests for core and all gated repositories. For each component: `./fresh_install`, `./install` (if not core), check if Selenium tests exist, and run them. Silent by default; use `VERBOSE=1` for full output.
-
-    ./run_selenium_tests_all_gated
-    ./run_selenium_tests_all_gated extensions/Echo
-    VERBOSE=1 ./run_selenium_tests_all_gated
-    FAST=1 ./run_selenium_tests_all_gated
-    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all_gated
-    PARALLEL=4 FAST=1 ./run_selenium_tests_all_gated
-
-**Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
-
-### `./run_selenium_tests_gated`
-
-Install all gated extensions and skins into a single MediaWiki, then run all Selenium tests. Unlike `./run_selenium_tests_all_gated` (which does `./fresh_install` per component), this installs everything together into one `src/`.
-
-    ./run_selenium_tests_gated
-    VERBOSE=1 ./run_selenium_tests_gated
-
-**Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a long time to run (50+ components).
-
-### `./run_selenium_tests_required_gated`
-
-Run Selenium tests for all gated repositories using only required dependencies (from `extension.json`/`skin.json`). For each component: `./fresh_install`, `./install` with required deps only, check if Selenium tests exist, and run them. Silent by default; use `VERBOSE=1` for full output.
-
-    ./run_selenium_tests_required_gated
-    ./run_selenium_tests_required_gated extensions/Echo
-    VERBOSE=1 ./run_selenium_tests_required_gated
-    FAST=1 ./run_selenium_tests_required_gated
-    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_required_gated
-    PARALLEL=4 FAST=1 ./run_selenium_tests_required_gated
-
-**Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
 ### `./dependencies`
 
@@ -262,6 +213,59 @@ Environment variables:
 - `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
+
+## Commands (all gated repositories)
+
+These scripts operate on all gated extensions and skins (from `./gated`). They take a long time to run.
+
+### `./prepare_gated`
+
+Clone or fetch bare repos for all gated repositories. Extends `./prepare` by cloning bare repos for all gated extensions and skins. Assumes `./prepare` has been run first (needs `ref/integration/config.git`).
+
+    ./prepare_gated
+    VERBOSE=1 ./prepare_gated
+
+### `./install_all_gated`
+
+Install all gated extensions and skins into a single MediaWiki. Runs `./fresh_install` for core, then installs each gated component on top. Run `./shellto` afterwards to open a shell with MediaWiki running.
+
+    ./install_all_gated
+    VERBOSE=1 ./install_all_gated
+
+### `./run_selenium_tests_all_gated`
+
+Run Selenium tests for core and all gated repositories. For each component: `./fresh_install`, `./install` (if not core), check if Selenium tests exist, and run them. Silent by default; use `VERBOSE=1` for full output.
+
+    ./run_selenium_tests_all_gated
+    ./run_selenium_tests_all_gated extensions/Echo
+    VERBOSE=1 ./run_selenium_tests_all_gated
+    FAST=1 ./run_selenium_tests_all_gated
+    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all_gated
+    PARALLEL=4 FAST=1 ./run_selenium_tests_all_gated
+
+**Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
+
+### `./run_selenium_tests_gated`
+
+Install all gated extensions and skins into a single MediaWiki, then run all Selenium tests. Unlike `./run_selenium_tests_all_gated` (which does `./fresh_install` per component), this installs everything together into one `src/`.
+
+    ./run_selenium_tests_gated
+    VERBOSE=1 ./run_selenium_tests_gated
+
+**Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a long time to run (50+ components).
+
+### `./run_selenium_tests_required_gated`
+
+Run Selenium tests for all gated repositories using only required dependencies (from `extension.json`/`skin.json`). For each component: `./fresh_install`, `./install` with required deps only, check if Selenium tests exist, and run them. Silent by default; use `VERBOSE=1` for full output.
+
+    ./run_selenium_tests_required_gated
+    ./run_selenium_tests_required_gated extensions/Echo
+    VERBOSE=1 ./run_selenium_tests_required_gated
+    FAST=1 ./run_selenium_tests_required_gated
+    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_required_gated
+    PARALLEL=4 FAST=1 ./run_selenium_tests_required_gated
+
+**Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
 ### `./dependencies_minimal_gated`
 
