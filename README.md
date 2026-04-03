@@ -236,6 +236,8 @@ Suggest the number of parallel workers based on available CPU and memory. Each w
 
 On macOS, the result may differ depending on whether Docker is running. When Docker is running, CPU and memory are read from `docker info`, which reports the Docker Desktop VM allocation (often lower than host resources). When Docker is not running, the script falls back to `sysctl`, which reports full system CPU and memory — potentially suggesting more workers than Docker can actually support.
 
+To maximize parallel workers on macOS, increase Docker Desktop memory: Docker Desktop → Settings → Resources → Memory. The formula is: workers = min(CPUs / 2, memory / 2 GB). On a 10-core / 64 GB machine with Docker Desktop defaults (~6 GB), memory is the bottleneck (3 workers instead of 5). Increasing Docker memory to 10+ GB removes the bottleneck.
+
     ./suggested_parallel
     PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all_gated
 
