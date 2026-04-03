@@ -147,6 +147,13 @@ Prepare the local environment for running Quibble. Pulls the Docker image, clone
 
 See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
 
+### `./prepare_gated`
+
+Clone or fetch bare repos for all gated repositories. Extends `./prepare` by cloning bare repos for all gated extensions and skins. Assumes `./prepare` has been run first (needs `ref/integration/config.git`).
+
+    ./prepare_gated
+    VERBOSE=1 ./prepare_gated
+
 ### `./run_selenium_tests_all_gated`
 
 Run Selenium tests for core and all gated repositories. For each component: `./fresh_install`, `./install` (if not core), check if Selenium tests exist, and run them. Silent by default; use `VERBOSE=1` for full output.
@@ -411,7 +418,7 @@ Builds the `components` array from either `$1` (single component) or `./gated` (
 
 ### `lib/clone_or_fetch`
 
-Provides `clone_or_fetch` function that clones or fetches a bare repo from Gerrit into `ref/`. If the repo already exists, fetches updates; otherwise clones it. Accepts optional `--quiet` flag. Sourced by `install`, `selenium_tests_exist`, and `lib/resolve_deps`.
+Provides `clone_or_fetch` function that clones or fetches a bare repo from Gerrit into `ref/`. If the repo already exists, fetches updates; otherwise clones it. Accepts optional `--quiet` flag. Sourced by `install`, `prepare_gated`, `selenium_tests_exist`, and `lib/resolve_deps`.
 
 ### `lib/dep_repo_path`
 

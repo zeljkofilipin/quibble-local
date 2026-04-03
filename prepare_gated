@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#
+# Clone or fetch bare repos for all gated repositories.
+# Extends ./prepare by cloning bare repos for all gated extensions and skins.
+# Assumes ./prepare has been run first (needs ref/integration/config.git).
+#
+# Usage: ./prepare_gated
+#        VERBOSE=1 ./prepare_gated
+#
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
+. "$(dirname "$0")"/lib/clone_or_fetch # provides clone_or_fetch function
+
+# Clone or fetch bare repos for all gated components
+while IFS= read -r component; do
+  # Convert component path (e.g. "extensions/Echo") to Gerrit repo (e.g. "mediawiki/extensions/Echo")
+  repo="mediawiki/${component}"
+  clone_or_fetch "$repo"
+done < <("$(dirname "$0")"/gated)
