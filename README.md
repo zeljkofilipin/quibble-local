@@ -234,6 +234,8 @@ Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
 
 Suggest the number of parallel workers based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number. Used by `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated`.
 
+On macOS, the result may differ depending on whether Docker is running. When Docker is running, CPU and memory are read from `docker info`, which reports the Docker Desktop VM allocation (often lower than host resources). When Docker is not running, the script falls back to `sysctl`, which reports full system CPU and memory — potentially suggesting more workers than Docker can actually support.
+
     ./suggested_parallel
     PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all_gated
 
