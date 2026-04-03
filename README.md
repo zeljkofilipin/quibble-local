@@ -256,6 +256,18 @@ Environment variables:
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
 
+### `./dependencies_minimal_gated`
+
+Find minimum dependencies for all gated repositories (or a single component). For each component: check if Selenium tests exist, check if it has optional dependencies, and run `./dependencies_minimal` to find the minimum set.
+
+    ./dependencies_minimal_gated
+    ./dependencies_minimal_gated extensions/Echo
+    VERBOSE=1 ./dependencies_minimal_gated
+
+See also: `./dependencies_minimal` for single-component usage.
+
+**Warning:** Without arguments, this will take a very long time to run (50+ components). This script inhibits sleep to prevent the machine from suspending.
+
 ### `./remove`
 
 Remove `src/` (MediaWiki source code). Cache, logs, bare git repos, and the Docker image are kept.
@@ -355,11 +367,11 @@ These are sourced by other scripts and are not intended to be run directly.
 
 ### `lib/batch_setup`
 
-Shared setup for batch scripts (`test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
+Shared setup for batch scripts (`test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
 
 ### `lib/heartbeat`
 
-Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, and `dependencies_minimal_thorough` for silent mode progress feedback. Provides `run_with_dots` function.
+Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, and `dependencies_minimal_thorough` for silent mode progress feedback. Provides `run_with_dots` function.
 
 ### `lib/debug_info`
 
@@ -395,7 +407,7 @@ Provides `run_quibble_test` function that runs a Quibble test command in Docker 
 
 ### `lib/build_component_list`
 
-Builds the `components` array from either `$1` (single component) or `./gated` (all gated extensions/skins). Sourced by `run_selenium_tests_all` and `run_selenium_tests_required`.
+Builds the `components` array from either `$1` (single component) or `./gated` (all gated extensions/skins). Sourced by `run_selenium_tests_all`, `run_selenium_tests_required`, and `dependencies_minimal_gated`.
 
 ### `lib/clone_or_fetch`
 
@@ -415,11 +427,11 @@ Sourced by scripts that need zuul config (`dependencies`, `gated`, `install`). E
 
 ### `lib/inhibit_sleep`
 
-Sourced by long-running scripts (`dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_thorough`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `test_integration`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+Sourced by long-running scripts (`dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `test_integration`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
 ### `lib/print_results`
 
-Sourced by scripts that track test/step results (`run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `test_integration`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
+Sourced by scripts that track test/step results (`run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal_gated`, `test_integration`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
 
 ### `lib/utc_timestamp`
 
