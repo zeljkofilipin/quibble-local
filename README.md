@@ -274,6 +274,11 @@ Find minimum dependencies for all gated repositories (or a single component). Fo
     ./dependencies_minimal_gated
     ./dependencies_minimal_gated extensions/Echo
     VERBOSE=1 ./dependencies_minimal_gated
+    PARALLEL=$(./suggested_parallel) ./dependencies_minimal_gated
+
+Environment variables:
+
+- `PARALLEL=N`: Run N components simultaneously, each in an isolated `ENVIRONMENT=N`. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 See also: `./dependencies_minimal` for single-component usage.
 
@@ -325,7 +330,7 @@ Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
 
 ### `./suggested_parallel`
 
-Suggest the number of parallel workers based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number. Used by `dependencies_minimal_bottom_up`, `dependencies_minimal_thorough`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated`.
+Suggest the number of parallel workers based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number. Used by `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated`.
 
     ./suggested_parallel
     PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all_gated

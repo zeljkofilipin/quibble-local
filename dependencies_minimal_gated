@@ -9,6 +9,11 @@
 # Usage: ./dependencies_minimal_gated
 #        ./dependencies_minimal_gated extensions/Echo
 #        VERBOSE=1 ./dependencies_minimal_gated
+#        PARALLEL=$(./suggested_parallel) ./dependencies_minimal_gated
+#
+# PARALLEL=N: Run N components in parallel (each in isolated ENVIRONMENT=N).
+#             Use ./suggested_parallel to determine N for your machine.
+#             Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 #
 # See also: ./dependencies_minimal for single-component usage.
 #
@@ -17,18 +22,18 @@
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
 
+parallel="${PARALLEL:-1}" # PARALLEL=N runs N components in parallel (default 1 = sequential)
+
 # --- Build list of gated components ---
 . "$(dirname "$0")"/lib/build_component_list # sets components[] from $1 or ./gated
 
-# --- Run dependencies_minimal for each component ---
+# --- Filter components: skip those without Selenium tests or without optional deps ---
+filtered=() # array of components that need dependencies_minimal
 for component in "${components[@]}"; do
-  print_header "$component"
-
   # Skip components without Selenium tests
   if ! ./selenium_tests_exist "$component"; then
-    printf "skipped (no Selenium tests)\n"
+    printf "skipped (no Selenium tests): %s\n" "$component"
     record_passed "$component"
-    printf " %s\n" "$(utc_timestamp)"
     continue
   fi
 
@@ -40,18 +45,117 @@ for component in "${components[@]}"; do
   done < <("$(dirname "$0")"/dependencies_optional "$component")
 
   if [ "$optional_count" -eq 0 ]; then
-    printf "skipped (no optional dependencies)\n"
+    printf "skipped (no optional dependencies): %s\n" "$component"
     record_passed "$component"
-    printf " %s\n" "$(utc_timestamp)"
     continue
   fi
 
-  # Run dependencies_minimal for this component
-  if run_step "$component" ./dependencies_minimal "$component"; then
-    record_passed "$component"
-  fi
-  printf " %s\n" "$(utc_timestamp)"
+  filtered+=("$component") # this component needs dependencies_minimal
 done
+
+if [ ${#filtered[@]} -eq 0 ]; then
+  printf "\nNo components need dependencies_minimal.\n"
+  print_results
+  exit 0
+fi
+
+printf "\n%d components to process.\n" "${#filtered[@]}"
+
+if [ "$parallel" -le 1 ]; then
+  # --- Sequential mode ---
+  for component in "${filtered[@]}"; do
+    print_header "$component"
+
+    # Run dependencies_minimal for this component
+    if run_step "$component" ./dependencies_minimal "$component"; then
+      record_passed "$component"
+    fi
+    printf " %s\n" "$(utc_timestamp)"
+  done
+
+else
+  # --- Parallel mode ---
+  printf "\nParallel mode: %d workers\n" "$parallel"
+
+  total=${#filtered[@]} # total components to process
+  _result_dir=$(mktemp -d) # temp dir for worker result files
+
+  # Process components in waves of $parallel workers
+  wave_start=0 # index into filtered array for start of current wave
+  while [ "$wave_start" -lt "$total" ]; do
+    wave_end=$((wave_start + parallel)) # exclusive end index
+    if [ "$wave_end" -gt "$total" ]; then
+      wave_end="$total" # last wave may be smaller
+    fi
+    wave_size=$((wave_end - wave_start)) # number of workers in this wave
+
+    printf "\n--- Wave %d-%d of %d (%d workers) --- %s\n" \
+      "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(utc_timestamp)"
+
+    # Launch workers for this wave
+    pids=() # array of background process IDs
+    worker=0 # worker index (0-based)
+    while [ "$worker" -lt "$wave_size" ]; do
+      item_idx=$((wave_start + worker)) # index into filtered array
+      component="${filtered[$item_idx]}" # component name
+      env_num=$((worker + 1)) # ENVIRONMENT number (1-based)
+      worker_log="log/silent/worker-${env_num}" # per-worker log directory
+      log_file="${worker_log}/${component//\//-}.log" # full log path
+      result_file="$_result_dir/worker_$item_idx" # path for worker to write result
+
+      mkdir -p "$worker_log" # create log directory
+
+      printf "  Worker %d: %s (ENVIRONMENT=%d)\n" "$env_num" "$component" "$env_num"
+
+      # Launch worker in background subshell
+      (
+        export ENVIRONMENT="$env_num" # isolated directories (src_N, src_save_N)
+        exec > "$log_file" 2>&1 # redirect all output to log file
+        if ./dependencies_minimal "$component"; then
+          echo "pass" > "$result_file"
+        else
+          echo "fail" > "$result_file"
+        fi
+      ) &
+      pids+=($!) # $! is the PID of the last background process
+
+      worker=$((worker + 1))
+    done
+
+    # Wait for all workers in this wave to finish
+    for pid in "${pids[@]}"; do
+      wait "$pid" 2>/dev/null || true # wait for each worker (ignore exit code, check result files)
+    done
+
+    # Collect results from this wave
+    worker=0 # reset worker index for result collection
+    while [ "$worker" -lt "$wave_size" ]; do
+      item_idx=$((wave_start + worker)) # index into filtered array
+      component="${filtered[$item_idx]}" # component name
+      env_num=$((worker + 1)) # ENVIRONMENT number (1-based)
+      result_file="$_result_dir/worker_$item_idx" # path to read result from
+      result="" # default empty
+      if [ -f "$result_file" ]; then
+        result=$(cat "$result_file") # read worker result
+      fi
+      if [ "$result" = "pass" ]; then
+        printf "  %s: ok\n" "$component"
+        passed="$passed
+  $component" # append component on a new indented line
+      else
+        printf "  %s: FAIL (see log/silent/worker-%d/%s.log)\n" "$component" "$env_num" "${component//\//-}"
+        failed="$failed
+  $component" # append component on a new indented line
+      fi
+      worker=$((worker + 1))
+    done
+
+    wave_start="$wave_end" # advance to next wave
+  done
+
+  # Clean up temp dir
+  rm -rf "$_result_dir"
+fi
 
 # Print pass/fail summary and exit with error if any component failed
 print_results
