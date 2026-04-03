@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Install all gated extensions and skins into a single MediaWiki, then run all Selenium tests.
-# Unlike ./run_selenium_tests_all (which does ./fresh_install per component), this installs
+# Unlike ./run_selenium_tests_all_gated (which does ./fresh_install per component), this installs
 # everything together into one src/.
 # Uses ./install_all_gated for installation, then runs Selenium tests for each component.
 # WARNING: This will take a long time to run (50+ components).

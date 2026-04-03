@@ -21,7 +21,7 @@ All commands run in **silent mode** by default (no trace output, no debug info).
     ./fresh_install            # silent (default)
     VERBOSE=1 ./fresh_install  # verbose (trace output)
 
-When commands are called from `test_integration` or `run_selenium_tests_all`, the mode is inherited via the `VERBOSE` environment variable.
+When commands are called from `test_integration` or `run_selenium_tests_all_gated`, the mode is inherited via the `VERBOSE` environment variable.
 
 ### `QUIBBLE_IMAGE`
 
@@ -50,9 +50,9 @@ Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directorie
 
 ### `FAST`
 
-`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `run_selenium_tests_all` and `run_selenium_tests_required`. (`dependencies_minimal`, `dependencies_minimal_bottom_up`, and `dependencies_minimal_thorough` always use save/restore automatically.)
+`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `run_selenium_tests_all_gated` and `run_selenium_tests_required`. (`dependencies_minimal`, `dependencies_minimal_bottom_up`, and `dependencies_minimal_thorough` always use save/restore automatically.)
 
-    FAST=1 ./run_selenium_tests_all
+    FAST=1 ./run_selenium_tests_all_gated
 
 ## Commands (same as mediawiki-quickstart)
 
@@ -147,22 +147,22 @@ Prepare the local environment for running Quibble. Pulls the Docker image, clone
 
 See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
 
-### `./run_selenium_tests_all`
+### `./run_selenium_tests_all_gated`
 
 Run Selenium tests for core and all gated repositories. For each component: `./fresh_install`, `./install` (if not core), check if Selenium tests exist, and run them. Silent by default; use `VERBOSE=1` for full output.
 
-    ./run_selenium_tests_all
-    ./run_selenium_tests_all extensions/Echo
-    VERBOSE=1 ./run_selenium_tests_all
-    FAST=1 ./run_selenium_tests_all
-    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all
-    PARALLEL=4 FAST=1 ./run_selenium_tests_all
+    ./run_selenium_tests_all_gated
+    ./run_selenium_tests_all_gated extensions/Echo
+    VERBOSE=1 ./run_selenium_tests_all_gated
+    FAST=1 ./run_selenium_tests_all_gated
+    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all_gated
+    PARALLEL=4 FAST=1 ./run_selenium_tests_all_gated
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
 ### `./run_selenium_tests_gated`
 
-Install all gated extensions and skins into a single MediaWiki, then run all Selenium tests. Unlike `./run_selenium_tests_all` (which does `./fresh_install` per component), this installs everything together into one `src/`.
+Install all gated extensions and skins into a single MediaWiki, then run all Selenium tests. Unlike `./run_selenium_tests_all_gated` (which does `./fresh_install` per component), this installs everything together into one `src/`.
 
     ./run_selenium_tests_gated
     VERBOSE=1 ./run_selenium_tests_gated
@@ -314,10 +314,10 @@ Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
 
 ### `./suggested_parallel`
 
-Suggest the number of parallel workers based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number. Used by `dependencies_minimal_bottom_up`, `dependencies_minimal_thorough`, `run_selenium_tests_all`, and `run_selenium_tests_required`.
+Suggest the number of parallel workers based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number. Used by `dependencies_minimal_bottom_up`, `dependencies_minimal_thorough`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required`.
 
     ./suggested_parallel
-    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all
+    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all_gated
 
 ### `./save`
 
@@ -367,11 +367,11 @@ These are sourced by other scripts and are not intended to be run directly.
 
 ### `lib/batch_setup`
 
-Shared setup for batch scripts (`test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
+Shared setup for batch scripts (`test_integration`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
 
 ### `lib/heartbeat`
 
-Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, and `dependencies_minimal_thorough` for silent mode progress feedback. Provides `run_with_dots` function.
+Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, and `dependencies_minimal_thorough` for silent mode progress feedback. Provides `run_with_dots` function.
 
 ### `lib/debug_info`
 
@@ -407,7 +407,7 @@ Provides `run_quibble_test` function that runs a Quibble test command in Docker 
 
 ### `lib/build_component_list`
 
-Builds the `components` array from either `$1` (single component) or `./gated` (all gated extensions/skins). Sourced by `run_selenium_tests_all`, `run_selenium_tests_required`, and `dependencies_minimal_gated`.
+Builds the `components` array from either `$1` (single component) or `./gated` (all gated extensions/skins). Sourced by `run_selenium_tests_all_gated`, `run_selenium_tests_required`, and `dependencies_minimal_gated`.
 
 ### `lib/clone_or_fetch`
 
@@ -427,11 +427,11 @@ Sourced by scripts that need zuul config (`dependencies`, `gated`, `install`). E
 
 ### `lib/inhibit_sleep`
 
-Sourced by long-running scripts (`dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`, `run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `test_integration`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+Sourced by long-running scripts (`dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `test_integration`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
 ### `lib/print_results`
 
-Sourced by scripts that track test/step results (`run_selenium_tests_all`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal_gated`, `test_integration`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
+Sourced by scripts that track test/step results (`run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required`, `dependencies_minimal_gated`, `test_integration`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
 
 ### `lib/utc_timestamp`
 
@@ -447,7 +447,7 @@ Provides `record_passed` function that records a component as passed (if not alr
 
 ### `lib/run_waves`
 
-Generic wave-based parallel worker orchestration. Processes an array of items in waves of `$parallel` workers, each in an isolated `src_worker_N/` directory. The caller defines `_run_worker` and `_collect_result` functions to customize worker behavior and result handling. Sourced by `run_selenium_tests_all` and `run_selenium_tests_required` in parallel mode.
+Generic wave-based parallel worker orchestration. Processes an array of items in waves of `$parallel` workers, each in an isolated `src_worker_N/` directory. The caller defines `_run_worker` and `_collect_result` functions to customize worker behavior and result handling. Sourced by `run_selenium_tests_all_gated` and `run_selenium_tests_required` in parallel mode.
 
 ### `lib/remove_worker_dirs`
 
@@ -455,7 +455,7 @@ Cleans up `src_worker_*` directories created by parallel execution. Tries `rm -r
 
 ### `lib/worker_init`
 
-Common setup for parallel worker subshells. Sets `QUIBBLE_SRC` and `QUIBBLE_BACKGROUND`, redirects output to a log file, and runs `./restore` (fast mode) or `./fresh_install`. Sourced inside worker subshells by `run_selenium_tests_all`, `run_selenium_tests_required`, and `lib/parallel`.
+Common setup for parallel worker subshells. Sets `QUIBBLE_SRC` and `QUIBBLE_BACKGROUND`, redirects output to a log file, and runs `./restore` (fast mode) or `./fresh_install`. Sourced inside worker subshells by `run_selenium_tests_all_gated`, `run_selenium_tests_required`, and `lib/parallel`.
 
 ### `lib/parse_requires.awk`
 
