@@ -3,7 +3,7 @@
 # Run integration tests for long-running scripts (more than 10 minutes each).
 # Separated from ./test_integration so that suite can stay fast.
 # Entries here are slow but deterministic — failures indicate real regressions
-# in this repo, unlike ./test_integration_gated which is upstream-fragile.
+# in this repo, unlike ./test_integration_flaky which is upstream-fragile.
 # WARNING: This will take a long time to run.
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #

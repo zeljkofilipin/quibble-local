@@ -21,7 +21,7 @@ All commands run in **silent mode** by default (no trace output, no debug info).
     ./fresh_install            # silent (default)
     VERBOSE=1 ./fresh_install  # verbose (trace output)
 
-When commands are called from `test_integration`, `test_integration_slow`, `test_integration_gated`, or `run_selenium_tests_all_gated`, the mode is inherited via the `VERBOSE` environment variable.
+When commands are called from `test_integration`, `test_integration_slow`, `test_integration_flaky`, or `run_selenium_tests_all_gated`, the mode is inherited via the `VERBOSE` environment variable.
 
 ### `QUIBBLE_IMAGE`
 
@@ -115,7 +115,7 @@ Open a shell in the container with MediaWiki running at http://127.0.0.1:9413. A
 
 ### `./test_integration`
 
-Run fast integration tests (each entry takes a few minutes or less) and report which ones passed or failed. Useful for detecting regressions after changes. Slow entries (more than 10 minutes each) live in `./test_integration_slow`; upstream-fragile entries live in `./test_integration_gated`. Silent by default; use `VERBOSE=1` for full output.
+Run fast integration tests (each entry takes a few minutes or less) and report which ones passed or failed. Useful for detecting regressions after changes. Slow entries (more than 10 minutes each) live in `./test_integration_slow`; known-flaky entries live in `./test_integration_flaky`. Silent by default; use `VERBOSE=1` for full output.
 
     ./test_integration
     VERBOSE=1 ./test_integration
@@ -124,19 +124,19 @@ Run fast integration tests (each entry takes a few minutes or less) and report w
 
 ### `./test_integration_slow`
 
-Run integration tests for long-running scripts (more than 10 minutes each). Separated from `./test_integration` so that suite can stay fast. Entries here are slow but deterministic — failures indicate real regressions in this repo, unlike `./test_integration_gated` which is upstream-fragile. Silent by default; use `VERBOSE=1` for full output.
+Run integration tests for long-running scripts (more than 10 minutes each). Separated from `./test_integration` so that suite can stay fast. Entries here are slow but deterministic — failures indicate real regressions in this repo, unlike `./test_integration_flaky` which is upstream-fragile. Silent by default; use `VERBOSE=1` for full output.
 
     ./test_integration_slow
     VERBOSE=1 ./test_integration_slow
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a long time to run.
 
-### `./test_integration_gated`
+### `./test_integration_flaky`
 
-Run integration tests for long-running or upstream-fragile scripts. Separated from `./test_integration` so that suite can stay fast and reliable. Entries here depend on the full set of gated Wikimedia repositories being healthy upstream, so failures may reflect upstream issues (broken submodules, Gerrit/Phabricator outages) rather than regressions in this repo. Silent by default; use `VERBOSE=1` for full output.
+Run integration tests for flaky scripts (intermittent failures driven by upstream issues like broken submodules or Gerrit/Phabricator outages). Separated from `./test_integration` so that suite can stay fast and reliable. Failures here may reflect upstream issues rather than regressions in this repo. Entries are added based on observed instability, not naming — many scripts whose names contain `_gated` are reliable and live in `./test_integration`. Silent by default; use `VERBOSE=1` for full output.
 
-    ./test_integration_gated
-    VERBOSE=1 ./test_integration_gated
+    ./test_integration_flaky
+    VERBOSE=1 ./test_integration_flaky
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a long time to run (50+ components).
 
@@ -415,11 +415,11 @@ These are sourced by other scripts and are not intended to be run directly.
 
 ### `lib/batch_setup`
 
-Shared setup for batch scripts (`test_integration`, `test_integration_slow`, `test_integration_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
+Shared setup for batch scripts (`test_integration`, `test_integration_slow`, `test_integration_flaky`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
 
 ### `lib/heartbeat`
 
-Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `test_integration_slow`, `test_integration_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, and `dependencies_minimal_thorough` for silent mode progress feedback. Provides `run_with_dots` function.
+Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `test_integration_slow`, `test_integration_flaky`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, and `dependencies_minimal_thorough` for silent mode progress feedback. Provides `run_with_dots` function.
 
 ### `lib/debug_info`
 
@@ -475,11 +475,11 @@ Sourced by scripts that need zuul config (`dependencies`, `gated`, `install`). E
 
 ### `lib/inhibit_sleep`
 
-Sourced by long-running scripts (`dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `test_integration`, `test_integration_slow`, `test_integration_gated`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+Sourced by long-running scripts (`dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `test_integration`, `test_integration_slow`, `test_integration_flaky`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
 ### `lib/print_results`
 
-Sourced by scripts that track test/step results (`run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `dependencies_minimal_gated`, `test_integration`, `test_integration_slow`, `test_integration_gated`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
+Sourced by scripts that track test/step results (`run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `dependencies_minimal_gated`, `test_integration`, `test_integration_slow`, `test_integration_flaky`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
 
 ### `lib/utc_timestamp`
 
@@ -495,7 +495,7 @@ Provides `record_passed` function that records a component as passed (if not alr
 
 ### `lib/run_test`
 
-Provides `run_test` function and `test_counter` for `test_integration`-style scripts. Runs a command, prints what it does, and records pass/fail in `$passed`/`$failed`. In verbose mode prints a separator box and full output; in silent mode saves output to a numbered log file (e.g. `log/silent/01-help.log`) and prints a dot per line. Must be sourced after `lib/batch_setup`. Sourced by `test_integration`, `test_integration_slow`, and `test_integration_gated`.
+Provides `run_test` function and `test_counter` for `test_integration`-style scripts. Runs a command, prints what it does, and records pass/fail in `$passed`/`$failed`. In verbose mode prints a separator box and full output; in silent mode saves output to a numbered log file (e.g. `log/silent/01-help.log`) and prints a dot per line. Must be sourced after `lib/batch_setup`. Sourced by `test_integration`, `test_integration_slow`, and `test_integration_flaky`.
 
 ### `lib/run_waves`
 

@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
 #
-# Run integration tests for long-running or upstream-fragile scripts.
+# Run integration tests for flaky scripts (intermittent failures driven by
+# upstream issues like broken submodules or Gerrit/Phabricator outages).
 # Separated from ./test_integration so that suite can stay fast and reliable.
-# Entries here depend on the full set of gated Wikimedia repositories being
-# healthy upstream, so failures may reflect upstream issues (broken submodules,
-# Gerrit/Phabricator outages) rather than regressions in this repo.
+# Failures here may reflect upstream issues rather than regressions in this
+# repo. Long-running but deterministic scripts live in ./test_integration_slow.
+# Entries are added based on observed instability, not naming — many scripts
+# whose names contain "_gated" are reliable and live in ./test_integration.
 # WARNING: This will take a long time to run.
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
-# Usage: ./test_integration_gated
-#        VERBOSE=1 ./test_integration_gated
+# Usage: ./test_integration_flaky
+#        VERBOSE=1 ./test_integration_flaky
 #
 
 # No set -euo pipefail: we want to continue after failures to collect all results
@@ -17,7 +19,7 @@
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
 . "$(dirname "$0")"/lib/run_test    # provides run_test function and test_counter
 
-# --- All gated repositories ---
+# --- Known-flaky entries ---
 run_test ./run_selenium_tests_gated  # test run_selenium_tests_gated (installs all gated, runs all selenium tests; also tests install_all_gated)
 
 # Print pass/fail summary and exit with error if any script failed
