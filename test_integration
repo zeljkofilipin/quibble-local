@@ -2,6 +2,7 @@
 #
 # Run all scripts and report which ones passed or failed.
 # Useful for detecting regressions after changes.
+# Each entry is annotated with its approximate runtime in minutes (or <1m).
 # WARNING: This will take a long time to run.
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
@@ -15,75 +16,75 @@
 . "$(dirname "$0")"/lib/run_test    # provides run_test function and test_counter
 
 # --- Development and CI ---
-run_test ./help                        # test that help output works
-run_test ./help install                # test detailed help for a specific script
-run_test ./lint                        # test that all scripts pass shellcheck
-run_test ./ci                          # test that CI lint passes in Docker
+run_test ./help                        # <1m: test that help output works
+run_test ./help install                # <1m: test detailed help for a specific script
+run_test ./lint                        # <1m: test that all scripts pass shellcheck
+run_test ./ci                          # <1m: test that CI lint passes in Docker
 
 # --- Setup and cleanup ---
-run_test ./prepare                     # test that prepare pulls image and clones repos
-run_test ./fetch                       # test fetching all bare repos (update stale repos before use)
-run_test ./fetch ref/mediawiki/core.git  # test fetching a specific repo
-run_test env PARALLEL=2 ./fetch        # test parallel fetch
-run_test ./fresh_install               # test fresh core install
-run_test ./save                        # test saving fresh_install state
-run_test ./restore                     # test restoring saved state
-run_test env ENVIRONMENT=0 ./fresh_install  # test environment isolation
-run_test env ENVIRONMENT=0 ./save           # test saving with environment
-run_test env ENVIRONMENT=0 ./restore        # test restoring with environment
-run_test env ENVIRONMENT=0 ./remove          # test cleaning with environment
+run_test ./prepare                     # <1m: test that prepare pulls image and clones repos
+run_test ./fetch                       # 2m: test fetching all bare repos (update stale repos before use)
+run_test ./fetch ref/mediawiki/core.git  # <1m: test fetching a specific repo
+run_test env PARALLEL=2 ./fetch        # <1m: test parallel fetch
+run_test ./fresh_install               # 1m: test fresh core install
+run_test ./save                        # <1m: test saving fresh_install state
+run_test ./restore                     # <1m: test restoring saved state
+run_test env ENVIRONMENT=0 ./fresh_install  # 1m: test environment isolation
+run_test env ENVIRONMENT=0 ./save           # 1m: test saving with environment
+run_test env ENVIRONMENT=0 ./restore        # 1m: test restoring with environment
+run_test env ENVIRONMENT=0 ./remove          # <1m: test cleaning with environment
 
 # --- Core tests ---
-run_test ./selenium_tests_exist        # test that core has Selenium tests
-run_test ./run_selenium_tests          # test running all core Selenium tests
-run_test ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js  # test running a specific test file
-run_test ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"  # test filtering by grep pattern
+run_test ./selenium_tests_exist        # <1m: test that core has Selenium tests
+run_test ./run_selenium_tests          # 1m: test running all core Selenium tests
+run_test ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js  # <1m: test running a specific test file
+run_test ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"  # <1m: test filtering by grep pattern
 
 # --- Extension tests (extensions/Echo) ---
-run_test ./install extensions/Echo     # test installing an extension
-run_test env QUIBBLE_DEPS="" ./install extensions/Echo  # test installing with no dependencies
-run_test env QUIBBLE_DEPS="EventLogging" ./install extensions/Echo  # test installing with specific dependencies
-run_test ./selenium_tests_exist extensions/Echo  # test that extension has Selenium tests
-run_test ./run_selenium_tests extensions/Echo  # test running extension Selenium tests
-run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js  # test running a specific extension test file
-run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"  # test filtering extension tests by grep
-run_test ./run_php_unit_tests extensions/Echo  # test running extension PHPUnit tests
-run_test ./run_php_unit_tests extensions/Echo --filter testNotificationCount  # test filtering PHPUnit tests
+run_test ./install extensions/Echo     # 1m: test installing an extension
+run_test env QUIBBLE_DEPS="" ./install extensions/Echo  # 1m: test installing with no dependencies
+run_test env QUIBBLE_DEPS="EventLogging" ./install extensions/Echo  # 1m: test installing with specific dependencies
+run_test ./selenium_tests_exist extensions/Echo  # <1m: test that extension has Selenium tests
+run_test ./run_selenium_tests extensions/Echo  # 1m: test running extension Selenium tests
+run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js  # <1m: test running a specific extension test file
+run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"  # <1m: test filtering extension tests by grep
+run_test ./run_php_unit_tests extensions/Echo  # 2m: test running extension PHPUnit tests
+run_test ./run_php_unit_tests extensions/Echo --filter testNotificationCount  # <1m: test filtering PHPUnit tests
 
 # --- Skin tests (skins/MinervaNeue) ---
-run_test ./install skins/MinervaNeue  # test installing a skin (exercises skins/ code path)
-run_test ./selenium_tests_exist skins/MinervaNeue  # test that skin has Selenium tests
-run_test ./run_selenium_tests skins/MinervaNeue  # test running skin Selenium tests
+run_test ./install skins/MinervaNeue  # 1m: test installing a skin (exercises skins/ code path)
+run_test ./selenium_tests_exist skins/MinervaNeue  # <1m: test that skin has Selenium tests
+run_test ./run_selenium_tests skins/MinervaNeue  # 1m: test running skin Selenium tests
 
 # --- Data queries ---
-run_test ./dependencies extensions/Echo  # test listing extension dependencies
-run_test ./dependencies_required extensions/Echo  # test listing required dependencies
-run_test ./dependencies_optional extensions/Echo  # test listing optional dependencies
-run_test ./dependencies_combinations extensions/Echo  # test listing dependency combinations
-run_test ./dependencies skins/MinervaNeue  # test listing skin dependencies
-run_test ./dependencies_required skins/MinervaNeue  # test listing required skin dependencies
-run_test ./dependencies_optional skins/MinervaNeue  # test listing optional skin dependencies
-run_test ./dependencies_combinations skins/MinervaNeue  # test listing skin dependency combinations
-run_test ./gated                       # test listing gated repos
-run_test ./suggested_parallel              # test suggesting number of parallel workers
+run_test ./dependencies extensions/Echo  # <1m: test listing extension dependencies
+run_test ./dependencies_required extensions/Echo  # <1m: test listing required dependencies
+run_test ./dependencies_optional extensions/Echo  # <1m: test listing optional dependencies
+run_test ./dependencies_combinations extensions/Echo  # <1m: test listing dependency combinations
+run_test ./dependencies skins/MinervaNeue  # <1m: test listing skin dependencies
+run_test ./dependencies_required skins/MinervaNeue  # <1m: test listing required skin dependencies
+run_test ./dependencies_optional skins/MinervaNeue  # <1m: test listing optional skin dependencies
+run_test ./dependencies_combinations skins/MinervaNeue  # <1m: test listing skin dependency combinations
+run_test ./gated                       # <1m: test listing gated repos
+run_test ./suggested_parallel              # <1m: test suggesting number of parallel workers
 
 # --- Finding minimum dependencies ---
-run_test ./dependencies_minimal_bottom_up extensions/Echo  # test bottom-up exhaustive (fast for Echo: 0 deps needed)
-run_test env PARALLEL=2 ./dependencies_minimal_bottom_up extensions/Echo  # test bottom-up with parallel mode
+run_test ./dependencies_minimal_bottom_up extensions/Echo  # 6m: test bottom-up exhaustive (fast for Echo: 0 deps needed)
+run_test env PARALLEL=2 ./dependencies_minimal_bottom_up extensions/Echo  # 10m: test bottom-up with parallel mode
 
 # --- All gated repositories ---
-run_test ./prepare_gated               # test cloning bare repos for all gated repos
-run_test ./run_selenium_tests_all_gated extensions/Echo     # test run_selenium_tests_all_gated with a single extension
-run_test env FAST=1 ./run_selenium_tests_all_gated extensions/Echo  # test run_selenium_tests_all_gated with fast mode
-run_test env PARALLEL=2 ./run_selenium_tests_all_gated extensions/Echo  # test run_selenium_tests_all_gated with parallel mode
-run_test env PARALLEL=2 FAST=1 ./run_selenium_tests_all_gated extensions/Echo  # test run_selenium_tests_all_gated with parallel + fast mode
-run_test ./run_selenium_tests_required_gated extensions/Echo  # test run_selenium_tests_required_gated with a single extension
-run_test env FAST=1 ./run_selenium_tests_required_gated extensions/Echo  # test run_selenium_tests_required_gated with fast mode
-run_test env PARALLEL=2 ./run_selenium_tests_required_gated extensions/Echo  # test run_selenium_tests_required_gated with parallel mode
-run_test env PARALLEL=2 FAST=1 ./run_selenium_tests_required_gated extensions/Echo  # test run_selenium_tests_required_gated with parallel + fast mode
+run_test ./prepare_gated               # 1m: test cloning bare repos for all gated repos
+run_test ./run_selenium_tests_all_gated extensions/Echo     # 6m: test run_selenium_tests_all_gated with a single extension
+run_test env FAST=1 ./run_selenium_tests_all_gated extensions/Echo  # 8m: test run_selenium_tests_all_gated with fast mode
+run_test env PARALLEL=2 ./run_selenium_tests_all_gated extensions/Echo  # 5m: test run_selenium_tests_all_gated with parallel mode
+run_test env PARALLEL=2 FAST=1 ./run_selenium_tests_all_gated extensions/Echo  # 6m: test run_selenium_tests_all_gated with parallel + fast mode
+run_test ./run_selenium_tests_required_gated extensions/Echo  # 4m: test run_selenium_tests_required_gated with a single extension
+run_test env FAST=1 ./run_selenium_tests_required_gated extensions/Echo  # 4m: test run_selenium_tests_required_gated with fast mode
+run_test env PARALLEL=2 ./run_selenium_tests_required_gated extensions/Echo  # 4m: test run_selenium_tests_required_gated with parallel mode
+run_test env PARALLEL=2 FAST=1 ./run_selenium_tests_required_gated extensions/Echo  # 4m: test run_selenium_tests_required_gated with parallel + fast mode
 
 # --- Cleanup ---
-run_test ./remove                       # test cleaning up src/
+run_test ./remove                       # <1m: test cleaning up src/
 
 # Print pass/fail summary and exit with error if any script failed
 print_results

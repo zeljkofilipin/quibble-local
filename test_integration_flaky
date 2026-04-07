@@ -7,6 +7,7 @@
 # repo. Long-running but deterministic scripts live in ./test_integration_slow.
 # Entries are added based on observed instability, not naming — many scripts
 # whose names contain "_gated" are reliable and live in ./test_integration.
+# Each entry is annotated with its approximate runtime in minutes.
 # WARNING: This will take a long time to run.
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
@@ -20,7 +21,7 @@
 . "$(dirname "$0")"/lib/run_test    # provides run_test function and test_counter
 
 # --- Known-flaky entries ---
-run_test ./run_selenium_tests_gated  # test run_selenium_tests_gated (installs all gated, runs all selenium tests; also tests install_all_gated)
+run_test ./run_selenium_tests_gated  # ?m: test run_selenium_tests_gated (installs all gated, runs all selenium tests; also tests install_all_gated) — runtime not recently measured
 
 # Print pass/fail summary and exit with error if any script failed
 print_results

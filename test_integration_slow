@@ -4,6 +4,7 @@
 # Separated from ./test_integration so that suite can stay fast.
 # Entries here are slow but deterministic — failures indicate real regressions
 # in this repo, unlike ./test_integration_flaky which is upstream-fragile.
+# Each entry is annotated with its approximate runtime in minutes.
 # WARNING: This will take a long time to run.
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
@@ -17,14 +18,14 @@
 . "$(dirname "$0")"/lib/run_test    # provides run_test function and test_counter
 
 # --- Core PHPUnit (slow: full core test suite) ---
-run_test ./run_php_unit_tests          # test running all core PHPUnit tests
+run_test ./run_php_unit_tests          # 13m: test running all core PHPUnit tests
 
 # --- Finding minimum dependencies (slow: exhaustive algorithms) ---
-run_test ./dependencies_minimal extensions/Echo  # test finding minimum dependencies (greedy algorithm)
-run_test ./dependencies_minimal_thorough extensions/Echo  # test greedy + exhaustive verification
-run_test env PARALLEL=2 ./dependencies_minimal_thorough extensions/Echo  # test thorough with parallel mode
-run_test ./dependencies_minimal_gated extensions/Echo  # test finding minimum dependencies for gated (single component)
-run_test env PARALLEL=2 ./dependencies_minimal_gated extensions/Echo  # test dependencies_minimal_gated with parallel mode
+run_test ./dependencies_minimal extensions/Echo  # 16m: test finding minimum dependencies (greedy algorithm)
+run_test ./dependencies_minimal_thorough extensions/Echo  # 21m: test greedy + exhaustive verification
+run_test env PARALLEL=2 ./dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with parallel mode
+run_test ./dependencies_minimal_gated extensions/Echo  # 20m: test finding minimum dependencies for gated (single component)
+run_test env PARALLEL=2 ./dependencies_minimal_gated extensions/Echo  # 22m: test dependencies_minimal_gated with parallel mode
 
 # Print pass/fail summary and exit with error if any script failed
 print_results
