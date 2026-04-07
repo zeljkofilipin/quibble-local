@@ -475,6 +475,10 @@ Provides `print_header` function that prints a section header for a component in
 
 Provides `record_passed` function that records a component as passed (if not already in the failed list). Sourced by `lib/batch_setup`.
 
+### `lib/run_test`
+
+Provides `run_test` function and `test_counter` for `test_integration`-style scripts. Runs a command, prints what it does, and records pass/fail in `$passed`/`$failed`. In verbose mode prints a separator box and full output; in silent mode saves output to a numbered log file (e.g. `log/silent/01-help.log`) and prints a dot per line. Must be sourced after `lib/batch_setup`. Sourced by `test_integration`.
+
 ### `lib/run_waves`
 
 Generic wave-based parallel worker orchestration. Processes an array of items in waves of `$parallel` workers, each in an isolated `src_worker_N/` directory. The caller defines `_run_worker` and `_collect_result` functions to customize worker behavior and result handling. Sourced by `run_selenium_tests_all_gated` and `run_selenium_tests_required_gated` in parallel mode.

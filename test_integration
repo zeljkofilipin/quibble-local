@@ -12,43 +12,7 @@
 # No set -euo pipefail: we want to continue after failures to collect all results
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
-
-test_counter=0 # counter for silent mode log file names
-
-# Run a command and record whether it passed or failed
-run_test() {
-  local test_start=$SECONDS # capture start time for test duration
-  if [ -n "$verbose" ]; then
-    # Verbose: print separator and run command with full output
-    printf "\n========================================\n"
-    printf "= Running: %s %s\n" "$*" "$(utc_timestamp)" # $* joins all args into a single string
-    printf "========================================\n"
-    if "$@"; then # run the command (all arguments passed to this function)
-      printf "(%s)\n" "$(_quibble_format_duration "$((SECONDS - test_start))")" # print test duration
-      passed="$passed
-  $*" # append full command on a new indented line
-    else
-      printf "(%s)\n" "$(_quibble_format_duration "$((SECONDS - test_start))")" # print test duration
-      failed="$failed
-  $*" # append full command on a new indented line
-    fi
-  else
-    # Silent: save output to log file, print a dot per line of output, then ok or FAIL with duration
-    test_counter=$((test_counter + 1)) # increment counter for unique log file names
-    local log_file
-    log_file=$(printf "log/silent/%02d-%s.log" "$test_counter" "${1##*/}") # e.g. log/silent/03-prepare.log
-    printf "%s " "$*" # print full command without newline
-    if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
-      printf " ok (%s) %s\n" "$(_quibble_format_duration "$((SECONDS - test_start))")" "$(utc_timestamp)" # success with duration and UTC timestamp
-      passed="$passed
-  $*" # append full command on a new indented line
-    else
-      printf " FAIL (%s) %s\n" "$(_quibble_format_duration "$((SECONDS - test_start))")" "$(utc_timestamp)" # failure with duration and UTC timestamp
-      failed="$failed
-  $*" # append full command on a new indented line
-    fi
-  fi
-}
+. "$(dirname "$0")"/lib/run_test    # provides run_test function and test_counter
 
 # --- Development and CI ---
 run_test ./help                        # test that help output works
