@@ -20,8 +20,13 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 # - without extra args: use --run phpunit to run all tests
 # ${#arr[@]} gets the number of elements in the array
 if [ ${#extra_args[@]} -gt 0 ]; then
-  # Run phpunit with specific arguments (e.g. --filter)
-  quibble_args=(--command "php tests/phpunit/phpunit.php ${extra_args[*]}")
+  # Run phpunit with specific arguments (e.g. --filter).
+  # Uses the same invocation Quibble itself uses internally for --run phpunit
+  # (see AbstractPhpUnit.get_phpunit_command in quibble/commands.py): the
+  # standalone phpunit.php entry point was removed from MediaWiki core, so
+  # tests are run via the `phpunit` composer script with --timeout=0 to
+  # disable composer's process timeout for long-running test suites.
+  quibble_args=(--command "composer run --timeout=0 phpunit -- ${extra_args[*]}")
 else
   # Run all PHPUnit tests
   quibble_args=(--run phpunit)

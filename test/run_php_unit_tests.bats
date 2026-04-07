@@ -24,14 +24,14 @@
     . '"$BATS_TEST_DIRNAME"'/../lib/parse_component_args
     # Build quibble_args like the script does
     if [ ${#extra_args[@]} -gt 0 ]; then
-      quibble_args=(--command "php tests/phpunit/phpunit.php ${extra_args[*]}")
+      quibble_args=(--command "composer run --timeout=0 phpunit -- ${extra_args[*]}")
     else
       quibble_args=(--run phpunit)
     fi
     echo "${quibble_args[*]}"
   '
   [ "$status" -eq 0 ]
-  [[ "$output" == *"php tests/phpunit/phpunit.php --filter testNotificationCount"* ]]
+  [[ "$output" == *"composer run --timeout=0 phpunit -- --filter testNotificationCount"* ]]
 }
 
 @test "run_php_unit_tests: no args uses --run phpunit" {
@@ -40,7 +40,7 @@
     set --
     . '"$BATS_TEST_DIRNAME"'/../lib/parse_component_args
     if [ ${#extra_args[@]} -gt 0 ]; then
-      quibble_args=(--command "php tests/phpunit/phpunit.php ${extra_args[*]}")
+      quibble_args=(--command "composer run --timeout=0 phpunit -- ${extra_args[*]}")
     else
       quibble_args=(--run phpunit)
     fi
