@@ -23,6 +23,8 @@ run_test ./run_php_unit_tests          # test running all core PHPUnit tests
 run_test ./dependencies_minimal extensions/Echo  # test finding minimum dependencies (greedy algorithm)
 run_test ./dependencies_minimal_thorough extensions/Echo  # test greedy + exhaustive verification
 run_test env PARALLEL=2 ./dependencies_minimal_thorough extensions/Echo  # test thorough with parallel mode
+run_test ./dependencies_minimal_gated extensions/Echo  # test finding minimum dependencies for gated (single component)
+run_test env PARALLEL=2 ./dependencies_minimal_gated extensions/Echo  # test dependencies_minimal_gated with parallel mode
 
 # Print pass/fail summary and exit with error if any script failed
 print_results
