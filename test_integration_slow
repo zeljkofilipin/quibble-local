@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#
+# Run integration tests for long-running scripts (more than 10 minutes each).
+# Separated from ./test_integration so that suite can stay fast.
+# Entries here are slow but deterministic — failures indicate real regressions
+# in this repo, unlike ./test_integration_gated which is upstream-fragile.
+# WARNING: This will take a long time to run.
+# WARNING: This script inhibits sleep to prevent the machine from suspending.
+#
+# Usage: ./test_integration_slow
+#        VERBOSE=1 ./test_integration_slow
+#
+
+# No set -euo pipefail: we want to continue after failures to collect all results
+
+. "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
+. "$(dirname "$0")"/lib/run_test    # provides run_test function and test_counter
+
+# --- Core PHPUnit (slow: full core test suite) ---
+run_test ./run_php_unit_tests          # test running all core PHPUnit tests
+
+# --- Finding minimum dependencies (slow: exhaustive algorithms) ---
+run_test ./dependencies_minimal extensions/Echo  # test finding minimum dependencies (greedy algorithm)
+run_test ./dependencies_minimal_thorough extensions/Echo  # test greedy + exhaustive verification
+run_test env PARALLEL=2 ./dependencies_minimal_thorough extensions/Echo  # test thorough with parallel mode
+
+# Print pass/fail summary and exit with error if any script failed
+print_results

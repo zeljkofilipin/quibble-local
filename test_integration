@@ -38,7 +38,6 @@ run_test ./selenium_tests_exist        # test that core has Selenium tests
 run_test ./run_selenium_tests          # test running all core Selenium tests
 run_test ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js  # test running a specific test file
 run_test ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"  # test filtering by grep pattern
-run_test ./run_php_unit_tests          # test running all core PHPUnit tests
 
 # --- Extension tests (extensions/Echo) ---
 run_test ./install extensions/Echo     # test installing an extension
@@ -69,11 +68,8 @@ run_test ./gated                       # test listing gated repos
 run_test ./suggested_parallel              # test suggesting number of parallel workers
 
 # --- Finding minimum dependencies ---
-run_test ./dependencies_minimal extensions/Echo  # test finding minimum dependencies (greedy algorithm)
 run_test ./dependencies_minimal_bottom_up extensions/Echo  # test bottom-up exhaustive (fast for Echo: 0 deps needed)
 run_test env PARALLEL=2 ./dependencies_minimal_bottom_up extensions/Echo  # test bottom-up with parallel mode
-run_test ./dependencies_minimal_thorough extensions/Echo  # test greedy + exhaustive verification
-run_test env PARALLEL=2 ./dependencies_minimal_thorough extensions/Echo  # test thorough with parallel mode
 
 # --- All gated repositories ---
 run_test ./prepare_gated               # test cloning bare repos for all gated repos
