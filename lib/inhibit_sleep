@@ -7,22 +7,46 @@ if [ -n "${_QUIBBLE_NO_INHIBIT:-}" ]; then
   return 0 # skip sleep inhibition
 fi
 if [ "$(uname)" = "Darwin" ]; then # check if running on macOS
-  caffeinate -s -w $$ >/dev/null 2>&1 & # macOS: prevent sleep while the caller is alive; redirect to /dev/null so it does not inherit pipe fds from callers like run_with_dots
+  caffeinate -s -w $$ </dev/null >/dev/null 2>&1 & # macOS: prevent sleep while the caller is alive; redirect to /dev/null so it does not inherit pipe fds from callers like run_with_dots
 elif command -v gnome-session-inhibit >/dev/null 2>&1 && [ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]; then
   # GNOME desktop: gnome-session-inhibit talks to GNOME's power manager via D-Bus.
   # This is more reliable than systemd-inhibit on GNOME desktops, which may auto-suspend
   # based on idle timeout regardless of systemd inhibitor locks.
   # --inhibit suspend: prevent automatic suspend
   # --reason: human-readable reason shown in GNOME power settings
-  gnome-session-inhibit --inhibit suspend --reason "Quibble tests running" sleep infinity >/dev/null 2>&1 &
-  # redirect to /dev/null so sleep infinity does not inherit pipe fds from callers like run_with_dots
-  inhibit_sleep_pid=$!                                    # $! is the PID of the last background process
-  trap 'kill $inhibit_sleep_pid 2>/dev/null' EXIT         # clean up the inhibit process when the script exits
+  # setsid: put the helper in its own session/process group so we can later kill
+  # the helper AND its child "sleep infinity" atomically with `kill -- -PGID`.
+  # Without setsid, killing $! kills only gnome-session-inhibit; the orphaned
+  # sleep is adopted by `systemd --user` and lingers forever.
+  setsid gnome-session-inhibit --inhibit suspend --reason "Quibble tests running" sleep infinity </dev/null >/dev/null 2>&1 &
+  # </dev/null and >/dev/null detach all three std fds from the caller, so the helper does
+  # not inherit a pipe end from callers like run_with_dots (which would block their wait()
+  # for EOF) or from bats (which would hang waiting for the child to close the test fd).
+  inhibit_sleep_pid=$!                                    # $! is the PID of the helper, which is also its PGID (setsid made it a session leader)
+  trap '_quibble_kill_inhibit "$inhibit_sleep_pid"' EXIT  # clean up the inhibit process group when the script exits
 else # Linux without GNOME: use systemd-inhibit to block sleep and idle
   # --what=sleep:idle: inhibit both sleep (manual/lid) and idle (auto-suspend after inactivity)
   # --mode=block: block suspend entirely (not just delay it); may require polkit rule for non-root users
-  systemd-inhibit --what=sleep:idle --mode=block --who="$(basename "$0")" --why="Quibble tests running" sleep infinity >/dev/null 2>&1 &
-  # sleep infinity keeps the inhibit process alive in the background until killed; redirect to /dev/null so it does not inherit pipe fds from callers like run_with_dots
-  inhibit_sleep_pid=$!                                    # $! is the PID of the last background process
-  trap 'kill $inhibit_sleep_pid 2>/dev/null' EXIT         # clean up the inhibit process when the script exits
+  # setsid: same reason as the gnome-session-inhibit branch above — kill the whole process group on exit.
+  setsid systemd-inhibit --what=sleep:idle --mode=block --who="$(basename "$0")" --why="Quibble tests running" sleep infinity </dev/null >/dev/null 2>&1 &
+  # sleep infinity keeps the inhibit process alive in the background until killed.
+  # </dev/null and >/dev/null detach all three std fds from the caller, so the helper does
+  # not inherit a pipe end from callers like run_with_dots (which would block their wait()
+  # for EOF) or from bats (which would hang waiting for the child to close the test fd).
+  inhibit_sleep_pid=$!                                    # $! is the PID of the helper, which is also its PGID (setsid made it a session leader)
+  trap '_quibble_kill_inhibit "$inhibit_sleep_pid"' EXIT  # clean up the inhibit process group when the script exits
 fi
+
+# Kill the inhibit helper and its child sleep atomically. Used by the EXIT trap above.
+# The helper was started via setsid, so its PID equals its session ID (SID). We
+# CANNOT use process-group-kill (`kill -- -PGID`): gnome-session-inhibit puts its
+# `sleep infinity` child in a NEW process group via setpgid(), so the child has a
+# different PGID than the helper and would be missed. The session, however, is
+# inherited and unchanged by setpgid() — both helper and child stay in the same
+# session — so `pkill -s SID` finds and kills both. If the helper hasn't forked
+# its sleep yet, only the helper is in the session and gets killed before it can
+# spawn the child. Either way, nothing leaks to `systemd --user`.
+_quibble_kill_inhibit() {
+  local sid="$1"                                          # SID of the helper's session (== helper PID, set by setsid)
+  pkill -s "$sid" 2>/dev/null                             # signal every process in the session; suppress errors if already gone
+}
