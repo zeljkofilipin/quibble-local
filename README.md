@@ -12,6 +12,8 @@ Inspired by [mediawiki-quickstart](https://gitlab.wikimedia.org/repos/test-platf
 - [ShellCheck](https://www.shellcheck.net/) (optional, for linting)
 - [Bats](https://github.com/bats-core/bats-core) (optional, for unit tests)
 
+Alternatively, open the repo in the provided [dev container](https://containers.dev/) (`.devcontainer/devcontainer.json`) to get Bash, Git, Docker (via the host socket), ShellCheck, Bats, and the [Claude Code](https://docs.claude.com/en/docs/claude-code) CLI pre-installed.
+
 ## Environment variables
 
 ### `VERBOSE`

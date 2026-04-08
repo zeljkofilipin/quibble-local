@@ -1,0 +1,31 @@
+// Dev container config for quibble-local development.
+// Reference: https://containers.dev/implementors/json_reference/
+{
+  "name": "quibble-local",
+
+  // Ubuntu base image — matches one of the project's supported OSes (macOS/Ubuntu),
+  // so scripts behave the same as on a native Ubuntu host.
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+
+  "features": {
+    // Mount the host Docker socket into the container so the project's scripts
+    // (./ci, ./fresh_install, ./test_integration, etc.) can run `docker` commands.
+    // The Quibble containers themselves still run on the host Docker daemon.
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+  },
+
+  // Install shellcheck (for ./lint), bats (for ./test_unit), and Claude Code CLI
+  // via the official native installer (npm install is deprecated).
+  // The native installer drops `claude` into ~/.local/bin, which is on PATH for
+  // the default `vscode` user in the base image.
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends shellcheck bats && curl -fsSL https://claude.ai/install.sh | bash",
+
+  "customizations": {
+    "vscode": {
+      // Extensions that match the tools used in this repo.
+      "extensions": [
+        "timonwong.shellcheck"
+      ]
+    }
+  }
+}
