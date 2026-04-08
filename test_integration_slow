@@ -18,6 +18,10 @@
 . "$(dirname "$0")"/lib/run_test    # provides run_test function and test_counter
 
 # --- Core PHPUnit (slow: full core test suite) ---
+# fresh_install is fast but required: run_php_unit_tests assumes src/ already has
+# MediaWiki installed. The later dependencies_minimal* entries set up src/ themselves
+# (via lib/minimal_setup), so they don't need this.
+run_test ./fresh_install               # 1m: install core so run_php_unit_tests has something to test
 run_test ./run_php_unit_tests          # 13m: test running all core PHPUnit tests
 
 # --- Finding minimum dependencies (slow: exhaustive algorithms) ---
