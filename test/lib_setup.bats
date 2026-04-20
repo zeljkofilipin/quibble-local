@@ -48,6 +48,7 @@
   '
   [ "$status" -eq 0 ]
   [[ "$output" == *"-it"* ]]
+  [[ "$output" == *"--tmpfs /tmp:exec,size=4g"* ]] # RAM-backed /tmp matching CI
 }
 
 @test "setup: sets QUIBBLE_DOCKER_FLAGS to -i in silent mode" {
@@ -58,7 +59,8 @@
     echo "${QUIBBLE_DOCKER_FLAGS[@]}"
   '
   [ "$status" -eq 0 ]
-  [[ "$output" == "-i" ]]
+  [[ "$output" == *"-i"* ]]
+  [[ "$output" == *"--tmpfs /tmp:exec,size=4g"* ]] # RAM-backed /tmp matching CI
 }
 
 @test "setup: sets QUIBBLE_DIR to current directory" {
@@ -133,13 +135,13 @@
   [[ "$output" == *"src_save"* ]]
 }
 
-@test "setup: QUIBBLE_DOCKER_FLAGS empty in background mode" {
+@test "setup: QUIBBLE_DOCKER_FLAGS has tmpfs in background mode" {
   run bash -c '
     export _QUIBBLE_NO_DOCKER_CHECK=1
     export QUIBBLE_BACKGROUND=1
     . lib/setup 2>/dev/null
-    echo "flags:${QUIBBLE_DOCKER_FLAGS[*]:-}:end"
+    echo "${QUIBBLE_DOCKER_FLAGS[@]}"
   '
   [ "$status" -eq 0 ]
-  [[ "$output" == *"flags::end"* ]]
+  [[ "$output" == *"--tmpfs /tmp:exec,size=4g"* ]] # RAM-backed /tmp matching CI
 }
