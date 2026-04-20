@@ -12,14 +12,21 @@
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
-# Get the latest Quibble Docker image
-docker pull "$QUIBBLE_IMAGE"
+# Create directory structure for bare repos (must exist before parallel clones)
+mkdir -p ref/mediawiki/skins ref/integration
 
 # Clone bare repos to use as local git references (avoids cloning from Gerrit each run).
 # If a repo already exists, fetch to update it.
-mkdir -p ref/mediawiki/skins # create directory structure for bare repos
+# All operations run in parallel since they are independent.
+pids=()      # array of background process IDs
+pid_names=() # array of descriptions (for error reporting)
 
-# Clone or fetch each core bare repo
+# Pull Docker image in background
+docker pull "$QUIBBLE_IMAGE" &
+pids+=($!) # $! is the PID of the last background process
+pid_names+=("docker pull $QUIBBLE_IMAGE")
+
+# Clone or fetch each core bare repo in background
 for ref_repo in \
   "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" \
   "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" \
@@ -28,11 +35,26 @@ for ref_repo in \
   ref_dir="${ref_repo%% *}"  # first word: local path (e.g. ref/mediawiki/core.git)
   ref_url="${ref_repo#* }"   # second word: Gerrit URL
   if [ -d "$ref_dir" ]; then
-    git -C "$ref_dir" fetch || true  # update existing bare repo (ignore errors if remote unreachable)
+    git -C "$ref_dir" fetch & # update existing bare repo in background
   else
-    git clone --bare "$ref_url" "$ref_dir" # clone new bare repo
+    git clone --bare "$ref_url" "$ref_dir" & # clone new bare repo in background
+  fi
+  pids+=($!)
+  pid_names+=("$ref_dir")
+done
+
+# Wait for all background jobs and report failures
+failed=0 # count of failed jobs
+for i in "${!pids[@]}"; do
+  if ! wait "${pids[$i]}"; then
+    echo "Warning: failed: ${pid_names[$i]}" >&2 # >&2 prints to stderr
+    failed=$((failed + 1))
   fi
 done
+
+if [ "$failed" -gt 0 ]; then
+  echo "Warning: $failed job(s) failed" >&2
+fi
 
 # Create working directories (chmod 777 because the container runs as a different user)
 mkdir -p cache log src
