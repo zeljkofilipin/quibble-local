@@ -117,7 +117,7 @@ Open a shell in the container with MediaWiki running at http://127.0.0.1:9413. A
 
 ### `./test_integration`
 
-Run fast integration tests (each entry takes a few minutes or less) and report which ones passed or failed. Useful for detecting regressions after changes. Slow entries (more than 10 minutes each) live in `./test_integration_slow`; known-flaky entries live in `./test_integration_flaky`. Silent by default; use `VERBOSE=1` for full output.
+Run fast integration tests (~20 minutes total) and report which ones passed or failed. Useful for detecting regressions after changes. Slow entries live in `./test_integration_slow`; known-flaky entries live in `./test_integration_flaky`. Silent by default; use `VERBOSE=1` for full output.
 
     ./test_integration
     VERBOSE=1 ./test_integration
@@ -126,7 +126,7 @@ Run fast integration tests (each entry takes a few minutes or less) and report w
 
 ### `./test_integration_slow`
 
-Run integration tests for long-running scripts (more than 10 minutes each). Separated from `./test_integration` so that suite can stay fast. Entries here are slow but deterministic — failures indicate real regressions in this repo, unlike `./test_integration_flaky` which is upstream-fragile. Silent by default; use `VERBOSE=1` for full output.
+Run integration tests that are too slow for the fast suite (`./test_integration`). Includes network-heavy setup, full test suites, exhaustive algorithms, and gated repository tests. Entries here are slow but deterministic — failures indicate real regressions in this repo, unlike `./test_integration_flaky` which is upstream-fragile. Silent by default; use `VERBOSE=1` for full output.
 
     ./test_integration_slow
     VERBOSE=1 ./test_integration_slow
@@ -135,7 +135,7 @@ Run integration tests for long-running scripts (more than 10 minutes each). Sepa
 
 ### `./test_integration_flaky`
 
-Run integration tests for flaky scripts (intermittent failures driven by upstream issues like broken submodules or Gerrit/Phabricator outages). Separated from `./test_integration` so that suite can stay fast and reliable. Failures here may reflect upstream issues rather than regressions in this repo. Entries are added based on observed instability, not naming — many scripts whose names contain `_gated` are reliable and live in `./test_integration`. Silent by default; use `VERBOSE=1` for full output.
+Run integration tests for flaky scripts (intermittent failures driven by upstream issues like broken submodules or Gerrit/Phabricator outages). Separated from `./test_integration` so that suite can stay fast and reliable. Failures here may reflect upstream issues rather than regressions in this repo. Entries are added based on observed instability, not naming — many scripts whose names contain `_gated` are reliable and live in `./test_integration_slow`. Silent by default; use `VERBOSE=1` for full output.
 
     ./test_integration_flaky
     VERBOSE=1 ./test_integration_flaky

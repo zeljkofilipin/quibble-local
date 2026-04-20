@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
-# Run all scripts and report which ones passed or failed.
+# Run fast integration tests and report which ones passed or failed.
 # Useful for detecting regressions after changes.
 # Each entry is annotated with its approximate runtime in minutes (or <1m).
-# WARNING: This will take a long time to run.
+# Total runtime: ~20 minutes.
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
 # Usage: ./test_integration
@@ -22,8 +22,8 @@ run_test ./lint                        # <1m: test that all scripts pass shellch
 run_test ./ci                          # <1m: test that CI lint passes in Docker
 
 # --- Setup and cleanup ---
-run_test ./prepare                     # <1m: test that prepare pulls image and clones repos
-run_test ./fetch                       # 2m: test fetching all bare repos (update stale repos before use)
+run_test ./prepare                     # 6m: test that prepare pulls image and clones repos
+run_test ./fetch                       # <1m: test fetching all bare repos (update stale repos before use)
 run_test ./fetch ref/mediawiki/core.git  # <1m: test fetching a specific repo
 run_test env PARALLEL=2 ./fetch        # <1m: test parallel fetch
 run_test ./fresh_install               # 1m: test fresh core install
@@ -67,21 +67,6 @@ run_test ./dependencies_optional skins/MinervaNeue  # <1m: test listing optional
 run_test ./dependencies_combinations skins/MinervaNeue  # <1m: test listing skin dependency combinations
 run_test ./gated                       # <1m: test listing gated repos
 run_test ./suggested_parallel              # <1m: test suggesting number of parallel workers
-
-# --- Finding minimum dependencies ---
-run_test ./dependencies_minimal_bottom_up extensions/Echo  # 6m: test bottom-up exhaustive (fast for Echo: 0 deps needed)
-run_test env PARALLEL=2 ./dependencies_minimal_bottom_up extensions/Echo  # 10m: test bottom-up with parallel mode
-
-# --- All gated repositories ---
-run_test ./prepare_gated               # 1m: test cloning bare repos for all gated repos
-run_test ./run_selenium_tests_all_gated extensions/Echo     # 6m: test run_selenium_tests_all_gated with a single extension
-run_test env FAST=1 ./run_selenium_tests_all_gated extensions/Echo  # 8m: test run_selenium_tests_all_gated with fast mode
-run_test env PARALLEL=2 ./run_selenium_tests_all_gated extensions/Echo  # 5m: test run_selenium_tests_all_gated with parallel mode
-run_test env PARALLEL=2 FAST=1 ./run_selenium_tests_all_gated extensions/Echo  # 6m: test run_selenium_tests_all_gated with parallel + fast mode
-run_test ./run_selenium_tests_required_gated extensions/Echo  # 4m: test run_selenium_tests_required_gated with a single extension
-run_test env FAST=1 ./run_selenium_tests_required_gated extensions/Echo  # 4m: test run_selenium_tests_required_gated with fast mode
-run_test env PARALLEL=2 ./run_selenium_tests_required_gated extensions/Echo  # 4m: test run_selenium_tests_required_gated with parallel mode
-run_test env PARALLEL=2 FAST=1 ./run_selenium_tests_required_gated extensions/Echo  # 4m: test run_selenium_tests_required_gated with parallel + fast mode
 
 # --- Cleanup ---
 run_test ./remove                       # <1m: test cleaning up src/
