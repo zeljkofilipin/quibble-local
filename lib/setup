@@ -57,8 +57,6 @@ elif [ "${VERBOSE:-}" = "1" ]; then
 else
   QUIBBLE_DOCKER_FLAGS=(-i)  # interactive only (no TTY = clean log output)
 fi
-# Use tmpfs for /tmp so database tests use RAM instead of disk, matching CI behavior
-QUIBBLE_DOCKER_FLAGS+=(--tmpfs "/tmp:exec,size=4g")
 
 # --- Trace output (verbose mode only) ---
 # In silent mode, skip set -x to keep output clean. Only show trace in verbose mode.
