@@ -6,7 +6,7 @@
 # and prints a dot per line of output.
 # Must be sourced after lib/batch_setup (which provides $verbose, $passed, $failed,
 # run_with_dots, _quibble_format_duration, utc_timestamp).
-# Sourced by test_integration, test_integration_slow, and test_integration_flaky.
+# Sourced by test_integration and test_integration_slow.
 # Usage: run_test ./help
 #        run_test env QUIBBLE_DEPS="" ./install extensions/Echo
 # shellcheck disable=SC2154 # verbose, failed, and passed are set by lib/batch_setup
