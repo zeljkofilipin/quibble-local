@@ -133,6 +133,28 @@
   [[ "$output" == *"src_save"* ]]
 }
 
+@test "setup: QUIBBLE_DRY_RUN is empty by default" {
+  run bash -c '
+    export _QUIBBLE_NO_DOCKER_CHECK=1
+    unset DRY_RUN
+    . lib/setup 2>/dev/null
+    echo "dry:${QUIBBLE_DRY_RUN[*]:-}:end"
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"dry::end"* ]]
+}
+
+@test "setup: QUIBBLE_DRY_RUN is --dry-run when DRY_RUN=1" {
+  run bash -c '
+    export _QUIBBLE_NO_DOCKER_CHECK=1
+    export DRY_RUN=1
+    . lib/setup 2>/dev/null
+    echo "${QUIBBLE_DRY_RUN[@]}"
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == "--dry-run" ]]
+}
+
 @test "setup: QUIBBLE_DOCKER_FLAGS empty in background mode" {
   run bash -c '
     export _QUIBBLE_NO_DOCKER_CHECK=1

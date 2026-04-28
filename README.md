@@ -56,6 +56,15 @@ Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directorie
 
     FAST=1 ./run_selenium_tests_all_gated
 
+### `DRY_RUN`
+
+`DRY_RUN=1` passes [`--dry-run`](https://doc.wikimedia.org/quibble/) to Quibble so it prints what it would do without actually running tests or installing anything. Useful for testing wrapper-script output (especially long-running commands) without paying the cost of a real run. Applies to `./fresh_install`, `./install`, `./run_selenium_tests`, and `./run_php_unit_tests`.
+
+    DRY_RUN=1 ./fresh_install
+    DRY_RUN=1 ./install extensions/Echo
+    DRY_RUN=1 ./run_selenium_tests extensions/Echo
+    DRY_RUN=1 ./run_php_unit_tests extensions/Echo
+
 ## Commands (same as mediawiki-quickstart)
 
 ### `./fresh_install`
@@ -64,6 +73,7 @@ Set up MediaWiki (without running tests). Runs `./prepare` first if needed, then
 
     ./fresh_install
     VERBOSE=1 ./fresh_install
+    DRY_RUN=1 ./fresh_install                                   # pass --dry-run to Quibble (no real install)
 
 See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
 
@@ -76,6 +86,7 @@ Install an extension or skin. Assumes `./fresh_install` has been run first. Run 
     VERBOSE=1 ./install extensions/Echo
     QUIBBLE_DEPS="" ./install extensions/Echo                    # no dependencies
     QUIBBLE_DEPS="EventLogging" ./install extensions/Echo        # only specific dependencies
+    DRY_RUN=1 ./install extensions/Echo                          # pass --dry-run to Quibble (no real install)
 
 Environment variables:
 
@@ -94,6 +105,7 @@ Run Selenium tests. Assumes `./fresh_install` (or `./install`) has been run firs
     ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"
     ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"
     VERBOSE=1 ./run_selenium_tests extensions/Echo
+    DRY_RUN=1 ./run_selenium_tests extensions/Echo  # pass --dry-run to Quibble (no real run)
 
 See: [Run tests targeting Quibble](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble)
 
@@ -105,6 +117,7 @@ Run PHPUnit tests. Assumes `./fresh_install` (or `./install`) has been run first
     ./run_php_unit_tests extensions/Echo
     ./run_php_unit_tests extensions/Echo --filter testNotificationCount
     VERBOSE=1 ./run_php_unit_tests extensions/Echo
+    DRY_RUN=1 ./run_php_unit_tests extensions/Echo  # pass --dry-run to Quibble (no real run)
 
 See: [Run tests targeting Quibble](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble)
 

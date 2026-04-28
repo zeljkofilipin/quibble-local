@@ -8,6 +8,7 @@
 # Usage: ./fresh_install
 #        ENVIRONMENT=0 ./fresh_install
 #        VERBOSE=1 ./fresh_install
+#        DRY_RUN=1 ./fresh_install                                   # pass --dry-run to Quibble (no real install)
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core
 #
@@ -35,12 +36,14 @@ docker_chmod cache log "$QUIBBLE_SRC" # make dirs world-writable for the contain
 # --rm: remove container on exit
 # --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
 # "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
+# "${QUIBBLE_DRY_RUN[@]}": --dry-run when DRY_RUN=1 (set by lib/setup); empty otherwise
 # --command true: install only, don't run tests ("true" exits immediately)
 cmd=(
   docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm
   --entrypoint=quibble-with-supervisord
   "${QUIBBLE_VOLUMES[@]}"
   "$QUIBBLE_IMAGE"
+  ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"}
   --command true
 )
 # Pretty-print the command (one option per line, framed by a '#' banner) so it stands

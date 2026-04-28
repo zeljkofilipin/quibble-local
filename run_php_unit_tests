@@ -6,6 +6,7 @@
 #        ./run_php_unit_tests extensions/Echo
 #        ENVIRONMENT=0 ./run_php_unit_tests extensions/Echo
 #        ./run_php_unit_tests extensions/Echo --filter testNotificationCount
+#        DRY_RUN=1 ./run_php_unit_tests extensions/Echo  # pass --dry-run to Quibble (no real run)
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble
 #

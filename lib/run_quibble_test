@@ -23,6 +23,7 @@ run_quibble_test() {
   # -e CI=true: tell Quibble this is a CI run
   # ${zuul_project[@]+"${zuul_project[@]}"}: bash 3.2 workaround to expand array
   #   only if non-empty (empty array with set -u would cause "unbound variable" error)
+  # "${QUIBBLE_DRY_RUN[@]}": --dry-run when DRY_RUN=1 (set by lib/setup); empty otherwise
   # --skip-zuul: don't clone repos (already in src/)
   # --skip-deps: don't install dependencies (already installed)
   local cmd=(
@@ -32,6 +33,7 @@ run_quibble_test() {
     -e CI=true
     ${zuul_project[@]+"${zuul_project[@]}"}
     "$QUIBBLE_IMAGE"
+    ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"}
     --skip-zuul
     --skip-deps
     "$@"

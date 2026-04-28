@@ -27,6 +27,7 @@ run_test ./fetch                       # <1m: test fetching all bare repos (upda
 run_test ./fetch ref/mediawiki/core.git  # <1m: test fetching a specific repo
 run_test env PARALLEL=2 ./fetch        # <1m: test parallel fetch
 run_test ./fresh_install               # 1m: test fresh core install
+run_test env DRY_RUN=1 ./fresh_install  # <1m: test DRY_RUN passes --dry-run to Quibble
 run_test ./save                        # <1m: test saving fresh_install state
 run_test ./restore                     # <1m: test restoring saved state
 run_test env ENVIRONMENT=0 ./fresh_install  # 1m: test environment isolation
@@ -42,6 +43,7 @@ run_test ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.gr
 
 # --- Extension tests (extensions/Echo) ---
 run_test ./install extensions/Echo     # 1m: test installing an extension
+run_test env DRY_RUN=1 ./install extensions/Echo  # <1m: test DRY_RUN passes --dry-run to Quibble
 run_test env QUIBBLE_DEPS="" ./install extensions/Echo  # 1m: test installing with no dependencies
 run_test env QUIBBLE_DEPS="EventLogging" ./install extensions/Echo  # 1m: test installing with specific dependencies
 run_test ./selenium_tests_exist extensions/Echo  # <1m: test that extension has Selenium tests
@@ -50,6 +52,7 @@ run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifi
 run_test ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"  # <1m: test filtering extension tests by grep
 run_test ./run_php_unit_tests extensions/Echo  # 2m: test running extension PHPUnit tests
 run_test ./run_php_unit_tests extensions/Echo --filter testNotificationCount  # <1m: test filtering PHPUnit tests
+run_test env DRY_RUN=1 ./run_php_unit_tests extensions/Echo  # <1m: test DRY_RUN passes --dry-run to Quibble
 
 # --- Skin tests (skins/MinervaNeue) ---
 run_test ./install skins/MinervaNeue  # 1m: test installing a skin (exercises skins/ code path)

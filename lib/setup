@@ -58,6 +58,17 @@ else
   QUIBBLE_DOCKER_FLAGS=(-i)  # interactive only (no TTY = clean log output)
 fi
 
+# --- Quibble --dry-run flag ---
+# DRY_RUN=1 passes --dry-run to Quibble so it prints what it would do without
+# actually running tests or installing anything. Useful for testing wrapper
+# script output without paying the cost of a real run.
+# shellcheck disable=SC2034 # used by scripts that source this file
+if [ "${DRY_RUN:-}" = "1" ]; then
+  QUIBBLE_DRY_RUN=(--dry-run)
+else
+  QUIBBLE_DRY_RUN=()
+fi
+
 # --- Trace output (verbose mode only) ---
 # In silent mode, skip set -x to keep output clean. Only show trace in verbose mode.
 if [ "${VERBOSE:-}" = "1" ]; then

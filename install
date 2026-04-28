@@ -10,6 +10,7 @@
 #        VERBOSE=1 ./install extensions/Echo
 #        QUIBBLE_DEPS="" ./install extensions/Echo                    # no dependencies
 #        QUIBBLE_DEPS="EventLogging" ./install extensions/Echo        # only specific dependencies
+#        DRY_RUN=1 ./install extensions/Echo                          # pass --dry-run to Quibble (no real install)
 #
 # QUIBBLE_DEPS: Override which dependencies to install (space-separated). When set, replaces
 #               the dependencies from zuul/dependencies.yaml. Set to empty string for no
@@ -50,6 +51,7 @@ clone_or_fetch "integration/config" # needed by ./dependencies
 # --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
 # "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
 # -e ZUUL_PROJECT: tell Quibble which extension/skin is the main project
+# "${QUIBBLE_DRY_RUN[@]}": --dry-run when DRY_RUN=1 (set by lib/setup); empty otherwise
 # --resolve-requires: let Quibble resolve and install PHP/extension dependencies
 # --command true: install only, don't run tests
 # ${deps[@]+"..."}: list of dependency repos to clone; ${arr[@]+"..."} is safe for empty arrays in bash 3.2
@@ -59,6 +61,7 @@ cmd=(
   "${QUIBBLE_VOLUMES[@]}"
   -e ZUUL_PROJECT="${repo}"
   "$QUIBBLE_IMAGE"
+  ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"}
   --resolve-requires
   --command true
   ${deps[@]+"${deps[@]}"}

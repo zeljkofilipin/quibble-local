@@ -29,3 +29,32 @@
   [[ "$output" == *"--run phpunit"* ]]
   [[ "$output" == *"fake-image:latest"* ]]
 }
+
+@test "run_quibble_test: passes --dry-run when QUIBBLE_DRY_RUN is set" {
+  # Verify DRY_RUN=1 (via QUIBBLE_DRY_RUN array from lib/setup) reaches Quibble.
+  run bash -c '
+    docker() { echo "stub-docker $*"; }
+    QUIBBLE_DOCKER_FLAGS=(-i)
+    QUIBBLE_VOLUMES=(-v /tmp:/tmp)
+    QUIBBLE_IMAGE=fake-image:latest
+    QUIBBLE_DRY_RUN=(--dry-run)
+    . '"$BATS_TEST_DIRNAME"'/../lib/run_quibble_test
+    run_quibble_test --run phpunit
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"--dry-run"* ]]
+}
+
+@test "run_quibble_test: omits --dry-run when QUIBBLE_DRY_RUN is empty" {
+  run bash -c '
+    docker() { echo "stub-docker $*"; }
+    QUIBBLE_DOCKER_FLAGS=(-i)
+    QUIBBLE_VOLUMES=(-v /tmp:/tmp)
+    QUIBBLE_IMAGE=fake-image:latest
+    QUIBBLE_DRY_RUN=()
+    . '"$BATS_TEST_DIRNAME"'/../lib/run_quibble_test
+    run_quibble_test --run phpunit
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" != *"--dry-run"* ]]
+}
