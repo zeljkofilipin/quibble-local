@@ -46,9 +46,6 @@ if [ $# -gt 0 ]; then
   exit 0
 fi
 
-# Print general note about silent/verbose modes
-printf "All commands are silent by default. Use VERBOSE=1 for full output.\n\n"
-
 # Find all user-facing scripts (files in root with bash shebang), sorted alphabetically.
 # Excludes lib/ files (internal helpers, not intended to be run directly).
 scripts=() # array of script names

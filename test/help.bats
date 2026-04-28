@@ -27,11 +27,6 @@
   [[ "$output" == *"Usage:"* ]]
 }
 
-@test "help: shows silent/verbose hint" {
-  run ./help
-  [[ "$output" == *"silent by default"* ]]
-}
-
 @test "help SCRIPT: shows detailed help for a script" {
   run ./help install
   [ "$status" -eq 0 ]
