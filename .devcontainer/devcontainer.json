@@ -20,6 +20,21 @@
   // the default `vscode` user in the base image.
   "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends shellcheck bats && curl -fsSL https://claude.ai/install.sh | bash",
 
+  // Persist Claude Code state (auto-memory, credentials, sessions, settings)
+  // across devcontainer rebuilds by bind-mounting a host directory. Stored
+  // outside the repo so personal state (credentials, sessions) cannot be
+  // accidentally committed. Create the host directory once before first build:
+  //   mkdir -p ~/.claude-devcontainers/quibble-local
+  "mounts": [
+    "source=${localEnv:HOME}/.claude-devcontainers/quibble-local,target=/home/vscode/.claude,type=bind"
+  ],
+
+  // Ensure the bind-mounted directory is owned by the `vscode` user inside the
+  // container. On Docker Desktop (Mac/Windows) this is a no-op (fakeowner), but
+  // on native Linux the host UID may not match, which would block Claude Code
+  // from writing to ~/.claude/.
+  "postStartCommand": "sudo chown -R vscode:vscode /home/vscode/.claude",
+
   "customizations": {
     "vscode": {
       // Extensions that match the tools used in this repo.
