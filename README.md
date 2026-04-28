@@ -416,7 +416,7 @@ Run a command, save output to a log file, and print a dot for each line of outpu
 
 ### `lib/debug_info`
 
-Outputs debug information (OS, bash, git, docker versions), checks basic prerequisites (git), shows a "use VERBOSE=1 for full output" hint in silent mode, and sets up duration tracking via `lib/duration_trap`. Sourced by all scripts.
+Outputs debug information (OS, CPU, RAM, bash, git, docker version, docker CPUs and RAM), checks basic prerequisites (git), shows a "use VERBOSE=1 for full output" hint in silent mode, and sets up duration tracking via `lib/duration_trap`. Sourced by all scripts.
 
 ### `lib/format_duration`
 

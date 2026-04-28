@@ -13,3 +13,18 @@
   run bash -c '. lib/debug_info'
   [ "$status" -eq 0 ]
 }
+
+@test "debug_info: _quibble_print_host_resources prints CPU and RAM" {
+  run bash -c '. lib/debug_info 2>/dev/null; _quibble_print_host_resources'
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"CPU:"* ]]
+  [[ "$output" == *"cores"* ]]
+  [[ "$output" == *"RAM:"* ]]
+  [[ "$output" == *"GB"* ]]
+}
+
+@test "debug_info: defines _quibble_print_docker_resources" {
+  run bash -c '. lib/debug_info 2>/dev/null; type _quibble_print_docker_resources'
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"function"* ]]
+}
