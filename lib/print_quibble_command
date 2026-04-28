@@ -1,0 +1,78 @@
+# shellcheck shell=bash
+# Pretty-print a docker command with one logical option per line, framed by a banner
+# of '#' so it stands out in busy logs. Each flag stays on the same line as its single
+# value (e.g. "-v X:Y" together) and continuation backslashes make the output a valid
+# copy-pasteable shell command. Must be sourced, not run directly.
+#
+# Usage: print_quibble_command docker run -it --rm -v X:Y IMAGE --command true
+
+print_quibble_command() {
+  # Save xtrace state and disable it so this function's internals don't flood verbose-mode
+  # output with set -x traces of every loop iteration. Bash 3.2 doesn't support `local -`,
+  # so we save/restore manually using $- (the current shell options).
+  local _xtrace_was_on=
+  case "$-" in *x*) _xtrace_was_on=1 ;; esac # 'x' present means set -x is on
+  set +x # disable xtrace for the rest of this function
+
+  # Walk the args and group flag+value pairs onto single lines. State machine:
+  #   mode=empty            no current line yet
+  #   mode=no_flag          current line is non-flag words only (e.g. "docker run")
+  #   mode=flag_no_value    current line is a flag still expecting its value (e.g. "-v")
+  #   mode=flag_with_value  current line is a flag with its value (e.g. "-v X:Y") OR --key=value
+  # Non-flag args extend a no_flag line, fill in a flag_no_value, or start a fresh
+  # positional line (image name) when the current line is already complete.
+  local lines=() current="" mode="empty" arg
+  for arg in "$@"; do
+    case "$arg" in
+      -*) # flag: emit current line (if any), start a new one with this flag
+        if [ -n "$current" ]; then lines+=("$current"); fi
+        current="$arg"
+        case "$arg" in
+          *=*) mode="flag_with_value" ;; # --key=value: embedded value, complete
+          *) mode="flag_no_value" ;;     # bare flag: may take a separate value
+        esac
+        ;;
+      *) # non-flag: depends on current mode
+        case "$mode" in
+          empty | no_flag) # extend a non-flag line (e.g. "docker" + "run")
+            if [ -z "$current" ]; then current="$arg"; else current="$current $arg"; fi
+            mode="no_flag"
+            ;;
+          flag_no_value) # fill in the flag's value (e.g. "-v" + "X:Y")
+            current="$current $arg"
+            mode="flag_with_value"
+            ;;
+          flag_with_value) # current line is complete; start a fresh positional (e.g. image name)
+            lines+=("$current")
+            current="$arg"
+            mode="no_flag"
+            ;;
+        esac
+        ;;
+    esac
+  done
+  if [ -n "$current" ]; then lines+=("$current"); fi # emit the last line
+
+  # Build a single output string with backslash-newline continuations so set -x traces it
+  # as one command (cleaner than printing line-by-line). First line flush left, the rest
+  # indented by 2 spaces, all but the last line end with " \\".
+  local output="" i=0 n=${#lines[@]}
+  while [ "$i" -lt "$n" ]; do
+    if [ "$i" -eq 0 ]; then
+      output+="${lines[i]}" # first line: no indent
+    else
+      output+="  ${lines[i]}" # subsequent lines: 2-space indent
+    fi
+    if [ "$i" -lt $((n - 1)) ]; then
+      output+=$' \\\n' # trailing backslash + newline (continuation)
+    fi
+    i=$((i + 1))
+  done
+
+  # Banner of '#' brackets the command so it's easy to find in busy logs. Single printf
+  # so set -x (if re-enabled below) only traces this once.
+  printf '########################################\n%s\n########################################\n' "$output"
+
+  # Restore xtrace if it was on at function entry
+  if [ "$_xtrace_was_on" = "1" ]; then set -x; fi
+}

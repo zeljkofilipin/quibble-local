@@ -3,12 +3,19 @@
 # Skips zuul clone and dependency installation (assumes ./fresh_install or ./install was run).
 # Must be sourced, not run directly. Expects lib/setup and lib/parse_component_args
 # to be sourced first (provides QUIBBLE_DOCKER_FLAGS, QUIBBLE_VOLUMES, QUIBBLE_IMAGE, zuul_project).
+# Sources lib/print_quibble_command itself so callers get pretty-printed command output.
 #
 # Usage: run_quibble_test QUIBBLE_ARGS...
 #   QUIBBLE_ARGS: arguments to pass to Quibble (e.g. --run selenium, --command "...")
 # shellcheck disable=SC2154 # variables are set by lib/setup and lib/parse_component_args
 
+# Source the pretty-print helper. Uses BASH_SOURCE (not $0) because this file is sourced by
+# other scripts, and $0 refers to the calling script, not this one (see lib/resolve_deps).
+# shellcheck source=lib/print_quibble_command
+. "$(dirname "${BASH_SOURCE[0]}")"/print_quibble_command
+
 run_quibble_test() {
+  # Build the docker command in an array so we can both print and execute it.
   # "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
   # --rm: remove container on exit
   # --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
@@ -18,13 +25,20 @@ run_quibble_test() {
   #   only if non-empty (empty array with set -u would cause "unbound variable" error)
   # --skip-zuul: don't clone repos (already in src/)
   # --skip-deps: don't install dependencies (already installed)
-  docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm \
-    --entrypoint=quibble-with-supervisord \
-    "${QUIBBLE_VOLUMES[@]}" \
-    -e CI=true \
-    ${zuul_project[@]+"${zuul_project[@]}"} \
-    "$QUIBBLE_IMAGE" \
-    --skip-zuul \
-    --skip-deps \
+  local cmd=(
+    docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm
+    --entrypoint=quibble-with-supervisord
+    "${QUIBBLE_VOLUMES[@]}"
+    -e CI=true
+    ${zuul_project[@]+"${zuul_project[@]}"}
+    "$QUIBBLE_IMAGE"
+    --skip-zuul
+    --skip-deps
     "$@"
+  )
+  # Pretty-print the command (one option per line, framed by a '#' banner) so it stands
+  # out in busy logs. In silent mode this lands in the log file; in verbose mode it also
+  # appears on the terminal.
+  print_quibble_command "${cmd[@]}"
+  "${cmd[@]}"
 }

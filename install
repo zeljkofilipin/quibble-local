@@ -32,6 +32,7 @@ ref_dir="ref/${repo}.git"           # e.g. "ref/mediawiki/extensions/Echo.git"
 
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 . "$(dirname "$0")"/lib/clone_or_fetch # provides clone_or_fetch function
+. "$(dirname "$0")"/lib/print_quibble_command # provides print_quibble_command function
 
 # Clone or fetch bare repos for the extension/skin and integration/config
 clone_or_fetch "$repo"              # e.g. "mediawiki/extensions/Echo"
@@ -43,7 +44,7 @@ clone_or_fetch "integration/config" # needed by ./dependencies
 # Sets the deps array with repo paths (e.g. "mediawiki/extensions/Echo").
 . "$(dirname "$0")"/lib/resolve_deps
 
-# Install extension/skin with its dependencies
+# Build the docker command in an array so we can both print and execute it.
 # "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
 # --rm: remove container on exit
 # --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
@@ -52,11 +53,18 @@ clone_or_fetch "integration/config" # needed by ./dependencies
 # --resolve-requires: let Quibble resolve and install PHP/extension dependencies
 # --command true: install only, don't run tests
 # ${deps[@]+"..."}: list of dependency repos to clone; ${arr[@]+"..."} is safe for empty arrays in bash 3.2
-docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm \
-  --entrypoint=quibble-with-supervisord \
-  "${QUIBBLE_VOLUMES[@]}" \
-  -e ZUUL_PROJECT="${repo}" \
-  "$QUIBBLE_IMAGE" \
-  --resolve-requires \
-  --command true \
+cmd=(
+  docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm
+  --entrypoint=quibble-with-supervisord
+  "${QUIBBLE_VOLUMES[@]}"
+  -e ZUUL_PROJECT="${repo}"
+  "$QUIBBLE_IMAGE"
+  --resolve-requires
+  --command true
   ${deps[@]+"${deps[@]}"}
+)
+# Pretty-print the command (one option per line, framed by a '#' banner) so it stands
+# out in busy logs. In silent mode this lands in the log file; in verbose mode it also
+# appears on the terminal.
+print_quibble_command "${cmd[@]}"
+"${cmd[@]}"

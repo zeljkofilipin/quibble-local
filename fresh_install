@@ -14,6 +14,7 @@
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 . "$(dirname "$0")"/lib/docker_chmod # provides docker_chmod function
+. "$(dirname "$0")"/lib/print_quibble_command # provides print_quibble_command function
 
 # Run prepare if bare repos haven't been cloned yet
 if [ ! -d ref/mediawiki/core.git ]; then
@@ -29,14 +30,21 @@ fi
 mkdir -p cache log "$QUIBBLE_SRC"
 docker_chmod cache log "$QUIBBLE_SRC" # make dirs world-writable for the container user
 
-# Install MediaWiki and open a shell
+# Build the docker command in an array so we can both print and execute it.
 # "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
 # --rm: remove container on exit
 # --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
 # "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
 # --command true: install only, don't run tests ("true" exits immediately)
-docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm \
-  --entrypoint=quibble-with-supervisord \
-  "${QUIBBLE_VOLUMES[@]}" \
-  "$QUIBBLE_IMAGE" \
+cmd=(
+  docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm
+  --entrypoint=quibble-with-supervisord
+  "${QUIBBLE_VOLUMES[@]}"
+  "$QUIBBLE_IMAGE"
   --command true
+)
+# Pretty-print the command (one option per line, framed by a '#' banner) so it stands
+# out in busy logs. In silent mode this lands in the log file; in verbose mode it also
+# appears on the terminal.
+print_quibble_command "${cmd[@]}"
+"${cmd[@]}"
