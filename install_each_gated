@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+#
+# Install each gated extension or skin into its own fresh MediaWiki, one at a time.
+# For each component: fresh_install, then install. Reports per-step and total duration.
+# Unlike install_all_gated (which stacks everything into one MediaWiki), this gives each
+# component a clean MediaWiki so per-component install times are comparable.
+# WARNING: Without arguments, this will take a very long time to run (50+ components).
+# WARNING: This script inhibits sleep to prevent the machine from suspending.
+#
+# Usage: ./install_each_gated
+#        ./install_each_gated extensions/Echo
+#        VERBOSE=1 ./install_each_gated
+#        FAST=1 ./install_each_gated
+#        PARALLEL=$(./suggested_parallel) ./install_each_gated
+#        PARALLEL=4 FAST=1 ./install_each_gated
+# FAST=1: Runs fresh_install once, saves state, then restores instead of re-running fresh_install.
+# PARALLEL=N: Run N components in parallel (each in isolated src_worker_$i/ directory).
+#             Use ./suggested_parallel to determine N for your machine.
+#
+
+# No set -euo pipefail: we want to continue after failures to collect all results
+
+. "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking, duration
+fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-running
+parallel="${PARALLEL:-1}" # PARALLEL=N runs N components in parallel (default 1 = sequential)
+
+# --- Build list of gated components ---
+. "$(dirname "$0")"/lib/build_component_list # sets components[] from $1 or ./gated
+
+if [ "$parallel" -le 1 ]; then
+  # --- Sequential mode ---
+  # IFS= preserves whitespace in component names; -r prevents backslash interpretation.
+  # <&3 reads from file descriptor 3 instead of stdin, because docker's -it flag needs stdin.
+  # 3< <(...) is process substitution: connects array output to fd 3.
+  while IFS= read -r component <&3; do
+    print_header "$component"
+    # Restore from saved state in fast mode, or run fresh_install
+    if [ -n "$fast" ] && [ -d "${QUIBBLE_SAVE:-src_save}" ]; then
+      core_ok=false; run_step "$component" ./restore && core_ok=true
+    else
+      core_ok=false; run_step "$component" ./fresh_install && core_ok=true
+      # Save state after first successful fresh_install for fast mode
+      if [ "$core_ok" = true ] && [ -n "$fast" ]; then
+        run_step "$component" ./save
+      fi
+    fi
+    if [ "$core_ok" = true ]; then # skip install if core setup fails
+      run_step "$component" ./install "$component" # install extension/skin
+    fi
+    record_passed "$component"
+    printf " %s\n" "$(utc_timestamp)" # print UTC timestamp after component
+  done 3< <(printf '%s\n' "${components[@]}")
+
+else
+  # --- Parallel mode ---
+  printf "\nParallel mode: %d workers\n" "$parallel"
+
+  if [ -n "$fast" ] && [ ! -d "${QUIBBLE_SAVE:-src_save}" ]; then
+    # Fast mode needs a saved state. Run fresh_install + save first.
+    print_header "setup (fresh_install + save)"
+    if run_step setup ./fresh_install; then
+      run_step setup ./save
+    else
+      printf "\nfresh_install failed. Cannot proceed.\n"
+      exit 1
+    fi
+    printf " %s\n" "$(utc_timestamp)"
+  fi
+
+  # Define worker function: restore/fresh_install → install.
+  # Runs inside a background subshell via lib/run_waves.
+  # $1: result_file path to write pass/fail
+  # $2: component name (e.g. "extensions/Echo")
+  _run_worker() {
+    local result_file="$1" # path to write "pass" or "fail"
+    local component="$2"   # e.g. "extensions/Echo"
+
+    # Common worker setup: set environment, redirect output, restore/fresh_install
+    . lib/worker_init
+
+    # Install extension/skin
+    if ./install "$component"; then
+      echo "pass" > "$result_file"
+    else
+      echo "fail" > "$result_file"
+    fi
+  }
+
+  # Define result collector: record pass/fail for each component.
+  # $1: component name
+  # $2: result string (pass/fail/empty)
+  # $3: worker number (1-based)
+  _collect_result() {
+    local component="$1" result="$2" worker_num="$3"
+    if [ "$result" = "pass" ]; then
+      printf "  %s: ok\n" "$component"
+      passed="$passed
+  $component" # append component on a new indented line
+    else
+      printf "  %s: FAIL (see log/silent/worker-%d/%s.log)\n" "$component" "$worker_num" "${component//\//-}"
+      failed="$failed
+  $component" # append component on a new indented line
+    fi
+  }
+
+  # Run all components in parallel waves
+  items=("${components[@]}") # lib/run_waves expects items[] array
+  . "$(dirname "$0")"/lib/run_waves
+fi
+
+# Print pass/fail summary and exit with error if any component failed
+print_results
