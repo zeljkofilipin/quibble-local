@@ -1,0 +1,140 @@
+./ci
+  Run the same checks that GitLab CI runs, using Docker.
+  Usage: ./ci
+
+./dependencies
+  Output dependencies for an extension or skin.
+  Usage: ./dependencies extensions/Echo
+
+./dependencies_combinations
+  Output all possible combinations of dependencies for an extension or skin.
+  Usage: ./dependencies_combinations extensions/Echo
+
+./dependencies_minimal
+  Find the minimum dependencies needed for a repository's Selenium tests to pass.
+  Usage: ./dependencies_minimal extensions/Echo
+
+./dependencies_minimal_bottom_up
+  Find the minimum dependencies needed for a repository's Selenium tests to pass.
+  Usage: ./dependencies_minimal_bottom_up extensions/Echo
+
+./dependencies_minimal_gated
+  Find minimum dependencies for all gated repositories (or a single component).
+  Usage: ./dependencies_minimal_gated
+
+./dependencies_minimal_thorough
+  Find and verify the minimum dependencies needed for a repository's Selenium tests to pass.
+  Usage: ./dependencies_minimal_thorough extensions/Echo
+
+./dependencies_optional
+  Output optional dependencies for an extension or skin.
+  Usage: ./dependencies_optional extensions/Echo
+
+./dependencies_required
+  Output required dependencies for an extension or skin from its extension.json or skin.json.
+  Usage: ./dependencies_required extensions/GrowthExperiments
+
+./fetch
+  Fetch the latest changes for bare git repos in ref/ from Gerrit.
+  Usage: ./fetch
+
+./fresh_install
+  Installs MediaWiki core (without running tests).
+  Usage: ./fresh_install
+
+./gated
+  Output the list of gated repositories (extensions and skins).
+  Usage: ./gated
+
+./help
+  List all scripts with their description and usage.
+  Usage: ./help
+
+./install
+  Installs an extension or skin (and its dependencies) into an existing MediaWiki core.
+  Usage: ./install extensions/Echo
+
+./install_all_gated
+  Install all gated extensions and skins into a single MediaWiki.
+  Usage: ./install_all_gated
+
+./lint
+  Run shellcheck on all shell scripts in the repo.
+  Usage: ./lint
+
+./prepare
+  Prepare the local environment for running Quibble.
+  Usage: ./prepare
+
+./prepare_gated
+  Clone or fetch bare repos for all gated repositories.
+  Usage: ./prepare_gated
+
+./remove
+  Remove src/ (MediaWiki source code).
+  Usage: ./remove
+
+./remove_deep
+  Remove everything quibble-local created, leaving only the git repo itself.
+  Usage: ./remove_deep
+
+./remove_src
+  Remove all src directories across all environments.
+  Usage: ./remove_src
+
+./restore
+  Restore src/ from a previously saved state (created by ./save).
+  Usage: ./restore
+
+./run_php_unit_tests
+  Run PHPUnit tests. Skips installation (assumes ./fresh_install or ./install has been run first).
+  Usage: ./run_php_unit_tests
+
+./run_selenium_tests
+  Run Selenium tests. Skips installation (assumes ./fresh_install or ./install has been run first).
+  Usage: ./run_selenium_tests
+
+./run_selenium_tests_all_gated
+  Run Selenium tests for core and all gated repositories (or a single component).
+  Usage: ./run_selenium_tests_all_gated
+
+./run_selenium_tests_gated
+  Install all gated extensions and skins into a single MediaWiki, then run all Selenium tests.
+  Usage: ./run_selenium_tests_gated
+
+./run_selenium_tests_required_gated
+  Run Selenium tests for all gated repositories (or a single component) using only required dependencies.
+  Usage: ./run_selenium_tests_required_gated
+
+./save
+  Save the current state of src/ (MediaWiki installation) for fast restore later.
+  Usage: ./save
+
+./selenium_tests_exist
+  Check if a component has Selenium tests.
+  Usage: ./selenium_tests_exist
+
+./shellto
+  Open a shell in the container with MediaWiki running.
+  Usage: ./shellto
+
+./suggested_parallel
+  Suggest the number of parallel workers for batch scripts.
+  Usage: ./suggested_parallel
+
+./test_integration
+  Run fast integration tests and report which ones passed or failed.
+  Usage: ./test_integration
+
+./test_integration_slow
+  Run integration tests that are too slow for the fast suite (./test_integration).
+  Usage: ./test_integration_slow
+
+./test_remove_deep
+  Run remove_deep, then run all tests. Slower but starts from a clean state.
+  Usage: ./test_remove_deep
+
+./test_unit
+  Run Bats unit tests.
+  Usage: ./test_unit
+
