@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#
+# Generate an example output file by running a command and capturing its output.
+# Used to refresh the example .txt files in examples/ that show typical command output.
+# Writes "$ <command>" header followed by a blank line and the captured output (stdout+stderr).
+# The captured command is allowed to fail (its exit status is not propagated) so that
+# usage-on-failure outputs (e.g. ./install with no args) can also be captured.
+#
+# Usage: ./generate_examples examples/help.txt './help'
+#        ./generate_examples examples/install.txt './install'
+#
+set -euo pipefail # exit on error, undefined vars, or pipe failures
+. "$(dirname "$0")"/lib/duration_trap # print elapsed time on exit (no debug_info: this is a short utility, no VERBOSE mode)
+
+# Require exactly two arguments: output file path and the command to run as a single string
+if [ "$#" -ne 2 ]; then
+  echo "Usage: ./generate_examples <output_file> '<command>'" >&2 # >&2 prints to stderr
+  exit 1
+fi
+
+file="$1" # path of the example file to write (e.g. examples/help.txt)
+cmd="$2"  # command to run, as a single string (e.g. './help install')
+
+# Switch to the script's directory (project root) so relative paths and ./scripts work
+# regardless of where this is invoked from. $0 may be relative or absolute; dirname handles both.
+cd "$(dirname "$0")"
+
+echo "Generating $file..." # progress message so the user sees what's being generated
+
+# Write the "$ <cmd>" header followed by a blank line. Truncates the file if it existed.
+printf '$ %s\n\n' "$cmd" > "$file"
+
+# Run the command and append stdout+stderr to the file.
+# eval is needed because $cmd is a single string with arguments and quoting baked in.
+# || true lets the script continue when the captured command exits non-zero (common
+# for usage-on-failure outputs); without it, set -e would abort before "Done!".
+eval "$cmd" >> "$file" 2>&1 || true
+
+echo "Done!" # signal completion to the user

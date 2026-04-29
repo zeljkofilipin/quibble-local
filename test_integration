@@ -20,6 +20,7 @@ run_test ./help                        # <1m: test that help output works
 run_test ./help install                # <1m: test detailed help for a specific script
 run_test ./lint                        # <1m: test that all scripts pass shellcheck
 run_test ./ci                          # <1m: test that CI lint passes in Docker
+run_test ./generate_examples log/generate_examples_test.txt './help'  # <1m: test capturing a command's output to a file
 
 # --- Setup and cleanup ---
 run_test ./prepare                     # 6m: test that prepare pulls image and clones repos

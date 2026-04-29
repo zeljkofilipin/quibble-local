@@ -428,6 +428,13 @@ Run `./remove_deep` first, then `./test_integration`. Slower but starts from a c
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending (via `./test_integration`).
 
+### `./generate_examples`
+
+Generate an example output file by running a command and capturing its output. Used to refresh the example `.txt` files in `examples/`. Writes a `$ <command>` header followed by the captured stdout+stderr. The captured command is allowed to fail, so usage-on-failure outputs can also be captured.
+
+    ./generate_examples examples/help.txt './help'
+    ./generate_examples examples/install.txt './install'
+
 ## Internal scripts (`lib/`)
 
 These are sourced by other scripts and are not intended to be run directly.
