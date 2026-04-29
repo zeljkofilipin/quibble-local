@@ -1,2 +1,4 @@
+$ ./fetch ref/mediawiki/core.git
+
 From https://gerrit.wikimedia.org/r/mediawiki/core
  * branch                    HEAD       -> FETCH_HEAD

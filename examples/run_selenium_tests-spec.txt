@@ -1,25 +1,28 @@
+$ ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js
+
 ########################################
 docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
   -e CI=true \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --skip-zuul \
   --skip-deps \
   --command npm run selenium-test -- --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js
 ########################################
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 + /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
-2026-04-29 11:08:26,264 INFO Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
-2026-04-29 11:08:26,267 INFO RPC interface 'supervisor' initialized
-2026-04-29 11:08:26,267 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-04-29 14:58:55,371 INFO Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
+2026-04-29 14:58:55,374 INFO RPC interface 'supervisor' initialized
+2026-04-29 14:58:55,374 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-04-29 14:58:55,376 INFO daemonizing the supervisord process
+2026-04-29 14:58:55,376 CRIT could not write pidfile /var/run/supervisord.pid
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --skip-zuul --skip-deps --command 'npm run selenium-test -- --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js'
-2026-04-29 11:08:26,268 INFO daemonizing the supervisord process
-2026-04-29 11:08:26,269 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -58,26 +61,26 @@ INFO:quibble.commands:Copyright (c) The PHP Group
 INFO:quibble.commands:Zend Engine v4.3.30, Copyright (c) Zend Technologies
 INFO:quibble.commands:    with Zend OPcache v8.3.30, Copyright (c), by Zend Technologies
 INFO:quibble.commands:psql --version: psql (PostgreSQL) 13.23 (Debian 13.23-0+deb11u3)
-INFO:quibble.commands:<<< Finish: Versions, in 0.172 s
+INFO:quibble.commands:<<< Finish: Versions, in 0.604 s
 INFO:quibble.commands:>>> Start: Ensure dir: '/workspace/log'
-INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.000 s
+INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.001 s
 INFO:quibble.commands:>>> Start: Start backends: <MySQL (no socket)>
 INFO:backend.MySQL:Starting MySQL
 INFO:backend.MySQL:Initializing MySQL data directory
-2026-04-29 11:08:27,272 INFO spawned: 'apache' with pid 118
-2026-04-29 11:08:27,274 INFO spawned: 'memcached' with pid 119
-2026-04-29 11:08:27,275 INFO spawned: 'php-fpm' with pid 120
-2026-04-29 11:08:27,301 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-04-29 14:58:56,381 INFO spawned: 'apache' with pid 71
+2026-04-29 14:58:56,382 INFO spawned: 'memcached' with pid 72
+2026-04-29 14:58:56,383 INFO spawned: 'php-fpm' with pid 73
+2026-04-29 14:58:56,494 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
 INFO:backend.MySQL:Waiting for MySQL socket
-2026-04-29 11:08:28,326 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2026-04-29 11:08:28,326 INFO success: memcached entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2026-04-29 14:58:57,584 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2026-04-29 14:58:57,584 INFO success: memcached entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 INFO:backend.MySQL:Creating the wiki database and grant
 INFO:backend.MySQL:MySQL is ready
-INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 1.984 s
+INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 2.267 s
 INFO:quibble.commands:>>> Start: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=1):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-0qo53v73/socket>
-INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-0qo53v73/socket>
-INFO:mw.maintenance.install:php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-0qo53v73/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-pycul2m_/socket>
+INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-pycul2m_/socket>
+INFO:mw.maintenance.install:php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-pycul2m_/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
 PHP 8.3.30 is installed.
 ICU 67.1 is installed (supports Unicode 13.0.0).
 Found ImageMagick: /usr/bin/convert. Image thumbnailing will be enabled if you enable uploads.
@@ -166,20 +169,20 @@ Fixing log entries with log_title starting with 'User:#'
 done.
 Skipped 34 updates that were already applied.
 Purging caches...
-Done in 0.1 s.
+Done in 0.2 s.
 INFO:mw.maintenance.rebuildLocalisationCache:php maintenance/rebuildLocalisationCache.php --lang en
 Rebuilding en...
 1 languages rebuilt out of 1
-INFO:quibble.commands:<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-0qo53v73/socket>, in 2.818 s
+INFO:quibble.commands:<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-pycul2m_/socket>, in 3.384 s
 INFO:quibble.commands:<<< Finish: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=1):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-0qo53v73/socket>, in 2.819 s
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-pycul2m_/socket>, in 3.384 s
 INFO:quibble.commands:>>> Start: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ExternalWebserver:Not starting a webserver.
 INFO:backend.Xvfb:Starting Xvfb on display :94
 INFO:backend.ChromeWebDriver:Starting Chromedriver
 INFO:quibble.use_headless:Display: :94
 DEBUG:quibble.chromium_flags:Flags: ['--autoplay-policy=no-user-gesture-required', '--disable-pushstate-throttle', '--no-sandbox']
-INFO:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.005 s
+INFO:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.006 s
 INFO:quibble.commands:>>> Start: User commands: npm run selenium-test -- --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js
 INFO:quibble.commands:User commands, working directory: /workspace/src
 
@@ -188,14 +191,14 @@ INFO:quibble.commands:User commands, working directory: /workspace/src
 
 Edit link visible
 Run test targeting http://127.0.0.1:9413/
-[System information] Memory (host): 12488.0 MB (12.49 GB) free
-[System information] RAM used by NodeJS 129.1 MB
-[System information] CPU: 4 cores
+[System information] Memory (host): 13946.5 MB (13.95 GB) free
+[System information] RAM used by NodeJS 166.4 MB
+[System information] CPU: 10 cores
 [Package information] WebdriverIO: 9.23.2
 [Package information] wdio-mediawiki: 6.5.1
-[Configuration] maxInstances 3 (max test suites running in parallel) 
+[Configuration] maxInstances 7 (max test suites running in parallel) 
 
-Execution of 1 workers started at 2026-04-29T11:08:35.150Z
+Execution of 1 workers started at 2026-04-29T14:59:10.742Z
 
 [0-0] RUNNING in chrome - file:///tests/selenium/wdio-mediawiki/specs/BlankPage.js
 [0-0] [Browser information] chrome-headless-shell 120.0.6099.224 viewPort 1280x1024
@@ -204,38 +207,38 @@ Execution of 1 workers started at 2026-04-29T11:08:35.150Z
  "spec" Reporter:
 ------------------------------------------------------------------
 [chrome-headless-shell 120.0.6099.224 linux #0-0] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-0] Session ID: 47e3b6d3ab90d92dbed29c53f05ace25
+[chrome-headless-shell 120.0.6099.224 linux #0-0] Session ID: 180d2d0bf32b71ea20171a6cee1700d0
 [chrome-headless-shell 120.0.6099.224 linux #0-0]
 [chrome-headless-shell 120.0.6099.224 linux #0-0] » tests/selenium/wdio-mediawiki/specs/BlankPage.js
 [chrome-headless-shell 120.0.6099.224 linux #0-0] BlankPage
 [chrome-headless-shell 120.0.6099.224 linux #0-0]    ✓ should have its title
 [chrome-headless-shell 120.0.6099.224 linux #0-0]
-[chrome-headless-shell 120.0.6099.224 linux #0-0] 1 passing (429ms)
+[chrome-headless-shell 120.0.6099.224 linux #0-0] 1 passing (1.6s)
 
 
-Spec Files:	 1 passed, 1 total (100% completed) in 00:00:02  
+Spec Files:	 1 passed, 1 total (100% completed) in 00:00:06  
 
-INFO:quibble.commands:<<< Finish: User commands: npm run selenium-test -- --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js, in 6.649 s
+INFO:quibble.commands:<<< Finish: User commands: npm run selenium-test -- --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js, in 15.566 s
 INFO:quibble.commands:Shutting down backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ChromeWebDriver:Terminating ChromeWebDriver
 INFO:backend.Xvfb:Terminating Xvfb
-INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-0qo53v73/socket>
+INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-pycul2m_/socket>
 INFO:backend.MySQL:Terminating MySQL
 INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
                        [ REPORT FOR COMMAND DURATIONS ]
 
-╒════════╤═══════════════════════════════════════════════════════════════════╕
-│ 0.000s │ Report durations                                                  │
-│ 0.172s │ Versions                                                          │
-│ 0.000s │ Ensure dir: '/workspace/log'                                      │
-│ 1.984s │ Start backends: <MySQL (no socket)>                               │
-│ 2.818s │ Install MediaWiki, db=<MySQL /tmp/quibble-mysql-0qo53v73/socket>  │
-│ 2.819s │ Run Post-dependency install, pre-database dependent steps in      │
-│        │ parallel (concurrency=1): * Install MediaWiki, db=<MySQL          │
-│        │ /tmp/quibble-mysql-0qo53v73/socket>                               │
-│ 0.005s │ Start backends: <ExternalWebserver http://127.0.0.1:9413          │
-│        │ /workspace/src> <Xvfb :94> <ChromeWebDriver :94>                  │
-│ 6.649s │ User commands: npm run selenium-test -- --spec                    │
-│        │ tests/selenium/wdio-mediawiki/specs/BlankPage.js                  │
-╘════════╧═══════════════════════════════════════════════════════════════════╛
+╒═════════╤══════════════════════════════════════════════════════════════════╕
+│  0.000s │ Report durations                                                 │
+│  0.604s │ Versions                                                         │
+│  0.001s │ Ensure dir: '/workspace/log'                                     │
+│  2.267s │ Start backends: <MySQL (no socket)>                              │
+│  3.384s │ Install MediaWiki, db=<MySQL /tmp/quibble-mysql-pycul2m_/socket> │
+│  3.384s │ Run Post-dependency install, pre-database dependent steps in     │
+│         │ parallel (concurrency=1): * Install MediaWiki, db=<MySQL         │
+│         │ /tmp/quibble-mysql-pycul2m_/socket>                              │
+│  0.006s │ Start backends: <ExternalWebserver http://127.0.0.1:9413         │
+│         │ /workspace/src> <Xvfb :94> <ChromeWebDriver :94>                 │
+│ 15.566s │ User commands: npm run selenium-test -- --spec                   │
+│         │ tests/selenium/wdio-mediawiki/specs/BlankPage.js                 │
+╘═════════╧══════════════════════════════════════════════════════════════════╛

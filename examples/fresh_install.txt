@@ -1,22 +1,37 @@
+$ ./fresh_install
+
+Cloning into bare repository 'ref/mediawiki/core.git'...
+latest: Pulling from releng/quibble-bullseye-php83
+Digest: sha256:e457fcd1fcf776e25f7c5e321a3989eee1a2727ea62ab9cc2c49fa985e1f1a5d
+Status: Image is up to date for docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+From https://gerrit.wikimedia.org/r/mediawiki/vendor
+ * branch                HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/integration/config
+ * branch                HEAD       -> FETCH_HEAD
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 ########################################
 docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --command true
 ########################################
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 + /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
-2026-04-29 10:33:29,756 INFO Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
-2026-04-29 10:33:29,759 INFO RPC interface 'supervisor' initialized
-2026-04-29 10:33:29,759 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-04-29 10:33:29,760 INFO daemonizing the supervisord process
+2026-04-29 14:48:13,629 INFO Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
+2026-04-29 14:48:13,633 INFO RPC interface 'supervisor' initialized
+2026-04-29 14:48:13,633 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-04-29 14:48:13,635 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --command true
-2026-04-29 10:33:29,761 CRIT could not write pidfile /var/run/supervisord.pid
+2026-04-29 14:48:13,636 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -46,6 +61,9 @@ INFO:quibble.commands:<<< Finish: Report durations, in 0.000 s
 INFO:quibble.commands:>>> Start: Versions
 INFO:quibble.commands:Python version: 3.9.2 (default, Apr 14 2026, 04:38:32) 
 [GCC 10.2.1 20210110]
+2026-04-29 14:48:14,643 INFO spawned: 'apache' with pid 62
+2026-04-29 14:48:14,645 INFO spawned: 'memcached' with pid 63
+2026-04-29 14:48:14,647 INFO spawned: 'php-fpm' with pid 64
 INFO:quibble.commands:chromedriver --version: ChromeDriver 120.0.6099.224 (3587067cafd6f5b1e567380acb485d96e623ef39-refs/branch-heads/6099@{#1761})
 INFO:quibble.commands:chromium --version: Chromium 120.0.6099.224 built on Debian 11.8, running on Debian 11.11
 INFO:quibble.commands:composer --version: Composer version 2.9.7 2026-04-14 13:31:52
@@ -59,9 +77,9 @@ INFO:quibble.commands:Copyright (c) The PHP Group
 INFO:quibble.commands:Zend Engine v4.3.30, Copyright (c) Zend Technologies
 INFO:quibble.commands:    with Zend OPcache v8.3.30, Copyright (c), by Zend Technologies
 INFO:quibble.commands:psql --version: psql (PostgreSQL) 13.23 (Debian 13.23-0+deb11u3)
-INFO:quibble.commands:<<< Finish: Versions, in 0.205 s
+INFO:quibble.commands:<<< Finish: Versions, in 0.681 s
 INFO:quibble.commands:>>> Start: Ensure dir: '/workspace/log'
-INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.000 s
+INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.003 s
 INFO:quibble.commands:>>> Start: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src"}
 INFO:zuul.CloneMapper:Workspace path set to: /workspace/src
 INFO:zuul.CloneMapper:Mapping projects to workspace...
@@ -72,28 +90,25 @@ INFO:zuul.CloneMapper:Expansion completed.
 INFO:quibble.zuul.clone:Preparing 3 repositories with 4 workers
 INFO:quibble.zuul.clone:Cloning mediawiki/core first
 INFO:zuul.Cloner:Creating repo mediawiki/core from cache /srv/git/mediawiki/core.git
-2026-04-29 10:33:30,763 INFO spawned: 'apache' with pid 63
-2026-04-29 10:33:30,766 INFO spawned: 'memcached' with pid 64
-2026-04-29 10:33:30,772 INFO spawned: 'php-fpm' with pid 69
-2026-04-29 10:33:30,807 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
-2026-04-29 10:33:31,831 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2026-04-29 10:33:31,831 INFO success: memcached entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2026-04-29 14:48:14,767 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-04-29 14:48:15,920 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2026-04-29 14:48:15,920 INFO success: memcached entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 INFO:zuul.Cloner:Updating origin remote in repo mediawiki/core to https://gerrit.wikimedia.org/r/mediawiki/core
 INFO:zuul.Cloner:Falling back to branch master
-INFO:zuul.Cloner:Prepared mediawiki/core repo with branch master at commit af35f1ba2a537ef6fdface5f354fe124bd87e34a
-INFO:zuul.Cloner.mediawiki/vendor:Creating repo mediawiki/vendor from cache /srv/git/mediawiki/vendor.git
+INFO:zuul.Cloner:Prepared mediawiki/core repo with branch master at commit aebf626ef22c7479b2c88453bd60e8e6be6c4632
 INFO:zuul.Cloner.mediawiki/skins/Vector:Creating repo mediawiki/skins/Vector from cache /srv/git/mediawiki/skins/Vector.git
+INFO:zuul.Cloner.mediawiki/vendor:Creating repo mediawiki/vendor from cache /srv/git/mediawiki/vendor.git
 INFO:zuul.Cloner.mediawiki/skins/Vector:Updating origin remote in repo mediawiki/skins/Vector to https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
-INFO:zuul.Cloner.mediawiki/vendor:Updating origin remote in repo mediawiki/vendor to https://gerrit.wikimedia.org/r/mediawiki/vendor
 INFO:zuul.Cloner.mediawiki/skins/Vector:Falling back to branch master
 INFO:zuul.Cloner.mediawiki/skins/Vector:Prepared mediawiki/skins/Vector repo with branch master at commit 1bebb1505ed826c44ab363a0307d005279ca9205
+INFO:zuul.Cloner.mediawiki/vendor:Updating origin remote in repo mediawiki/vendor to https://gerrit.wikimedia.org/r/mediawiki/vendor
 INFO:zuul.Cloner.mediawiki/vendor:Falling back to branch master
 INFO:zuul.Cloner.mediawiki/vendor:Prepared mediawiki/vendor repo with branch master at commit 427dab3c11a29a5cd1ec9be744a93015b2e272e2
 INFO:quibble.zuul.clone:Prepared all repositories
-INFO:quibble.commands:<<< Finish: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src"}, in 13.045 s
+INFO:quibble.commands:<<< Finish: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src"}, in 26.401 s
 INFO:quibble.commands:>>> Start: Submodule update: /workspace/src
 INFO:quibble.commands:Updating git submodules of extensions and skins
-INFO:quibble.commands:<<< Finish: Submodule update: /workspace/src, in 0.000 s
+INFO:quibble.commands:<<< Finish: Submodule update: /workspace/src, in 0.002 s
 INFO:quibble.commands:>>> Start: Install composer dev-requires for vendor.git
 INFO:quibble.commands:mediawiki/vendor is used, add require-dev dependencies
 DEBUG:quibble.commands:composer require --dev composer/spdx-licenses=1.5.9 doctrine/dbal=3.10.5 doctrine/sql-formatter=1.5.4 ergebnis/phpunit-slow-test-detector=2.24.0 ext-simplexml=* giorgiosironi/eris=^0.14.0 hamcrest/hamcrest-php=^2.0 mediawiki/mediawiki-codesniffer=50.0.0 mediawiki/mediawiki-phan-config=0.20.0 mediawiki/minus-x=2.0.1 nikic/php-parser=^5.5.0 php-parallel-lint/php-console-highlighter=1.0.0 php-parallel-lint/php-parallel-lint=1.4.0 phpunit/phpunit=9.6.34 psy/psysh=^0.12.19 seld/jsonlint=1.11.0 wikimedia/alea=1.0.1 wikimedia/langconv=^0.5.0 wikimedia/testing-access-wrapper=4.0.0 wmde/hamcrest-html-matchers=^1.0.0
@@ -179,65 +194,6 @@ Updates: psy/psysh:v0.12.22
 [32mPackage operations: 58 installs, 1 update, 0 removals[39m
 Installs: squizlabs/php_codesniffer:3.13.5, dealerdirect/phpcodesniffer-composer-installer:v1.2.0, composer/pcre:3.3.2, psr/cache:3.0.0, doctrine/event-manager:2.1.1, doctrine/deprecations:1.1.6, doctrine/dbal:3.10.5, doctrine/sql-formatter:1.5.4, sebastian/version:3.0.2, sebastian/type:3.2.1, sebastian/resource-operations:3.0.4, sebastian/recursion-context:4.0.6, sebastian/object-reflector:2.0.4, sebastian/object-enumerator:4.0.4, sebastian/global-state:5.0.8, sebastian/exporter:4.0.8, sebastian/environment:5.1.5, sebastian/diff:4.0.6, sebastian/comparator:4.0.10, sebastian/code-unit:1.0.8, sebastian/cli-parser:1.0.2, phpunit/php-timer:5.0.3, phpunit/php-text-template:2.0.4, phpunit/php-invoker:3.1.1, phpunit/php-file-iterator:3.0.6, theseer/tokenizer:1.3.1, sebastian/lines-of-code:1.0.4, sebastian/complexity:2.0.3, sebastian/code-unit-reverse-lookup:2.0.3, phpunit/php-code-coverage:9.2.32, phar-io/version:3.2.1, phar-io/manifest:2.0.4, myclabs/deep-copy:1.13.4, doctrine/instantiator:2.0.0, phpunit/phpunit:9.6.34, ergebnis/phpunit-slow-test-detector:2.24.0, giorgiosironi/eris:0.14.1, phpcsstandards/phpcsutils:1.2.2, phpcsstandards/phpcsextra:1.4.0, composer/spdx-licenses:1.5.9, mediawiki/mediawiki-codesniffer:v50.0.0, sabre/event:6.1.0, phan/var_representation_polyfill:0.1.4, phan/tolerant-php-parser:v0.2.0, netresearch/jsonmapper:v5.0.1, danog/advanced-json-rpc:v3.2.3, composer/xdebug-handler:3.0.5, phan/phan:6.0.2, mediawiki/phan-taint-check-plugin:9.1.0, mediawiki/mediawiki-phan-config:0.20.0, mediawiki/minus-x:2.0.1, php-parallel-lint/php-console-color:v1.0.1, php-parallel-lint/php-console-highlighter:v1.0.0, php-parallel-lint/php-parallel-lint:v1.4.0, seld/jsonlint:1.11.0, wikimedia/alea:1.0.1, hamcrest/hamcrest-php:v2.1.1, wmde/hamcrest-html-matchers:v1.1.0
 Updates: psy/psysh:v0.12.22
-  - Downloading [32msquizlabs/php_codesniffer[39m ([33m3.13.5[39m)
-  - Downloading [32mdealerdirect/phpcodesniffer-composer-installer[39m ([33mv1.2.0[39m)
-  - Downloading [32mcomposer/pcre[39m ([33m3.3.2[39m)
-  - Downloading [32mpsr/cache[39m ([33m3.0.0[39m)
-  - Downloading [32mdoctrine/event-manager[39m ([33m2.1.1[39m)
-  - Downloading [32mdoctrine/deprecations[39m ([33m1.1.6[39m)
-  - Downloading [32mdoctrine/dbal[39m ([33m3.10.5[39m)
-  - Downloading [32mdoctrine/sql-formatter[39m ([33m1.5.4[39m)
-  - Downloading [32msebastian/version[39m ([33m3.0.2[39m)
-  - Downloading [32msebastian/type[39m ([33m3.2.1[39m)
-  - Downloading [32msebastian/resource-operations[39m ([33m3.0.4[39m)
-  - Downloading [32msebastian/recursion-context[39m ([33m4.0.6[39m)
-  - Downloading [32msebastian/object-reflector[39m ([33m2.0.4[39m)
-  - Downloading [32msebastian/object-enumerator[39m ([33m4.0.4[39m)
-  - Downloading [32msebastian/global-state[39m ([33m5.0.8[39m)
-  - Downloading [32msebastian/exporter[39m ([33m4.0.8[39m)
-  - Downloading [32msebastian/environment[39m ([33m5.1.5[39m)
-  - Downloading [32msebastian/diff[39m ([33m4.0.6[39m)
-  - Downloading [32msebastian/comparator[39m ([33m4.0.10[39m)
-  - Downloading [32msebastian/code-unit[39m ([33m1.0.8[39m)
-  - Downloading [32msebastian/cli-parser[39m ([33m1.0.2[39m)
-  - Downloading [32mphpunit/php-timer[39m ([33m5.0.3[39m)
-  - Downloading [32mphpunit/php-text-template[39m ([33m2.0.4[39m)
-  - Downloading [32mphpunit/php-invoker[39m ([33m3.1.1[39m)
-  - Downloading [32mphpunit/php-file-iterator[39m ([33m3.0.6[39m)
-  - Downloading [32mtheseer/tokenizer[39m ([33m1.3.1[39m)
-  - Downloading [32msebastian/lines-of-code[39m ([33m1.0.4[39m)
-  - Downloading [32msebastian/complexity[39m ([33m2.0.3[39m)
-  - Downloading [32msebastian/code-unit-reverse-lookup[39m ([33m2.0.3[39m)
-  - Downloading [32mphpunit/php-code-coverage[39m ([33m9.2.32[39m)
-  - Downloading [32mphar-io/version[39m ([33m3.2.1[39m)
-  - Downloading [32mphar-io/manifest[39m ([33m2.0.4[39m)
-  - Downloading [32mmyclabs/deep-copy[39m ([33m1.13.4[39m)
-  - Downloading [32mdoctrine/instantiator[39m ([33m2.0.0[39m)
-  - Downloading [32mphpunit/phpunit[39m ([33m9.6.34[39m)
-  - Downloading [32mergebnis/phpunit-slow-test-detector[39m ([33m2.24.0[39m)
-  - Downloading [32mgiorgiosironi/eris[39m ([33m0.14.1[39m)
-  - Downloading [32mphpcsstandards/phpcsutils[39m ([33m1.2.2[39m)
-  - Downloading [32mphpcsstandards/phpcsextra[39m ([33m1.4.0[39m)
-  - Downloading [32mcomposer/spdx-licenses[39m ([33m1.5.9[39m)
-  - Downloading [32mmediawiki/mediawiki-codesniffer[39m ([33mv50.0.0[39m)
-  - Downloading [32msabre/event[39m ([33m6.1.0[39m)
-  - Downloading [32mphan/var_representation_polyfill[39m ([33m0.1.4[39m)
-  - Downloading [32mphan/tolerant-php-parser[39m ([33mv0.2.0[39m)
-  - Downloading [32mnetresearch/jsonmapper[39m ([33mv5.0.1[39m)
-  - Downloading [32mdanog/advanced-json-rpc[39m ([33mv3.2.3[39m)
-  - Downloading [32mcomposer/xdebug-handler[39m ([33m3.0.5[39m)
-  - Downloading [32mphan/phan[39m ([33m6.0.2[39m)
-  - Downloading [32mmediawiki/phan-taint-check-plugin[39m ([33m9.1.0[39m)
-  - Downloading [32mmediawiki/mediawiki-phan-config[39m ([33m0.20.0[39m)
-  - Downloading [32mmediawiki/minus-x[39m ([33m2.0.1[39m)
-  - Downloading [32mphp-parallel-lint/php-console-color[39m ([33mv1.0.1[39m)
-  - Downloading [32mphp-parallel-lint/php-console-highlighter[39m ([33mv1.0.0[39m)
-  - Downloading [32mphp-parallel-lint/php-parallel-lint[39m ([33mv1.4.0[39m)
-  - Downloading [32mpsy/psysh[39m ([33mv0.12.22[39m)
-  - Downloading [32mseld/jsonlint[39m ([33m1.11.0[39m)
-  - Downloading [32mwikimedia/alea[39m ([33m1.0.1[39m)
-  - Downloading [32mhamcrest/hamcrest-php[39m ([33mv2.1.1[39m)
-  - Downloading [32mwmde/hamcrest-html-matchers[39m ([33mv1.1.0[39m)
   - Installing [32msquizlabs/php_codesniffer[39m ([33m3.13.5[39m): Extracting archive
 > post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
   - Installing [32mdealerdirect/phpcodesniffer-composer-installer[39m ([33mv1.2.0[39m): Extracting archive
@@ -375,19 +331,19 @@ Generated optimized autoload files (authoritative) containing 7933 classes
 INFO:quibble.util:Copying /workspace/src/composer.json to /workspace/log/composer.core.json.txt
 INFO:quibble.util:Copying /workspace/src/vendor/composer.json to /workspace/log/composer.vendor.json.txt
 INFO:quibble.util:Copying /workspace/src/vendor/composer/autoload_files.php to /workspace/log/composer.autoload_files.php.txt
-INFO:quibble.commands:<<< Finish: Install composer dev-requires for vendor.git, in 11.933 s
+INFO:quibble.commands:<<< Finish: Install composer dev-requires for vendor.git, in 20.764 s
 INFO:quibble.commands:>>> Start: Start backends: <MySQL (no socket)>
 INFO:backend.MySQL:Starting MySQL
 INFO:backend.MySQL:Initializing MySQL data directory
 INFO:backend.MySQL:Waiting for MySQL socket
 INFO:backend.MySQL:Creating the wiki database and grant
 INFO:backend.MySQL:MySQL is ready
-INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 2.018 s
+INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 2.269 s
 INFO:quibble.commands:>>> Start: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-9jhhuch_/socket>
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-jwk9wg9j/socket>
 * npm install in /workspace/src
-INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-9jhhuch_/socket>
-php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-9jhhuch_/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
+INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-jwk9wg9j/socket>
+php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-jwk9wg9j/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
 PHP 8.3.30 is installed.
 ICU 67.1 is installed (supports Unicode 13.0.0).
 Found ImageMagick: /usr/bin/convert. Image thumbnailing will be enabled if you enable uploads.
@@ -480,13 +436,14 @@ Done in 0.2 s.
 php maintenance/rebuildLocalisationCache.php --lang en
 Rebuilding en...
 1 languages rebuilt out of 1
-<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-9jhhuch_/socket>, in 2.540 s
+<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-jwk9wg9j/socket>, in 4.171 s
 
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 10s elapsed, 1/2 completed
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 20s elapsed, 1/2 completed
+DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 30s elapsed, 1/2 completed
 INFO:quibble.commands:>>> Start: npm install in /workspace/src
 
-added 1714 packages, and audited 1716 packages in 30s
+added 1714 packages, and audited 1716 packages in 35s
 
 240 packages are looking for funding
   run `npm fund` for details
@@ -500,30 +457,25 @@ To address all issues (including breaking changes), run:
   npm audit fix --force
 
 Run `npm audit` for details.
-npm notice
-npm notice New minor version of npm available! 11.11.0 -> 11.13.0
-npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.13.0
-npm notice To update run: npm install -g npm@11.13.0
-npm notice
-<<< Finish: npm install in /workspace/src, in 29.855 s
+<<< Finish: npm install in /workspace/src, in 35.311 s
 
 INFO:quibble.commands:<<< Finish: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-9jhhuch_/socket>
-* npm install in /workspace/src, in 29.875 s
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-jwk9wg9j/socket>
+* npm install in /workspace/src, in 35.328 s
 INFO:quibble.commands:>>> Start: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ExternalWebserver:Not starting a webserver.
 INFO:backend.Xvfb:Starting Xvfb on display :94
 INFO:backend.ChromeWebDriver:Starting Chromedriver
 INFO:quibble.use_headless:Display: :94
 DEBUG:quibble.chromium_flags:Flags: ['--autoplay-policy=no-user-gesture-required', '--disable-pushstate-throttle', '--no-sandbox']
-INFO:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.019 s
+INFO:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.007 s
 INFO:quibble.commands:>>> Start: User commands: true
 INFO:quibble.commands:User commands, working directory: /workspace/src
-INFO:quibble.commands:<<< Finish: User commands: true, in 0.006 s
+INFO:quibble.commands:<<< Finish: User commands: true, in 0.021 s
 INFO:quibble.commands:Shutting down backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ChromeWebDriver:Terminating ChromeWebDriver
 INFO:backend.Xvfb:Terminating Xvfb
-INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-9jhhuch_/socket>
+INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-jwk9wg9j/socket>
 INFO:backend.MySQL:Terminating MySQL
 INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
@@ -531,20 +483,20 @@ INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
 ╒═════════╤══════════════════════════════════════════════════════════════════╕
 │  0.000s │ Report durations                                                 │
-│  0.205s │ Versions                                                         │
-│  0.000s │ Ensure dir: '/workspace/log'                                     │
-│ 13.045s │ Zuul clone {"cache_dir": "/srv/git", "projects":                 │
+│  0.681s │ Versions                                                         │
+│  0.003s │ Ensure dir: '/workspace/log'                                     │
+│ 26.401s │ Zuul clone {"cache_dir": "/srv/git", "projects":                 │
 │         │ ["mediawiki/core", "mediawiki/skins/Vector",                     │
 │         │ "mediawiki/vendor"], "workers": 4, "workspace":                  │
 │         │ "/workspace/src"}                                                │
-│  0.000s │ Submodule update: /workspace/src                                 │
-│ 11.933s │ Install composer dev-requires for vendor.git                     │
-│  2.018s │ Start backends: <MySQL (no socket)>                              │
-│ 29.875s │ Run Post-dependency install, pre-database dependent steps in     │
+│  0.002s │ Submodule update: /workspace/src                                 │
+│ 20.764s │ Install composer dev-requires for vendor.git                     │
+│  2.269s │ Start backends: <MySQL (no socket)>                              │
+│ 35.328s │ Run Post-dependency install, pre-database dependent steps in     │
 │         │ parallel (concurrency=2): * Install MediaWiki, db=<MySQL         │
-│         │ /tmp/quibble-mysql-9jhhuch_/socket> * npm install in             │
+│         │ /tmp/quibble-mysql-jwk9wg9j/socket> * npm install in             │
 │         │ /workspace/src                                                   │
-│  0.019s │ Start backends: <ExternalWebserver http://127.0.0.1:9413         │
+│  0.007s │ Start backends: <ExternalWebserver http://127.0.0.1:9413         │
 │         │ /workspace/src> <Xvfb :94> <ChromeWebDriver :94>                 │
-│  0.006s │ User commands: true                                              │
+│  0.021s │ User commands: true                                              │
 ╘═════════╧══════════════════════════════════════════════════════════════════╛

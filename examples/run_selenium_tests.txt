@@ -1,25 +1,28 @@
+$ ./run_selenium_tests
+
 ########################################
 docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
   -e CI=true \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --skip-zuul \
   --skip-deps \
   --run selenium
 ########################################
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 + /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
-2026-04-29 11:02:59,039 INFO Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
-2026-04-29 11:02:59,043 INFO RPC interface 'supervisor' initialized
-2026-04-29 11:02:59,043 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-04-29 14:50:10,594 INFO Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
+2026-04-29 14:50:10,597 INFO RPC interface 'supervisor' initialized
+2026-04-29 14:50:10,598 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-04-29 14:50:10,599 INFO daemonizing the supervisord process
+2026-04-29 14:50:10,600 CRIT could not write pidfile /var/run/supervisord.pid
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --skip-zuul --skip-deps --run selenium
-2026-04-29 11:02:59,045 INFO daemonizing the supervisord process
-2026-04-29 11:02:59,046 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -58,26 +61,26 @@ INFO:quibble.commands:Copyright (c) The PHP Group
 INFO:quibble.commands:Zend Engine v4.3.30, Copyright (c) Zend Technologies
 INFO:quibble.commands:    with Zend OPcache v8.3.30, Copyright (c), by Zend Technologies
 INFO:quibble.commands:psql --version: psql (PostgreSQL) 13.23 (Debian 13.23-0+deb11u3)
-INFO:quibble.commands:<<< Finish: Versions, in 0.567 s
+INFO:quibble.commands:<<< Finish: Versions, in 0.617 s
 INFO:quibble.commands:>>> Start: Ensure dir: '/workspace/log'
-INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.000 s
+INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.002 s
 INFO:quibble.commands:>>> Start: Start backends: <MySQL (no socket)>
 INFO:backend.MySQL:Starting MySQL
 INFO:backend.MySQL:Initializing MySQL data directory
-2026-04-29 11:03:00,049 INFO spawned: 'apache' with pid 106
-2026-04-29 11:03:00,051 INFO spawned: 'memcached' with pid 107
-2026-04-29 11:03:00,054 INFO spawned: 'php-fpm' with pid 108
-2026-04-29 11:03:00,096 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
-2026-04-29 11:03:01,128 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2026-04-29 11:03:01,129 INFO success: memcached entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2026-04-29 14:50:11,604 INFO spawned: 'apache' with pid 71
+2026-04-29 14:50:11,605 INFO spawned: 'memcached' with pid 72
+2026-04-29 14:50:11,606 INFO spawned: 'php-fpm' with pid 73
+2026-04-29 14:50:11,719 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
 INFO:backend.MySQL:Waiting for MySQL socket
+2026-04-29 14:50:12,815 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2026-04-29 14:50:12,815 INFO success: memcached entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 INFO:backend.MySQL:Creating the wiki database and grant
 INFO:backend.MySQL:MySQL is ready
-INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 3.023 s
+INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 2.286 s
 INFO:quibble.commands:>>> Start: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=1):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-zr2uz43a/socket>
-INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-zr2uz43a/socket>
-INFO:mw.maintenance.install:php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-zr2uz43a/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-fgq_txs8/socket>
+INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-fgq_txs8/socket>
+INFO:mw.maintenance.install:php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-fgq_txs8/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
 PHP 8.3.30 is installed.
 ICU 67.1 is installed (supports Unicode 13.0.0).
 Found ImageMagick: /usr/bin/convert. Image thumbnailing will be enabled if you enable uploads.
@@ -166,24 +169,24 @@ Fixing log entries with log_title starting with 'User:#'
 done.
 Skipped 34 updates that were already applied.
 Purging caches...
-Done in 0.3 s.
+Done in 0.2 s.
 INFO:mw.maintenance.rebuildLocalisationCache:php maintenance/rebuildLocalisationCache.php --lang en
 Rebuilding en...
 1 languages rebuilt out of 1
-INFO:quibble.commands:<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-zr2uz43a/socket>, in 5.623 s
+INFO:quibble.commands:<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-fgq_txs8/socket>, in 3.362 s
 INFO:quibble.commands:<<< Finish: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=1):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-zr2uz43a/socket>, in 5.623 s
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-fgq_txs8/socket>, in 3.362 s
 INFO:quibble.commands:>>> Start: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ExternalWebserver:Not starting a webserver.
 INFO:backend.Xvfb:Starting Xvfb on display :94
 INFO:backend.ChromeWebDriver:Starting Chromedriver
 INFO:quibble.use_headless:Display: :94
 DEBUG:quibble.chromium_flags:Flags: ['--autoplay-policy=no-user-gesture-required', '--disable-pushstate-throttle', '--no-sandbox']
-INFO:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.009 s
+INFO:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.006 s
 INFO:quibble.commands:>>> Start: Run all browser tests
 INFO:quibble.commands:>>> Start: Browser tests in 'mediawiki/core'
 
-added 1714 packages, and audited 1716 packages in 22s
+added 1714 packages, and audited 1716 packages in 42s
 
 240 packages are looking for funding
   run `npm fund` for details
@@ -203,57 +206,84 @@ Run `npm audit` for details.
 
 Edit link visible
 Run test targeting http://127.0.0.1:9413/
-[System information] Memory (host): 12514.6 MB (12.51 GB) free
-[System information] RAM used by NodeJS 128.0 MB
-[System information] CPU: 4 cores
+[System information] Memory (host): 13889.0 MB (13.89 GB) free
+[System information] RAM used by NodeJS 163.0 MB
+[System information] CPU: 10 cores
 [Package information] WebdriverIO: 9.23.2
 [Package information] wdio-mediawiki: 6.5.1
-[Configuration] maxInstances 3 (max test suites running in parallel) 
+[Configuration] maxInstances 7 (max test suites running in parallel) 
 [1m[22m
-[1mExecution of [34m13[39m workers started at[22m 2026-04-29T11:03:34.895Z
+[1mExecution of [34m13[39m workers started at[22m 2026-04-29T14:51:09.748Z
 
-[0-1] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/specs/pageadmin.js
 [0-2] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/specs/recentchanges.js
+[0-1] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/specs/pageadmin.js
 [0-0] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/specs/page.js
-[0-0] [Browser information] chrome-headless-shell 120.0.6099.224 viewPort 1280x1024
-[0-2] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/specs/recentchanges.js
 [0-3] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/specs/temporaryuser.js
-[0-1] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/specs/pageadmin.js
-[0-3] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/specs/temporaryuser.js
 [0-4] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/specs/temporaryuseraccount.js
-[0-5] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/specs/user.js
-[0-0] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/specs/page.js
-[0-4] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/specs/temporaryuseraccount.js
 [0-6] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/docs/Create_a_simple_test/specs/specialpages.js
-[0-7] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/docs/Page_object_pattern/specs/login.js
+[0-5] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/specs/user.js
+[0-0] [Browser information] chrome-headless-shell 120.0.6099.224 viewPort 1280x1024
 [0-6] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/docs/Create_a_simple_test/specs/specialpages.js
-[0-7] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/docs/Page_object_pattern/specs/login.js
+[0-3] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/specs/temporaryuser.js
+[0-4] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/specs/temporaryuseraccount.js
+[0-2] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/specs/recentchanges.js
+[0-7] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/docs/Page_object_pattern/specs/login.js
 [0-8] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/docs/Stack/specs/expect.js
 [0-9] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/docs/Stack/specs/mocha.js
-[0-8] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/docs/Stack/specs/expect.js
+[0-10] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/docs/Stack/specs/pageobject.js
+[0-1] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/specs/pageadmin.js
 [0-5] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/specs/user.js
+[0-8] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/docs/Stack/specs/expect.js
 [0-9] Edit link visible
 [0-9] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/docs/Stack/specs/mocha.js
-[0-10] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/docs/Stack/specs/pageobject.js
+[0-7] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/docs/Page_object_pattern/specs/login.js
+[0-10] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/docs/Stack/specs/pageobject.js
 [0-11] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/docs/Use_MediaWiki_API/specs/api.js
 [0-12] [1m[36mRUNNING[39m[22m in chrome - file:///tests/selenium/wdio-mediawiki/specs/BlankPage.js
+[0-0] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/specs/page.js
 [0-11] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/docs/Use_MediaWiki_API/specs/api.js
-[0-10] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/docs/Stack/specs/pageobject.js
 [0-12] [1m[32mPASSED[39m[22m in chrome - file:///tests/selenium/wdio-mediawiki/specs/BlankPage.js
 
  [1m[35m"spec" Reporter:[39m[22m
 ------------------------------------------------------------------
+[chrome-headless-shell 120.0.6099.224 linux #0-6] Running: chrome-headless-shell (v120.0.6099.224) on linux
+[chrome-headless-shell 120.0.6099.224 linux #0-6] Session ID: df276c289f6413ecbd530d45d3e2c9a5
+[chrome-headless-shell 120.0.6099.224 linux #0-6]
+[chrome-headless-shell 120.0.6099.224 linux #0-6] » tests/selenium/docs/Create_a_simple_test/specs/specialpages.js
+[chrome-headless-shell 120.0.6099.224 linux #0-6] Special:SpecialPages
+[chrome-headless-shell 120.0.6099.224 linux #0-6]    [32m✓[39m should not have Edit link
+[chrome-headless-shell 120.0.6099.224 linux #0-6]
+[chrome-headless-shell 120.0.6099.224 linux #0-6] [32m1 passing (4.5s)[39m
+------------------------------------------------------------------
+[chrome-headless-shell 120.0.6099.224 linux #0-3] Running: chrome-headless-shell (v120.0.6099.224) on linux
+[chrome-headless-shell 120.0.6099.224 linux #0-3] Session ID: 93cef7969e6ef9703994a8c4a1651347
+[chrome-headless-shell 120.0.6099.224 linux #0-3]
+[chrome-headless-shell 120.0.6099.224 linux #0-3] » tests/selenium/specs/temporaryuser.js
+[chrome-headless-shell 120.0.6099.224 linux #0-3] Temporary user
+[chrome-headless-shell 120.0.6099.224 linux #0-3]    [32m✓[39m should not see signup form fields relevant to named users
+[chrome-headless-shell 120.0.6099.224 linux #0-3]
+[chrome-headless-shell 120.0.6099.224 linux #0-3] [32m1 passing (6s)[39m
+------------------------------------------------------------------
+[chrome-headless-shell 120.0.6099.224 linux #0-4] Running: chrome-headless-shell (v120.0.6099.224) on linux
+[chrome-headless-shell 120.0.6099.224 linux #0-4] Session ID: e234390372d96ac6eb4b8936de40f385
+[chrome-headless-shell 120.0.6099.224 linux #0-4]
+[chrome-headless-shell 120.0.6099.224 linux #0-4] » tests/selenium/specs/temporaryuseraccount.js
+[chrome-headless-shell 120.0.6099.224 linux #0-4] Temporary user account creation
+[chrome-headless-shell 120.0.6099.224 linux #0-4]    [32m✓[39m should be able to create account
+[chrome-headless-shell 120.0.6099.224 linux #0-4]
+[chrome-headless-shell 120.0.6099.224 linux #0-4] [32m1 passing (7.2s)[39m
+------------------------------------------------------------------
 [chrome-headless-shell 120.0.6099.224 linux #0-2] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-2] Session ID: 522085bef67ba35452ba24c7a4ee22ad
+[chrome-headless-shell 120.0.6099.224 linux #0-2] Session ID: 2420366186ba806d7d6fb3799833e7cd
 [chrome-headless-shell 120.0.6099.224 linux #0-2]
 [chrome-headless-shell 120.0.6099.224 linux #0-2] » tests/selenium/specs/recentchanges.js
 [chrome-headless-shell 120.0.6099.224 linux #0-2] Special:RecentChanges
 [chrome-headless-shell 120.0.6099.224 linux #0-2]    [32m✓[39m shows page creation
 [chrome-headless-shell 120.0.6099.224 linux #0-2]
-[chrome-headless-shell 120.0.6099.224 linux #0-2] [32m1 passing (4.2s)[39m
+[chrome-headless-shell 120.0.6099.224 linux #0-2] [32m1 passing (7.8s)[39m
 ------------------------------------------------------------------
 [chrome-headless-shell 120.0.6099.224 linux #0-1] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-1] Session ID: 7094ab516088108020a679366e601c1b
+[chrome-headless-shell 120.0.6099.224 linux #0-1] Session ID: d4a9c2d9bb5b21ec79116e5fba3d4137
 [chrome-headless-shell 120.0.6099.224 linux #0-1]
 [chrome-headless-shell 120.0.6099.224 linux #0-1] » tests/selenium/specs/pageadmin.js
 [chrome-headless-shell 120.0.6099.224 linux #0-1] Page admin actions
@@ -261,19 +291,58 @@ Run test targeting http://127.0.0.1:9413/
 [chrome-headless-shell 120.0.6099.224 linux #0-1]    [32m✓[39m should be restorable
 [chrome-headless-shell 120.0.6099.224 linux #0-1]    [32m✓[39m should be protectable
 [chrome-headless-shell 120.0.6099.224 linux #0-1]
-[chrome-headless-shell 120.0.6099.224 linux #0-1] [32m3 passing (7.8s)[39m
+[chrome-headless-shell 120.0.6099.224 linux #0-1] [32m3 passing (14.7s)[39m
 ------------------------------------------------------------------
-[chrome-headless-shell 120.0.6099.224 linux #0-3] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-3] Session ID: f5f922ce4c07b2118299b3238337db3f
-[chrome-headless-shell 120.0.6099.224 linux #0-3]
-[chrome-headless-shell 120.0.6099.224 linux #0-3] » tests/selenium/specs/temporaryuser.js
-[chrome-headless-shell 120.0.6099.224 linux #0-3] Temporary user
-[chrome-headless-shell 120.0.6099.224 linux #0-3]    [32m✓[39m should not see signup form fields relevant to named users
-[chrome-headless-shell 120.0.6099.224 linux #0-3]
-[chrome-headless-shell 120.0.6099.224 linux #0-3] [32m1 passing (2.3s)[39m
+[chrome-headless-shell 120.0.6099.224 linux #0-5] Running: chrome-headless-shell (v120.0.6099.224) on linux
+[chrome-headless-shell 120.0.6099.224 linux #0-5] Session ID: 01542d704622668c7aa1373fc9cf2104
+[chrome-headless-shell 120.0.6099.224 linux #0-5]
+[chrome-headless-shell 120.0.6099.224 linux #0-5] » tests/selenium/specs/user.js
+[chrome-headless-shell 120.0.6099.224 linux #0-5] User
+[chrome-headless-shell 120.0.6099.224 linux #0-5]    [32m✓[39m should be able to create account
+[chrome-headless-shell 120.0.6099.224 linux #0-5]    [32m✓[39m should be able to log in
+[chrome-headless-shell 120.0.6099.224 linux #0-5]    [32m✓[39m named user should see extra signup form fields when creating an account
+[chrome-headless-shell 120.0.6099.224 linux #0-5]    [32m✓[39m should be able to block a user
+[chrome-headless-shell 120.0.6099.224 linux #0-5]
+[chrome-headless-shell 120.0.6099.224 linux #0-5] [32m4 passing (15.8s)[39m
+------------------------------------------------------------------
+[chrome-headless-shell 120.0.6099.224 linux #0-8] Running: chrome-headless-shell (v120.0.6099.224) on linux
+[chrome-headless-shell 120.0.6099.224 linux #0-8] Session ID: 7d5ed926c7ecbbca722ad1442240f8ab
+[chrome-headless-shell 120.0.6099.224 linux #0-8]
+[chrome-headless-shell 120.0.6099.224 linux #0-8] » tests/selenium/docs/Stack/specs/expect.js
+[chrome-headless-shell 120.0.6099.224 linux #0-8] Main page
+[chrome-headless-shell 120.0.6099.224 linux #0-8]    [32m✓[39m should have edit link when using expect
+[chrome-headless-shell 120.0.6099.224 linux #0-8]
+[chrome-headless-shell 120.0.6099.224 linux #0-8] [32m1 passing (2.5s)[39m
+------------------------------------------------------------------
+[chrome-headless-shell 120.0.6099.224 linux #0-9] Running: chrome-headless-shell (v120.0.6099.224) on linux
+[chrome-headless-shell 120.0.6099.224 linux #0-9] Session ID: a53ced01aaf10c4e3f53744afb76f19d
+[chrome-headless-shell 120.0.6099.224 linux #0-9]
+[chrome-headless-shell 120.0.6099.224 linux #0-9] » tests/selenium/docs/Stack/specs/mocha.js
+[chrome-headless-shell 120.0.6099.224 linux #0-9] Main page
+[chrome-headless-shell 120.0.6099.224 linux #0-9]    [32m✓[39m should have edit link when using mocha
+[chrome-headless-shell 120.0.6099.224 linux #0-9]
+[chrome-headless-shell 120.0.6099.224 linux #0-9] [32m1 passing (2.2s)[39m
+------------------------------------------------------------------
+[chrome-headless-shell 120.0.6099.224 linux #0-7] Running: chrome-headless-shell (v120.0.6099.224) on linux
+[chrome-headless-shell 120.0.6099.224 linux #0-7] Session ID: 89a05926e5430f9b773e2381a9800b28
+[chrome-headless-shell 120.0.6099.224 linux #0-7]
+[chrome-headless-shell 120.0.6099.224 linux #0-7] » tests/selenium/docs/Page_object_pattern/specs/login.js
+[chrome-headless-shell 120.0.6099.224 linux #0-7] User
+[chrome-headless-shell 120.0.6099.224 linux #0-7]    [32m✓[39m should be able to log in without page object
+[chrome-headless-shell 120.0.6099.224 linux #0-7]
+[chrome-headless-shell 120.0.6099.224 linux #0-7] [32m1 passing (5.3s)[39m
+------------------------------------------------------------------
+[chrome-headless-shell 120.0.6099.224 linux #0-10] Running: chrome-headless-shell (v120.0.6099.224) on linux
+[chrome-headless-shell 120.0.6099.224 linux #0-10] Session ID: b0713bbb0910e4029dd713e189a8cef0
+[chrome-headless-shell 120.0.6099.224 linux #0-10]
+[chrome-headless-shell 120.0.6099.224 linux #0-10] » tests/selenium/docs/Stack/specs/pageobject.js
+[chrome-headless-shell 120.0.6099.224 linux #0-10] Main Page
+[chrome-headless-shell 120.0.6099.224 linux #0-10]    [32m✓[39m should have edit link when using page object
+[chrome-headless-shell 120.0.6099.224 linux #0-10]
+[chrome-headless-shell 120.0.6099.224 linux #0-10] [32m1 passing (2.1s)[39m
 ------------------------------------------------------------------
 [chrome-headless-shell 120.0.6099.224 linux #0-0] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-0] Session ID: 5e388d72e37c5b423645b8ffff23152a
+[chrome-headless-shell 120.0.6099.224 linux #0-0] Session ID: 567b264042b731c0e51c4e08e4772264
 [chrome-headless-shell 120.0.6099.224 linux #0-0]
 [chrome-headless-shell 120.0.6099.224 linux #0-0] » tests/selenium/specs/page.js
 [chrome-headless-shell 120.0.6099.224 linux #0-0] Page
@@ -284,102 +353,36 @@ Run test targeting http://127.0.0.1:9413/
 [chrome-headless-shell 120.0.6099.224 linux #0-0]    [32m✓[39m should have history
 [chrome-headless-shell 120.0.6099.224 linux #0-0]    [32m✓[39m should be undoable
 [chrome-headless-shell 120.0.6099.224 linux #0-0]
-[chrome-headless-shell 120.0.6099.224 linux #0-0] [32m6 passing (13.1s)[39m
-------------------------------------------------------------------
-[chrome-headless-shell 120.0.6099.224 linux #0-4] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-4] Session ID: 7ce596449ef9d3a6ea179bfc13140c02
-[chrome-headless-shell 120.0.6099.224 linux #0-4]
-[chrome-headless-shell 120.0.6099.224 linux #0-4] » tests/selenium/specs/temporaryuseraccount.js
-[chrome-headless-shell 120.0.6099.224 linux #0-4] Temporary user account creation
-[chrome-headless-shell 120.0.6099.224 linux #0-4]    [32m✓[39m should be able to create account
-[chrome-headless-shell 120.0.6099.224 linux #0-4]
-[chrome-headless-shell 120.0.6099.224 linux #0-4] [32m1 passing (3.1s)[39m
-------------------------------------------------------------------
-[chrome-headless-shell 120.0.6099.224 linux #0-6] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-6] Session ID: e8117fb949b95af6767949da4830e1ec
-[chrome-headless-shell 120.0.6099.224 linux #0-6]
-[chrome-headless-shell 120.0.6099.224 linux #0-6] » tests/selenium/docs/Create_a_simple_test/specs/specialpages.js
-[chrome-headless-shell 120.0.6099.224 linux #0-6] Special:SpecialPages
-[chrome-headless-shell 120.0.6099.224 linux #0-6]    [32m✓[39m should not have Edit link
-[chrome-headless-shell 120.0.6099.224 linux #0-6]
-[chrome-headless-shell 120.0.6099.224 linux #0-6] [32m1 passing (902ms)[39m
-------------------------------------------------------------------
-[chrome-headless-shell 120.0.6099.224 linux #0-7] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-7] Session ID: 5fdd17afbc6560ace135f059762bfab0
-[chrome-headless-shell 120.0.6099.224 linux #0-7]
-[chrome-headless-shell 120.0.6099.224 linux #0-7] » tests/selenium/docs/Page_object_pattern/specs/login.js
-[chrome-headless-shell 120.0.6099.224 linux #0-7] User
-[chrome-headless-shell 120.0.6099.224 linux #0-7]    [32m✓[39m should be able to log in without page object
-[chrome-headless-shell 120.0.6099.224 linux #0-7]
-[chrome-headless-shell 120.0.6099.224 linux #0-7] [32m1 passing (2.1s)[39m
-------------------------------------------------------------------
-[chrome-headless-shell 120.0.6099.224 linux #0-8] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-8] Session ID: f10571aaebce46bcac8b724be4f78e9b
-[chrome-headless-shell 120.0.6099.224 linux #0-8]
-[chrome-headless-shell 120.0.6099.224 linux #0-8] » tests/selenium/docs/Stack/specs/expect.js
-[chrome-headless-shell 120.0.6099.224 linux #0-8] Main page
-[chrome-headless-shell 120.0.6099.224 linux #0-8]    [32m✓[39m should have edit link when using expect
-[chrome-headless-shell 120.0.6099.224 linux #0-8]
-[chrome-headless-shell 120.0.6099.224 linux #0-8] [32m1 passing (703ms)[39m
-------------------------------------------------------------------
-[chrome-headless-shell 120.0.6099.224 linux #0-5] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-5] Session ID: e9e3ec56cef26437b71b4839e4baad10
-[chrome-headless-shell 120.0.6099.224 linux #0-5]
-[chrome-headless-shell 120.0.6099.224 linux #0-5] » tests/selenium/specs/user.js
-[chrome-headless-shell 120.0.6099.224 linux #0-5] User
-[chrome-headless-shell 120.0.6099.224 linux #0-5]    [32m✓[39m should be able to create account
-[chrome-headless-shell 120.0.6099.224 linux #0-5]    [32m✓[39m should be able to log in
-[chrome-headless-shell 120.0.6099.224 linux #0-5]    [32m✓[39m named user should see extra signup form fields when creating an account
-[chrome-headless-shell 120.0.6099.224 linux #0-5]    [32m✓[39m should be able to block a user
-[chrome-headless-shell 120.0.6099.224 linux #0-5]
-[chrome-headless-shell 120.0.6099.224 linux #0-5] [32m4 passing (8.9s)[39m
-------------------------------------------------------------------
-[chrome-headless-shell 120.0.6099.224 linux #0-9] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-9] Session ID: a65e7f15f4e16ceabad81289da1986c1
-[chrome-headless-shell 120.0.6099.224 linux #0-9]
-[chrome-headless-shell 120.0.6099.224 linux #0-9] » tests/selenium/docs/Stack/specs/mocha.js
-[chrome-headless-shell 120.0.6099.224 linux #0-9] Main page
-[chrome-headless-shell 120.0.6099.224 linux #0-9]    [32m✓[39m should have edit link when using mocha
-[chrome-headless-shell 120.0.6099.224 linux #0-9]
-[chrome-headless-shell 120.0.6099.224 linux #0-9] [32m1 passing (651ms)[39m
+[chrome-headless-shell 120.0.6099.224 linux #0-0] [32m6 passing (20.9s)[39m
 ------------------------------------------------------------------
 [chrome-headless-shell 120.0.6099.224 linux #0-11] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-11] Session ID: ed4d962e0668023885c89b03b391bda1
+[chrome-headless-shell 120.0.6099.224 linux #0-11] Session ID: 572c3aee28361862294a47a40496eb0e
 [chrome-headless-shell 120.0.6099.224 linux #0-11]
 [chrome-headless-shell 120.0.6099.224 linux #0-11] » tests/selenium/docs/Use_MediaWiki_API/specs/api.js
 [chrome-headless-shell 120.0.6099.224 linux #0-11] API
 [chrome-headless-shell 120.0.6099.224 linux #0-11]    [32m✓[39m Main Page should exist
 [chrome-headless-shell 120.0.6099.224 linux #0-11]    [32m✓[39m Missing Page should not exist
 [chrome-headless-shell 120.0.6099.224 linux #0-11]
-[chrome-headless-shell 120.0.6099.224 linux #0-11] [32m2 passing (162ms)[39m
-------------------------------------------------------------------
-[chrome-headless-shell 120.0.6099.224 linux #0-10] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-10] Session ID: a4fdbb3219443a2cbf9d2e4454090880
-[chrome-headless-shell 120.0.6099.224 linux #0-10]
-[chrome-headless-shell 120.0.6099.224 linux #0-10] » tests/selenium/docs/Stack/specs/pageobject.js
-[chrome-headless-shell 120.0.6099.224 linux #0-10] Main Page
-[chrome-headless-shell 120.0.6099.224 linux #0-10]    [32m✓[39m should have edit link when using page object
-[chrome-headless-shell 120.0.6099.224 linux #0-10]
-[chrome-headless-shell 120.0.6099.224 linux #0-10] [32m1 passing (694ms)[39m
+[chrome-headless-shell 120.0.6099.224 linux #0-11] [32m2 passing (148ms)[39m
 ------------------------------------------------------------------
 [chrome-headless-shell 120.0.6099.224 linux #0-12] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-12] Session ID: 2e40040cbd51c71cf4d63222464cf869
+[chrome-headless-shell 120.0.6099.224 linux #0-12] Session ID: 6bd7deddd90b26599dc682abf5ddb93c
 [chrome-headless-shell 120.0.6099.224 linux #0-12]
 [chrome-headless-shell 120.0.6099.224 linux #0-12] » tests/selenium/wdio-mediawiki/specs/BlankPage.js
 [chrome-headless-shell 120.0.6099.224 linux #0-12] BlankPage
 [chrome-headless-shell 120.0.6099.224 linux #0-12]    [32m✓[39m should have its title
 [chrome-headless-shell 120.0.6099.224 linux #0-12]
-[chrome-headless-shell 120.0.6099.224 linux #0-12] [32m1 passing (375ms)[39m
+[chrome-headless-shell 120.0.6099.224 linux #0-12] [32m1 passing (1.8s)[39m
 
 
-Spec Files:	 [32m13 passed[39m, 13 total (100% completed) in 00:00:27  
+Spec Files:	 [32m13 passed[39m, 13 total (100% completed) in 00:00:34  
 
-INFO:quibble.commands:<<< Finish: Browser tests in 'mediawiki/core', in 53.767 s
-INFO:quibble.commands:<<< Finish: Run all browser tests, in 53.769 s
+INFO:quibble.commands:<<< Finish: Browser tests in 'mediawiki/core', in 87.197 s
+INFO:quibble.commands:<<< Finish: Run all browser tests, in 87.202 s
 INFO:quibble.commands:Shutting down backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ChromeWebDriver:Terminating ChromeWebDriver
 INFO:backend.Xvfb:Terminating Xvfb
-INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-zr2uz43a/socket>
+INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-fgq_txs8/socket>
 INFO:backend.MySQL:Terminating MySQL
 INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
@@ -387,15 +390,15 @@ INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
 ╒═════════╤══════════════════════════════════════════════════════════════════╕
 │  0.000s │ Report durations                                                 │
-│  0.567s │ Versions                                                         │
-│  0.000s │ Ensure dir: '/workspace/log'                                     │
-│  3.023s │ Start backends: <MySQL (no socket)>                              │
-│  5.623s │ Install MediaWiki, db=<MySQL /tmp/quibble-mysql-zr2uz43a/socket> │
-│  5.623s │ Run Post-dependency install, pre-database dependent steps in     │
+│  0.617s │ Versions                                                         │
+│  0.002s │ Ensure dir: '/workspace/log'                                     │
+│  2.286s │ Start backends: <MySQL (no socket)>                              │
+│  3.362s │ Install MediaWiki, db=<MySQL /tmp/quibble-mysql-fgq_txs8/socket> │
+│  3.362s │ Run Post-dependency install, pre-database dependent steps in     │
 │         │ parallel (concurrency=1): * Install MediaWiki, db=<MySQL         │
-│         │ /tmp/quibble-mysql-zr2uz43a/socket>                              │
-│  0.009s │ Start backends: <ExternalWebserver http://127.0.0.1:9413         │
+│         │ /tmp/quibble-mysql-fgq_txs8/socket>                              │
+│  0.006s │ Start backends: <ExternalWebserver http://127.0.0.1:9413         │
 │         │ /workspace/src> <Xvfb :94> <ChromeWebDriver :94>                 │
-│ 53.767s │ Browser tests in 'mediawiki/core'                                │
-│ 53.769s │ Run all browser tests                                            │
+│ 87.197s │ Browser tests in 'mediawiki/core'                                │
+│ 87.202s │ Run all browser tests                                            │
 ╘═════════╧══════════════════════════════════════════════════════════════════╛

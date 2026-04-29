@@ -1,3 +1,5 @@
+$ ./help
+
 ./ci
   Run the same checks that GitLab CI runs, using Docker.
   Usage: ./ci
@@ -46,6 +48,10 @@
   Output the list of gated repositories (extensions and skins).
   Usage: ./gated
 
+./generate_examples
+  Generate an example output file by running a command and capturing its output.
+  Usage: ./generate_examples examples/help.txt './help'
+
 ./help
   List all scripts with their description and usage.
   Usage: ./help
@@ -57,6 +63,10 @@
 ./install_all_gated
   Install all gated extensions and skins into a single MediaWiki.
   Usage: ./install_all_gated
+
+./install_each_gated
+  Install each gated extension or skin into its own fresh MediaWiki, one at a time.
+  Usage: ./install_each_gated
 
 ./lint
   Run shellcheck on all shell scripts in the repo.

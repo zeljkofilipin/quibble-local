@@ -1,110 +1,110 @@
+$ ./fetch
+
 From https://gerrit.wikimedia.org/r/integration/config
  * branch                HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/vendor
- * branch                HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/core
- * branch                    HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/skins/MinervaNeue
  * branch              HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
  * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfigurationExample
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/SandboxLink
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CirrusSearch
- * branch                HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfiguration
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/JsonConfig
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CheckUser
- * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageTriage
- * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikiLove
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseMediaInfo
- * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaMessages
- * branch                HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageViewInfo
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/IPInfo
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Translate
- * branch                HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/MediaModeration
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageImages
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/FileImporter
- * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/ProofreadPage
- * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/TimedMediaHandler
- * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Babel
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/ContentTranslation
- * branch                HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Scribunto
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileApp
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaCampaignEvents
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Echo
- * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GuidedTour
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
- * branch                HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/cldr
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CampaignEvents
- * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GrowthExperiments
- * branch                HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Thanks
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/TemplateData
- * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/SiteMatrix
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
- * branch                HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/NavigationTiming
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Disambiguator
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventLogging
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Elastica
  * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/BetaFeatures
  * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GeoData
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Kartographer
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/ProofreadPage
  * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/AntiSpoof
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseCirrusSearch
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/NavigationTiming
  * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Math
  * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventStreamConfig
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GrowthExperiments
+ * branch                HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Disambiguator
  * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/AbuseFilter
- * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalCssJs
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventBus
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaCampaignEvents
  * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Wikibase
  * branch                  HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseCirrusSearch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/SandboxLink
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Scribunto
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Thanks
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/ContentTranslation
+ * branch                HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikiLove
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CheckUser
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Babel
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CampaignEvents
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/FileImporter
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/AbuseFilter
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CirrusSearch
+ * branch                HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventStreamConfig
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
+ * branch                HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/SiteMatrix
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventLogging
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/JsonConfig
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/IPInfo
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventBus
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseMediaInfo
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageImages
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfigurationExample
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Kartographer
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Elastica
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaMessages
+ * branch                HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfiguration
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GeoData
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalCssJs
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageTriage
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/cldr
  * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/UniversalLanguageSelector
  * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileApp
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/TemplateData
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Translate
+ * branch                HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/TimedMediaHandler
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/AntiSpoof
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
+ * branch                HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GuidedTour
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/MediaModeration
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Echo
+ * branch              HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalPreferences
  * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/vendor
+ * branch                HEAD       -> FETCH_HEAD

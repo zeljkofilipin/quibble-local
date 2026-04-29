@@ -1,25 +1,28 @@
+$ ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"
+
 ########################################
 docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /Users/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
   -e CI=true \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --skip-zuul \
   --skip-deps \
   --command npm run selenium-test -- --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account
 ########################################
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 + /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
-2026-04-29 11:10:16,023 INFO Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
-2026-04-29 11:10:16,026 INFO RPC interface 'supervisor' initialized
-2026-04-29 11:10:16,026 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-04-29 11:10:16,028 INFO daemonizing the supervisord process
+2026-04-29 14:59:56,349 INFO Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
+2026-04-29 14:59:56,352 INFO RPC interface 'supervisor' initialized
+2026-04-29 14:59:56,352 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-04-29 14:59:56,354 INFO daemonizing the supervisord process
+2026-04-29 14:59:56,354 CRIT could not write pidfile /var/run/supervisord.pid
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --skip-zuul --skip-deps --command 'npm run selenium-test -- --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account'
-2026-04-29 11:10:16,028 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -58,26 +61,26 @@ INFO:quibble.commands:Copyright (c) The PHP Group
 INFO:quibble.commands:Zend Engine v4.3.30, Copyright (c) Zend Technologies
 INFO:quibble.commands:    with Zend OPcache v8.3.30, Copyright (c), by Zend Technologies
 INFO:quibble.commands:psql --version: psql (PostgreSQL) 13.23 (Debian 13.23-0+deb11u3)
-INFO:quibble.commands:<<< Finish: Versions, in 0.196 s
+INFO:quibble.commands:<<< Finish: Versions, in 0.590 s
 INFO:quibble.commands:>>> Start: Ensure dir: '/workspace/log'
-INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.000 s
+INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.002 s
 INFO:quibble.commands:>>> Start: Start backends: <MySQL (no socket)>
 INFO:backend.MySQL:Starting MySQL
 INFO:backend.MySQL:Initializing MySQL data directory
-2026-04-29 11:10:17,031 INFO spawned: 'apache' with pid 118
-2026-04-29 11:10:17,033 INFO spawned: 'memcached' with pid 119
-2026-04-29 11:10:17,035 INFO spawned: 'php-fpm' with pid 120
-2026-04-29 11:10:17,060 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-04-29 14:59:57,359 INFO spawned: 'apache' with pid 75
+2026-04-29 14:59:57,360 INFO spawned: 'memcached' with pid 76
+2026-04-29 14:59:57,360 INFO spawned: 'php-fpm' with pid 77
+2026-04-29 14:59:57,465 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
 INFO:backend.MySQL:Waiting for MySQL socket
-2026-04-29 11:10:18,083 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2026-04-29 11:10:18,083 INFO success: memcached entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2026-04-29 14:59:58,585 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2026-04-29 14:59:58,585 INFO success: memcached entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 INFO:backend.MySQL:Creating the wiki database and grant
 INFO:backend.MySQL:MySQL is ready
-INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 1.978 s
+INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 2.281 s
 INFO:quibble.commands:>>> Start: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=1):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-syw3cl26/socket>
-INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-syw3cl26/socket>
-INFO:mw.maintenance.install:php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-syw3cl26/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-diapjmmz/socket>
+INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-diapjmmz/socket>
+INFO:mw.maintenance.install:php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-diapjmmz/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
 PHP 8.3.30 is installed.
 ICU 67.1 is installed (supports Unicode 13.0.0).
 Found ImageMagick: /usr/bin/convert. Image thumbnailing will be enabled if you enable uploads.
@@ -170,16 +173,16 @@ Done in 0.2 s.
 INFO:mw.maintenance.rebuildLocalisationCache:php maintenance/rebuildLocalisationCache.php --lang en
 Rebuilding en...
 1 languages rebuilt out of 1
-INFO:quibble.commands:<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-syw3cl26/socket>, in 2.766 s
+INFO:quibble.commands:<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-diapjmmz/socket>, in 3.328 s
 INFO:quibble.commands:<<< Finish: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=1):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-syw3cl26/socket>, in 2.767 s
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-diapjmmz/socket>, in 3.328 s
 INFO:quibble.commands:>>> Start: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ExternalWebserver:Not starting a webserver.
 INFO:backend.Xvfb:Starting Xvfb on display :94
 INFO:backend.ChromeWebDriver:Starting Chromedriver
 INFO:quibble.use_headless:Display: :94
 DEBUG:quibble.chromium_flags:Flags: ['--autoplay-policy=no-user-gesture-required', '--disable-pushstate-throttle', '--no-sandbox']
-INFO:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.005 s
+INFO:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.007 s
 INFO:quibble.commands:>>> Start: User commands: npm run selenium-test -- --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account
 INFO:quibble.commands:User commands, working directory: /workspace/src
 
@@ -188,14 +191,14 @@ INFO:quibble.commands:User commands, working directory: /workspace/src
 
 Edit link visible
 Run test targeting http://127.0.0.1:9413/
-[System information] Memory (host): 12454.0 MB (12.45 GB) free
-[System information] RAM used by NodeJS 128.4 MB
-[System information] CPU: 4 cores
+[System information] Memory (host): 14016.5 MB (14.02 GB) free
+[System information] RAM used by NodeJS 166.4 MB
+[System information] CPU: 10 cores
 [Package information] WebdriverIO: 9.23.2
 [Package information] wdio-mediawiki: 6.5.1
-[Configuration] maxInstances 3 (max test suites running in parallel) 
+[Configuration] maxInstances 7 (max test suites running in parallel) 
 
-Execution of 1 workers started at 2026-04-29T11:10:24.741Z
+Execution of 1 workers started at 2026-04-29T15:00:11.573Z
 
 [0-0] RUNNING in chrome - file:///tests/selenium/specs/user.js
 [0-0] [Browser information] chrome-headless-shell 120.0.6099.224 viewPort 1280x1024
@@ -204,7 +207,7 @@ Execution of 1 workers started at 2026-04-29T11:10:24.741Z
  "spec" Reporter:
 ------------------------------------------------------------------
 [chrome-headless-shell 120.0.6099.224 linux #0-0] Running: chrome-headless-shell (v120.0.6099.224) on linux
-[chrome-headless-shell 120.0.6099.224 linux #0-0] Session ID: 813c9f38c8001fded67e381a4675347a
+[chrome-headless-shell 120.0.6099.224 linux #0-0] Session ID: f174d020aedb7f2d672b568c8414979c
 [chrome-headless-shell 120.0.6099.224 linux #0-0]
 [chrome-headless-shell 120.0.6099.224 linux #0-0] » tests/selenium/specs/user.js
 [chrome-headless-shell 120.0.6099.224 linux #0-0] User
@@ -213,16 +216,16 @@ Execution of 1 workers started at 2026-04-29T11:10:24.741Z
 [chrome-headless-shell 120.0.6099.224 linux #0-0]    ✓ named user should see extra signup form fields when creating an account
 [chrome-headless-shell 120.0.6099.224 linux #0-0]    ✓ should be able to block a user
 [chrome-headless-shell 120.0.6099.224 linux #0-0]
-[chrome-headless-shell 120.0.6099.224 linux #0-0] 4 passing (7.7s)
+[chrome-headless-shell 120.0.6099.224 linux #0-0] 4 passing (8.9s)
 
 
-Spec Files:	 1 passed, 1 total (100% completed) in 00:00:10  
+Spec Files:	 1 passed, 1 total (100% completed) in 00:00:13  
 
-INFO:quibble.commands:<<< Finish: User commands: npm run selenium-test -- --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account, in 14.215 s
+INFO:quibble.commands:<<< Finish: User commands: npm run selenium-test -- --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account, in 22.771 s
 INFO:quibble.commands:Shutting down backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ChromeWebDriver:Terminating ChromeWebDriver
 INFO:backend.Xvfb:Terminating Xvfb
-INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-syw3cl26/socket>
+INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-diapjmmz/socket>
 INFO:backend.MySQL:Terminating MySQL
 INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
@@ -230,16 +233,16 @@ INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
 ╒═════════╤══════════════════════════════════════════════════════════════════╕
 │  0.000s │ Report durations                                                 │
-│  0.196s │ Versions                                                         │
-│  0.000s │ Ensure dir: '/workspace/log'                                     │
-│  1.978s │ Start backends: <MySQL (no socket)>                              │
-│  2.766s │ Install MediaWiki, db=<MySQL /tmp/quibble-mysql-syw3cl26/socket> │
-│  2.767s │ Run Post-dependency install, pre-database dependent steps in     │
+│  0.590s │ Versions                                                         │
+│  0.002s │ Ensure dir: '/workspace/log'                                     │
+│  2.281s │ Start backends: <MySQL (no socket)>                              │
+│  3.328s │ Install MediaWiki, db=<MySQL /tmp/quibble-mysql-diapjmmz/socket> │
+│  3.328s │ Run Post-dependency install, pre-database dependent steps in     │
 │         │ parallel (concurrency=1): * Install MediaWiki, db=<MySQL         │
-│         │ /tmp/quibble-mysql-syw3cl26/socket>                              │
-│  0.005s │ Start backends: <ExternalWebserver http://127.0.0.1:9413         │
+│         │ /tmp/quibble-mysql-diapjmmz/socket>                              │
+│  0.007s │ Start backends: <ExternalWebserver http://127.0.0.1:9413         │
 │         │ /workspace/src> <Xvfb :94> <ChromeWebDriver :94>                 │
-│ 14.215s │ User commands: npm run selenium-test -- --spec                   │
+│ 22.771s │ User commands: npm run selenium-test -- --spec                   │
 │         │ tests/selenium/specs/user.js --mochaOpts.grep should be able to  │
 │         │ create account                                                   │
 ╘═════════╧══════════════════════════════════════════════════════════════════╛
