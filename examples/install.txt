@@ -1,0 +1,3 @@
+$ ./install
+
+Usage: ./install extensions/EXTENSION or ./install skins/SKIN
