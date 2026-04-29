@@ -23,8 +23,10 @@
   // Persist Claude Code state (auto-memory, credentials, sessions, settings)
   // across devcontainer rebuilds by bind-mounting a host directory. Stored
   // outside the repo so personal state (credentials, sessions) cannot be
-  // accidentally committed. Create the host directory once before first build:
-  //   mkdir -p ~/.claude-devcontainers/quibble-local
+  // accidentally committed. `initializeCommand` runs on the host before build
+  // and ensures the directory exists (Docker errors on a missing bind source
+  // rather than auto-creating it).
+  "initializeCommand": "mkdir -p ${localEnv:HOME}/.claude-devcontainers/quibble-local",
   "mounts": [
     "source=${localEnv:HOME}/.claude-devcontainers/quibble-local,target=/home/vscode/.claude,type=bind"
   ],
