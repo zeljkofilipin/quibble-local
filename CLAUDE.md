@@ -69,3 +69,5 @@ There is no build step. `./test_integration` is an integration test that exercis
 - `log/` — Quibble logs
 
 **Do not read or search** `cache/`, `log/`, `ref/`, `src/`, `src_save/`, or `src_worker_*/` unless explicitly asked. These are large runtime directories (gigabytes of cloned repos, build artifacts, and logs) that are not part of the project source code.
+
+**Do not read or search** `examples/` unless explicitly working on it. It contains captured command output (regenerated via `./generate_examples`), not project source code.
