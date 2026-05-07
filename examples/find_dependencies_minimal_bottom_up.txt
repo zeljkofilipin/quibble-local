@@ -1,0 +1,3 @@
+$ ./find_dependencies_minimal_bottom_up
+
+Usage: ./find_dependencies_minimal_bottom_up extensions/EXTENSION or ./find_dependencies_minimal_bottom_up skins/SKIN

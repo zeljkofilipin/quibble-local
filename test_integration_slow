@@ -25,8 +25,8 @@ run_test ./run_php_unit_tests          # 13m: test running all core PHPUnit test
 run_test ./run_php_unit_tests --filter testValidSpecialPageAliases  # 1m: test filtering core PHPUnit tests
 
 # --- Finding minimum dependencies (slow: exhaustive algorithms) ---
-run_test ./dependencies_minimal_bottom_up extensions/Echo  # 4m: test bottom-up exhaustive (fast for Echo: 0 deps needed)
-run_test env PARALLEL=2 ./dependencies_minimal_bottom_up extensions/Echo  # 7m: test bottom-up with parallel mode
+run_test ./find_dependencies_minimal_bottom_up extensions/Echo  # 4m: test bottom-up exhaustive (fast for Echo: 0 deps needed)
+run_test env PARALLEL=2 ./find_dependencies_minimal_bottom_up extensions/Echo  # 7m: test bottom-up with parallel mode
 run_test ./dependencies_minimal_greedy extensions/CommunityConfiguration  # 8m: test finding minimum dependencies (greedy algorithm)
 run_test ./dependencies_minimal_thorough extensions/Echo  # 21m: test greedy + exhaustive verification
 run_test env PARALLEL=2 ./dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with parallel mode

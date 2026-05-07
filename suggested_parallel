@@ -4,7 +4,7 @@
 # Outputs a single number based on available CPU and memory.
 # Each parallel worker needs ~2 CPU cores and ~2 GB of Docker memory.
 #
-# Used by ./dependencies_minimal_bottom_up, ./dependencies_minimal_gated,
+# Used by ./find_dependencies_minimal_bottom_up, ./dependencies_minimal_gated,
 # ./dependencies_minimal_thorough, ./run_selenium_tests_all_gated,
 # and ./run_selenium_tests_required_gated.
 #

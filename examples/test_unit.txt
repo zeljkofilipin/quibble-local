@@ -1,9 +1,9 @@
 $ ./test_unit
 
 1..188
-ok 1 dependencies_minimal_bottom_up: shows usage with no arguments
-ok 2 dependencies_minimal_greedy: shows usage with no arguments
-ok 3 dependencies_minimal_thorough: shows usage with no arguments
+ok 1 dependencies_minimal_greedy: shows usage with no arguments
+ok 2 dependencies_minimal_thorough: shows usage with no arguments
+ok 3 find_dependencies_minimal_bottom_up: shows usage with no arguments
 ok 4 gated: lists gated extensions and skins
 ok 5 gated: handles empty lists
 ok 6 gated: errors when config file missing

@@ -12,9 +12,9 @@
 # — finds the answer in 1 test). Extremely slow when many are needed (e.g.
 # extensions/GrowthExperiments: 17 deps — up to 131,072 combinations).
 #
-# Usage: ./dependencies_minimal_bottom_up extensions/Echo
-#        VERBOSE=1 ./dependencies_minimal_bottom_up extensions/Echo
-#        PARALLEL=$(./suggested_parallel) ./dependencies_minimal_bottom_up extensions/Echo
+# Usage: ./find_dependencies_minimal_bottom_up extensions/Echo
+#        VERBOSE=1 ./find_dependencies_minimal_bottom_up extensions/Echo
+#        PARALLEL=$(./suggested_parallel) ./find_dependencies_minimal_bottom_up extensions/Echo
 #
 # PARALLEL=N: Run N combinations in parallel (each in isolated src_worker_$i/ directory).
 #             Use ./suggested_parallel to determine N for your machine.

@@ -8,7 +8,7 @@
 #
 # Pick this when: you need a guaranteed minimum and expect the answer to be large
 # (many deps actually needed). Always slower than ./dependencies_minimal_greedy (it runs
-# greedy plus verification); when few deps are needed, ./dependencies_minimal_bottom_up
+# greedy plus verification); when few deps are needed, ./find_dependencies_minimal_bottom_up
 # is faster.
 #
 # Fast for extensions/Echo (4 deps, 0 needed): greedy finds 0 in ~4 tests, verification
