@@ -140,10 +140,6 @@ $ ./help
   Run integration tests that are too slow for the fast suite (./test_integration).
   Usage: ./test_integration_slow
 
-./test_remove_all
-  Run remove_all, then run all tests. Slower but starts from a clean state.
-  Usage: ./test_remove_all
-
 ./test_unit
   Run Bats unit tests.
   Usage: ./test_unit
