@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 #
-# Run remove_deep, then run all tests. Slower but starts from a clean state.
+# Run remove_all, then run all tests. Slower but starts from a clean state.
 # WARNING: This will take a very long time to run.
 #
-# Usage: ./test_remove_deep
+# Usage: ./test_remove_all
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/debug_info # print debug info, check prerequisites, show verbose hint
 
 # Remove everything quibble-local created
-"$(dirname "$0")"/remove_deep
+"$(dirname "$0")"/remove_all
 # Run all tests
 "$(dirname "$0")"/test_integration

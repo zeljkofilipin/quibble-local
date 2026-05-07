@@ -1,4 +1,4 @@
-$ ./remove_deep
+$ ./remove_all
 
 WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 Untagged: docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest

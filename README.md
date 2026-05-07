@@ -203,12 +203,12 @@ Remove all `src/` directories across all environments (`src/`, `src_save/`, `src
     ./remove_src
     VERBOSE=1 ./remove_src
 
-### `./remove_deep`
+### `./remove_all`
 
 Remove everything created by quibble-local, including bare git repos in `ref/` and the Docker image.
 
-    ./remove_deep
-    VERBOSE=1 ./remove_deep
+    ./remove_all
+    VERBOSE=1 ./remove_all
 
 ## Data queries
 
@@ -427,11 +427,11 @@ Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo. 
 
     ./lint
 
-### `./test_remove_deep`
+### `./test_remove_all`
 
-Run `./remove_deep` first, then `./test_integration`. Slower but starts from a completely clean state.
+Run `./remove_all` first, then `./test_integration`. Slower but starts from a completely clean state.
 
-    ./test_remove_deep
+    ./test_remove_all
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending (via `./test_integration`).
 

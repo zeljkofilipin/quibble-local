@@ -1,4 +1,4 @@
-$ ./test_remove_deep
+$ ./test_remove_all
 
 Untagged: docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
 Untagged: docker-registry.wikimedia.org/releng/quibble-bullseye-php83@sha256:ee977240ad32f4c3bf202e0ad11f7427fea93838f9060f7567c5884e0e746146

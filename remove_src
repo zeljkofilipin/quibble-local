@@ -4,7 +4,7 @@
 # This removes src/, src_save/, src_N/, src_save_N/, and src_worker_N/.
 # Keeps ref/ (bare repos), cache/, log/, and the Docker image.
 # Use ./remove to remove only the current environment's src/.
-# Use ./remove_deep to remove everything quibble-local created.
+# Use ./remove_all to remove everything quibble-local created.
 # WARNING: This will delete all MediaWiki source code in all environments.
 #
 # Usage: ./remove_src

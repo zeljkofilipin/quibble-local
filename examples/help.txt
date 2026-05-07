@@ -12,10 +12,6 @@ $ ./help
   Output all possible combinations of dependencies for an extension or skin.
   Usage: ./dependencies_combinations extensions/Echo
 
-./dependencies_minimal
-  Find the minimum dependencies needed for a repository's Selenium tests to pass.
-  Usage: ./dependencies_minimal extensions/Echo
-
 ./dependencies_minimal_bottom_up
   Find the minimum dependencies needed for a repository's Selenium tests to pass.
   Usage: ./dependencies_minimal_bottom_up extensions/Echo
@@ -23,6 +19,10 @@ $ ./help
 ./dependencies_minimal_gated
   Find minimum dependencies for all gated repositories (or a single component).
   Usage: ./dependencies_minimal_gated
+
+./dependencies_minimal_greedy
+  Find the minimum dependencies needed for a repository's Selenium tests to pass.
+  Usage: ./dependencies_minimal_greedy extensions/Echo
 
 ./dependencies_minimal_thorough
   Find and verify the minimum dependencies needed for a repository's Selenium tests to pass.
@@ -84,9 +84,9 @@ $ ./help
   Remove src/ (MediaWiki source code).
   Usage: ./remove
 
-./remove_deep
+./remove_all
   Remove everything quibble-local created, leaving only the git repo itself.
-  Usage: ./remove_deep
+  Usage: ./remove_all
 
 ./remove_src
   Remove all src directories across all environments.
@@ -140,9 +140,9 @@ $ ./help
   Run integration tests that are too slow for the fast suite (./test_integration).
   Usage: ./test_integration_slow
 
-./test_remove_deep
-  Run remove_deep, then run all tests. Slower but starts from a clean state.
-  Usage: ./test_remove_deep
+./test_remove_all
+  Run remove_all, then run all tests. Slower but starts from a clean state.
+  Usage: ./test_remove_all
 
 ./test_unit
   Run Bats unit tests.
