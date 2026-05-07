@@ -1,0 +1,3 @@
+$ ./dependencies_minimal
+
+Usage: ./dependencies_minimal extensions/EXTENSION or ./dependencies_minimal skins/SKIN
