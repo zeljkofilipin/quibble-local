@@ -48,7 +48,7 @@ Run multiple independent sessions on the same machine simultaneously. Each envir
     ENVIRONMENT=1 ./dependencies_minimal_greedy skins/MinervaNeue
     ENVIRONMENT=1 ./remove
 
-Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directories are shared (safe for concurrent use). Use `./remove_src` to remove all environments at once.
+Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directories are shared (safe for concurrent use). Use `./remove_srcs` to remove all environments at once.
 
 ### `FAST`
 
@@ -196,12 +196,12 @@ Remove `src/` (MediaWiki source code). Cache, logs, bare git repos, and the Dock
     ./remove
     VERBOSE=1 ./remove
 
-### `./remove_src`
+### `./remove_srcs`
 
 Remove all `src/` directories across all environments (`src/`, `src_save/`, `src_N/`, `src_save_N/`, `src_worker_N/`). Keeps `ref/`, `cache/`, `log/`, and the Docker image.
 
-    ./remove_src
-    VERBOSE=1 ./remove_src
+    ./remove_srcs
+    VERBOSE=1 ./remove_srcs
 
 ### `./remove_all`
 

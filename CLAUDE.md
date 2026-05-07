@@ -50,7 +50,7 @@ There is no build step. `./test_integration` is an integration test that exercis
 - Internal scripts (sourced helpers in `lib/` like `lib/setup`, `lib/inhibit_sleep`) must be documented in a separate section in `README.md` to make it clear they are not intended to be run directly
 - Every new argument to a script must have a corresponding test in the appropriate integration test suite (see next bullet for which suite)
 - Integration test entries are split across two suites by observed runtime: `test_integration` (fast — ~10 minutes total, each entry ≤1 minute) and `test_integration_slow` (slow — tests too slow for the fast suite). Annotate each entry's approximate runtime in its inline comment as `# Nm: ...` or `# <1m: ...`.
-- Scripts that are destructive across environments (e.g. `remove_src`, `remove_all`) must NOT be in `test_integration`, so it can run safely while other environments are active
+- Scripts that are destructive across environments (e.g. `remove_srcs`, `remove_all`) must NOT be in `test_integration`, so it can run safely while other environments are active
 - Long-running scripts that can be scoped to a single component should be tested with one component (e.g. `./run_selenium_tests_all_gated extensions/Echo`). Scripts that cannot be scoped and are already tested implicitly by another integration test entry do not need their own entry (e.g. `install_all_gated` is tested by `run_selenium_tests_gated` in `test_integration_slow`).
 - Docker container runs as a different user, so `chmod 777` is used on shared directories
 - `remove` and `remove_all` use Docker (as root) to remove container-owned files before `rm -rf`

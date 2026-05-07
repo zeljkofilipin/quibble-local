@@ -88,9 +88,9 @@ $ ./help
   Remove everything quibble-local created, leaving only the git repo itself.
   Usage: ./remove_all
 
-./remove_src
+./remove_srcs
   Remove all src directories across all environments.
-  Usage: ./remove_src
+  Usage: ./remove_srcs
 
 ./restore
   Restore src/ from a previously saved state (created by ./save).
