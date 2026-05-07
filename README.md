@@ -114,6 +114,7 @@ See: [Run tests targeting Quibble](https://www.mediawiki.org/wiki/Selenium/How-t
 Run PHPUnit tests. Assumes `./fresh_install` (or `./install`) has been run first.
 
     ./run_php_unit_tests
+    ./run_php_unit_tests --filter testValidSpecialPageAliases
     ./run_php_unit_tests extensions/Echo
     ./run_php_unit_tests extensions/Echo --filter testNotificationCount
     VERBOSE=1 ./run_php_unit_tests extensions/Echo

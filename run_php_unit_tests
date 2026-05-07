@@ -3,6 +3,7 @@
 # Run PHPUnit tests. Skips installation (assumes ./fresh_install or ./install has been run first).
 #
 # Usage: ./run_php_unit_tests
+#        ./run_php_unit_tests --filter testValidSpecialPageAliases
 #        ./run_php_unit_tests extensions/Echo
 #        ENVIRONMENT=0 ./run_php_unit_tests extensions/Echo
 #        ./run_php_unit_tests extensions/Echo --filter testNotificationCount

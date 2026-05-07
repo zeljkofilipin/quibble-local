@@ -22,6 +22,7 @@
 # (via lib/minimal_setup), so they don't need this.
 run_test ./fresh_install               # 1m: install core so run_php_unit_tests has something to test
 run_test ./run_php_unit_tests          # 13m: test running all core PHPUnit tests
+run_test ./run_php_unit_tests --filter testValidSpecialPageAliases  # 1m: test filtering core PHPUnit tests
 
 # --- Finding minimum dependencies (slow: exhaustive algorithms) ---
 run_test ./dependencies_minimal_bottom_up extensions/Echo  # 4m: test bottom-up exhaustive (fast for Echo: 0 deps needed)
