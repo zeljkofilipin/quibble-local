@@ -1,0 +1,17 @@
+$ ./dependencies_combinations extensions/Echo
+
+AntiSpoof
+CentralAuth
+EventLogging
+MobileFrontend
+AntiSpoof CentralAuth
+AntiSpoof EventLogging
+CentralAuth EventLogging
+AntiSpoof MobileFrontend
+CentralAuth MobileFrontend
+EventLogging MobileFrontend
+AntiSpoof CentralAuth EventLogging
+AntiSpoof CentralAuth MobileFrontend
+AntiSpoof EventLogging MobileFrontend
+CentralAuth EventLogging MobileFrontend
+AntiSpoof CentralAuth EventLogging MobileFrontend
