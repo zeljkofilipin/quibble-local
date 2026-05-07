@@ -1,4 +1,4 @@
-$ ./dependencies_minimal extensions/Echo
+$ ./find_dependencies_minimal_greedy extensions/Echo
 
 All dependencies for extensions/Echo (4):
   AntiSpoof

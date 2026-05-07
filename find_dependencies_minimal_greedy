@@ -14,8 +14,8 @@
 # concluding none are needed, while ./find_dependencies_minimal_bottom_up finds the answer in
 # 1 test.
 #
-# Usage: ./dependencies_minimal_greedy extensions/Echo
-#        VERBOSE=1 ./dependencies_minimal_greedy extensions/Echo
+# Usage: ./find_dependencies_minimal_greedy extensions/Echo
+#        VERBOSE=1 ./find_dependencies_minimal_greedy extensions/Echo
 #
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #

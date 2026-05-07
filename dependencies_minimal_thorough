@@ -7,7 +7,7 @@
 # the greedy result.
 #
 # Pick this when: you need a guaranteed minimum and expect the answer to be large
-# (many deps actually needed). Always slower than ./dependencies_minimal_greedy (it runs
+# (many deps actually needed). Always slower than ./find_dependencies_minimal_greedy (it runs
 # greedy plus verification); when few deps are needed, ./find_dependencies_minimal_bottom_up
 # is faster.
 #

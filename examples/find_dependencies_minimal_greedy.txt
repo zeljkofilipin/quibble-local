@@ -1,0 +1,3 @@
+$ ./find_dependencies_minimal_greedy
+
+Usage: ./find_dependencies_minimal_greedy extensions/EXTENSION or ./find_dependencies_minimal_greedy skins/SKIN
