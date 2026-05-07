@@ -17,8 +17,6 @@
 # Usage: ./dependencies_minimal_greedy extensions/Echo
 #        VERBOSE=1 ./dependencies_minimal_greedy extensions/Echo
 #
-# See also: ./dependencies_minimal_thorough for exhaustive verification.
-#
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
 

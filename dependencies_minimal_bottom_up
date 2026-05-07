@@ -11,7 +11,6 @@
 # Fast when few or no optional deps are needed (e.g. extensions/Echo: 4 deps, 0 needed
 # — finds the answer in 1 test). Extremely slow when many are needed (e.g.
 # extensions/GrowthExperiments: 17 deps — up to 131,072 combinations).
-# For extensions with many needed deps, use ./dependencies_minimal_greedy (greedy, O(N)) instead.
 #
 # Usage: ./dependencies_minimal_bottom_up extensions/Echo
 #        VERBOSE=1 ./dependencies_minimal_bottom_up extensions/Echo
