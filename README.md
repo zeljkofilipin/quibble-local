@@ -136,6 +136,8 @@ Run fast integration tests (~20 minutes total) and report which ones passed or f
     ./test_integration
     VERBOSE=1 ./test_integration
 
+To start from a completely clean state, run `./remove_all` first.
+
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
 
 ### `./test_integration_slow`
@@ -426,14 +428,6 @@ Run the same lint check that GitLab CI runs, using Docker. Does not require Shel
 Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo. Requires ShellCheck in addition to the base prerequisites.
 
     ./lint
-
-### `./test_remove_all`
-
-Run `./remove_all` first, then `./test_integration`. Slower but starts from a completely clean state.
-
-    ./test_remove_all
-
-**Warning:** This script inhibits sleep to prevent the machine from suspending (via `./test_integration`).
 
 ### `./generate_examples`
 
