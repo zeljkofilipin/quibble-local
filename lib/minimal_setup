@@ -46,7 +46,7 @@ required=() # indexed array of required dependency names
 while IFS= read -r dep; do
   [ -z "$dep" ] && continue # skip empty lines
   required+=("$dep") # += appends to bash arrays
-done < <("$(dirname "$0")"/dependencies_required "$component")
+done < <("$(dirname "$0")"/list_dependencies_required "$component")
 
 # Read optional dependencies (all deps minus required deps)
 optional=() # indexed array of optional dependency names

@@ -20,10 +20,6 @@ $ ./help
   Find and verify the minimum dependencies needed for a repository's Selenium tests to pass.
   Usage: ./dependencies_minimal_thorough extensions/Echo
 
-./dependencies_required
-  Output required dependencies for an extension or skin from its extension.json or skin.json.
-  Usage: ./dependencies_required extensions/GrowthExperiments
-
 ./fetch
   Fetch the latest changes for bare git repos in ref/ from Gerrit.
   Usage: ./fetch
@@ -71,6 +67,10 @@ $ ./help
 ./list_dependencies_optional
   Output optional dependencies for an extension or skin.
   Usage: ./list_dependencies_optional extensions/Echo
+
+./list_dependencies_required
+  Output required dependencies for an extension or skin from its extension.json or skin.json.
+  Usage: ./list_dependencies_required extensions/GrowthExperiments
 
 ./prepare
   Prepare the local environment for running Quibble.

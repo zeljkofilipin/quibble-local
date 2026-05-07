@@ -4,14 +4,14 @@
 # These are the extensions/skins listed in the "requires" field that must always be present.
 # Output format matches ./list_dependencies (bare names for extensions, "skins/Name" for skins).
 #
-# Usage: ./dependencies_required extensions/GrowthExperiments
-#        ./dependencies_required skins/MinervaNeue
+# Usage: ./list_dependencies_required extensions/GrowthExperiments
+#        ./list_dependencies_required skins/MinervaNeue
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then # $# is the number of arguments
-  echo "Usage: ./dependencies_required extensions/EXTENSION or ./dependencies_required skins/SKIN"
+  echo "Usage: ./list_dependencies_required extensions/EXTENSION or ./list_dependencies_required skins/SKIN"
   exit 1
 fi
 

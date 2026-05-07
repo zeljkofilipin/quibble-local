@@ -1,0 +1,4 @@
+$ ./list_dependencies_required extensions/GrowthExperiments
+
+CommunityConfiguration
+VisualEditor

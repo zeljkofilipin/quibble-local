@@ -223,16 +223,16 @@ Output dependencies for an extension or skin from `zuul/dependencies.yaml`.
     ./list_dependencies extensions/Echo
     ./list_dependencies skins/MinervaNeue
 
-### `./dependencies_required`
+### `./list_dependencies_required`
 
 Output required dependencies for an extension or skin from its `extension.json` or `skin.json`. These are the extensions/skins listed in the `requires` field that must always be present.
 
-    ./dependencies_required extensions/GrowthExperiments
-    ./dependencies_required skins/MinervaNeue
+    ./list_dependencies_required extensions/GrowthExperiments
+    ./list_dependencies_required skins/MinervaNeue
 
 ### `./list_dependencies_optional`
 
-Output optional dependencies for an extension or skin. These are dependencies in `zuul/dependencies.yaml` that are NOT in `extension.json`/`skin.json` `requires` field. Complement of `./dependencies_required`.
+Output optional dependencies for an extension or skin. These are dependencies in `zuul/dependencies.yaml` that are NOT in `extension.json`/`skin.json` `requires` field. Complement of `./list_dependencies_required`.
 
     ./list_dependencies_optional extensions/Echo
     ./list_dependencies_optional skins/MinervaNeue
@@ -538,7 +538,7 @@ Common setup for parallel worker subshells. Sets `QUIBBLE_SRC` and `QUIBBLE_BACK
 
 ### `lib/parse_requires.awk`
 
-Awk script that parses `requires.extensions` and `requires.skins` from `extension.json` or `skin.json`. Used by `dependencies_required`.
+Awk script that parses `requires.extensions` and `requires.skins` from `extension.json` or `skin.json`. Used by `list_dependencies_required`.
 
 ### `lib/combinations.awk`
 

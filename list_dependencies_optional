@@ -3,7 +3,7 @@
 # Output optional dependencies for an extension or skin.
 # Optional dependencies are those in zuul's dependencies.yaml but NOT in
 # extension.json/skin.json "requires" field.
-# Complement of ./dependencies_required.
+# Complement of ./list_dependencies_required.
 #
 # Usage: ./list_dependencies_optional extensions/Echo
 #        ./list_dependencies_optional skins/MinervaNeue
@@ -24,7 +24,7 @@ required_lookup=" " # space-padded string for substring matching
 while IFS= read -r dep; do
   [ -z "$dep" ] && continue # skip empty lines
   required_lookup="${required_lookup}${dep} " # e.g. " CommunityConfiguration VisualEditor "
-done < <("$(dirname "$0")"/dependencies_required "$component")
+done < <("$(dirname "$0")"/list_dependencies_required "$component")
 
 # Read all dependencies and output only those NOT in the required list
 while IFS= read -r dep; do
