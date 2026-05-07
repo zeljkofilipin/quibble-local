@@ -1,4 +1,4 @@
-$ ./dependencies_minimal_gated
+$ ./find_dependencies_minimal_gated
 
 skipped (no Selenium tests): extensions/AntiSpoof
 skipped (no Selenium tests): extensions/Babel

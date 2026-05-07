@@ -6,10 +6,10 @@
 # WARNING: Without arguments, this will take a very long time to run (50+ components).
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
-# Usage: ./dependencies_minimal_gated
-#        ./dependencies_minimal_gated extensions/Echo
-#        VERBOSE=1 ./dependencies_minimal_gated
-#        PARALLEL=$(./suggested_parallel) ./dependencies_minimal_gated
+# Usage: ./find_dependencies_minimal_gated
+#        ./find_dependencies_minimal_gated extensions/Echo
+#        VERBOSE=1 ./find_dependencies_minimal_gated
+#        PARALLEL=$(./suggested_parallel) ./find_dependencies_minimal_gated
 #
 # PARALLEL=N: Run N components in parallel (each in isolated ENVIRONMENT=N).
 #             Use ./suggested_parallel to determine N for your machine.

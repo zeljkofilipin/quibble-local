@@ -4,10 +4,6 @@ $ ./help
   Run the same checks that GitLab CI runs, using Docker.
   Usage: ./ci
 
-./dependencies_minimal_gated
-  Find minimum dependencies for all gated repositories (or a single component).
-  Usage: ./dependencies_minimal_gated
-
 ./dependencies_minimal_greedy
   Find the minimum dependencies needed for a repository's Selenium tests to pass.
   Usage: ./dependencies_minimal_greedy extensions/Echo
@@ -23,6 +19,10 @@ $ ./help
 ./find_dependencies_minimal_bottom_up
   Find the minimum dependencies needed for a repository's Selenium tests to pass.
   Usage: ./find_dependencies_minimal_bottom_up extensions/Echo
+
+./find_dependencies_minimal_gated
+  Find minimum dependencies for all gated repositories (or a single component).
+  Usage: ./find_dependencies_minimal_gated
 
 ./fresh_install
   Installs MediaWiki core (without running tests).
