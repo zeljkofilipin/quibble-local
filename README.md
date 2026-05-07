@@ -237,12 +237,12 @@ Output optional dependencies for an extension or skin. These are dependencies in
     ./dependencies_optional extensions/Echo
     ./dependencies_optional skins/MinervaNeue
 
-### `./dependencies_combinations`
+### `./list_dependencies_combinations`
 
 Output all possible combinations of dependencies for an extension or skin. One combination per line (space-separated), starting with one dependency, ending with all dependencies.
 
-    ./dependencies_combinations extensions/Echo
-    ./dependencies_combinations skins/MinervaNeue
+    ./list_dependencies_combinations extensions/Echo
+    ./list_dependencies_combinations skins/MinervaNeue
 
 ### `./gated`
 
@@ -542,7 +542,7 @@ Awk script that parses `requires.extensions` and `requires.skins` from `extensio
 
 ### `lib/combinations.awk`
 
-Awk script that generates all bitmask combinations of dependencies, ordered by size (starting from 1). Used by `dependencies_combinations`.
+Awk script that generates all bitmask combinations of dependencies, ordered by size (starting from 1). Used by `list_dependencies_combinations`.
 
 ### `lib/combinations_with_empty.awk`
 

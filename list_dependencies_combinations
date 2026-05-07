@@ -4,14 +4,14 @@
 # One combination per line (space-separated), starting with one dependency,
 # ending with all dependencies.
 #
-# Usage: ./dependencies_combinations extensions/Echo
-#        ./dependencies_combinations skins/MinervaNeue
+# Usage: ./list_dependencies_combinations extensions/Echo
+#        ./list_dependencies_combinations skins/MinervaNeue
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then # $# is the number of arguments
-  echo "Usage: ./dependencies_combinations extensions/EXTENSION or ./dependencies_combinations skins/SKIN"
+  echo "Usage: ./list_dependencies_combinations extensions/EXTENSION or ./list_dependencies_combinations skins/SKIN"
   exit 1
 fi
 

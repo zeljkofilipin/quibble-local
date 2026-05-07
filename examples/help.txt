@@ -4,10 +4,6 @@ $ ./help
   Run the same checks that GitLab CI runs, using Docker.
   Usage: ./ci
 
-./dependencies_combinations
-  Output all possible combinations of dependencies for an extension or skin.
-  Usage: ./dependencies_combinations extensions/Echo
-
 ./dependencies_minimal_bottom_up
   Find the minimum dependencies needed for a repository's Selenium tests to pass.
   Usage: ./dependencies_minimal_bottom_up extensions/Echo
@@ -71,6 +67,10 @@ $ ./help
 ./list_dependencies
   Output dependencies for an extension or skin.
   Usage: ./list_dependencies extensions/Echo
+
+./list_dependencies_combinations
+  Output all possible combinations of dependencies for an extension or skin.
+  Usage: ./list_dependencies_combinations extensions/Echo
 
 ./prepare
   Prepare the local environment for running Quibble.
