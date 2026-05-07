@@ -1,0 +1,56 @@
+$ ./test_integration_slow
+
+./fresh_install ...................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................... ok (58s) 2026-05-06 20:02:08 UTC
+./run_php_unit_tests .......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................... ok (12m 45s) 2026-05-06 20:14:53 UTC
+./dependencies_minimal_bottom_up extensions/Echo ......................... ok (3m 57s) 2026-05-06 20:18:50 UTC
+env PARALLEL=2 ./dependencies_minimal_bottom_up extensions/Echo ............................... ok (5m 31s) 2026-05-06 20:24:21 UTC
+./dependencies_minimal extensions/CommunityConfiguration ....................... ok (8m 17s) 2026-05-06 20:32:38 UTC
+./dependencies_minimal_thorough extensions/Echo ............................................. ok (16m 7s) 2026-05-06 20:48:45 UTC
+env PARALLEL=2 ./dependencies_minimal_thorough extensions/Echo ............................................. ok (17m 30s) 2026-05-06 21:06:15 UTC
+./dependencies_minimal_gated extensions/Echo ........... ok (18m 39s) 2026-05-06 21:24:54 UTC
+env PARALLEL=2 ./dependencies_minimal_gated extensions/Echo ................ ok (22m 24s) 2026-05-06 21:47:18 UTC
+./prepare_gated  ok (1m 28s) 2026-05-06 21:48:46 UTC
+./install_each_gated extensions/Echo ......... ok (1m 57s) 2026-05-06 21:50:43 UTC
+env FAST=1 ./install_each_gated extensions/Echo ......... ok (2m 10s) 2026-05-06 21:52:53 UTC
+env PARALLEL=2 ./install_each_gated extensions/Echo .............. ok (2m 25s) 2026-05-06 21:55:18 UTC
+env PARALLEL=2 FAST=1 ./install_each_gated extensions/Echo .............. ok (3m 11s) 2026-05-06 21:58:29 UTC
+./run_selenium_tests_all_gated extensions/Echo ........... ok (6m 47s) 2026-05-06 22:05:16 UTC
+env FAST=1 ./run_selenium_tests_all_gated extensions/Echo ........... ok (7m 27s) 2026-05-06 22:12:43 UTC
+env PARALLEL=2 ./run_selenium_tests_all_gated extensions/Echo ................ ok (5m 40s) 2026-05-06 22:18:23 UTC
+env PARALLEL=2 FAST=1 ./run_selenium_tests_all_gated extensions/Echo ................ ok (7m 6s) 2026-05-06 22:25:29 UTC
+./run_selenium_tests_required_gated extensions/Echo .......... ok (4m 3s) 2026-05-06 22:29:32 UTC
+env FAST=1 ./run_selenium_tests_required_gated extensions/Echo .......... ok (3m 53s) 2026-05-06 22:33:25 UTC
+env PARALLEL=2 ./run_selenium_tests_required_gated extensions/Echo ............... ok (4m 40s) 2026-05-06 22:38:05 UTC
+env PARALLEL=2 FAST=1 ./run_selenium_tests_required_gated extensions/Echo ............... ok (4m 28s) 2026-05-06 22:42:33 UTC
+./run_selenium_tests_gated ......... FAIL (28m 36s) 2026-05-06 23:11:09 UTC
+
+========================================
+= Results
+========================================
+PASSED:
+  ./fresh_install
+  ./run_php_unit_tests
+  ./dependencies_minimal_bottom_up extensions/Echo
+  env PARALLEL=2 ./dependencies_minimal_bottom_up extensions/Echo
+  ./dependencies_minimal extensions/CommunityConfiguration
+  ./dependencies_minimal_thorough extensions/Echo
+  env PARALLEL=2 ./dependencies_minimal_thorough extensions/Echo
+  ./dependencies_minimal_gated extensions/Echo
+  env PARALLEL=2 ./dependencies_minimal_gated extensions/Echo
+  ./prepare_gated
+  ./install_each_gated extensions/Echo
+  env FAST=1 ./install_each_gated extensions/Echo
+  env PARALLEL=2 ./install_each_gated extensions/Echo
+  env PARALLEL=2 FAST=1 ./install_each_gated extensions/Echo
+  ./run_selenium_tests_all_gated extensions/Echo
+  env FAST=1 ./run_selenium_tests_all_gated extensions/Echo
+  env PARALLEL=2 ./run_selenium_tests_all_gated extensions/Echo
+  env PARALLEL=2 FAST=1 ./run_selenium_tests_all_gated extensions/Echo
+  ./run_selenium_tests_required_gated extensions/Echo
+  env FAST=1 ./run_selenium_tests_required_gated extensions/Echo
+  env PARALLEL=2 ./run_selenium_tests_required_gated extensions/Echo
+  env PARALLEL=2 FAST=1 ./run_selenium_tests_required_gated extensions/Echo
+FAILED:
+  ./run_selenium_tests_gated
+
+Logs: log/silent/
