@@ -4,10 +4,6 @@ $ ./help
   Run the same checks that GitLab CI runs, using Docker.
   Usage: ./ci
 
-./dependencies_minimal_thorough
-  Find and verify the minimum dependencies needed for a repository's Selenium tests to pass.
-  Usage: ./dependencies_minimal_thorough extensions/Echo
-
 ./fetch
   Fetch the latest changes for bare git repos in ref/ from Gerrit.
   Usage: ./fetch
@@ -23,6 +19,10 @@ $ ./help
 ./find_dependencies_minimal_greedy
   Find the minimum dependencies needed for a repository's Selenium tests to pass.
   Usage: ./find_dependencies_minimal_greedy extensions/Echo
+
+./find_dependencies_minimal_thorough
+  Find and verify the minimum dependencies needed for a repository's Selenium tests to pass.
+  Usage: ./find_dependencies_minimal_thorough extensions/Echo
 
 ./fresh_install
   Installs MediaWiki core (without running tests).

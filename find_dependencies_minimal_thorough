@@ -16,9 +16,9 @@
 # greedy finds ~8 in ~17 tests, then verifies by testing combinations of size 0-7 only
 # (not all 131,072).
 #
-# Usage: ./dependencies_minimal_thorough extensions/Echo
-#        VERBOSE=1 ./dependencies_minimal_thorough extensions/Echo
-#        PARALLEL=$(./suggested_parallel) ./dependencies_minimal_thorough extensions/Echo
+# Usage: ./find_dependencies_minimal_thorough extensions/Echo
+#        VERBOSE=1 ./find_dependencies_minimal_thorough extensions/Echo
+#        PARALLEL=$(./suggested_parallel) ./find_dependencies_minimal_thorough extensions/Echo
 #
 # PARALLEL=N: Run N combinations in parallel (each in isolated src_worker_$i/ directory).
 #             Use ./suggested_parallel to determine N for your machine.

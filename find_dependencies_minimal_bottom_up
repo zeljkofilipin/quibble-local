@@ -5,7 +5,7 @@
 # Stops at the first combination that passes — guaranteed to be the smallest.
 #
 # Pick this when: you need a guaranteed minimum and expect the answer to be small
-# (few deps actually needed). When many deps are needed, use ./dependencies_minimal_thorough
+# (few deps actually needed). When many deps are needed, use ./find_dependencies_minimal_thorough
 # instead — its greedy upper bound prunes the search space.
 #
 # Fast when few or no optional deps are needed (e.g. extensions/Echo: 4 deps, 0 needed
