@@ -44,15 +44,15 @@ Run multiple independent sessions on the same machine simultaneously. Each envir
     ENVIRONMENT=0 ./run_selenium_tests extensions/Echo
     ENVIRONMENT=0 ./remove
 
-    # Terminal 2 (at the same time): run dependencies_minimal for MinervaNeue
-    ENVIRONMENT=1 ./dependencies_minimal skins/MinervaNeue
+    # Terminal 2 (at the same time): run dependencies_minimal_greedy for MinervaNeue
+    ENVIRONMENT=1 ./dependencies_minimal_greedy skins/MinervaNeue
     ENVIRONMENT=1 ./remove
 
 Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directories are shared (safe for concurrent use). Use `./remove_src` to remove all environments at once.
 
 ### `FAST`
 
-`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `install_each_gated`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated`. (`dependencies_minimal`, `dependencies_minimal_bottom_up`, and `dependencies_minimal_thorough` always use save/restore automatically.)
+`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `install_each_gated`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated`. (`dependencies_minimal_greedy`, `dependencies_minimal_bottom_up`, and `dependencies_minimal_thorough` always use save/restore automatically.)
 
     FAST=1 ./run_selenium_tests_all_gated
 
@@ -270,14 +270,14 @@ To maximize parallel workers on macOS, increase Docker Desktop memory: Docker De
 
 These scripts find which optional dependencies are actually needed for Selenium tests to pass. They are long-running.
 
-### `./dependencies_minimal`
+### `./dependencies_minimal_greedy`
 
 Find the minimum dependencies using a greedy algorithm: starts with all optional deps, removes one at a time. O(N). Repeats until stable to catch order-dependent removals. Good general-purpose choice.
 
 **Pick this when:** speed matters more than guaranteed correctness (greedy can miss the true minimum). For a guaranteed minimum, use `./dependencies_minimal_bottom_up` (fast when few deps are needed) or `./dependencies_minimal_thorough` (fast when many).
 
-    ./dependencies_minimal extensions/Echo
-    VERBOSE=1 ./dependencies_minimal extensions/Echo
+    ./dependencies_minimal_greedy extensions/Echo
+    VERBOSE=1 ./dependencies_minimal_greedy extensions/Echo
 
 - **Fast for extensions/GrowthExperiments** (17 deps, ~8 needed): ~17 tests regardless of how many are needed.
 - **Slower for extensions/Echo** (4 deps, 0 needed): tests all 4 before concluding none are needed, while `dependencies_minimal_bottom_up` finds the answer in 1 test.
@@ -307,7 +307,7 @@ Environment variables:
 
 Find and verify the minimum dependencies. Phase 1: greedy for a fast estimate. Phase 2: exhaustive verification of all smaller combinations. Confirms the result is truly minimal.
 
-**Pick this when:** you need a guaranteed minimum and expect the answer to be large (many deps actually needed). Always slower than `./dependencies_minimal` (it runs greedy plus verification); when few deps are needed, `./dependencies_minimal_bottom_up` is faster.
+**Pick this when:** you need a guaranteed minimum and expect the answer to be large (many deps actually needed). Always slower than `./dependencies_minimal_greedy` (it runs greedy plus verification); when few deps are needed, `./dependencies_minimal_bottom_up` is faster.
 
     ./dependencies_minimal_thorough extensions/Echo
     VERBOSE=1 ./dependencies_minimal_thorough extensions/Echo
@@ -390,7 +390,7 @@ Run Selenium tests for all gated repositories using only required dependencies (
 
 ### `./dependencies_minimal_gated`
 
-Find minimum dependencies for all gated repositories (or a single component). For each component: check if Selenium tests exist, check if it has optional dependencies, and run `./dependencies_minimal` to find the minimum set.
+Find minimum dependencies for all gated repositories (or a single component). For each component: check if Selenium tests exist, check if it has optional dependencies, and run `./dependencies_minimal_greedy` to find the minimum set.
 
     ./dependencies_minimal_gated
     ./dependencies_minimal_gated extensions/Echo
@@ -401,7 +401,7 @@ Environment variables:
 
 - `PARALLEL=N`: Run N components simultaneously, each in an isolated `ENVIRONMENT=N`. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
-See also: `./dependencies_minimal` for single-component usage.
+See also: `./dependencies_minimal_greedy` for single-component usage.
 
 **Warning:** Without arguments, this will take a very long time to run (50+ components). This script inhibits sleep to prevent the machine from suspending.
 
@@ -448,11 +448,11 @@ These are sourced by other scripts and are not intended to be run directly.
 
 ### `lib/batch_setup`
 
-Shared setup for batch scripts (`test_integration`, `test_integration_slow`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
+Shared setup for batch scripts (`test_integration`, `test_integration_slow`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `dependencies_minimal_greedy`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
 
 ### `lib/heartbeat`
 
-Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `test_integration_slow`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, and `dependencies_minimal_thorough` for silent mode progress feedback. Provides `run_with_dots` function.
+Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `test_integration_slow`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `dependencies_minimal_greedy`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, and `dependencies_minimal_thorough` for silent mode progress feedback. Provides `run_with_dots` function.
 
 ### `lib/debug_info`
 
@@ -508,7 +508,7 @@ Sourced by scripts that need zuul config (`dependencies`, `gated`, `install`). E
 
 ### `lib/inhibit_sleep`
 
-Sourced by long-running scripts (`dependencies_minimal`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `test_integration`, `test_integration_slow`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+Sourced by long-running scripts (`dependencies_minimal_greedy`, `dependencies_minimal_bottom_up`, `dependencies_minimal_gated`, `dependencies_minimal_thorough`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `test_integration`, `test_integration_slow`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
 ### `lib/print_results`
 
@@ -564,7 +564,7 @@ Awk script that extracts entries from a Python list assignment in `parameter_fun
 
 ### `lib/minimal_setup`
 
-Shared setup for `dependencies_minimal`, `dependencies_minimal_bottom_up`, and `dependencies_minimal_thorough`. Reads dependencies, classifies them into required/optional, pre-clones bare repos. Sets up `fresh_or_restore` function and all shared variables.
+Shared setup for `dependencies_minimal_greedy`, `dependencies_minimal_bottom_up`, and `dependencies_minimal_thorough`. Reads dependencies, classifies them into required/optional, pre-clones bare repos. Sets up `fresh_or_restore` function and all shared variables.
 
 ### `lib/print_dep_summary`
 
@@ -580,7 +580,7 @@ Defines the `fresh_or_restore` function: runs `./fresh_install` or `./restore` d
 
 ### `lib/greedy`
 
-Greedy algorithm for `dependencies_minimal`: starts with all optional deps, removes one at a time. O(N) instead of O(2^N). Repeats until stable to catch order-dependent removals. Sourced by `dependencies_minimal`.
+Greedy algorithm for `dependencies_minimal_greedy`: starts with all optional deps, removes one at a time. O(N) instead of O(2^N). Repeats until stable to catch order-dependent removals. Sourced by `dependencies_minimal_greedy`.
 
 ### `lib/parallel`
 
@@ -588,7 +588,7 @@ Parallel exhaustive search: tests combinations in waves of N workers, each in an
 
 ### `lib/print_found`
 
-Prints the "minimum dependencies found" results (header, required deps, optional deps). Sourced by `dependencies_minimal`, `dependencies_minimal_bottom_up`, and `dependencies_minimal_thorough`.
+Prints the "minimum dependencies found" results (header, required deps, optional deps). Sourced by `dependencies_minimal_greedy`, `dependencies_minimal_bottom_up`, and `dependencies_minimal_thorough`.
 
 ## Further reading
 

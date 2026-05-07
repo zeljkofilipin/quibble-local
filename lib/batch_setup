@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-# Shared setup for batch scripts (test_integration, run_selenium_tests_all_gated, run_selenium_tests_required_gated, dependencies_minimal, dependencies_minimal_bottom_up, dependencies_minimal_thorough, dependencies_minimal_gated).
+# Shared setup for batch scripts (test_integration, run_selenium_tests_all_gated, run_selenium_tests_required_gated, dependencies_minimal_greedy, dependencies_minimal_bottom_up, dependencies_minimal_thorough, dependencies_minimal_gated).
 # Sets up verbose/silent mode, sources helper libraries (including duration tracking), creates log directory.
 # Must be sourced, not run directly.
 

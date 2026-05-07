@@ -14,8 +14,8 @@
 # concluding none are needed, while ./dependencies_minimal_bottom_up finds the answer in
 # 1 test.
 #
-# Usage: ./dependencies_minimal extensions/Echo
-#        VERBOSE=1 ./dependencies_minimal extensions/Echo
+# Usage: ./dependencies_minimal_greedy extensions/Echo
+#        VERBOSE=1 ./dependencies_minimal_greedy extensions/Echo
 #
 # See also: ./dependencies_minimal_thorough for exhaustive verification.
 #

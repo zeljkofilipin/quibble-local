@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-# Sourced by long-running scripts (dependencies_minimal, dependencies_minimal_bottom_up, dependencies_minimal_thorough, run_selenium_tests_all_gated, run_selenium_tests_required_gated, test_integration) to prevent the machine from suspending.
+# Sourced by long-running scripts (dependencies_minimal_greedy, dependencies_minimal_bottom_up, dependencies_minimal_thorough, run_selenium_tests_all_gated, run_selenium_tests_required_gated, test_integration) to prevent the machine from suspending.
 # Uses caffeinate on macOS; on Linux tries gnome-session-inhibit (GNOME desktop), then systemd-inhibit (headless/other).
 # The caller's PID ($$) is used so the inhibit ends when the caller exits.
 # Set _QUIBBLE_NO_INHIBIT=1 to skip (used in tests to avoid background processes).

@@ -26,7 +26,7 @@ fi
 
 # Try to read the JSON file from src/ first (working copy), then fall back to the bare repo
 # in ref/ via git show. The bare repo fallback is needed when called before ./install
-# (e.g. from ./dependencies_minimal which reads required deps before installing the extension).
+# (e.g. from ./dependencies_minimal_greedy which reads required deps before installing the extension).
 json_file="src/${component}/${json_name}" # e.g. src/extensions/GrowthExperiments/extension.json
 bare_repo="ref/mediawiki/${component}.git" # e.g. ref/mediawiki/extensions/GrowthExperiments.git
 
