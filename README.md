@@ -274,6 +274,8 @@ These scripts find which optional dependencies are actually needed for Selenium 
 
 Find the minimum dependencies using a greedy algorithm: starts with all optional deps, removes one at a time. O(N). Repeats until stable to catch order-dependent removals. Good general-purpose choice.
 
+**Pick this when:** speed matters more than guaranteed correctness (greedy can miss the true minimum). For a guaranteed minimum, use `./dependencies_minimal_bottom_up` (fast when few deps are needed) or `./dependencies_minimal_thorough` (fast when many).
+
     ./dependencies_minimal extensions/Echo
     VERBOSE=1 ./dependencies_minimal extensions/Echo
 
@@ -285,6 +287,8 @@ Find the minimum dependencies using a greedy algorithm: starts with all optional
 ### `./dependencies_minimal_bottom_up`
 
 Find the minimum dependencies by testing combinations from smallest (0 deps) to largest. Stops at the first passing combination — guaranteed smallest.
+
+**Pick this when:** you need a guaranteed minimum and expect the answer to be small (few deps actually needed). When many deps are needed, use `./dependencies_minimal_thorough` instead — its greedy upper bound prunes the search space.
 
     ./dependencies_minimal_bottom_up extensions/Echo
     VERBOSE=1 ./dependencies_minimal_bottom_up extensions/Echo
@@ -302,6 +306,8 @@ Environment variables:
 ### `./dependencies_minimal_thorough`
 
 Find and verify the minimum dependencies. Phase 1: greedy for a fast estimate. Phase 2: exhaustive verification of all smaller combinations. Confirms the result is truly minimal.
+
+**Pick this when:** you need a guaranteed minimum and expect the answer to be large (many deps actually needed). Always slower than `./dependencies_minimal` (it runs greedy plus verification); when few deps are needed, `./dependencies_minimal_bottom_up` is faster.
 
     ./dependencies_minimal_thorough extensions/Echo
     VERBOSE=1 ./dependencies_minimal_thorough extensions/Echo
