@@ -1,0 +1,3 @@
+$ ./list_dependencies
+
+Usage: ./list_dependencies extensions/EXTENSION or ./list_dependencies skins/SKIN

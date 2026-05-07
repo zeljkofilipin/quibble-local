@@ -1,3 +1,0 @@
-$ ./dependencies
-
-Usage: ./dependencies extensions/EXTENSION or ./dependencies skins/SKIN

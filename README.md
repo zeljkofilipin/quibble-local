@@ -216,12 +216,12 @@ Remove everything created by quibble-local, including bare git repos in `ref/` a
 
 These scripts output information and don't run Docker containers.
 
-### `./dependencies`
+### `./list_dependencies`
 
 Output dependencies for an extension or skin from `zuul/dependencies.yaml`.
 
-    ./dependencies extensions/Echo
-    ./dependencies skins/MinervaNeue
+    ./list_dependencies extensions/Echo
+    ./list_dependencies skins/MinervaNeue
 
 ### `./dependencies_required`
 
@@ -494,11 +494,11 @@ Provides `dep_repo_path` function that converts a dependency name to a Gerrit re
 
 ### `lib/resolve_deps`
 
-Resolves dependency repos for a component, cloning bare repos as needed. Sets the `deps` array with repo paths. Reads from `QUIBBLE_DEPS` env var if set, otherwise from `./dependencies`. Sourced by `install`.
+Resolves dependency repos for a component, cloning bare repos as needed. Sets the `deps` array with repo paths. Reads from `QUIBBLE_DEPS` env var if set, otherwise from `./list_dependencies`. Sourced by `install`.
 
 ### `lib/ensure_config`
 
-Sourced by scripts that need zuul config (`dependencies`, `gated`, `install`). Ensures the `integration/config` working copy exists in `src/config` by cloning from the bare repo.
+Sourced by scripts that need zuul config (`list_dependencies`, `gated`, `install`). Ensures the `integration/config` working copy exists in `src/config` by cloning from the bare repo.
 
 ### `lib/inhibit_sleep`
 
@@ -550,7 +550,7 @@ Awk script that generates all bitmask combinations including the empty set, orde
 
 ### `lib/parse_yaml_list.awk`
 
-Awk script that parses a YAML list under a given key from `zuul/dependencies.yaml`. Used by `dependencies`.
+Awk script that parses a YAML list under a given key from `zuul/dependencies.yaml`. Used by `list_dependencies`.
 
 ### `lib/parse_python_list.awk`
 

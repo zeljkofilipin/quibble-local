@@ -34,7 +34,7 @@ all_deps=() # indexed array of all dependency names
 while IFS= read -r dep; do
   [ -z "$dep" ] && continue # skip empty lines
   all_deps+=("$dep") # += appends to bash arrays
-done < <("$(dirname "$0")"/dependencies "$component")
+done < <("$(dirname "$0")"/list_dependencies "$component")
 
 if [ ${#all_deps[@]} -eq 0 ]; then
   echo "No dependencies found for $component."

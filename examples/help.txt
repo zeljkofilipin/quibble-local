@@ -4,10 +4,6 @@ $ ./help
   Run the same checks that GitLab CI runs, using Docker.
   Usage: ./ci
 
-./dependencies
-  Output dependencies for an extension or skin.
-  Usage: ./dependencies extensions/Echo
-
 ./dependencies_combinations
   Output all possible combinations of dependencies for an extension or skin.
   Usage: ./dependencies_combinations extensions/Echo
@@ -71,6 +67,10 @@ $ ./help
 ./lint
   Run shellcheck on all shell scripts in the repo.
   Usage: ./lint
+
+./list_dependencies
+  Output dependencies for an extension or skin.
+  Usage: ./list_dependencies extensions/Echo
 
 ./prepare
   Prepare the local environment for running Quibble.

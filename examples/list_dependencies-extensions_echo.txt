@@ -1,4 +1,4 @@
-$ ./dependencies extensions/Echo
+$ ./list_dependencies extensions/Echo
 
 AntiSpoof
 CentralAuth

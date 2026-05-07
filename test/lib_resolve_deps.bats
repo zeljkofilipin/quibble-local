@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 #
 # Tests for lib/resolve_deps.
-# Uses QUIBBLE_DEPS env var to avoid needing ./dependencies and config files.
+# Uses QUIBBLE_DEPS env var to avoid needing ./list_dependencies and config files.
 # Pre-creates ref/ directories so git clone is skipped.
 
 setup() {

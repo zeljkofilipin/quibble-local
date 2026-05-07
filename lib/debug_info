@@ -54,7 +54,7 @@ _quibble_print_docker_resources() {
 
 # --- Debug information and verbose mode hint ---
 # Only print when stdout is a terminal ([ -t 1 ]). This suppresses debug output when
-# a script's stdout is piped or captured (e.g. ./dependencies called from ./install via
+# a script's stdout is piped or captured (e.g. ./list_dependencies called from ./install via
 # process substitution, or child scripts whose output flows through run_with_dots).
 if [ -t 1 ]; then
   # In silent mode, tell the user how to get full output and where logs are saved

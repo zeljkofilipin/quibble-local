@@ -37,8 +37,8 @@ ref_dir="ref/${repo}.git"           # e.g. "ref/mediawiki/extensions/Echo.git"
 
 # Clone or fetch bare repos for the extension/skin and integration/config
 clone_or_fetch "$repo"              # e.g. "mediawiki/extensions/Echo"
-clone_or_fetch "integration/config" # needed by ./dependencies
-# Ensure integration/config working copy exists (needed by ./dependencies)
+clone_or_fetch "integration/config" # needed by ./list_dependencies
+# Ensure integration/config working copy exists (needed by ./list_dependencies)
 . "$(dirname "$0")"/lib/ensure_config
 
 # Resolve dependency repos and clone bare repos as needed.

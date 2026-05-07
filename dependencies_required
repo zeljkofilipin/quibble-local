@@ -2,7 +2,7 @@
 #
 # Output required dependencies for an extension or skin from its extension.json or skin.json.
 # These are the extensions/skins listed in the "requires" field that must always be present.
-# Output format matches ./dependencies (bare names for extensions, "skins/Name" for skins).
+# Output format matches ./list_dependencies (bare names for extensions, "skins/Name" for skins).
 #
 # Usage: ./dependencies_required extensions/GrowthExperiments
 #        ./dependencies_required skins/MinervaNeue

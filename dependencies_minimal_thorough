@@ -106,7 +106,7 @@ if [ "$parallel" -le 1 ]; then
     fi
 
     # Install extension with this combination of deps
-    # QUIBBLE_DEPS overrides ./dependencies in ./install (see install script)
+    # QUIBBLE_DEPS overrides ./list_dependencies in ./install (see install script)
     export QUIBBLE_DEPS="$full_combo"
     if ! run_step "$component" ./install "$component"; then
       unset QUIBBLE_DEPS # clean up env var

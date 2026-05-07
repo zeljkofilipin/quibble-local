@@ -33,4 +33,4 @@ while IFS= read -r dep; do
     continue # skip required deps
   fi
   echo "$dep" # this dep is optional
-done < <("$(dirname "$0")"/dependencies "$component")
+done < <("$(dirname "$0")"/list_dependencies "$component")

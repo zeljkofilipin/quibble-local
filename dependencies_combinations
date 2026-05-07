@@ -22,7 +22,7 @@ deps=() # indexed array of dependency names
 while IFS= read -r dep; do
   [ -z "$dep" ] && continue # skip empty lines
   deps+=("$dep") # += appends to bash arrays
-done < <("$(dirname "$0")"/dependencies "$component")
+done < <("$(dirname "$0")"/list_dependencies "$component")
 
 n=${#deps[@]} # number of dependencies
 
