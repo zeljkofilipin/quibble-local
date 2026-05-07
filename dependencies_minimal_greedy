@@ -22,8 +22,12 @@
 
 # No set -euo pipefail: we want to continue after failures to test the next combination
 
+# shellcheck source=lib/minimal_setup
+# shellcheck disable=SC1091 # silence IDE warning about not following sources
 . "$(dirname "$0")"/lib/minimal_setup "$@" # shared setup: read deps, classify, pre-clone
 
+# shellcheck source=lib/greedy
+# shellcheck disable=SC1091 # silence IDE warning about not following sources
 . "$(dirname "$0")"/lib/greedy # greedy algorithm: remove one dep at a time, repeat until stable
 
 exit 0

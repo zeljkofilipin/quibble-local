@@ -27,6 +27,8 @@
 
 # No set -euo pipefail: we want to continue after failures to test the next combination
 
+# shellcheck source=lib/minimal_setup
+# shellcheck disable=SC1091 # silence IDE warning about not following sources
 . "$(dirname "$0")"/lib/minimal_setup "$@" # shared setup: read deps, classify, pre-clone
 
 parallel="${PARALLEL:-1}" # PARALLEL=N runs N combinations in parallel (default 1 = sequential)
@@ -52,6 +54,8 @@ if [ "$parallel" -le 1 ]; then
     combo_num=$((combo_num + 1))
 
     # Build full combo: required deps + optional deps for this combination
+    # shellcheck source=lib/build_full_combo
+    # shellcheck disable=SC1091 # silence IDE warning about not following sources
     . "$(dirname "$0")"/lib/build_full_combo
 
     printf "\n=== Combination %d/%d: %s === %s\n" "$combo_num" "$total" "${full_combo:-(none)}" "$(utc_timestamp)"
@@ -74,6 +78,8 @@ if [ "$parallel" -le 1 ]; then
 
     # Run Selenium tests
     if run_step "$component" ./run_selenium_tests "$component"; then
+      # shellcheck source=lib/print_found
+      # shellcheck disable=SC1091 # silence IDE warning about not following sources
       . "$(dirname "$0")"/lib/print_found # print the winning combination
       exit 0
     fi
@@ -81,6 +87,8 @@ if [ "$parallel" -le 1 ]; then
 
 else
   # --- Parallel mode: see lib/parallel for implementation ---
+  # shellcheck source=lib/parallel
+  # shellcheck disable=SC1091 # silence IDE warning about not following sources
   . "$(dirname "$0")"/lib/parallel
 fi
 
