@@ -230,12 +230,12 @@ Output required dependencies for an extension or skin from its `extension.json` 
     ./dependencies_required extensions/GrowthExperiments
     ./dependencies_required skins/MinervaNeue
 
-### `./dependencies_optional`
+### `./list_dependencies_optional`
 
 Output optional dependencies for an extension or skin. These are dependencies in `zuul/dependencies.yaml` that are NOT in `extension.json`/`skin.json` `requires` field. Complement of `./dependencies_required`.
 
-    ./dependencies_optional extensions/Echo
-    ./dependencies_optional skins/MinervaNeue
+    ./list_dependencies_optional extensions/Echo
+    ./list_dependencies_optional skins/MinervaNeue
 
 ### `./list_dependencies_combinations`
 

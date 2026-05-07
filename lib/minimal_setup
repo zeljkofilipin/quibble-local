@@ -53,7 +53,7 @@ optional=() # indexed array of optional dependency names
 while IFS= read -r dep; do
   [ -z "$dep" ] && continue # skip empty lines
   optional+=("$dep") # += appends to bash arrays
-done < <("$(dirname "$0")"/dependencies_optional "$component")
+done < <("$(dirname "$0")"/list_dependencies_optional "$component")
 
 n=${#optional[@]} # number of optional dependencies
 total=$((1 << n)) # 2^n total combinations of optional deps

@@ -5,14 +5,14 @@
 # extension.json/skin.json "requires" field.
 # Complement of ./dependencies_required.
 #
-# Usage: ./dependencies_optional extensions/Echo
-#        ./dependencies_optional skins/MinervaNeue
+# Usage: ./list_dependencies_optional extensions/Echo
+#        ./list_dependencies_optional skins/MinervaNeue
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then # $# is the number of arguments
-  echo "Usage: ./dependencies_optional extensions/EXTENSION or ./dependencies_optional skins/SKIN"
+  echo "Usage: ./list_dependencies_optional extensions/EXTENSION or ./list_dependencies_optional skins/SKIN"
   exit 1
 fi
 

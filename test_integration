@@ -63,11 +63,11 @@ run_test ./run_selenium_tests skins/MinervaNeue  # 1m: test running skin Seleniu
 # --- Data queries ---
 run_test ./list_dependencies extensions/Echo  # <1m: test listing extension dependencies
 run_test ./dependencies_required extensions/Echo  # <1m: test listing required dependencies
-run_test ./dependencies_optional extensions/Echo  # <1m: test listing optional dependencies
+run_test ./list_dependencies_optional extensions/Echo  # <1m: test listing optional dependencies
 run_test ./list_dependencies_combinations extensions/Echo  # <1m: test listing dependency combinations
 run_test ./list_dependencies skins/MinervaNeue  # <1m: test listing skin dependencies
 run_test ./dependencies_required skins/MinervaNeue  # <1m: test listing required skin dependencies
-run_test ./dependencies_optional skins/MinervaNeue  # <1m: test listing optional skin dependencies
+run_test ./list_dependencies_optional skins/MinervaNeue  # <1m: test listing optional skin dependencies
 run_test ./list_dependencies_combinations skins/MinervaNeue  # <1m: test listing skin dependency combinations
 run_test ./gated                       # <1m: test listing gated repos
 run_test ./suggested_parallel              # <1m: test suggesting number of parallel workers
