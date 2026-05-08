@@ -28,7 +28,7 @@ printf " %s\n" "$(utc_timestamp)" # print UTC timestamp after install
 components=() # array of gated components
 while IFS= read -r component; do
   components+=("$component")
-done < <("$(dirname "$0")"/gated)
+done < <("$(dirname "$0")"/list_gated)
 
 # --- Run Selenium tests for all installed components ---
 # Core first

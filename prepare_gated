@@ -16,4 +16,4 @@ while IFS= read -r component; do
   # Convert component path (e.g. "extensions/Echo") to Gerrit repo (e.g. "mediawiki/extensions/Echo")
   repo="mediawiki/${component}"
   clone_or_fetch "$repo"
-done < <("$(dirname "$0")"/gated)
+done < <("$(dirname "$0")"/list_gated)

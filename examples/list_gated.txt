@@ -1,4 +1,4 @@
-$ ./gated
+$ ./list_gated
 
 extensions/AbuseFilter
 extensions/AntiSpoof

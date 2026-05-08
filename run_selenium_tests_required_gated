@@ -29,7 +29,7 @@ fail_count=0   # running count of failed components
 skip_count=0   # running count of skipped components (no Selenium tests)
 
 # --- Build list of gated components ---
-. "$(dirname "$0")"/lib/build_component_list # sets components[] from $1 or ./gated
+. "$(dirname "$0")"/lib/build_component_list # sets components[] from $1 or ./list_gated
 
 if [ "$parallel" -le 1 ]; then
   # --- Sequential mode ---

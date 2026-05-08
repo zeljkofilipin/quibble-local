@@ -244,11 +244,11 @@ Output all possible combinations of dependencies for an extension or skin. One c
     ./list_dependencies_combinations extensions/Echo
     ./list_dependencies_combinations skins/MinervaNeue
 
-### `./gated`
+### `./list_gated`
 
 Output the list of gated repositories (extensions and skins) from `parameter_functions.py`. Clones `integration/config` into `src/config` if needed. Assumes `./prepare` has been run first.
 
-    ./gated
+    ./list_gated
 
 ### `./selenium_tests_exist`
 
@@ -326,7 +326,7 @@ Environment variables:
 
 ## Commands (all gated repositories)
 
-These scripts operate on all gated extensions and skins (from `./gated`). They take a long time to run.
+These scripts operate on all gated extensions and skins (from `./list_gated`). They take a long time to run.
 
 ### `./prepare_gated`
 
@@ -482,7 +482,7 @@ Provides `run_quibble_test` function that runs a Quibble test command in Docker 
 
 ### `lib/build_component_list`
 
-Builds the `components` array from either `$1` (single component) or `./gated` (all gated extensions/skins). Sourced by `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_required_gated`, and `find_dependencies_minimal_gated`.
+Builds the `components` array from either `$1` (single component) or `./list_gated` (all gated extensions/skins). Sourced by `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_required_gated`, and `find_dependencies_minimal_gated`.
 
 ### `lib/clone_or_fetch`
 
@@ -498,7 +498,7 @@ Resolves dependency repos for a component, cloning bare repos as needed. Sets th
 
 ### `lib/ensure_config`
 
-Sourced by scripts that need zuul config (`list_dependencies`, `gated`, `install`). Ensures the `integration/config` working copy exists in `src/config` by cloning from the bare repo.
+Sourced by scripts that need zuul config (`list_dependencies`, `list_gated`, `install`). Ensures the `integration/config` working copy exists in `src/config` by cloning from the bare repo.
 
 ### `lib/inhibit_sleep`
 
@@ -554,7 +554,7 @@ Awk script that parses a YAML list under a given key from `zuul/dependencies.yam
 
 ### `lib/parse_python_list.awk`
 
-Awk script that extracts entries from a Python list assignment in `parameter_functions.py`. Used by `gated`.
+Awk script that extracts entries from a Python list assignment in `parameter_functions.py`. Used by `list_gated`.
 
 ### `lib/minimal_setup`
 

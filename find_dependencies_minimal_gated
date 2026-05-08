@@ -25,7 +25,7 @@
 parallel="${PARALLEL:-1}" # PARALLEL=N runs N components in parallel (default 1 = sequential)
 
 # --- Build list of gated components ---
-. "$(dirname "$0")"/lib/build_component_list # sets components[] from $1 or ./gated
+. "$(dirname "$0")"/lib/build_component_list # sets components[] from $1 or ./list_gated
 
 # --- Filter components: skip those without Selenium tests or without optional deps ---
 filtered=() # array of components that need find_dependencies_minimal_greedy

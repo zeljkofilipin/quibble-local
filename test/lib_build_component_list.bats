@@ -21,16 +21,16 @@ teardown() {
   [ "$output" = "extensions/Echo" ]
 }
 
-@test "build_component_list: reads from gated when no argument" {
+@test "build_component_list: reads from list_gated when no argument" {
   cd "$TEST_DIR"
-  # Create a mock gated script that outputs two components
+  # Create a mock list_gated script that outputs two components
   mkdir -p "$(dirname "$0")" 2>/dev/null || true
-  cat > "$TEST_DIR/gated" << 'SCRIPT'
+  cat > "$TEST_DIR/list_gated" << 'SCRIPT'
 #!/usr/bin/env bash
 echo "extensions/Echo"
 echo "skins/MinervaNeue"
 SCRIPT
-  chmod +x "$TEST_DIR/gated"
+  chmod +x "$TEST_DIR/list_gated"
   run bash -c '
     cd '"$TEST_DIR"'
     set --

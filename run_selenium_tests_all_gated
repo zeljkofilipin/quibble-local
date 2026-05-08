@@ -37,7 +37,7 @@ fi
 printf " %s\n" "$(utc_timestamp)" # print UTC timestamp after core
 
 # --- Build list of gated components ---
-. "$(dirname "$0")"/lib/build_component_list # sets components[] from $1 or ./gated
+. "$(dirname "$0")"/lib/build_component_list # sets components[] from $1 or ./list_gated
 
 if [ "$parallel" -le 1 ]; then
   # --- Sequential mode ---

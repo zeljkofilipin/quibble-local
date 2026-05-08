@@ -28,10 +28,6 @@ $ ./help
   Installs MediaWiki core (without running tests).
   Usage: ./fresh_install
 
-./gated
-  Output the list of gated repositories (extensions and skins).
-  Usage: ./gated
-
 ./generate_examples
   Generate an example output file by running a command and capturing its output.
   Usage: ./generate_examples examples/help.txt './help'
@@ -71,6 +67,10 @@ $ ./help
 ./list_dependencies_required
   Output required dependencies for an extension or skin from its extension.json or skin.json.
   Usage: ./list_dependencies_required extensions/GrowthExperiments
+
+./list_gated
+  Output the list of gated repositories (extensions and skins).
+  Usage: ./list_gated
 
 ./prepare
   Prepare the local environment for running Quibble.

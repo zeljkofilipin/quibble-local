@@ -1,7 +1,7 @@
 # shellcheck shell=bash
-# Build the list of components to process from arguments or ./gated.
+# Build the list of components to process from arguments or ./list_gated.
 # If a component is passed as $1, uses that single component.
-# Otherwise reads all gated components from ./gated.
+# Otherwise reads all gated components from ./list_gated.
 # Must be sourced, not run directly.
 # shellcheck disable=SC2034 # components is used by the sourcing script
 #
@@ -14,5 +14,5 @@ else
   # Read all gated extensions/skins
   while IFS= read -r component; do
     components+=("$component") # += appends to bash arrays
-  done < <("$(dirname "$0")"/gated)
+  done < <("$(dirname "$0")"/list_gated)
 fi
