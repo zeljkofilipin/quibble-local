@@ -21,6 +21,7 @@ run_test ./help install                # <1m: test detailed help for a specific 
 run_test ./lint                        # <1m: test that all scripts pass shellcheck
 run_test ./ci                          # <1m: test that CI lint passes in Docker
 run_test ./generate_example log/generate_example_test.txt './help'  # <1m: test capturing a command's output to a file
+run_test env DRY_RUN=1 ./generate_examples  # <1m: test bulk regenerator iteration logic (DRY_RUN to avoid re-running every script)
 
 # --- Setup and cleanup ---
 run_test ./prepare                     # 6m: test that prepare pulls image and clones repos

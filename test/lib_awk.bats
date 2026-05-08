@@ -153,3 +153,46 @@ JSON
   result=$(echo "$input" | awk -f lib/parse_requires.awk)
   [ -z "$result" ]
 }
+
+# parse_usage.awk — extract the # Usage: block from a script header
+
+@test "parse_usage.awk: single-line Usage" {
+  input=$(printf '#!/usr/bin/env bash\n#\n# Some description\n#\n# Usage: ./foo\n#\nset -e\n')
+  result=$(echo "$input" | awk -f lib/parse_usage.awk)
+  [ "$result" = "./foo" ]
+}
+
+@test "parse_usage.awk: multi-line Usage with continuations" {
+  input=$(printf '#!/usr/bin/env bash\n# Usage: ./foo\n#        ./foo bar\n#        VERBOSE=1 ./foo\n#\nset -e\n')
+  result=$(echo "$input" | awk -f lib/parse_usage.awk)
+  expected=$(printf './foo\n./foo bar\nVERBOSE=1 ./foo')
+  [ "$result" = "$expected" ]
+}
+
+@test "parse_usage.awk: stops at blank comment line" {
+  input=$(printf '# Usage: ./foo\n#        ./foo bar\n#\n#        ./not_a_continuation\n')
+  result=$(echo "$input" | awk -f lib/parse_usage.awk)
+  expected=$(printf './foo\n./foo bar')
+  [ "$result" = "$expected" ]
+}
+
+@test "parse_usage.awk: stops at non-comment line" {
+  input=$(printf '# Usage: ./foo\n#        ./foo bar\nset -e\n#        ./not_a_continuation\n')
+  result=$(echo "$input" | awk -f lib/parse_usage.awk)
+  expected=$(printf './foo\n./foo bar')
+  [ "$result" = "$expected" ]
+}
+
+@test "parse_usage.awk: stops at single-space comment line" {
+  # "# FOO=1: explanation" has only one space after # — distinct from continuation.
+  input=$(printf '# Usage: ./foo\n#        ./foo bar\n# FAST=1: explanation\n')
+  result=$(echo "$input" | awk -f lib/parse_usage.awk)
+  expected=$(printf './foo\n./foo bar')
+  [ "$result" = "$expected" ]
+}
+
+@test "parse_usage.awk: returns nothing when no Usage block" {
+  input=$(printf '#!/usr/bin/env bash\n# Some description\nset -e\n')
+  result=$(echo "$input" | awk -f lib/parse_usage.awk)
+  [ -z "$result" ]
+}

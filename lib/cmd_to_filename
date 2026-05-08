@@ -1,0 +1,76 @@
+# shellcheck shell=bash
+# Convert a Usage command string to an examples/*.txt filename.
+# Output is written to stdout.
+# Must be sourced, not run directly.
+#
+# Rules:
+#   - Tokenize on whitespace via `read -ra` (does NOT perform $() command substitution).
+#   - Tokens before "./scriptname" are env var assignments (NAME=VALUE) — collected for suffix.
+#   - "./scriptname" gives the script name (used verbatim, no case change).
+#   - Tokens after the script:
+#       - "--flag": drop value (skip next token). Suffix: "-flagname" (leading "--" stripped, dots → "_", lowercased).
+#       - Otherwise (positional): suffix: "-arg" (slashes/dots → "_", lowercased).
+#   - Env var suffixes appended after positional/flag suffixes:
+#       "-name" (lowercased) + (if value non-empty) "_value" (lowercased).
+#
+# Usage:
+#   . "$(dirname "$0")"/lib/cmd_to_filename
+#   filename=$(cmd_to_filename "./install extensions/Echo")
+#   # filename == "examples/install-extensions_echo.txt"
+
+cmd_to_filename() {
+  local cmd="$1"                                                   # the Usage command string
+  local script="" args_suffix="" env_suffix=""                     # output components
+  local skip_next=0                                                # set to 1 after a --flag to skip its value
+  local in_args=0                                                  # 0 = before script, 1 = after script
+  local tokens token                                                # tokens array, current token
+  local var_name var_value lc_name lc_value lc_flag arg_part        # working scratch vars
+
+  # Word-split on whitespace WITHOUT performing command substitution
+  # (eval would expand $(...) — read -ra preserves it as a literal token).
+  read -ra tokens <<< "$cmd"
+
+  for token in "${tokens[@]}"; do
+    if [ "$skip_next" -eq 1 ]; then                                # current token is the value after a --flag
+      skip_next=0
+      continue
+    fi
+    if [ "$in_args" -eq 0 ]; then                                  # not yet past the ./script invocation
+      case "$token" in
+        ./*)                                                       # ./scriptname — extract the name
+          script="${token#./}"
+          in_args=1
+          ;;
+        env) ;;                                                    # ignore literal "env" keyword (rare)
+        *=*)                                                       # NAME=VALUE env var assignment
+          var_name="${token%%=*}"                                  # everything before first =
+          var_value="${token#*=}"                                  # everything after first =
+          # Strip surrounding double quotes if present (e.g. QUIBBLE_DEPS="EventLogging")
+          case "$var_value" in
+            \"*\") var_value="${var_value%\"}"; var_value="${var_value#\"}" ;;
+          esac
+          lc_name=$(printf '%s' "$var_name" | tr '[:upper:]' '[:lower:]')
+          env_suffix="${env_suffix}-${lc_name}"
+          if [ -n "$var_value" ]; then                             # non-empty value: append _<value>
+            lc_value=$(printf '%s' "$var_value" | tr '[:upper:]' '[:lower:]')
+            env_suffix="${env_suffix}_${lc_value}"
+          fi
+          ;;
+      esac
+    else                                                           # past the ./script: positional or flag
+      case "$token" in
+        --*)                                                       # --flag: drop value, append flag suffix
+          lc_flag=$(printf '%s' "${token#--}" | tr '[:upper:]' '[:lower:]' | tr '.' '_')
+          args_suffix="${args_suffix}-${lc_flag}"
+          skip_next=1
+          ;;
+        *)                                                         # positional arg
+          arg_part=$(printf '%s' "$token" | tr '/' '_' | tr '.' '_' | tr '[:upper:]' '[:lower:]')
+          args_suffix="${args_suffix}-${arg_part}"
+          ;;
+      esac
+    fi
+  done
+
+  printf 'examples/%s%s%s.txt\n' "$script" "$args_suffix" "$env_suffix"
+}

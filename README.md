@@ -440,6 +440,13 @@ Generate an example output file by running a command and capturing its output. U
     ./generate_example examples/help.txt './help'
     ./generate_example examples/install.txt './install'
 
+### `./generate_examples`
+
+Regenerate example output files in `examples/` in bulk by iterating each project-root script's `# Usage:` block. Iteration 1 runs only the FIRST `Usage:` line per script (the simplest invocation). Filenames are derived from the command via `lib/cmd_to_filename`. Useful for refreshing `examples/` after script renames or behavior changes.
+
+    ./generate_examples
+    DRY_RUN=1 ./generate_examples
+
 ## Internal scripts (`lib/`)
 
 These are sourced by other scripts and are not intended to be run directly.
@@ -559,6 +566,14 @@ Awk script that parses a YAML list under a given key from `zuul/dependencies.yam
 ### `lib/parse_python_list.awk`
 
 Awk script that extracts entries from a Python list assignment in `parameter_functions.py`. Used by `list_gated`.
+
+### `lib/parse_usage.awk`
+
+Awk script that extracts the `# Usage:` block from a script header. Used by `generate_examples`.
+
+### `lib/cmd_to_filename`
+
+Provides `cmd_to_filename`, a Bash function that converts a Usage command string (e.g. `./install extensions/Echo`) to an `examples/*.txt` filename (e.g. `examples/install-extensions_echo.txt`). Sourced by `generate_examples`.
 
 ### `lib/minimal_setup`
 
