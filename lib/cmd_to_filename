@@ -4,7 +4,8 @@
 # Must be sourced, not run directly.
 #
 # Rules:
-#   - Tokenize on whitespace via `read -ra` (does NOT perform $() command substitution).
+#   - Tokenize via `xargs -n1`, which respects shell quoting (so multi-word values like
+#     `--flag "a b c"` become a single token) and does NOT perform $() expansion.
 #   - Tokens before "./scriptname" are env var assignments (NAME=VALUE) — collected for suffix.
 #   - "./scriptname" gives the script name (used verbatim, no case change).
 #   - Tokens after the script:
@@ -23,14 +24,17 @@ cmd_to_filename() {
   local script="" args_suffix="" env_suffix=""                     # output components
   local skip_next=0                                                # set to 1 after a --flag to skip its value
   local in_args=0                                                  # 0 = before script, 1 = after script
-  local tokens token                                                # tokens array, current token
+  local tokens=() token                                             # tokens array, current token
   local var_name var_value lc_name lc_value lc_flag arg_part        # working scratch vars
 
-  # Word-split on whitespace WITHOUT performing command substitution
-  # (eval would expand $(...) — read -ra preserves it as a literal token).
-  read -ra tokens <<< "$cmd"
+  # Tokenize via xargs -n1: respects shell quoting so multi-word values like
+  # `--flag "a b c"` become a single token. xargs does NOT expand $() or variables.
+  while IFS= read -r token; do
+    tokens+=("$token")
+  done < <(printf '%s\n' "$cmd" | xargs -n1 2>/dev/null)
 
-  for token in "${tokens[@]}"; do
+  # ${arr[@]+"${arr[@]}"} expands to "${arr[@]}" if set, else nothing — required under set -u when array may be empty.
+  for token in ${tokens[@]+"${tokens[@]}"}; do
     if [ "$skip_next" -eq 1 ]; then                                # current token is the value after a --flag
       skip_next=0
       continue
@@ -48,6 +52,11 @@ cmd_to_filename() {
           # Strip surrounding double quotes if present (e.g. QUIBBLE_DEPS="EventLogging")
           case "$var_value" in
             \"*\") var_value="${var_value%\"}"; var_value="${var_value#\"}" ;;
+          esac
+          # Dynamic values like $(./suggest_parallel) or arithmetic substitutions don't make
+          # sensible filename suffixes. Treat as empty so the suffix is just "-<name>".
+          case "$var_value" in
+            *'$'*|*'('*|*')'*) var_value="" ;;
           esac
           lc_name=$(printf '%s' "$var_name" | tr '[:upper:]' '[:lower:]')
           env_suffix="${env_suffix}-${lc_name}"

@@ -43,9 +43,20 @@ setup() {
   [ "$result" = "examples/run_selenium_tests-spec.txt" ]
 }
 
-@test "cmd_to_filename: command substitution in env var preserved as literal" {
-  # eval would expand $(./suggest_parallel); read -ra preserves it as a literal token.
+@test "cmd_to_filename: command substitution in env var produces clean suffix" {
+  # $(./suggest_parallel) is dynamic; we omit the value so the suffix is just "-parallel".
   result=$(cmd_to_filename 'PARALLEL=$(./suggest_parallel) ./run_selenium_tests_all_gated')
-  # The exact output is awkward but the test is that we don't execute the substitution.
-  [[ "$result" == examples/run_selenium_tests_all_gated-parallel_* ]]
+  [ "$result" = "examples/run_selenium_tests_all_gated-parallel.txt" ]
+}
+
+@test "cmd_to_filename: multiple env vars with simple values" {
+  result=$(cmd_to_filename 'PARALLEL=4 FAST=1 ./install_each_gated')
+  [ "$result" = "examples/install_each_gated-parallel_4-fast_1.txt" ]
+}
+
+@test "cmd_to_filename: quoted multi-word --flag value treated as single token" {
+  # Without quote-aware tokenization, "should be able to..." would split into 5 tokens
+  # and leak "be", "able", etc. into the filename as positional args.
+  result=$(cmd_to_filename './run_selenium_tests --spec X --mochaOpts.grep "should be able to create account"')
+  [ "$result" = "examples/run_selenium_tests-spec-mochaopts_grep.txt" ]
 }

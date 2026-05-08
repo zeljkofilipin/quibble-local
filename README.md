@@ -442,7 +442,7 @@ Generate an example output file by running a command and capturing its output. U
 
 ### `./generate_examples`
 
-Regenerate example output files in `examples/` in bulk by iterating each project-root script's `# Usage:` block. Iteration 1 runs only the FIRST `Usage:` line per script (the simplest invocation). Filenames are derived from the command via `lib/cmd_to_filename`. Useful for refreshing `examples/` after script renames or behavior changes.
+Regenerate example output files in `examples/` in bulk by iterating each project-root script's `# Usage:` block. Runs every `Usage:` line of every script; filenames are derived from the command via `lib/cmd_to_filename`. Useful for refreshing `examples/` after script renames or behavior changes.
 
     ./generate_examples
     DRY_RUN=1 ./generate_examples

@@ -10,11 +10,12 @@
   [[ "$output" == *"Would generate examples/"* ]]
 }
 
-@test "generate_examples: DRY_RUN includes a known stable entry" {
+@test "generate_examples: DRY_RUN runs every Usage line per script" {
   run env DRY_RUN=1 ./generate_examples
   [ "$status" -eq 0 ]
-  # ./help is the simplest first-Usage line of help; should always appear.
+  # Both first and non-first Usage lines of help should appear.
   [[ "$output" == *"Would generate examples/help.txt from: ./help"* ]]
+  [[ "$output" == *"Would generate examples/help-install.txt from: ./help install"* ]]
 }
 
 @test "generate_examples: DRY_RUN skips itself and generate_example" {
@@ -22,4 +23,12 @@
   [ "$status" -eq 0 ]
   [[ "$output" != *"examples/generate_examples.txt"* ]]
   [[ "$output" != *"examples/generate_example.txt"* ]]
+}
+
+@test "generate_examples: warns and skips filename collisions" {
+  # The same command appears in run_selenium_tests_all_gated's Usage block and
+  # suggest_parallel's Usage block, producing the same derived filename.
+  run env DRY_RUN=1 ./generate_examples
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"filename collision"* ]]
 }

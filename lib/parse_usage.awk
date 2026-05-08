@@ -5,6 +5,6 @@
 # The 2-space minimum on continuation lines distinguishes them from regular comments
 # like "# FAST=1: explanation" that may follow the Usage block.
 
-/^# Usage:/ { flag=1; sub(/^# Usage:[[:space:]]*/, ""); if (NF) print; next }   # first Usage line
-flag && /^#  +[^ ]/ { sub(/^#[[:space:]]+/, ""); print; next }                  # continuation line (# + 2+ spaces + non-space)
-flag { exit }                                                                    # block ends at first non-continuation line
+/^# Usage:/ { flag=1; sub(/^# Usage:[[:space:]]*/, ""); sub(/[[:space:]]+#.*$/, ""); if (NF) print; next }  # first Usage line; also strip any trailing " #..." inline comment
+flag && /^#  +[^ ]/ { sub(/^#[[:space:]]+/, ""); sub(/[[:space:]]+#.*$/, ""); if (NF) print; next }         # continuation line (# + 2+ spaces + non-space)
+flag { exit }                                                                                                  # block ends at first non-continuation line

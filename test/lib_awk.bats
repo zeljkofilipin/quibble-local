@@ -196,3 +196,10 @@ JSON
   result=$(echo "$input" | awk -f lib/parse_usage.awk)
   [ -z "$result" ]
 }
+
+@test "parse_usage.awk: strips trailing inline # comment" {
+  input=$(printf '# Usage: ./foo\n#        DRY_RUN=1 ./foo bar  # pass --dry-run\n')
+  result=$(echo "$input" | awk -f lib/parse_usage.awk)
+  expected=$(printf './foo\nDRY_RUN=1 ./foo bar')
+  [ "$result" = "$expected" ]
+}

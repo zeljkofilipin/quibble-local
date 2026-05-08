@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 #
 # Regenerate example output files in examples/ by iterating each project-root script's # Usage: block.
-# Iteration 1: runs only the FIRST Usage line per script (the simplest invocation, after Commit 1's reorder).
-# Filenames are derived from the command (see lib/cmd_to_filename).
+# Runs every Usage line of every script; filenames are derived from the command (see lib/cmd_to_filename).
 # Useful for refreshing examples/ in bulk after script renames or behavior changes.
 #
 # Usage: ./generate_examples
@@ -15,6 +14,10 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 # Switch to the script's directory (project root) so relative paths and ./scripts work
 # regardless of where this is invoked from. $0 may be relative or absolute; dirname handles both.
 cd "$(dirname "$0")"
+
+# Track filenames already generated so two distinct Usage lines don't silently overwrite
+# each other. Bash 3.2 has no associative arrays; use a delimited string.
+seen="|"
 
 # Iterate project-root files. Auto-discover scripts the same way ./lint and ./help do:
 # the first line must be a bash shebang or a shellcheck directive.
@@ -29,17 +32,28 @@ for script in *; do
     '#!/usr/bin/env bash'|'# shellcheck'*) ;;
     *) continue ;;
   esac
-  # Take only the first Usage line (iteration 1).
-  # `head -n 1` may close the pipe early; awk's SIGPIPE is harmless here.
-  cmd="$(awk -f lib/parse_usage.awk "$script" | head -n 1)"
-  if [ -z "$cmd" ]; then
+  # Capture every Usage line of this script.
+  usage_block="$(awk -f lib/parse_usage.awk "$script")"
+  if [ -z "$usage_block" ]; then
     echo "Skipping $script: no # Usage: block" >&2 # >&2 prints to stderr
     continue
   fi
-  file="$(cmd_to_filename "$cmd")"                                  # derive examples/*.txt filename from the command
-  if [ -n "${DRY_RUN:-}" ]; then                                    # ${VAR:-} is "" when VAR is unset (works under set -u)
-    echo "Would generate $file from: $cmd"                          # DRY_RUN mode: print what would happen
-  else
-    ./generate_example "$file" "$cmd"                               # actually run the command and capture output
-  fi
+  # Iterate each Usage line. `<<<` feeds the captured block to the loop; the loop
+  # runs in the current shell so `set -e` and exits behave normally.
+  while IFS= read -r cmd; do
+    [ -n "$cmd" ] || continue                                       # skip blank lines (defensive)
+    file="$(cmd_to_filename "$cmd")"                                # derive examples/*.txt filename from the command
+    case "$seen" in
+      *"|$file|"*)                                                  # already generated this filename earlier
+        echo "Skipping $cmd: $file already generated (filename collision)" >&2
+        continue
+        ;;
+    esac
+    seen="${seen}${file}|"                                          # remember we've claimed this filename
+    if [ -n "${DRY_RUN:-}" ]; then                                  # ${VAR:-} is "" when VAR is unset (works under set -u)
+      echo "Would generate $file from: $cmd"                        # DRY_RUN mode: print what would happen
+    else
+      ./generate_example "$file" "$cmd"                             # actually run the command and capture output
+    fi
+  done <<< "$usage_block"
 done
