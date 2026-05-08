@@ -100,6 +100,7 @@ Run Selenium tests. Assumes `./fresh_install` (or `./install`) has been run firs
 
     ./run_selenium_tests
     ./run_selenium_tests extensions/Echo
+    ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js
     ./run_selenium_tests --spec tests/selenium/specs/page.js
     ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js
     ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"
@@ -227,6 +228,7 @@ Output dependencies for an extension or skin from `zuul/dependencies.yaml`.
 
 Output required dependencies for an extension or skin from its `extension.json` or `skin.json`. These are the extensions/skins listed in the `requires` field that must always be present.
 
+    ./list_dependencies_required extensions/Echo
     ./list_dependencies_required extensions/GrowthExperiments
     ./list_dependencies_required skins/MinervaNeue
 
@@ -256,6 +258,8 @@ Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
 
     ./selenium_tests_exist
     ./selenium_tests_exist extensions/Echo
+    ./selenium_tests_exist skins/MinervaNeue
+    ./selenium_tests_exist skins/Vector
 
 ### `./suggest_parallel`
 

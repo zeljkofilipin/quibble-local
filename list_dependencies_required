@@ -4,7 +4,8 @@
 # These are the extensions/skins listed in the "requires" field that must always be present.
 # Output format matches ./list_dependencies (bare names for extensions, "skins/Name" for skins).
 #
-# Usage: ./list_dependencies_required extensions/GrowthExperiments
+# Usage: ./list_dependencies_required extensions/Echo
+#        ./list_dependencies_required extensions/GrowthExperiments
 #        ./list_dependencies_required skins/MinervaNeue
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures

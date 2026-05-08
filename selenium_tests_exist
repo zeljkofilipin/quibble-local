@@ -8,6 +8,7 @@
 # Usage: ./selenium_tests_exist
 #        ./selenium_tests_exist extensions/Echo
 #        ./selenium_tests_exist skins/MinervaNeue
+#        ./selenium_tests_exist skins/Vector
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
