@@ -128,9 +128,9 @@ $ ./help
   Open a shell in the container with MediaWiki running.
   Usage: ./shellto
 
-./suggested_parallel
+./suggest_parallel
   Suggest the number of parallel workers for batch scripts.
-  Usage: ./suggested_parallel
+  Usage: ./suggest_parallel
 
 ./test_integration
   Run fast integration tests and report which ones passed or failed.

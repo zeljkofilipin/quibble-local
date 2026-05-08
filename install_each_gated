@@ -11,11 +11,11 @@
 #        ./install_each_gated extensions/Echo
 #        VERBOSE=1 ./install_each_gated
 #        FAST=1 ./install_each_gated
-#        PARALLEL=$(./suggested_parallel) ./install_each_gated
+#        PARALLEL=$(./suggest_parallel) ./install_each_gated
 #        PARALLEL=4 FAST=1 ./install_each_gated
 # FAST=1: Runs fresh_install once, saves state, then restores instead of re-running fresh_install.
 # PARALLEL=N: Run N components in parallel (each in isolated src_worker_$i/ directory).
-#             Use ./suggested_parallel to determine N for your machine.
+#             Use ./suggest_parallel to determine N for your machine.
 #
 
 # No set -euo pipefail: we want to continue after failures to collect all results

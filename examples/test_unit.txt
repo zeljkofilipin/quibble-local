@@ -187,5 +187,5 @@ ok 183 selenium_tests_exist: clones core from ref and finds selenium-test
 ok 184 selenium_tests_exist: clones core from ref and exits 1 when no selenium-test
 ok 185 selenium_tests_exist: clones extension from ref and finds selenium-test
 ok 186 selenium_tests_exist: clones skin from ref and finds selenium-test
-ok 187 suggested_parallel: outputs a number
-ok 188 suggested_parallel: output is at least 1
+ok 187 suggest_parallel: outputs a number
+ok 188 suggest_parallel: output is at least 1

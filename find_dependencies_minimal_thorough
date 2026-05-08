@@ -18,10 +18,10 @@
 #
 # Usage: ./find_dependencies_minimal_thorough extensions/Echo
 #        VERBOSE=1 ./find_dependencies_minimal_thorough extensions/Echo
-#        PARALLEL=$(./suggested_parallel) ./find_dependencies_minimal_thorough extensions/Echo
+#        PARALLEL=$(./suggest_parallel) ./find_dependencies_minimal_thorough extensions/Echo
 #
 # PARALLEL=N: Run N combinations in parallel (each in isolated src_worker_$i/ directory).
-#             Use ./suggested_parallel to determine N for your machine.
+#             Use ./suggest_parallel to determine N for your machine.
 #             Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 #
 # WARNING: This script inhibits sleep to prevent the machine from suspending.

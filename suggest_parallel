@@ -21,8 +21,8 @@
 # Docker Desktop defaults (~6 GB), memory is the bottleneck (3 workers instead
 # of 5). Increasing Docker memory to 10+ GB removes the bottleneck.
 #
-# Usage: ./suggested_parallel
-#        PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all_gated
+# Usage: ./suggest_parallel
+#        PARALLEL=$(./suggest_parallel) ./run_selenium_tests_all_gated
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 

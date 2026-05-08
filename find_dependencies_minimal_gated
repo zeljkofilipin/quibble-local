@@ -9,10 +9,10 @@
 # Usage: ./find_dependencies_minimal_gated
 #        ./find_dependencies_minimal_gated extensions/Echo
 #        VERBOSE=1 ./find_dependencies_minimal_gated
-#        PARALLEL=$(./suggested_parallel) ./find_dependencies_minimal_gated
+#        PARALLEL=$(./suggest_parallel) ./find_dependencies_minimal_gated
 #
 # PARALLEL=N: Run N components in parallel (each in isolated ENVIRONMENT=N).
-#             Use ./suggested_parallel to determine N for your machine.
+#             Use ./suggest_parallel to determine N for your machine.
 #             Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 #
 # See also: ./find_dependencies_minimal_greedy for single-component usage.

@@ -257,7 +257,7 @@ Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
     ./selenium_tests_exist
     ./selenium_tests_exist extensions/Echo
 
-### `./suggested_parallel`
+### `./suggest_parallel`
 
 Suggest the number of parallel workers based on available CPU and memory. Each worker needs ~2 CPU cores and ~2 GB of Docker memory. Outputs a single number. Used by `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_gated`, `find_dependencies_minimal_thorough`, `install_each_gated`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated`.
 
@@ -265,8 +265,8 @@ On macOS, the result may differ depending on whether Docker is running. When Doc
 
 To maximize parallel workers on macOS, increase Docker Desktop memory: Docker Desktop → Settings → Resources → Memory. The formula is: workers = min(CPUs / 2, memory / 2 GB). On a 10-core / 64 GB machine with Docker Desktop defaults (~6 GB), memory is the bottleneck (3 workers instead of 5). Increasing Docker memory to 10+ GB removes the bottleneck.
 
-    ./suggested_parallel
-    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all_gated
+    ./suggest_parallel
+    PARALLEL=$(./suggest_parallel) ./run_selenium_tests_all_gated
 
 ## Finding minimum dependencies
 
@@ -294,14 +294,14 @@ Find the minimum dependencies by testing combinations from smallest (0 deps) to 
 
     ./find_dependencies_minimal_bottom_up extensions/Echo
     VERBOSE=1 ./find_dependencies_minimal_bottom_up extensions/Echo
-    PARALLEL=$(./suggested_parallel) ./find_dependencies_minimal_bottom_up extensions/Echo
+    PARALLEL=$(./suggest_parallel) ./find_dependencies_minimal_bottom_up extensions/Echo
 
 - **Fast for extensions/Echo** (4 deps, 0 needed): tests empty set first, passes in 1 test.
 - **Extremely slow for extensions/GrowthExperiments** (17 deps, ~8 needed): tests up to 2^17 = 131,072 combinations (~10 min each).
 
 Environment variables:
 
-- `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
+- `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggest_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
 
@@ -313,14 +313,14 @@ Find and verify the minimum dependencies. Phase 1: greedy for a fast estimate. P
 
     ./find_dependencies_minimal_thorough extensions/Echo
     VERBOSE=1 ./find_dependencies_minimal_thorough extensions/Echo
-    PARALLEL=$(./suggested_parallel) ./find_dependencies_minimal_thorough extensions/Echo
+    PARALLEL=$(./suggest_parallel) ./find_dependencies_minimal_thorough extensions/Echo
 
 - **Fast for extensions/Echo** (4 deps, 0 needed): greedy finds 0 in ~4 tests, verification confirms immediately.
 - **Moderate for extensions/GrowthExperiments** (17 deps, ~8 needed): greedy finds ~8 in ~17 tests, then verifies by testing combinations of size 0–7 only (not all 131,072).
 
 Environment variables:
 
-- `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
+- `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggest_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
 
@@ -350,7 +350,7 @@ Install each gated extension or skin into its own fresh MediaWiki, one at a time
     ./install_each_gated extensions/Echo
     VERBOSE=1 ./install_each_gated
     FAST=1 ./install_each_gated
-    PARALLEL=$(./suggested_parallel) ./install_each_gated
+    PARALLEL=$(./suggest_parallel) ./install_each_gated
     PARALLEL=4 FAST=1 ./install_each_gated
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
@@ -363,7 +363,7 @@ Run Selenium tests for core and all gated repositories. For each component: `./f
     ./run_selenium_tests_all_gated extensions/Echo
     VERBOSE=1 ./run_selenium_tests_all_gated
     FAST=1 ./run_selenium_tests_all_gated
-    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_all_gated
+    PARALLEL=$(./suggest_parallel) ./run_selenium_tests_all_gated
     PARALLEL=4 FAST=1 ./run_selenium_tests_all_gated
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
@@ -385,7 +385,7 @@ Run Selenium tests for all gated repositories using only required dependencies (
     ./run_selenium_tests_required_gated extensions/Echo
     VERBOSE=1 ./run_selenium_tests_required_gated
     FAST=1 ./run_selenium_tests_required_gated
-    PARALLEL=$(./suggested_parallel) ./run_selenium_tests_required_gated
+    PARALLEL=$(./suggest_parallel) ./run_selenium_tests_required_gated
     PARALLEL=4 FAST=1 ./run_selenium_tests_required_gated
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
@@ -397,11 +397,11 @@ Find minimum dependencies for all gated repositories (or a single component). Fo
     ./find_dependencies_minimal_gated
     ./find_dependencies_minimal_gated extensions/Echo
     VERBOSE=1 ./find_dependencies_minimal_gated
-    PARALLEL=$(./suggested_parallel) ./find_dependencies_minimal_gated
+    PARALLEL=$(./suggest_parallel) ./find_dependencies_minimal_gated
 
 Environment variables:
 
-- `PARALLEL=N`: Run N components simultaneously, each in an isolated `ENVIRONMENT=N`. Use `./suggested_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
+- `PARALLEL=N`: Run N components simultaneously, each in an isolated `ENVIRONMENT=N`. Use `./suggest_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 See also: `./find_dependencies_minimal_greedy` for single-component usage.
 
