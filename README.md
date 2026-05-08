@@ -433,12 +433,12 @@ Run [ShellCheck](https://www.shellcheck.net/) on all shell scripts in the repo. 
 
     ./lint
 
-### `./generate_examples`
+### `./generate_example`
 
 Generate an example output file by running a command and capturing its output. Used to refresh the example `.txt` files in `examples/`. Writes a `$ <command>` header followed by the captured stdout+stderr. The captured command is allowed to fail, so usage-on-failure outputs can also be captured.
 
-    ./generate_examples examples/help.txt './help'
-    ./generate_examples examples/install.txt './install'
+    ./generate_example examples/help.txt './help'
+    ./generate_example examples/install.txt './install'
 
 ## Internal scripts (`lib/`)
 

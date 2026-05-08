@@ -6,15 +6,15 @@
 # The captured command is allowed to fail (its exit status is not propagated) so that
 # usage-on-failure outputs (e.g. ./install with no args) can also be captured.
 #
-# Usage: ./generate_examples examples/help.txt './help'
-#        ./generate_examples examples/install.txt './install'
+# Usage: ./generate_example examples/help.txt './help'
+#        ./generate_example examples/install.txt './install'
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/duration_trap # print elapsed time on exit (no debug_info: this is a short utility, no VERBOSE mode)
 
 # Require exactly two arguments: output file path and the command to run as a single string
 if [ "$#" -ne 2 ]; then
-  echo "Usage: ./generate_examples <output_file> '<command>'" >&2 # >&2 prints to stderr
+  echo "Usage: ./generate_example <output_file> '<command>'" >&2 # >&2 prints to stderr
   exit 1
 fi
 
