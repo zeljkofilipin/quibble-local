@@ -86,35 +86,35 @@ teardown() {
   [ "$status" -eq 0 ]
 }
 
-# --- Tests that clone from ref/ bare repos (no src/ present) ---
+# --- Tests that read from ref/ bare repos (no src/ present) ---
 
-@test "selenium_tests_exist: clones core from ref and finds selenium-test" {
+@test "selenium_tests_exist: reads core from ref and finds selenium-test" {
   cd "$TEST_DIR"
   create_bare_repo ref/mediawiki/core.git '{"scripts": {"selenium-test": "wdio"}}'
   run "$BATS_TEST_DIRNAME/../selenium_tests_exist"
   [ "$status" -eq 0 ]
-  [ -d "$TEST_DIR/src" ] # src/ should have been created by clone
+  [ ! -d "$TEST_DIR/src" ] # script must not write to src/ (avoids host/container UID conflicts)
 }
 
-@test "selenium_tests_exist: clones core from ref and exits 1 when no selenium-test" {
+@test "selenium_tests_exist: reads core from ref and exits 1 when no selenium-test" {
   cd "$TEST_DIR"
   create_bare_repo ref/mediawiki/core.git '{"scripts": {"test": "jest"}}'
   run "$BATS_TEST_DIRNAME/../selenium_tests_exist"
   [ "$status" -eq 1 ]
 }
 
-@test "selenium_tests_exist: clones extension from ref and finds selenium-test" {
+@test "selenium_tests_exist: reads extension from ref and finds selenium-test" {
   cd "$TEST_DIR"
   create_bare_repo ref/mediawiki/extensions/Echo.git '{"scripts": {"selenium-test": "wdio"}}'
   run "$BATS_TEST_DIRNAME/../selenium_tests_exist" extensions/Echo
   [ "$status" -eq 0 ]
-  [ -d "$TEST_DIR/src/extensions/Echo" ] # extension dir should have been created by clone
+  [ ! -d "$TEST_DIR/src/extensions/Echo" ] # script must not write to src/ (avoids host/container UID conflicts)
 }
 
-@test "selenium_tests_exist: clones skin from ref and finds selenium-test" {
+@test "selenium_tests_exist: reads skin from ref and finds selenium-test" {
   cd "$TEST_DIR"
   create_bare_repo ref/mediawiki/skins/MinervaNeue.git '{"scripts": {"selenium-test": "wdio"}}'
   run "$BATS_TEST_DIRNAME/../selenium_tests_exist" skins/MinervaNeue
   [ "$status" -eq 0 ]
-  [ -d "$TEST_DIR/src/skins/MinervaNeue" ] # skin dir should have been created by clone
+  [ ! -d "$TEST_DIR/src/skins/MinervaNeue" ] # script must not write to src/ (avoids host/container UID conflicts)
 }

@@ -254,7 +254,7 @@ Output the list of gated repositories (extensions and skins) from `parameter_fun
 
 ### `./selenium_tests_exist`
 
-Check if a component has Selenium tests. Exits 0 if yes, 1 if no.
+Check if a component has Selenium tests. Exits 0 if `selenium-test` script exists in `package.json`, 1 otherwise. Reads `package.json` from `src/<component>` if a working copy is present, otherwise from the bare repo in `ref/` via `git show`. Clones the bare repo from Gerrit if not already cloned. No Docker or `fresh_install` required, and no host write to `src/`.
 
     ./selenium_tests_exist
     ./selenium_tests_exist extensions/Echo

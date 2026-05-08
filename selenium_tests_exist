@@ -2,8 +2,9 @@
 #
 # Check if a component has Selenium tests.
 # Exits 0 if selenium-test script exists in package.json, 1 otherwise.
-# Clones the bare repo from Gerrit if needed, then clones from ref/ to src/.
-# No Docker or fresh_install required.
+# Reads package.json from src/<component> if a working copy is present, otherwise from the
+# bare repo in ref/ via `git show`. Clones the bare repo from Gerrit if not already cloned.
+# No Docker or fresh_install required, and no host write to src/.
 #
 # Usage: ./selenium_tests_exist
 #        ./selenium_tests_exist extensions/Echo
@@ -12,34 +13,42 @@
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 
-# Determine the Gerrit repo, bare repo path, and clone destination
+# Determine the Gerrit repo, bare repo path, working-copy directory, and package.json path.
+# When called with a component, target that extension/skin; otherwise target core.
 if [ $# -gt 0 ]; then
-  component="$1"                                # e.g. "extensions/Echo"
+  component="$1"                                 # e.g. "extensions/Echo"
   repo="mediawiki/${component}"                  # e.g. "mediawiki/extensions/Echo"
   bare_repo="ref/mediawiki/${component}.git"     # e.g. ref/mediawiki/extensions/Echo.git
-  dest="src/${component}"                        # e.g. src/extensions/Echo
+  working_copy="src/${component}"                # e.g. src/extensions/Echo
   package_json="src/${component}/package.json"   # e.g. src/extensions/Echo/package.json
 else
   repo="mediawiki/core"                          # core Gerrit repo
   bare_repo="ref/mediawiki/core.git"             # core bare repo
-  dest="src"                                     # clone core to src/
-  package_json="src/package.json"                # core
+  working_copy="src"                             # core working copy is src/ itself
+  package_json="src/package.json"                # core working copy package.json
 fi
 
-# Clone from bare repo to src/ if the directory doesn't exist yet
-if [ ! -d "$dest" ]; then
-  # Clone or fetch bare repo (--quiet: this is a data script, suppress progress output)
+# Read package.json contents. Prefer the working copy when it's been materialized
+# (e.g. after fresh_install/install), otherwise read from the bare repo via `git show`.
+# Reading from the bare repo avoids writing into src/, which on Linux can be owned by
+# the container's quibble user (mode 755) once Docker has populated it — a host-side
+# `git clone` into src/extensions/<Name> would fail with "Permission denied" there.
+if [ -d "$working_copy" ]; then
+  # Working copy is present; trust it. Missing package.json means no tests.
+  if [ ! -f "$package_json" ]; then
+    exit 1 # no package.json
+  fi
+  json_content=$(cat "$package_json") # read from working copy
+else
+  # No working copy yet; ensure the bare repo exists (clones from Gerrit on first call).
+  # --quiet because this is a data script; progress output would be noise.
   . "$(dirname "$0")"/lib/clone_or_fetch
   clone_or_fetch --quiet "$repo"
-  mkdir -p "$(dirname "$dest")" # create parent directories (no-op for core)
-  git clone --quiet "$bare_repo" "$dest" # clone from local bare repo (no network needed)
+  # `git show HEAD:package.json` prints the file at the bare repo's default branch tip.
+  # 2>/dev/null + ||: silence and treat "no such file" as "no tests".
+  json_content=$(git -C "$bare_repo" show "HEAD:package.json" 2>/dev/null) || exit 1
 fi
 
-# Check if package.json exists
-if [ ! -f "$package_json" ]; then
-  exit 1 # no package.json means no tests
-fi
-
-# Check if package.json contains a "selenium-test" script
-# -q: quiet mode, don't print matches, just set exit code (0=found, 1=not found)
-grep -q '"selenium-test"' "$package_json"
+# Check if package.json contains a "selenium-test" script.
+# -q: quiet mode, don't print matches, just set exit code (0=found, 1=not found).
+printf '%s' "$json_content" | grep -q '"selenium-test"'
