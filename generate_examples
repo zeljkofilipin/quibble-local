@@ -10,6 +10,7 @@
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/duration_trap # print elapsed time on exit
 . "$(dirname "$0")"/lib/cmd_to_filename # provides cmd_to_filename function
+. "$(dirname "$0")"/lib/inhibit_sleep # prevent the machine from suspending during the long run
 
 # Switch to the script's directory (project root) so relative paths and ./scripts work
 # regardless of where this is invoked from. $0 may be relative or absolute; dirname handles both.
