@@ -48,5 +48,5 @@ fi
 # spawn the child. Either way, nothing leaks to `systemd --user`.
 _quibble_kill_inhibit() {
   local sid="$1"                                          # SID of the helper's session (== helper PID, set by setsid)
-  pkill -s "$sid" 2>/dev/null                             # signal every process in the session; suppress errors if already gone
+  pkill -s "$sid" 2>/dev/null || true                     # signal every process in the session; ignore "no matches" (exit 1) so the EXIT trap does not bleed a non-zero status into the script's own exit under set -e
 }
