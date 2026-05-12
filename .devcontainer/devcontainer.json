@@ -7,17 +7,15 @@
   // so scripts behave the same as on a native Ubuntu host.
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
 
-  "features": {
-    // Mount the host Docker socket into the container so the project's scripts
-    // (./ci, ./fresh_install, ./test_integration, etc.) can run `docker` commands.
-    // The Quibble containers themselves still run on the host Docker daemon.
-    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
-  },
-
   // Install shellcheck (for ./lint), bats (for ./test_unit), and Claude Code CLI
   // via the official native installer (npm install is deprecated).
   // The native installer drops `claude` into ~/.local/bin, which is on PATH for
   // the default `vscode` user in the base image.
+  //
+  // No Docker access by design: the devcontainer is Claude's sandbox, and
+  // mounting the host Docker socket would let it escape to the host. Project
+  // scripts that need Docker (./ci, ./fresh_install, ./test_integration, etc.)
+  // must be run on the host directly.
   "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends shellcheck bats && curl -fsSL https://claude.ai/install.sh | bash",
 
   // Persist Claude Code state (auto-memory, credentials, sessions, settings)
@@ -26,7 +24,14 @@
   // accidentally committed. `initializeCommand` runs on the host before build
   // and ensures the directory exists (Docker errors on a missing bind source
   // rather than auto-creating it).
-  "initializeCommand": "mkdir -p ${localEnv:HOME}/.claude-devcontainers/quibble-local",
+  //
+  // It also seeds a user-scope `settings.json` with `bypassPermissions` so
+  // Claude does not prompt for tool use inside the container. The container is
+  // Claude's sandbox; per-tool prompts are redundant inside it. Kept at user
+  // scope (this bind-mounted ~/.claude) rather than project scope so it does
+  // NOT apply when running Claude on the host. The seed runs only if the file
+  // is missing, so manual edits on either machine are preserved.
+  "initializeCommand": "mkdir -p ${localEnv:HOME}/.claude-devcontainers/quibble-local && { [ -f ${localEnv:HOME}/.claude-devcontainers/quibble-local/settings.json ] || echo '{\"permissions\":{\"defaultMode\":\"bypassPermissions\"}}' > ${localEnv:HOME}/.claude-devcontainers/quibble-local/settings.json; }",
   "mounts": [
     "source=${localEnv:HOME}/.claude-devcontainers/quibble-local,target=/home/vscode/.claude,type=bind"
   ],
