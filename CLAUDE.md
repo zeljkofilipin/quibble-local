@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Wrapper scripts for running [Quibble](https://doc.wikimedia.org/quibble/) (MediaWiki CI test runner) locally via Docker. Targets macOS and Ubuntu. Inspired by [mediawiki-quickstart](https://gitlab.wikimedia.org/repos/test-platform/mediawiki-quickstart).
 
+## Multi-machine workflow
+
+This repo is used on multiple machines. Every change must be checked into the repo — never leave behavior in machine-local locations (e.g. `~/.claude/`, host home dirs, untracked devcontainer state). If a change has to land outside the repo, drive it from a checked-in file (e.g. install it during `.devcontainer/devcontainer.json` `postStartCommand`) so a fresh clone on any machine reproduces it.
+
 ## Prerequisites
 
 Bash, Git, and Docker. Optional: [ShellCheck](https://www.shellcheck.net/) (for linting), [Bats](https://github.com/bats-core/bats-core) (for unit tests). When adding a new dependency, also add it to the prerequisites section in `README.md`.
