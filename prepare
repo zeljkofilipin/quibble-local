@@ -58,4 +58,4 @@ fi
 
 # Create working directories (chmod 777 because the container runs as a different user)
 mkdir -p cache log src
-chmod 777 cache log src
+chmod 777 cache log ref src
