@@ -22,16 +22,15 @@
   // across devcontainer rebuilds by bind-mounting a host directory. Stored
   // outside the repo so personal state (credentials, sessions) cannot be
   // accidentally committed. `initializeCommand` runs on the host before build
-  // and ensures the directory exists (Docker errors on a missing bind source
-  // rather than auto-creating it).
-  //
-  // It also seeds a user-scope `settings.json` with `bypassPermissions` so
-  // Claude does not prompt for tool use inside the container. The container is
-  // Claude's sandbox; per-tool prompts are redundant inside it. Kept at user
-  // scope (this bind-mounted ~/.claude) rather than project scope so it does
-  // NOT apply when running Claude on the host. The seed runs only if the file
-  // is missing, so manual edits on either machine are preserved.
-  "initializeCommand": "mkdir -p ${localEnv:HOME}/.claude-devcontainers/quibble-local && { [ -f ${localEnv:HOME}/.claude-devcontainers/quibble-local/settings.json ] || echo '{\"permissions\":{\"defaultMode\":\"bypassPermissions\"}}' > ${localEnv:HOME}/.claude-devcontainers/quibble-local/settings.json; }",
+  // and is delegated to `.devcontainer/initialize.sh`, which ensures the
+  // bind-mount dir exists (Docker errors on a missing source rather than
+  // auto-creating it), seeds a user-scope `settings.json` with
+  // `bypassPermissions` (so Claude does not prompt for tool use inside the
+  // container — the container is Claude's sandbox; per-tool prompts are
+  // redundant inside it; kept at user scope so it does NOT apply when running
+  // Claude on the host), and captures the host's timezone for the status line
+  // (the container is always UTC and cannot query the host directly).
+  "initializeCommand": "${localWorkspaceFolder}/.devcontainer/initialize.sh",
   "mounts": [
     "source=${localEnv:HOME}/.claude-devcontainers/quibble-local,target=/home/vscode/.claude,type=bind"
   ],
@@ -41,13 +40,16 @@
   // on native Linux the host UID may not match, which would block Claude Code
   // from writing to ~/.claude/.
   //
-  // Then merge a `statusLine` entry into ~/.claude/settings.json so the status
-  // line shows the model name and the 5-hour rate-limit usage percentage (the
-  // same number shown at claude.ai/settings/usage). Done on every start (not
-  // just init) so the config stays in sync across machines via this checked-in
-  // devcontainer.json. jq merge with `.statusLine = ...` overwrites any stale
-  // value but leaves other keys (permissions, theme, etc.) untouched.
-  "postStartCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && jq --arg cmd 'jq -r \"\\\"[\\(.model.display_name)] \\(.rate_limits.five_hour.used_percentage // 0 | floor)% session\\\"\"' '.statusLine = {type: \"command\", command: $cmd}' /home/vscode/.claude/settings.json > /tmp/cc-settings.json && mv /tmp/cc-settings.json /home/vscode/.claude/settings.json",
+  // Then install the checked-in `.devcontainer/statusline.sh` to
+  // ~/.claude/statusline.sh, and merge a `statusLine` entry into
+  // ~/.claude/settings.json that points at it. The status line shows the model
+  // name, effort level, 5-hour rate-limit usage percentage (the same number
+  // shown at claude.ai/settings/usage), and a countdown + local clock time of
+  // when the 5-hour window resets. Done on every start (not just init) so the
+  // config stays in sync across machines via this checked-in devcontainer.json.
+  // jq merge with `.statusLine = ...` overwrites any stale value but leaves
+  // other keys (permissions, theme, etc.) untouched.
+  "postStartCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && install -m 755 ${containerWorkspaceFolder}/.devcontainer/statusline.sh /home/vscode/.claude/statusline.sh && jq '.statusLine = {type: \"command\", command: \"/home/vscode/.claude/statusline.sh\"}' /home/vscode/.claude/settings.json > /tmp/cc-settings.json && mv /tmp/cc-settings.json /home/vscode/.claude/settings.json",
 
   "customizations": {
     "vscode": {
