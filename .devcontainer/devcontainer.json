@@ -18,12 +18,6 @@
   // must be run on the host directly.
   "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends shellcheck bats && curl -fsSL https://claude.ai/install.sh | bash",
 
-  // Add Node.js so the status line can run `npx ccusage` to show session block
-  // usage (cost, % of limit, burn rate, time left in the 5-hour window).
-  "features": {
-    "ghcr.io/devcontainers/features/node:1": {}
-  },
-
   // Persist Claude Code state (auto-memory, credentials, sessions, settings)
   // across devcontainer rebuilds by bind-mounting a host directory. Stored
   // outside the repo so personal state (credentials, sessions) cannot be
@@ -48,12 +42,12 @@
   // from writing to ~/.claude/.
   //
   // Then merge a `statusLine` entry into ~/.claude/settings.json so the status
-  // line shows session block usage (cost, % of limit, burn rate, time left in
-  // the 5-hour window) via ccusage. Done on every start (not just init) so the
-  // config stays in sync across machines via this checked-in devcontainer.json.
-  // jq merge with `.statusLine = ...` overwrites any stale value but leaves
-  // other keys (permissions, theme, etc.) untouched.
-  "postStartCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && jq '.statusLine = {type: \"command\", command: \"npx -y ccusage@latest statusline\", padding: 0}' /home/vscode/.claude/settings.json > /tmp/cc-settings.json && mv /tmp/cc-settings.json /home/vscode/.claude/settings.json",
+  // line shows the model name and the 5-hour rate-limit usage percentage (the
+  // same number shown at claude.ai/settings/usage). Done on every start (not
+  // just init) so the config stays in sync across machines via this checked-in
+  // devcontainer.json. jq merge with `.statusLine = ...` overwrites any stale
+  // value but leaves other keys (permissions, theme, etc.) untouched.
+  "postStartCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && jq --arg cmd 'jq -r \"\\\"[\\(.model.display_name)] \\(.rate_limits.five_hour.used_percentage // 0 | floor)% session\\\"\"' '.statusLine = {type: \"command\", command: $cmd}' /home/vscode/.claude/settings.json > /tmp/cc-settings.json && mv /tmp/cc-settings.json /home/vscode/.claude/settings.json",
 
   "customizations": {
     "vscode": {
