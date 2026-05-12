@@ -18,6 +18,12 @@
   // must be run on the host directly.
   "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends shellcheck bats && curl -fsSL https://claude.ai/install.sh | bash",
 
+  // Add Node.js so the status line can run `npx ccusage` to show session block
+  // usage (cost, % of limit, burn rate, time left in the 5-hour window).
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+
   // Persist Claude Code state (auto-memory, credentials, sessions, settings)
   // across devcontainer rebuilds by bind-mounting a host directory. Stored
   // outside the repo so personal state (credentials, sessions) cannot be
@@ -40,7 +46,14 @@
   // container. On Docker Desktop (Mac/Windows) this is a no-op (fakeowner), but
   // on native Linux the host UID may not match, which would block Claude Code
   // from writing to ~/.claude/.
-  "postStartCommand": "sudo chown -R vscode:vscode /home/vscode/.claude",
+  //
+  // Then merge a `statusLine` entry into ~/.claude/settings.json so the status
+  // line shows session block usage (cost, % of limit, burn rate, time left in
+  // the 5-hour window) via ccusage. Done on every start (not just init) so the
+  // config stays in sync across machines via this checked-in devcontainer.json.
+  // jq merge with `.statusLine = ...` overwrites any stale value but leaves
+  // other keys (permissions, theme, etc.) untouched.
+  "postStartCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && jq '.statusLine = {type: \"command\", command: \"npx -y ccusage@latest statusline\", padding: 0}' /home/vscode/.claude/settings.json > /tmp/cc-settings.json && mv /tmp/cc-settings.json /home/vscode/.claude/settings.json",
 
   "customizations": {
     "vscode": {
