@@ -1,2 +1,3 @@
-$ ./selenium_tests_exist skins/Vector
+$ DRY_RUN=1 ./selenium_tests_exist skins/Vector
 
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied

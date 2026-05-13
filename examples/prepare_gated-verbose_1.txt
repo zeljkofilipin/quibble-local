@@ -1,0 +1,83 @@
+$ DRY_RUN=1 VERBOSE=1 ./prepare_gated
+
+OS: Linux 6.14.0-37-generic
+CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
+RAM: 15.6 GB
+bash: 5.2.21(1)-release
+git: git version 2.43.0
+docker: Docker version 29.4.3, build 055a478
+docker CPUs: 4
+docker RAM: 15.6 GB
+
+
+
+
+========================================
+= prepare_gated is running: dirname ./prepare_gated
+
+
+========================================
+= prepare_gated is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare_gated is running: '[' -z 1 ']'
+
+
+========================================
+= prepare_gated is running: dirname ./prepare_gated
+
+========================================
+= prepare_gated is running: . ./lib/clone_or_fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+
+
+========================================
+= prepare_gated is running: dirname ./prepare_gated
+
+
+========================================
+= prepare_gated is running: ./list_gated
+
+========================================
+= prepare_gated is running: repo='mediawiki/Error: ref/integration/config.git not found. Run ./prepare first.'
+
+========================================
+= prepare_gated is running: clone_or_fetch 'mediawiki/Error: ref/integration/config.git not found. Run ./prepare first.'
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' 'mediawiki/Error: ref/integration/config.git not found. Run ./prepare first.' = --quiet ']'
+
+========================================
+= prepare_gated is running: local 'repo=mediawiki/Error: ref/integration/config.git not found. Run ./prepare first.'
+
+========================================
+= prepare_gated is running: local 'ref_dir=ref/mediawiki/Error: ref/integration/config.git not found. Run ./prepare first..git'
+
+========================================
+= prepare_gated is running: '[' -d 'ref/mediawiki/Error: ref/integration/config.git not found. Run ./prepare first..git' ']'
+
+
+========================================
+= prepare_gated is running: dirname 'ref/mediawiki/Error: ref/integration/config.git not found. Run ./prepare first..git'
+
+========================================
+= prepare_gated is running: mkdir -p 'ref/mediawiki/Error: ref/integration/config.git not found. Run .'
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+
+========================================
+= prepare_gated is running: _quibble_duration_exit
+
+========================================
+= prepare_gated is running: local exit_code=1
+(0s)

@@ -1,0 +1,15 @@
+$ DRY_RUN=1 VERBOSE=1 ./find_dependencies_minimal_gated
+
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+skipped (no Selenium tests): Error: ref/integration/config.git not found. Run ./prepare first.
+
+No components need find_dependencies_minimal_greedy.
+
+========================================
+= Results
+========================================
+PASSED:
+  Error: ref/integration/config.git not found. Run ./prepare first.
+
+All passed.
+(0s)

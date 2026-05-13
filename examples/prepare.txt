@@ -1,13 +1,15 @@
-$ ./prepare
+$ DRY_RUN=1 ./prepare
 
-Cloning into bare repository 'ref/mediawiki/core.git'...
-latest: Pulling from releng/quibble-bullseye-php83
-Digest: sha256:e457fcd1fcf776e25f7c5e321a3989eee1a2727ea62ab9cc2c49fa985e1f1a5d
-Status: Image is up to date for docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
-docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
-From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
- * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/integration/config
- * branch                HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/vendor
- * branch                HEAD       -> FETCH_HEAD
+use VERBOSE=1 for full output
+logs: log/prepare.log
+
+OS: Linux 6.14.0-37-generic
+CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
+RAM: 15.6 GB
+bash: 5.2.21(1)-release
+git: git version 2.43.0
+docker: Docker version 29.4.3, build 055a478
+docker CPUs: 4
+docker RAM: 15.6 GB
+
+prepare .. FAIL (0s) (see log/prepare.log)

@@ -1,0 +1,84 @@
+$ DRY_RUN=1 VERBOSE=1 ./find_dependencies_minimal_thorough extensions/Echo
+
+All dependencies for extensions/Echo (1):
+  Error: ref/integration/config.git not found. Run ./prepare first.
+
+Optional dependencies to vary (1):
+  Error: ref/integration/config.git not found. Run ./prepare first.
+
+Total combinations to test: 2 (from 0 to 1 optional dependencies)
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+Pre-cloning dependency: Error: ref/integration/config.git not found. Run ./prepare first.
+fatal: could not create leading directories of 'ref/mediawiki/extensions/Error: ref/integration/config.git not found. Run ./prepare first..git'
+
+=== Phase 1: Greedy estimate ===
+
+Greedy mode: starting with all 1 optional deps, removing one at a time.
+
+=== Baseline: all dependencies === 2026-05-13 10:03:18 UTC
+
+========================================
+= extensions/Echo: ./fresh_install 2026-05-13 10:03:18 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+SKIP (fresh_install/restore failed)
+
+Cannot establish baseline.
+(0s)

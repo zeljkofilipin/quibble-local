@@ -9,6 +9,13 @@
   [ -z "$output" ]
 }
 
+@test "debug_info: prints banner with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal" {
+  run bash -c 'export _QUIBBLE_FORCE_TERMINAL=1; . lib/debug_info | cat'
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"OS:"* ]]
+  [[ "$output" == *"bash:"* ]]
+}
+
 @test "debug_info: exits 0 when git is installed" {
   run bash -c '. lib/debug_info'
   [ "$status" -eq 0 ]

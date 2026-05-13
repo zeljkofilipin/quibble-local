@@ -1,6 +1,0 @@
-$ ./list_dependencies_optional extensions/Echo
-
-AntiSpoof
-CentralAuth
-EventLogging
-MobileFrontend

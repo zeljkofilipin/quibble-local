@@ -1,0 +1,56 @@
+$ DRY_RUN=1 VERBOSE=1 ./save
+
+OS: Linux 6.14.0-37-generic
+CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
+RAM: 15.6 GB
+bash: 5.2.21(1)-release
+git: git version 2.43.0
+docker: Docker version 29.4.3, build 055a478
+docker CPUs: 4
+docker RAM: 15.6 GB
+
+
+
+
+========================================
+= save is running: dirname ./save
+
+
+========================================
+= save is running: . ./lib/silent_output
+
+
+
+========================================
+= save is running: '[' -z 1 ']'
+
+
+========================================
+= save is running: dirname ./save
+
+========================================
+= save is running: . ./lib/docker_chmod
+
+========================================
+= save is running: '[' '!' -d src ']'
+
+
+========================================
+= save is running: ls -A src
+
+========================================
+= save is running: '[' -z '' ']'
+
+========================================
+= save is running: echo 'Error: src/ is empty or missing. Run ./fresh_install first.'
+Error: src/ is empty or missing. Run ./fresh_install first.
+
+========================================
+= save is running: exit 1
+
+========================================
+= save is running: _quibble_duration_exit
+
+========================================
+= save is running: local exit_code=1
+(0s)

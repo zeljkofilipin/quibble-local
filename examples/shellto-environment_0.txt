@@ -1,0 +1,31 @@
+$ DRY_RUN=1 ENVIRONMENT=0 ./shellto
+
+use VERBOSE=1 for full output
+logs: log/shellto.log
+
+OS: Linux 6.14.0-37-generic
+CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
+RAM: 15.6 GB
+bash: 5.2.21(1)-release
+git: git version 2.43.0
+docker: Docker version 29.4.3, build 055a478
+docker CPUs: 4
+docker RAM: 15.6 GB
+
+########################################
+docker run \
+  -it \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -p 9413:9413 \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src_0:/workspace/src \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --skip-zuul \
+  --skip-deps \
+  --command bash
+########################################
+cannot attach stdin to a TTY-enabled container because stdin is not a terminal
+(0s)

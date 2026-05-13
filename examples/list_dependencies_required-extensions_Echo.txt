@@ -1,2 +1,0 @@
-$ ./list_dependencies_required extensions/Echo
-

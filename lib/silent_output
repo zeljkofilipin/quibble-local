@@ -5,10 +5,14 @@
 # Must be sourced, not run directly. Only activates when:
 #   - Not in verbose mode (VERBOSE is unset or empty)
 #   - Not already managed (_QUIBBLE_OUTPUT_MANAGED is unset)
-#   - stdout is a terminal ([ -t 1 ])
+#   - stdout is a terminal ([ -t 1 ]) OR _QUIBBLE_FORCE_TERMINAL=1 is set
+#     (the latter lets generate_example capture the silent-mode UX into examples/)
 
 # shellcheck disable=SC2034 # _quibble_log used inside trap function
-if [ -z "${VERBOSE:-}" ] && [ -z "${_QUIBBLE_OUTPUT_MANAGED:-}" ] && [ -t 1 ]; then
+if [ -z "${VERBOSE:-}" ] && [ -z "${_QUIBBLE_OUTPUT_MANAGED:-}" ] && { [ -t 1 ] || [ -n "${_QUIBBLE_FORCE_TERMINAL:-}" ]; }; then
+  # Demote FORCE_TERMINAL from exported to shell-local so child processes (docker, child
+  # scripts) inherit the real TTY status. Idempotent across debug_info / duration_trap.
+  export -n _QUIBBLE_FORCE_TERMINAL 2>/dev/null || :
   mkdir -p log                       # ensure log directory exists
   _quibble_log="log/${0##*/}.log"    # log file named after the script (e.g. log/fresh_install.log)
   printf "%s " "${0##*/}"            # show script name on terminal (dots will follow on same line)

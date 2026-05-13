@@ -1,4 +1,15 @@
-$ ./help
+$ DRY_RUN=1 ./help
+
+use VERBOSE=1 for full output
+
+OS: Linux 6.14.0-37-generic
+CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
+RAM: 15.6 GB
+bash: 5.2.21(1)-release
+git: git version 2.43.0
+docker: Docker version 29.4.3, build 055a478
+docker CPUs: 4
+docker RAM: 15.6 GB
 
 ./ci
   Run the same checks that GitLab CI runs, using Docker.
@@ -28,9 +39,13 @@ $ ./help
   Installs MediaWiki core (without running tests).
   Usage: ./fresh_install
 
-./generate_examples
+./generate_example
   Generate an example output file by running a command and capturing its output.
-  Usage: ./generate_examples examples/help.txt './help'
+  Usage: ./generate_example examples/help.txt './help'
+
+./generate_examples
+  Regenerate example output files in examples/ by iterating each project-root script's # Usage: block.
+  Usage: ./generate_examples
 
 ./help
   List all scripts with their description and usage.
@@ -66,7 +81,7 @@ $ ./help
 
 ./list_dependencies_required
   Output required dependencies for an extension or skin from its extension.json or skin.json.
-  Usage: ./list_dependencies_required extensions/GrowthExperiments
+  Usage: ./list_dependencies_required extensions/Echo
 
 ./list_gated
   Output the list of gated repositories (extensions and skins).
@@ -144,3 +159,4 @@ $ ./help
   Run Bats unit tests.
   Usage: ./test_unit
 
+(0s)

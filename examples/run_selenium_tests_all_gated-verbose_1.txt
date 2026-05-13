@@ -1,0 +1,144 @@
+$ DRY_RUN=1 VERBOSE=1 ./run_selenium_tests_all_gated
+
+
+########################################
+# core 2026-05-13 10:05:53 UTC
+########################################
+
+========================================
+= core: ./fresh_install 2026-05-13 10:05:53 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+ 2026-05-13 10:05:53 UTC
+
+########################################
+# Error: ref/integration/config.git not found. Run ./prepare first. 2026-05-13 10:05:53 UTC
+########################################
+
+========================================
+= Error: ref/integration/config.git not found. Run ./prepare first.: ./fresh_install 2026-05-13 10:05:53 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+ 2026-05-13 10:05:53 UTC
+
+========================================
+= Results
+========================================
+FAILED:
+  core (fresh_install)
+  Error: ref/integration/config.git not found. Run ./prepare first. (fresh_install)
+(0s)

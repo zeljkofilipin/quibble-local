@@ -1,2 +1,2 @@
-$ ./selenium_tests_exist
+$ DRY_RUN=1 ./selenium_tests_exist
 

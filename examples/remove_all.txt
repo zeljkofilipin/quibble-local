@@ -1,5 +1,15 @@
-$ ./remove_all
+$ DRY_RUN=1 ./remove_all
 
-WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
-Untagged: docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
-Deleted: sha256:e457fcd1fcf776e25f7c5e321a3989eee1a2727ea62ab9cc2c49fa985e1f1a5d
+use VERBOSE=1 for full output
+logs: log/remove_all.log
+
+OS: Linux 6.14.0-37-generic
+CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
+RAM: 15.6 GB
+bash: 5.2.21(1)-release
+git: git version 2.43.0
+docker: Docker version 29.4.3, build 055a478
+docker CPUs: 4
+docker RAM: 15.6 GB
+
+remove_all ................................................ ok (2s)
