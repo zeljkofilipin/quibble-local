@@ -21,3 +21,13 @@
   # No EXIT trap should be set (stdout is not a terminal in run)
   [[ "$output" != *"_quibble_duration_exit"* ]]
 }
+
+@test "duration_trap: sets trap with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal" {
+  run bash -c '
+    export _QUIBBLE_FORCE_TERMINAL=1
+    . lib/duration_trap
+    trap -p EXIT
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"_quibble_duration_exit"* ]]
+}

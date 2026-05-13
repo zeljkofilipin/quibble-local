@@ -1,15 +1,21 @@
 # shellcheck shell=bash
 # Set EXIT trap to print script duration when it exits.
 # Sources lib/format_duration for the formatting function.
-# Only activates when stdout is a terminal (prevents corrupting piped output).
+# Only activates when stdout is a terminal (prevents corrupting piped output),
+# or when _QUIBBLE_FORCE_TERMINAL=1 is set (used by generate_example to capture
+# the terminal-style duration line into examples/*.txt).
 # lib/silent_output overrides this trap with its own handler that also includes duration.
 # Must be sourced, not run directly.
 
 # Source the formatting function
 . "$(dirname "$0")"/lib/format_duration # provides _quibble_format_duration
 
-# Set EXIT trap for duration display (only when outputting to a terminal)
-if [ -t 1 ]; then
+# Set EXIT trap for duration display (only when outputting to a terminal,
+# or when forced via _QUIBBLE_FORCE_TERMINAL=1 — see header comment).
+if [ -t 1 ] || [ -n "${_QUIBBLE_FORCE_TERMINAL:-}" ]; then
+  # Demote FORCE_TERMINAL from exported to shell-local so child processes inherit the real
+  # TTY status. Idempotent across debug_info / silent_output.
+  export -n _QUIBBLE_FORCE_TERMINAL 2>/dev/null || :
   _quibble_duration_exit() {
     local exit_code=$?                # capture exit code before any command changes it
     { set +x; } 2>/dev/null          # disable trace output silently (may be active in verbose mode)

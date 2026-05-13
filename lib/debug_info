@@ -56,7 +56,14 @@ _quibble_print_docker_resources() {
 # Only print when stdout is a terminal ([ -t 1 ]). This suppresses debug output when
 # a script's stdout is piped or captured (e.g. ./list_dependencies called from ./install via
 # process substitution, or child scripts whose output flows through run_with_dots).
-if [ -t 1 ]; then
+# _QUIBBLE_FORCE_TERMINAL=1 overrides this so generate_example can capture the same
+# banner a terminal user would see into examples/*.txt. The override applies to THIS
+# script only — `export -n` demotes the var to shell-local so child processes (docker,
+# child scripts, bats tests) inherit the real TTY status.
+if [ -t 1 ] || [ -n "${_QUIBBLE_FORCE_TERMINAL:-}" ]; then
+  # Demote FORCE_TERMINAL from exported to shell-local. Idempotent across the three
+  # libs (silent_output, duration_trap, debug_info) that honor the override.
+  export -n _QUIBBLE_FORCE_TERMINAL 2>/dev/null || :
   # In silent mode, tell the user how to get full output and where logs are saved
   if [ -z "${VERBOSE:-}" ]; then # only show hint when VERBOSE is not set
     echo "use VERBOSE=1 for full output"
