@@ -446,6 +446,14 @@ Regenerate example output files in `examples/` in bulk by iterating each project
 
     ./generate_examples
     DRY_RUN=1 ./generate_examples
+    FAST=1 ./generate_examples
+
+`DRY_RUN` and `FAST` do different things:
+
+- `DRY_RUN=1 ./generate_examples` — outer-level preview. Prints `Would generate ...` for each Usage line. No files are written, no inner scripts run.
+- `FAST=1 ./generate_examples` — actually generate every file, but prepend `DRY_RUN=1` to each Usage command so Quibble short-circuits. Inner scripts that honor `DRY_RUN` (`install`, `fresh_install`, `run_php_unit_tests`, `run_selenium_tests`, and batch scripts that propagate the env var to them) finish in seconds instead of minutes. Other scripts ignore the unused env var.
+
+The two can be combined: `DRY_RUN=1 FAST=1 ./generate_examples` previews the FAST-mode command list. Use `FAST=1` to iterate on `generate_examples` itself or to validate the pipeline end-to-end. **Do not commit `examples/*.txt` produced under `FAST=1` — they do not reflect real script behavior.**
 
 ## Internal scripts (`lib/`)
 

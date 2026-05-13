@@ -6,11 +6,30 @@
 #
 # Usage: ./generate_examples
 #        DRY_RUN=1 ./generate_examples
+#        FAST=1 ./generate_examples
+#
+# DRY_RUN and FAST do different things:
+#   DRY_RUN=1 ./generate_examples  — outer-level preview. Prints "Would generate ..." for each
+#                                    Usage line. No files written, no inner scripts run.
+#   FAST=1 ./generate_examples     — actually generate every file, but prepend DRY_RUN=1 to
+#                                    each Usage command so Quibble short-circuits. Inner scripts
+#                                    that honor DRY_RUN (install, fresh_install, run_php_unit_tests,
+#                                    run_selenium_tests, and batch scripts that propagate the env
+#                                    var to them) finish in seconds instead of minutes. Other
+#                                    scripts ignore the unused env var.
+# The two can be combined: DRY_RUN=1 FAST=1 previews the FAST-mode command list.
+# Use FAST=1 to iterate on generate_examples itself or to validate the pipeline end-to-end.
+# Do NOT commit examples/*.txt produced under FAST=1 — they do not reflect real script behavior.
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/duration_trap # print elapsed time on exit
 . "$(dirname "$0")"/lib/cmd_to_filename # provides cmd_to_filename function
 . "$(dirname "$0")"/lib/inhibit_sleep # prevent the machine from suspending during the long run
+
+# FAST mode: warn loudly on stderr so the user can't miss it when piping/teeing.
+if [ -n "${FAST:-}" ]; then
+  echo "generate_examples: FAST mode enabled — do not commit the resulting examples/" >&2
+fi
 
 # Switch to the script's directory (project root) so relative paths and ./scripts work
 # regardless of where this is invoked from. $0 may be relative or absolute; dirname handles both.
@@ -51,10 +70,20 @@ for script in *; do
         ;;
     esac
     seen="${seen}${file}|"                                          # remember we've claimed this filename
+    # In FAST mode, prepend DRY_RUN=1 to the command so Quibble-running scripts short-circuit.
+    # The filename was derived from the ORIGINAL command above, so output goes to the same
+    # path as a real run. Skip the prepend if the command already sets DRY_RUN= itself.
+    run_cmd="$cmd"
+    if [ -n "${FAST:-}" ]; then
+      case "$cmd" in
+        *DRY_RUN=*) ;;                                              # already explicit; leave alone
+        *) run_cmd="DRY_RUN=1 $cmd" ;;
+      esac
+    fi
     if [ -n "${DRY_RUN:-}" ]; then                                  # ${VAR:-} is "" when VAR is unset (works under set -u)
-      echo "Would generate $file from: $cmd"                        # DRY_RUN mode: print what would happen
+      echo "Would generate $file from: $run_cmd"                    # DRY_RUN mode: print what would happen
     else
-      ./generate_example "$file" "$cmd"                             # actually run the command and capture output
+      ./generate_example "$file" "$run_cmd"                         # actually run the command and capture output
     fi
   done <<< "$usage_block"
 done
