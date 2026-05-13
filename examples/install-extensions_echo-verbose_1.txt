@@ -56,17 +56,133 @@ docker RAM: 15.6 GB
 ========================================
 = install is running: '[' -d ref/mediawiki/extensions/Echo.git ']'
 
+========================================
+= install is running: git -C ref/mediawiki/extensions/Echo.git fetch
 
 ========================================
-= install is running: dirname ref/mediawiki/extensions/Echo.git
+= install is running: clone_or_fetch integration/config
 
 ========================================
-= install is running: mkdir -p ref/mediawiki/extensions
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+= install is running: local quiet=
+
+========================================
+= install is running: '[' integration/config = --quiet ']'
+
+========================================
+= install is running: local repo=integration/config
+
+========================================
+= install is running: local ref_dir=ref/integration/config.git
+
+========================================
+= install is running: '[' -d ref/integration/config.git ']'
+
+========================================
+= install is running: git -C ref/integration/config.git fetch
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/ensure_config
+
+
+========================================
+= install is running: config_ref_dir=ref/integration/config.git
+
+
+========================================
+= install is running: config_src_dir=src/config
+
+
+========================================
+= install is running: '[' '!' -d src/config ']'
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/resolve_deps
+
+
+========================================
+= install is running: set +x
+
+========================================
+= install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --resolve-requires --command true ${deps[@]+"${deps[@]}"})
+
+========================================
+= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+
+========================================
+= install is running: local _xtrace_was_on=
+
+========================================
+= install is running: case "$-" in
+
+========================================
+= install is running: _xtrace_was_on=1
+
+========================================
+= install is running: set +x
+########################################
+docker run \
+  -it \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Echo \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+########################################
+
+========================================
+= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
++ /usr/bin/supervisord
+2026-05-13 12:00:45,658 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:00:45,660 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:00:45,660 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:00:45,662 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+2026-05-13 12:00:45,663 CRIT could not write pidfile /var/run/supervisord.pid
+[36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
+[32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
+[32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
+[32mINFO[0m:zuul.CloneMapper:Workspace path set to: ./
+[32mINFO[0m:zuul.CloneMapper:Mapping projects to workspace...
+[32mINFO[0m:zuul.CloneMapper:  mediawiki/extensions/Echo -> extensions/Echo
+[32mINFO[0m:zuul.CloneMapper:Expansion completed.
+[36mDEBUG[0m:quibble.cmd:Running stages: 
+[36mDEBUG[0m:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+[36mDEBUG[0m:quibble.cmd:Project dir: /workspace/src/extensions/Echo
+[36mDEBUG[0m:quibble.cmd:Reporting URL: not specified
+[36mDEBUG[0m:quibble.cmd:Execution plan:
+[36mDEBUG[0m:quibble.cmd:Report durations
+[36mDEBUG[0m:quibble.cmd:Versions
+[36mDEBUG[0m:quibble.cmd:Ensure dir: '/workspace/log'
+[36mDEBUG[0m:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/Echo", "mediawiki/extensions/EventLogging", "mediawiki/extensions/MobileFrontend", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}
+[36mDEBUG[0m:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+[36mDEBUG[0m:quibble.cmd:Submodule update: /workspace/src
+[36mDEBUG[0m:quibble.cmd:Install composer dev-requires for vendor.git
+[36mDEBUG[0m:quibble.cmd:Start backends: <MySQL (no socket)>
+[36mDEBUG[0m:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+[36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+[36mDEBUG[0m:quibble.cmd:User commands: true
+[33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
 
 ========================================
 = install is running: _quibble_duration_exit
 
 ========================================
-= install is running: local exit_code=1
-(0s)
+= install is running: local exit_code=0
+(12s)

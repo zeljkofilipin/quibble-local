@@ -1,3 +1,6 @@
 $ DRY_RUN=1 ./list_dependencies_optional extensions/Echo
 
-Error: ref/integration/config.git not found. Run ./prepare first.
+AntiSpoof
+CentralAuth
+EventLogging
+MobileFrontend

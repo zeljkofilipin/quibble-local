@@ -12,17 +12,35 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-All dependencies for extensions/Echo (1):
-  Error: ref/integration/config.git not found. Run ./prepare first.
+All dependencies for extensions/Echo (4):
+  AntiSpoof
+  CentralAuth
+  EventLogging
+  MobileFrontend
 
-Optional dependencies to vary (1):
-  Error: ref/integration/config.git not found. Run ./prepare first.
+Optional dependencies to vary (4):
+  AntiSpoof
+  CentralAuth
+  EventLogging
+  MobileFrontend
 
-Total combinations to test: 2 (from 0 to 1 optional dependencies)
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
-pre-clone(Error: ref/integration/config.git not found. Run ./prepare first.) .
+Total combinations to test: 16 (from 0 to 4 optional dependencies)
+fetch(AntiSpoof) ..
+fetch(CentralAuth) ..
+fetch(EventLogging) ..
+fetch(MobileFrontend) ..
 
 Parallel mode: 2 workers
-fresh_install .. FAIL (0s) 
-fresh_install/save failed. Cannot proceed.
-(0s)
+fresh_install ............................................. ok (1s) install ................................................ ok (4s) save  ok (1s) 
+--- Wave 1-2 of 16 (2 workers) --- 2026-05-13 11:20:53 UTC
+  Worker 1: combo 1/16: (none)
+  Worker 2: combo 2/16: AntiSpoof
+
+  Combination 1/16 passed!
+
+========================================
+= FOUND: minimum dependencies for extensions/Echo
+========================================
+
+No dependencies needed.
+(20s)

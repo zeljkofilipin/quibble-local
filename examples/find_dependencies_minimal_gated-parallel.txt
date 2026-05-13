@@ -12,16 +12,139 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
-skipped (no Selenium tests): Error: ref/integration/config.git not found. Run ./prepare first.
+skipped (no Selenium tests): extensions/AntiSpoof
+skipped (no Selenium tests): extensions/Babel
+skipped (no Selenium tests): extensions/BetaFeatures
+skipped (no Selenium tests): extensions/CheckUser
+skipped (no Selenium tests): extensions/CirrusSearch
+skipped (no Selenium tests): extensions/cldr
+skipped (no Selenium tests): extensions/ContentTranslation
+skipped (no Selenium tests): extensions/CommunityConfigurationExample
+skipped (no Selenium tests): extensions/Disambiguator
+skipped (no Selenium tests): extensions/Elastica
+skipped (no Selenium tests): extensions/EventBus
+skipped (no Selenium tests): extensions/EventLogging
+skipped (no Selenium tests): extensions/EventStreamConfig
+skipped (no Selenium tests): extensions/FileImporter
+skipped (no Selenium tests): extensions/GeoData
+skipped (no Selenium tests): extensions/GlobalCssJs
+skipped (no Selenium tests): extensions/GlobalPreferences
+skipped (no Selenium tests): extensions/GrowthExperiments
+skipped (no Selenium tests): extensions/IPInfo
+skipped (no Selenium tests): extensions/JsonConfig
+skipped (no Selenium tests): extensions/Kartographer
+skipped (no Selenium tests): extensions/MediaModeration
+skipped (no Selenium tests): extensions/MobileApp
+skipped (no Selenium tests): extensions/MobileFrontend
+skipped (no Selenium tests): extensions/NavigationTiming
+skipped (no Selenium tests): extensions/PageImages
+skipped (no Selenium tests): extensions/PageViewInfo
+skipped (no Selenium tests): extensions/SandboxLink
+skipped (no Selenium tests): extensions/Scribunto
+skipped (no Selenium tests): extensions/SiteMatrix
+skipped (no optional dependencies): extensions/TemplateData
+skipped (no Selenium tests): extensions/Thanks
+skipped (no Selenium tests): extensions/TimedMediaHandler
+skipped (no Selenium tests): extensions/Translate
+skipped (no Selenium tests): extensions/UniversalLanguageSelector
+skipped (no Selenium tests): extensions/Wikibase
+skipped (no Selenium tests): extensions/WikibaseCirrusSearch
+skipped (no Selenium tests): extensions/WikibaseMediaInfo
+skipped (no Selenium tests): extensions/WikiLove
+skipped (no Selenium tests): extensions/WikimediaCampaignEvents
+skipped (no Selenium tests): extensions/WikimediaMessages
+skipped (no Selenium tests): skins/Vector
 
-No components need find_dependencies_minimal_greedy.
+10 components to process.
+
+Parallel mode: 2 workers
+
+--- Wave 1-2 of 10 (2 workers) --- 2026-05-13 11:52:29 UTC
+  Worker 1: extensions/AbuseFilter (ENVIRONMENT=1)
+  Worker 2: extensions/CampaignEvents (ENVIRONMENT=2)
+  extensions/AbuseFilter: ok
+  extensions/CampaignEvents: ok
+
+--- Wave 3-4 of 10 (2 workers) --- 2026-05-13 11:53:09 UTC
+  Worker 1: extensions/CommunityConfiguration (ENVIRONMENT=1)
+  Worker 2: extensions/Echo (ENVIRONMENT=2)
+  extensions/CommunityConfiguration: ok
+  extensions/Echo: ok
+
+--- Wave 5-6 of 10 (2 workers) --- 2026-05-13 11:53:35 UTC
+  Worker 1: extensions/GuidedTour (ENVIRONMENT=1)
+  Worker 2: extensions/Math (ENVIRONMENT=2)
+  extensions/GuidedTour: ok
+  extensions/Math: ok
+
+--- Wave 7-8 of 10 (2 workers) --- 2026-05-13 11:53:55 UTC
+  Worker 1: extensions/PageTriage (ENVIRONMENT=1)
+  Worker 2: extensions/ProofreadPage (ENVIRONMENT=2)
+  extensions/PageTriage: ok
+  extensions/ProofreadPage: ok
+
+--- Wave 9-10 of 10 (2 workers) --- 2026-05-13 11:54:21 UTC
+  Worker 1: extensions/VisualEditor (ENVIRONMENT=1)
+  Worker 2: skins/MinervaNeue (ENVIRONMENT=2)
+  extensions/VisualEditor: ok
+  skins/MinervaNeue: ok
 
 ========================================
 = Results
 ========================================
 PASSED:
-  Error: ref/integration/config.git not found. Run ./prepare first.
+  extensions/AntiSpoof
+  extensions/Babel
+  extensions/BetaFeatures
+  extensions/CheckUser
+  extensions/CirrusSearch
+  extensions/cldr
+  extensions/ContentTranslation
+  extensions/CommunityConfigurationExample
+  extensions/Disambiguator
+  extensions/Elastica
+  extensions/EventBus
+  extensions/EventLogging
+  extensions/EventStreamConfig
+  extensions/FileImporter
+  extensions/GeoData
+  extensions/GlobalCssJs
+  extensions/GlobalPreferences
+  extensions/GrowthExperiments
+  extensions/IPInfo
+  extensions/JsonConfig
+  extensions/Kartographer
+  extensions/MediaModeration
+  extensions/MobileApp
+  extensions/MobileFrontend
+  extensions/NavigationTiming
+  extensions/PageImages
+  extensions/PageViewInfo
+  extensions/SandboxLink
+  extensions/Scribunto
+  extensions/SiteMatrix
+  extensions/TemplateData
+  extensions/Thanks
+  extensions/TimedMediaHandler
+  extensions/Translate
+  extensions/UniversalLanguageSelector
+  extensions/Wikibase
+  extensions/WikibaseCirrusSearch
+  extensions/WikibaseMediaInfo
+  extensions/WikiLove
+  extensions/WikimediaCampaignEvents
+  extensions/WikimediaMessages
+  skins/Vector
+  extensions/AbuseFilter
+  extensions/CampaignEvents
+  extensions/CommunityConfiguration
+  extensions/Echo
+  extensions/GuidedTour
+  extensions/Math
+  extensions/PageTriage
+  extensions/ProofreadPage
+  extensions/VisualEditor
+  skins/MinervaNeue
 
 All passed.
-(0s)
+(3m 42s)

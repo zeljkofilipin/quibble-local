@@ -1,3 +1,129 @@
 $ DRY_RUN=1 ./list_dependencies_combinations skins/MinervaNeue
 
-Error: ref/integration/config.git not found. Run ./prepare first.
+Cite
+Echo
+MobileFrontend
+EventBus
+EventLogging
+EventStreamConfig
+TestKitchen
+Cite Echo
+Cite MobileFrontend
+Echo MobileFrontend
+Cite EventBus
+Echo EventBus
+MobileFrontend EventBus
+Cite EventLogging
+Echo EventLogging
+MobileFrontend EventLogging
+EventBus EventLogging
+Cite EventStreamConfig
+Echo EventStreamConfig
+MobileFrontend EventStreamConfig
+EventBus EventStreamConfig
+EventLogging EventStreamConfig
+Cite TestKitchen
+Echo TestKitchen
+MobileFrontend TestKitchen
+EventBus TestKitchen
+EventLogging TestKitchen
+EventStreamConfig TestKitchen
+Cite Echo MobileFrontend
+Cite Echo EventBus
+Cite MobileFrontend EventBus
+Echo MobileFrontend EventBus
+Cite Echo EventLogging
+Cite MobileFrontend EventLogging
+Echo MobileFrontend EventLogging
+Cite EventBus EventLogging
+Echo EventBus EventLogging
+MobileFrontend EventBus EventLogging
+Cite Echo EventStreamConfig
+Cite MobileFrontend EventStreamConfig
+Echo MobileFrontend EventStreamConfig
+Cite EventBus EventStreamConfig
+Echo EventBus EventStreamConfig
+MobileFrontend EventBus EventStreamConfig
+Cite EventLogging EventStreamConfig
+Echo EventLogging EventStreamConfig
+MobileFrontend EventLogging EventStreamConfig
+EventBus EventLogging EventStreamConfig
+Cite Echo TestKitchen
+Cite MobileFrontend TestKitchen
+Echo MobileFrontend TestKitchen
+Cite EventBus TestKitchen
+Echo EventBus TestKitchen
+MobileFrontend EventBus TestKitchen
+Cite EventLogging TestKitchen
+Echo EventLogging TestKitchen
+MobileFrontend EventLogging TestKitchen
+EventBus EventLogging TestKitchen
+Cite EventStreamConfig TestKitchen
+Echo EventStreamConfig TestKitchen
+MobileFrontend EventStreamConfig TestKitchen
+EventBus EventStreamConfig TestKitchen
+EventLogging EventStreamConfig TestKitchen
+Cite Echo MobileFrontend EventBus
+Cite Echo MobileFrontend EventLogging
+Cite Echo EventBus EventLogging
+Cite MobileFrontend EventBus EventLogging
+Echo MobileFrontend EventBus EventLogging
+Cite Echo MobileFrontend EventStreamConfig
+Cite Echo EventBus EventStreamConfig
+Cite MobileFrontend EventBus EventStreamConfig
+Echo MobileFrontend EventBus EventStreamConfig
+Cite Echo EventLogging EventStreamConfig
+Cite MobileFrontend EventLogging EventStreamConfig
+Echo MobileFrontend EventLogging EventStreamConfig
+Cite EventBus EventLogging EventStreamConfig
+Echo EventBus EventLogging EventStreamConfig
+MobileFrontend EventBus EventLogging EventStreamConfig
+Cite Echo MobileFrontend TestKitchen
+Cite Echo EventBus TestKitchen
+Cite MobileFrontend EventBus TestKitchen
+Echo MobileFrontend EventBus TestKitchen
+Cite Echo EventLogging TestKitchen
+Cite MobileFrontend EventLogging TestKitchen
+Echo MobileFrontend EventLogging TestKitchen
+Cite EventBus EventLogging TestKitchen
+Echo EventBus EventLogging TestKitchen
+MobileFrontend EventBus EventLogging TestKitchen
+Cite Echo EventStreamConfig TestKitchen
+Cite MobileFrontend EventStreamConfig TestKitchen
+Echo MobileFrontend EventStreamConfig TestKitchen
+Cite EventBus EventStreamConfig TestKitchen
+Echo EventBus EventStreamConfig TestKitchen
+MobileFrontend EventBus EventStreamConfig TestKitchen
+Cite EventLogging EventStreamConfig TestKitchen
+Echo EventLogging EventStreamConfig TestKitchen
+MobileFrontend EventLogging EventStreamConfig TestKitchen
+EventBus EventLogging EventStreamConfig TestKitchen
+Cite Echo MobileFrontend EventBus EventLogging
+Cite Echo MobileFrontend EventBus EventStreamConfig
+Cite Echo MobileFrontend EventLogging EventStreamConfig
+Cite Echo EventBus EventLogging EventStreamConfig
+Cite MobileFrontend EventBus EventLogging EventStreamConfig
+Echo MobileFrontend EventBus EventLogging EventStreamConfig
+Cite Echo MobileFrontend EventBus TestKitchen
+Cite Echo MobileFrontend EventLogging TestKitchen
+Cite Echo EventBus EventLogging TestKitchen
+Cite MobileFrontend EventBus EventLogging TestKitchen
+Echo MobileFrontend EventBus EventLogging TestKitchen
+Cite Echo MobileFrontend EventStreamConfig TestKitchen
+Cite Echo EventBus EventStreamConfig TestKitchen
+Cite MobileFrontend EventBus EventStreamConfig TestKitchen
+Echo MobileFrontend EventBus EventStreamConfig TestKitchen
+Cite Echo EventLogging EventStreamConfig TestKitchen
+Cite MobileFrontend EventLogging EventStreamConfig TestKitchen
+Echo MobileFrontend EventLogging EventStreamConfig TestKitchen
+Cite EventBus EventLogging EventStreamConfig TestKitchen
+Echo EventBus EventLogging EventStreamConfig TestKitchen
+MobileFrontend EventBus EventLogging EventStreamConfig TestKitchen
+Cite Echo MobileFrontend EventBus EventLogging EventStreamConfig
+Cite Echo MobileFrontend EventBus EventLogging TestKitchen
+Cite Echo MobileFrontend EventBus EventStreamConfig TestKitchen
+Cite Echo MobileFrontend EventLogging EventStreamConfig TestKitchen
+Cite Echo EventBus EventLogging EventStreamConfig TestKitchen
+Cite MobileFrontend EventBus EventLogging EventStreamConfig TestKitchen
+Echo MobileFrontend EventBus EventLogging EventStreamConfig TestKitchen
+Cite Echo MobileFrontend EventBus EventLogging EventStreamConfig TestKitchen

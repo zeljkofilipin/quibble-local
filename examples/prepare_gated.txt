@@ -12,4 +12,4 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-prepare_gated . FAIL (0s) (see log/prepare_gated.log)
+prepare_gated  ok (1m 19s)

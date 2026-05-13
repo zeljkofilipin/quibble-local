@@ -26,12 +26,163 @@ docker RAM: 15.6 GB
 
 ========================================
 = prepare is running: mkdir -p ref/mediawiki/skins ref/integration
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
-mkdir: cannot create directory ‘ref/integration’: Permission denied
+
+========================================
+= prepare is running: pids=()
+
+========================================
+= prepare is running: pid_names=()
+
+========================================
+= prepare is running: pids+=($!)
+
+========================================
+= prepare is running: pid_names+=("docker pull $QUIBBLE_IMAGE")
+
+========================================
+= prepare is running: docker pull docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+
+========================================
+= prepare is running: for ref_repo in "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"
+
+========================================
+= prepare is running: ref_dir=ref/mediawiki/core.git
+
+========================================
+= prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/core
+
+========================================
+= prepare is running: '[' -d ref/mediawiki/core.git ']'
+
+========================================
+= prepare is running: pids+=($!)
+
+========================================
+= prepare is running: pid_names+=("$ref_dir")
+
+========================================
+= prepare is running: for ref_repo in "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"
+
+========================================
+= prepare is running: ref_dir=ref/mediawiki/vendor.git
+
+========================================
+= prepare is running: git -C ref/mediawiki/core.git fetch
+
+========================================
+= prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/vendor
+
+========================================
+= prepare is running: '[' -d ref/mediawiki/vendor.git ']'
+
+========================================
+= prepare is running: pids+=($!)
+
+========================================
+
+========================================
+= prepare is running: pid_names+=("$ref_dir")
+= prepare is running: git -C ref/mediawiki/vendor.git fetch
+
+========================================
+= prepare is running: for ref_repo in "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"
+
+========================================
+= prepare is running: ref_dir=ref/mediawiki/skins/Vector.git
+
+========================================
+= prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
+
+========================================
+= prepare is running: '[' -d ref/mediawiki/skins/Vector.git ']'
+
+========================================
+
+========================================
+= prepare is running: pids+=($!)
+
+========================================
+= prepare is running: pid_names+=("$ref_dir")
+
+========================================
+= prepare is running: for ref_repo in "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"
+
+========================================
+= prepare is running: ref_dir=ref/integration/config.git
+= prepare is running: git -C ref/mediawiki/skins/Vector.git fetch
+
+========================================
+= prepare is running: ref_url=https://gerrit.wikimedia.org/r/integration/config
+
+========================================
+= prepare is running: '[' -d ref/integration/config.git ']'
+
+========================================
+= prepare is running: pids+=($!)
+
+========================================
+= prepare is running: pid_names+=("$ref_dir")
+
+========================================
+= prepare is running: failed=0
+
+========================================
+= prepare is running: for i in "${!pids[@]}"
+
+========================================
+= prepare is running: wait 763879
+
+========================================
+= prepare is running: git -C ref/integration/config.git fetch
+latest: Pulling from releng/quibble-bullseye-php83
+Digest: sha256:ee977240ad32f4c3bf202e0ad11f7427fea93838f9060f7567c5884e0e746146
+Status: Image is up to date for docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+
+========================================
+= prepare is running: for i in "${!pids[@]}"
+
+========================================
+= prepare is running: wait 763880
+From https://gerrit.wikimedia.org/r/mediawiki/vendor
+ * branch                HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/integration/config
+ * branch                HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/core
+ * branch                    HEAD       -> FETCH_HEAD
+
+========================================
+= prepare is running: for i in "${!pids[@]}"
+
+========================================
+= prepare is running: wait 763881
+
+========================================
+= prepare is running: for i in "${!pids[@]}"
+
+========================================
+= prepare is running: wait 763882
+
+========================================
+= prepare is running: for i in "${!pids[@]}"
+
+========================================
+= prepare is running: wait 763894
+
+========================================
+= prepare is running: '[' 0 -gt 0 ']'
+
+========================================
+= prepare is running: mkdir -p cache log src
+
+========================================
+= prepare is running: chmod 777 cache log ref src
 
 ========================================
 = prepare is running: _quibble_duration_exit
 
 ========================================
-= prepare is running: local exit_code=1
-(0s)
+= prepare is running: local exit_code=0
+(5s)

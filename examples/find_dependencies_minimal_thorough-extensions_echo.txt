@@ -12,22 +12,49 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-All dependencies for extensions/Echo (1):
-  Error: ref/integration/config.git not found. Run ./prepare first.
+All dependencies for extensions/Echo (4):
+  AntiSpoof
+  CentralAuth
+  EventLogging
+  MobileFrontend
 
-Optional dependencies to vary (1):
-  Error: ref/integration/config.git not found. Run ./prepare first.
+Optional dependencies to vary (4):
+  AntiSpoof
+  CentralAuth
+  EventLogging
+  MobileFrontend
 
-Total combinations to test: 2 (from 0 to 1 optional dependencies)
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
-pre-clone(Error: ref/integration/config.git not found. Run ./prepare first.) .
+Total combinations to test: 16 (from 0 to 4 optional dependencies)
+fetch(AntiSpoof) ..
+fetch(CentralAuth) ..
+fetch(EventLogging) ..
+fetch(MobileFrontend) ..
 
 === Phase 1: Greedy estimate ===
 
-Greedy mode: starting with all 1 optional deps, removing one at a time.
+Greedy mode: starting with all 4 optional deps, removing one at a time.
 
-=== Baseline: all dependencies === 2026-05-13 10:37:49 UTC
-fresh_install .. FAIL (0s) SKIP (fresh_install/restore failed)
+=== Baseline: all dependencies === 2026-05-13 11:56:55 UTC
+fresh_install ............................................. ok (1s) install ................................................ ok (4s) save  ok (1s) install ................................................. ok (11s) run_selenium_tests ............................................. ok (1s) 
+=== Try removing AntiSpoof (1/4, pass 1) === 2026-05-13 11:57:13 UTC
+restore  ok (0s) install ................................................. ok (10s) run_selenium_tests ............................................. ok (1s) Tests passed without AntiSpoof, removing it
 
-Cannot establish baseline.
-(1s)
+=== Try removing CentralAuth (2/4, pass 1) === 2026-05-13 11:57:24 UTC
+restore  ok (0s) install ................................................. ok (8s) run_selenium_tests ............................................. ok (1s) Tests passed without CentralAuth, removing it
+
+=== Try removing EventLogging (3/4, pass 1) === 2026-05-13 11:57:33 UTC
+restore  ok (0s) install ................................................. ok (7s) run_selenium_tests ............................................. ok (0s) Tests passed without EventLogging, removing it
+
+=== Try removing MobileFrontend (4/4, pass 1) === 2026-05-13 11:57:40 UTC
+restore  ok (1s) install ................................................ ok (4s) run_selenium_tests ............................................. ok (1s) Tests passed without MobileFrontend, removing it
+
+--- Verification pass 2 (re-checking 0 remaining deps) ---
+
+========================================
+= FOUND: minimum dependencies for extensions/Echo
+========================================
+
+No dependencies needed.
+
+No optional dependencies needed (confirmed).
+(58s)

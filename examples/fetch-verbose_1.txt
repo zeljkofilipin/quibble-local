@@ -42,6 +42,7 @@ docker RAM: 15.6 GB
 
 ========================================
 = fetch is running: find ref -name '*.git' -type d
+find: ‘ref’: No such file or directory
 
 ========================================
 = fetch is running: '[' 0 -eq 0 ']'

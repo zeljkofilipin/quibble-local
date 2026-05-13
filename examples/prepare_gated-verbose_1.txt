@@ -47,37 +47,1568 @@ docker RAM: 15.6 GB
 = prepare_gated is running: ./list_gated
 
 ========================================
-= prepare_gated is running: repo='mediawiki/Error: ref/integration/config.git not found. Run ./prepare first.'
+= prepare_gated is running: repo=mediawiki/extensions/AbuseFilter
 
 ========================================
-= prepare_gated is running: clone_or_fetch 'mediawiki/Error: ref/integration/config.git not found. Run ./prepare first.'
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/AbuseFilter
 
 ========================================
 = prepare_gated is running: local quiet=
 
 ========================================
-= prepare_gated is running: '[' 'mediawiki/Error: ref/integration/config.git not found. Run ./prepare first.' = --quiet ']'
+= prepare_gated is running: '[' mediawiki/extensions/AbuseFilter = --quiet ']'
 
 ========================================
-= prepare_gated is running: local 'repo=mediawiki/Error: ref/integration/config.git not found. Run ./prepare first.'
+= prepare_gated is running: local repo=mediawiki/extensions/AbuseFilter
 
 ========================================
-= prepare_gated is running: local 'ref_dir=ref/mediawiki/Error: ref/integration/config.git not found. Run ./prepare first..git'
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/AbuseFilter.git
 
 ========================================
-= prepare_gated is running: '[' -d 'ref/mediawiki/Error: ref/integration/config.git not found. Run ./prepare first..git' ']'
-
-
-========================================
-= prepare_gated is running: dirname 'ref/mediawiki/Error: ref/integration/config.git not found. Run ./prepare first..git'
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/AbuseFilter.git ']'
 
 ========================================
-= prepare_gated is running: mkdir -p 'ref/mediawiki/Error: ref/integration/config.git not found. Run .'
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+= prepare_gated is running: git -C ref/mediawiki/extensions/AbuseFilter.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/AntiSpoof
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/AntiSpoof
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/AntiSpoof = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/AntiSpoof
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/AntiSpoof.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/AntiSpoof.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/AntiSpoof.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/Babel
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/Babel
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/Babel = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/Babel
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/Babel.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/Babel.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/Babel.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/BetaFeatures
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/BetaFeatures
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/BetaFeatures = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/BetaFeatures
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/BetaFeatures.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/BetaFeatures.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/BetaFeatures.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/CampaignEvents
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/CampaignEvents
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/CampaignEvents = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/CampaignEvents
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/CampaignEvents.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/CampaignEvents.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/CampaignEvents.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/CheckUser
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/CheckUser
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/CheckUser = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/CheckUser
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/CheckUser.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/CheckUser.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/CheckUser.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/CirrusSearch
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/CirrusSearch
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/CirrusSearch = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/CirrusSearch
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/CirrusSearch.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/CirrusSearch.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/CirrusSearch.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/cldr
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/cldr
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/cldr = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/cldr
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/cldr.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/cldr.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/cldr.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/ContentTranslation
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/ContentTranslation
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/ContentTranslation = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/ContentTranslation
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/ContentTranslation.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/ContentTranslation.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/ContentTranslation.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/CommunityConfiguration
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/CommunityConfiguration
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/CommunityConfiguration = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/CommunityConfiguration
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/CommunityConfiguration.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/CommunityConfiguration.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/CommunityConfiguration.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/CommunityConfigurationExample
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/CommunityConfigurationExample
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/CommunityConfigurationExample = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/CommunityConfigurationExample
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/CommunityConfigurationExample.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/CommunityConfigurationExample.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/CommunityConfigurationExample.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/Disambiguator
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/Disambiguator
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/Disambiguator = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/Disambiguator
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/Disambiguator.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/Disambiguator.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/Disambiguator.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/Echo
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/Echo
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/Echo = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/Echo
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/Echo.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/Echo.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/Echo.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/Elastica
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/Elastica
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/Elastica = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/Elastica
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/Elastica.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/Elastica.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/Elastica.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/EventBus
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/EventBus
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/EventBus = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/EventBus
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/EventBus.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/EventBus.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/EventBus.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/EventLogging
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/EventLogging
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/EventLogging = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/EventLogging
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/EventLogging.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/EventLogging.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/EventLogging.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/EventStreamConfig
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/EventStreamConfig
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/EventStreamConfig = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/EventStreamConfig
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/EventStreamConfig.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/EventStreamConfig.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/EventStreamConfig.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/FileImporter
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/FileImporter
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/FileImporter = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/FileImporter
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/FileImporter.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/FileImporter.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/FileImporter.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/GeoData
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/GeoData
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/GeoData = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/GeoData
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/GeoData.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/GeoData.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/GeoData.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/GlobalCssJs
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/GlobalCssJs
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/GlobalCssJs = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/GlobalCssJs
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/GlobalCssJs.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/GlobalCssJs.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/GlobalCssJs.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/GlobalPreferences
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/GlobalPreferences
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/GlobalPreferences = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/GlobalPreferences
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/GlobalPreferences.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/GlobalPreferences.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/GlobalPreferences.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/GrowthExperiments
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/GrowthExperiments
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/GrowthExperiments = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/GrowthExperiments
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/GrowthExperiments.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/GrowthExperiments.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/GrowthExperiments.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/GuidedTour
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/GuidedTour
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/GuidedTour = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/GuidedTour
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/GuidedTour.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/GuidedTour.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/GuidedTour.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/IPInfo
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/IPInfo
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/IPInfo = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/IPInfo
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/IPInfo.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/IPInfo.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/IPInfo.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/JsonConfig
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/JsonConfig
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/JsonConfig = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/JsonConfig
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/JsonConfig.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/JsonConfig.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/JsonConfig.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/Kartographer
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/Kartographer
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/Kartographer = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/Kartographer
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/Kartographer.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/Kartographer.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/Kartographer.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/Math
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/Math
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/Math = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/Math
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/Math.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/Math.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/Math.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/MediaModeration
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/MediaModeration
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/MediaModeration = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/MediaModeration
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/MediaModeration.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/MediaModeration.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/MediaModeration.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/MobileApp
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/MobileApp
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/MobileApp = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/MobileApp
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/MobileApp.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/MobileApp.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/MobileApp.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/MobileFrontend
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/MobileFrontend
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/MobileFrontend = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/MobileFrontend
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/MobileFrontend.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/MobileFrontend.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/MobileFrontend.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/NavigationTiming
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/NavigationTiming
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/NavigationTiming = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/NavigationTiming
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/NavigationTiming.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/NavigationTiming.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/NavigationTiming.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/PageImages
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/PageImages
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/PageImages = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/PageImages
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/PageImages.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/PageImages.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/PageImages.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/PageTriage
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/PageTriage
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/PageTriage = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/PageTriage
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/PageTriage.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/PageTriage.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/PageTriage.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/PageViewInfo
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/PageViewInfo
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/PageViewInfo = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/PageViewInfo
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/PageViewInfo.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/PageViewInfo.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/PageViewInfo.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/ProofreadPage
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/ProofreadPage
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/ProofreadPage = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/ProofreadPage
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/ProofreadPage.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/ProofreadPage.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/ProofreadPage.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/SandboxLink
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/SandboxLink
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/SandboxLink = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/SandboxLink
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/SandboxLink.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/SandboxLink.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/SandboxLink.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/Scribunto
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/Scribunto
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/Scribunto = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/Scribunto
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/Scribunto.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/Scribunto.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/Scribunto.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/SiteMatrix
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/SiteMatrix
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/SiteMatrix = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/SiteMatrix
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/SiteMatrix.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/SiteMatrix.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/SiteMatrix.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/TemplateData
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/TemplateData
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/TemplateData = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/TemplateData
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/TemplateData.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/TemplateData.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/TemplateData.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/Thanks
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/Thanks
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/Thanks = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/Thanks
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/Thanks.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/Thanks.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/Thanks.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/TimedMediaHandler
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/TimedMediaHandler
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/TimedMediaHandler = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/TimedMediaHandler
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/TimedMediaHandler.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/TimedMediaHandler.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/TimedMediaHandler.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/Translate
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/Translate
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/Translate = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/Translate
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/Translate.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/Translate.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/Translate.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/UniversalLanguageSelector
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/UniversalLanguageSelector
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/UniversalLanguageSelector = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/UniversalLanguageSelector
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/UniversalLanguageSelector.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/UniversalLanguageSelector.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/UniversalLanguageSelector.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/VisualEditor
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/VisualEditor
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/VisualEditor = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/VisualEditor
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/VisualEditor.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/VisualEditor.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/VisualEditor.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/Wikibase
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/Wikibase
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/Wikibase = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/Wikibase
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/Wikibase.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/Wikibase.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/Wikibase.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/WikibaseCirrusSearch
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/WikibaseCirrusSearch
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/WikibaseCirrusSearch = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/WikibaseCirrusSearch
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/WikibaseCirrusSearch.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/WikibaseCirrusSearch.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/WikibaseCirrusSearch.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/WikibaseMediaInfo
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/WikibaseMediaInfo
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/WikibaseMediaInfo = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/WikibaseMediaInfo
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/WikibaseMediaInfo.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/WikibaseMediaInfo.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/WikibaseMediaInfo.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/WikiLove
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/WikiLove
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/WikiLove = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/WikiLove
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/WikiLove.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/WikiLove.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/WikiLove.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/WikimediaCampaignEvents
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/WikimediaCampaignEvents
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/WikimediaCampaignEvents = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/WikimediaCampaignEvents
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/WikimediaCampaignEvents.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/WikimediaCampaignEvents.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/WikimediaCampaignEvents.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/extensions/WikimediaMessages
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/extensions/WikimediaMessages
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/extensions/WikimediaMessages = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/extensions/WikimediaMessages
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/extensions/WikimediaMessages.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/extensions/WikimediaMessages.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/extensions/WikimediaMessages.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/skins/MinervaNeue
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/skins/MinervaNeue
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/skins/MinervaNeue = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/skins/MinervaNeue
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/skins/MinervaNeue.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/skins/MinervaNeue.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/skins/MinervaNeue.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+========================================
+= prepare_gated is running: repo=mediawiki/skins/Vector
+
+========================================
+= prepare_gated is running: clone_or_fetch mediawiki/skins/Vector
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' mediawiki/skins/Vector = --quiet ']'
+
+========================================
+= prepare_gated is running: local repo=mediawiki/skins/Vector
+
+========================================
+= prepare_gated is running: local ref_dir=ref/mediawiki/skins/Vector.git
+
+========================================
+= prepare_gated is running: '[' -d ref/mediawiki/skins/Vector.git ']'
+
+========================================
+= prepare_gated is running: git -C ref/mediawiki/skins/Vector.git fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
 
 ========================================
 = prepare_gated is running: _quibble_duration_exit
 
 ========================================
-= prepare_gated is running: local exit_code=1
-(0s)
+= prepare_gated is running: local exit_code=0
+(1m 19s)

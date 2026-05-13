@@ -1,85 +1,31 @@
 $ DRY_RUN=1 VERBOSE=1 ./find_dependencies_minimal_bottom_up extensions/Echo
 
-All dependencies for extensions/Echo (1):
-  Error: ref/integration/config.git not found. Run ./prepare first.
+All dependencies for extensions/Echo (4):
+  AntiSpoof
+  CentralAuth
+  EventLogging
+  MobileFrontend
 
-Optional dependencies to vary (1):
-  Error: ref/integration/config.git not found. Run ./prepare first.
+Optional dependencies to vary (4):
+  AntiSpoof
+  CentralAuth
+  EventLogging
+  MobileFrontend
 
-Total combinations to test: 2 (from 0 to 1 optional dependencies)
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
-Pre-cloning dependency: Error: ref/integration/config.git not found. Run ./prepare first.
-fatal: could not create leading directories of 'ref/mediawiki/extensions/Error: ref/integration/config.git not found. Run ./prepare first..git'
+Total combinations to test: 16 (from 0 to 4 optional dependencies)
+Pre-cloning dependency: AntiSpoof
+Cloning into bare repository 'ref/mediawiki/extensions/AntiSpoof.git'...
+Pre-cloning dependency: CentralAuth
+Cloning into bare repository 'ref/mediawiki/extensions/CentralAuth.git'...
+Pre-cloning dependency: EventLogging
+Cloning into bare repository 'ref/mediawiki/extensions/EventLogging.git'...
+Pre-cloning dependency: MobileFrontend
+Cloning into bare repository 'ref/mediawiki/extensions/MobileFrontend.git'...
 
-=== Combination 1/2: (none) === 2026-05-13 10:37:47 UTC
-
-========================================
-= extensions/Echo: ./fresh_install 2026-05-13 10:37:47 UTC
-========================================
-
-
-
-========================================
-= fresh_install is running: dirname ./fresh_install
-
-
-========================================
-= fresh_install is running: . ./lib/silent_output
-
-
+=== Combination 1/16: (none) === 2026-05-13 11:17:04 UTC
 
 ========================================
-= fresh_install is running: '[' -z 1 ']'
-
-
-========================================
-= fresh_install is running: dirname ./fresh_install
-
-========================================
-= fresh_install is running: . ./lib/docker_chmod
-
-
-========================================
-= fresh_install is running: dirname ./fresh_install
-
-========================================
-= fresh_install is running: . ./lib/print_quibble_command
-
-========================================
-= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
-
-
-========================================
-= fresh_install is running: dirname ./fresh_install
-
-========================================
-= fresh_install is running: ./prepare
-
-
-
-========================================
-= prepare is running: dirname ./prepare
-
-
-========================================
-= prepare is running: . ./lib/silent_output
-
-
-
-========================================
-= prepare is running: '[' -z 1 ']'
-
-========================================
-= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
-mkdir: cannot create directory ‘ref/integration’: Permission denied
-(0s)
-SKIP (fresh_install/restore failed)
-
-=== Combination 2/2: Error: ref/integration/config.git not found. Run ./prepare first. === 2026-05-13 10:37:47 UTC
-
-========================================
-= extensions/Echo: ./fresh_install 2026-05-13 10:37:47 UTC
+= extensions/Echo: ./fresh_install 2026-05-13 11:17:04 UTC
 ========================================
 
 
@@ -136,10 +82,782 @@ SKIP (fresh_install/restore failed)
 
 ========================================
 = prepare is running: mkdir -p ref/mediawiki/skins ref/integration
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
-mkdir: cannot create directory ‘ref/integration’: Permission denied
-(0s)
-SKIP (fresh_install/restore failed)
 
-No working combination found.
+========================================
+= prepare is running: pids=()
+
+========================================
+= prepare is running: pid_names=()
+
+========================================
+= prepare is running: pids+=($!)
+
+========================================
+= prepare is running: pid_names+=("docker pull $QUIBBLE_IMAGE")
+
+========================================
+= prepare is running: docker pull docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+
+========================================
+= prepare is running: for ref_repo in "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"
+
+========================================
+= prepare is running: ref_dir=ref/mediawiki/core.git
+
+========================================
+= prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/core
+
+========================================
+= prepare is running: '[' -d ref/mediawiki/core.git ']'
+
+========================================
+= prepare is running: pids+=($!)
+
+========================================
+= prepare is running: pid_names+=("$ref_dir")
+
+========================================
+= prepare is running: for ref_repo in "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"
+
+========================================
+= prepare is running: git clone --bare https://gerrit.wikimedia.org/r/mediawiki/core ref/mediawiki/core.git
+
+========================================
+= prepare is running: ref_dir=ref/mediawiki/vendor.git
+
+========================================
+= prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/vendor
+
+========================================
+= prepare is running: '[' -d ref/mediawiki/vendor.git ']'
+
+========================================
+= prepare is running: pids+=($!)
+
+========================================
+= prepare is running: git -C ref/mediawiki/vendor.git fetch
+
+========================================
+= prepare is running: pid_names+=("$ref_dir")
+
+========================================
+= prepare is running: for ref_repo in "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"
+
+========================================
+= prepare is running: ref_dir=ref/mediawiki/skins/Vector.git
+
+========================================
+= prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
+
+========================================
+= prepare is running: '[' -d ref/mediawiki/skins/Vector.git ']'
+
+========================================
+= prepare is running: pids+=($!)
+
+========================================
+= prepare is running: pid_names+=("$ref_dir")
+
+========================================
+= prepare is running: for ref_repo in "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"
+
+========================================
+
+========================================
+Cloning into bare repository 'ref/mediawiki/core.git'...
+= prepare is running: git -C ref/mediawiki/skins/Vector.git fetch
+= prepare is running: ref_dir=ref/integration/config.git
+
+========================================
+= prepare is running: ref_url=https://gerrit.wikimedia.org/r/integration/config
+
+========================================
+= prepare is running: '[' -d ref/integration/config.git ']'
+
+========================================
+= prepare is running: pids+=($!)
+
+========================================
+= prepare is running: pid_names+=("$ref_dir")
+
+========================================
+
+========================================
+= prepare is running: failed=0
+
+========================================
+= prepare is running: for i in "${!pids[@]}"
+
+========================================
+= prepare is running: wait 547472
+= prepare is running: git -C ref/integration/config.git fetch
+latest: Pulling from releng/quibble-bullseye-php83
+Digest: sha256:ee977240ad32f4c3bf202e0ad11f7427fea93838f9060f7567c5884e0e746146
+Status: Image is up to date for docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
+
+========================================
+= prepare is running: for i in "${!pids[@]}"
+
+========================================
+= prepare is running: wait 547473
+From https://gerrit.wikimedia.org/r/mediawiki/vendor
+ * branch                HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/integration/config
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= prepare is running: for i in "${!pids[@]}"
+
+========================================
+= prepare is running: wait 547474
+
+========================================
+= prepare is running: for i in "${!pids[@]}"
+
+========================================
+= prepare is running: wait 547475
+
+========================================
+= prepare is running: for i in "${!pids[@]}"
+
+========================================
+= prepare is running: wait 547477
+
+========================================
+= prepare is running: '[' 0 -gt 0 ']'
+
+========================================
+= prepare is running: mkdir -p cache log src
+
+========================================
+= prepare is running: chmod 777 cache log ref src
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./remove
+
+
+
+========================================
+= remove is running: dirname ./remove
+
+
+========================================
+= remove is running: . ./lib/silent_output
+
+
+
+========================================
+= remove is running: '[' -z 1 ']'
+
+========================================
+= remove is running: docker run --rm --entrypoint bash --user root -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete'
+
+========================================
+= remove is running: rm -rf src
+
+========================================
+= fresh_install is running: mkdir -p cache log src
+
+========================================
+= fresh_install is running: docker_chmod cache log src
+
+========================================
+= fresh_install is running: chmod 777 cache log src
+
+========================================
+= fresh_install is running: return 0
+
+========================================
+= fresh_install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --command true)
+
+========================================
+= fresh_install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
+
+========================================
+= fresh_install is running: local _xtrace_was_on=
+
+========================================
+= fresh_install is running: case "$-" in
+
+========================================
+= fresh_install is running: _xtrace_was_on=1
+
+========================================
+= fresh_install is running: set +x
+########################################
+docker run \
+  -it \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --command true
+########################################
+
+========================================
+= fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
++ /usr/bin/supervisord
+2026-05-13 11:20:29,594 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 11:20:29,597 INFO RPC interface 'supervisor' initialized
+2026-05-13 11:20:29,597 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 11:20:29,599 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
+2026-05-13 11:20:29,599 CRIT could not write pidfile /var/run/supervisord.pid
+[33mWARNING[0m:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
+[32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
+[32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
+[32mINFO[0m:zuul.CloneMapper:Workspace path set to: ./
+[32mINFO[0m:zuul.CloneMapper:Mapping projects to workspace...
+[32mINFO[0m:zuul.CloneMapper:  mediawiki/core -> .
+[32mINFO[0m:zuul.CloneMapper:Expansion completed.
+[36mDEBUG[0m:quibble.cmd:Running stages: 
+[36mDEBUG[0m:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+[36mDEBUG[0m:quibble.cmd:Project dir: /workspace/src
+[36mDEBUG[0m:quibble.cmd:Reporting URL: not specified
+[36mDEBUG[0m:quibble.cmd:Execution plan:
+[36mDEBUG[0m:quibble.cmd:Report durations
+[36mDEBUG[0m:quibble.cmd:Versions
+[36mDEBUG[0m:quibble.cmd:Ensure dir: '/workspace/log'
+[36mDEBUG[0m:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src"}
+[36mDEBUG[0m:quibble.cmd:Submodule update: /workspace/src
+[36mDEBUG[0m:quibble.cmd:Install composer dev-requires for vendor.git
+[36mDEBUG[0m:quibble.cmd:Start backends: <MySQL (no socket)>
+[36mDEBUG[0m:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+[36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+[36mDEBUG[0m:quibble.cmd:User commands: true
+[33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
+(3m 25s)
+
+========================================
+= extensions/Echo: ./install extensions/Echo 2026-05-13 11:20:29 UTC
+========================================
+
+
+
+========================================
+= install is running: dirname ./install
+
+
+========================================
+= install is running: . ./lib/silent_output
+
+
+
+========================================
+= install is running: '[' -z 1 ']'
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/clone_or_fetch
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/print_quibble_command
+
+========================================
+= install is running: clone_or_fetch mediawiki/extensions/Echo
+
+========================================
+= install is running: local quiet=
+
+========================================
+= install is running: '[' mediawiki/extensions/Echo = --quiet ']'
+
+========================================
+= install is running: local repo=mediawiki/extensions/Echo
+
+========================================
+= install is running: local ref_dir=ref/mediawiki/extensions/Echo.git
+
+========================================
+= install is running: '[' -d ref/mediawiki/extensions/Echo.git ']'
+
+========================================
+= install is running: git -C ref/mediawiki/extensions/Echo.git fetch
+
+========================================
+= install is running: clone_or_fetch integration/config
+
+========================================
+= install is running: local quiet=
+
+========================================
+= install is running: '[' integration/config = --quiet ']'
+
+========================================
+= install is running: local repo=integration/config
+
+========================================
+= install is running: local ref_dir=ref/integration/config.git
+
+========================================
+= install is running: '[' -d ref/integration/config.git ']'
+
+========================================
+= install is running: git -C ref/integration/config.git fetch
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/ensure_config
+
+
+========================================
+= install is running: config_ref_dir=ref/integration/config.git
+
+
+========================================
+= install is running: config_src_dir=src/config
+
+
+========================================
+= install is running: '[' '!' -d src/config ']'
+
+
+========================================
+= install is running: '[' '!' -d ref/integration/config.git ']'
+
+
+========================================
+= install is running: git clone -q ref/integration/config.git src/config
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/resolve_deps
+
+
+========================================
+= install is running: set +x
+
+========================================
+= install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --resolve-requires --command true ${deps[@]+"${deps[@]}"})
+
+========================================
+= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true
+
+========================================
+= install is running: local _xtrace_was_on=
+
+========================================
+= install is running: case "$-" in
+
+========================================
+= install is running: _xtrace_was_on=1
+
+========================================
+= install is running: set +x
+########################################
+docker run \
+  -it \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Echo \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
+
+========================================
+= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true
++ /usr/bin/supervisord
+2026-05-13 11:20:34,074 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 11:20:34,077 INFO RPC interface 'supervisor' initialized
+2026-05-13 11:20:34,077 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 11:20:34,078 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 11:20:34,079 CRIT could not write pidfile /var/run/supervisord.pid
+[36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
+[32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
+[32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
+[32mINFO[0m:zuul.CloneMapper:Workspace path set to: ./
+[32mINFO[0m:zuul.CloneMapper:Mapping projects to workspace...
+[32mINFO[0m:zuul.CloneMapper:  mediawiki/extensions/Echo -> extensions/Echo
+[32mINFO[0m:zuul.CloneMapper:Expansion completed.
+[36mDEBUG[0m:quibble.cmd:Running stages: 
+[36mDEBUG[0m:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+[36mDEBUG[0m:quibble.cmd:Project dir: /workspace/src/extensions/Echo
+[36mDEBUG[0m:quibble.cmd:Reporting URL: not specified
+[36mDEBUG[0m:quibble.cmd:Execution plan:
+[36mDEBUG[0m:quibble.cmd:Report durations
+[36mDEBUG[0m:quibble.cmd:Versions
+[36mDEBUG[0m:quibble.cmd:Ensure dir: '/workspace/log'
+[36mDEBUG[0m:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Echo", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}
+[36mDEBUG[0m:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+[36mDEBUG[0m:quibble.cmd:Submodule update: /workspace/src
+[36mDEBUG[0m:quibble.cmd:Install composer dev-requires for vendor.git
+[36mDEBUG[0m:quibble.cmd:Start backends: <MySQL (no socket)>
+[36mDEBUG[0m:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+[36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+[36mDEBUG[0m:quibble.cmd:User commands: true
+[33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
+(5s)
+
+========================================
+= extensions/Echo: ./save 2026-05-13 11:20:34 UTC
+========================================
+
+
+
+========================================
+= save is running: dirname ./save
+
+
+========================================
+= save is running: . ./lib/silent_output
+
+
+
+========================================
+= save is running: '[' -z 1 ']'
+
+
+========================================
+= save is running: dirname ./save
+
+========================================
+= save is running: . ./lib/docker_chmod
+
+========================================
+= save is running: '[' '!' -d src ']'
+
+
+========================================
+= save is running: ls -A src
+
+========================================
+= save is running: '[' -z config ']'
+
+========================================
+= save is running: mkdir -p src_save
+
+========================================
+= save is running: docker_chmod src_save
+
+========================================
+= save is running: chmod 777 src_save
+
+========================================
+= save is running: return 0
+
+========================================
+= save is running: docker run --rm --entrypoint bash --user root -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src_save:/workspace/src_save docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src_save -mindepth 1 -delete && cp -a /workspace/src/. /workspace/src_save/'
 (0s)
+
+========================================
+= extensions/Echo: ./install extensions/Echo 2026-05-13 11:20:34 UTC
+========================================
+
+
+
+========================================
+= install is running: dirname ./install
+
+
+========================================
+= install is running: . ./lib/silent_output
+
+
+
+========================================
+= install is running: '[' -z 1 ']'
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/clone_or_fetch
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/print_quibble_command
+
+========================================
+= install is running: clone_or_fetch mediawiki/extensions/Echo
+
+========================================
+= install is running: local quiet=
+
+========================================
+= install is running: '[' mediawiki/extensions/Echo = --quiet ']'
+
+========================================
+= install is running: local repo=mediawiki/extensions/Echo
+
+========================================
+= install is running: local ref_dir=ref/mediawiki/extensions/Echo.git
+
+========================================
+= install is running: '[' -d ref/mediawiki/extensions/Echo.git ']'
+
+========================================
+= install is running: git -C ref/mediawiki/extensions/Echo.git fetch
+
+========================================
+= install is running: clone_or_fetch integration/config
+
+========================================
+= install is running: local quiet=
+
+========================================
+= install is running: '[' integration/config = --quiet ']'
+
+========================================
+= install is running: local repo=integration/config
+
+========================================
+= install is running: local ref_dir=ref/integration/config.git
+
+========================================
+= install is running: '[' -d ref/integration/config.git ']'
+
+========================================
+= install is running: git -C ref/integration/config.git fetch
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/ensure_config
+
+
+========================================
+= install is running: config_ref_dir=ref/integration/config.git
+
+
+========================================
+= install is running: config_src_dir=src/config
+
+
+========================================
+= install is running: '[' '!' -d src/config ']'
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/resolve_deps
+
+
+========================================
+= install is running: set +x
+
+========================================
+= install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --resolve-requires --command true ${deps[@]+"${deps[@]}"})
+
+========================================
+= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true
+
+========================================
+= install is running: local _xtrace_was_on=
+
+========================================
+= install is running: case "$-" in
+
+========================================
+= install is running: _xtrace_was_on=1
+
+========================================
+= install is running: set +x
+########################################
+docker run \
+  -it \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Echo \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
+
+========================================
+= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true
++ /usr/bin/supervisord
+2026-05-13 11:20:39,083 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 11:20:39,086 INFO RPC interface 'supervisor' initialized
+2026-05-13 11:20:39,086 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 11:20:39,087 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 11:20:39,088 CRIT could not write pidfile /var/run/supervisord.pid
+[36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
+[32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
+[32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
+[32mINFO[0m:zuul.CloneMapper:Workspace path set to: ./
+[32mINFO[0m:zuul.CloneMapper:Mapping projects to workspace...
+[32mINFO[0m:zuul.CloneMapper:  mediawiki/extensions/Echo -> extensions/Echo
+[32mINFO[0m:zuul.CloneMapper:Expansion completed.
+[36mDEBUG[0m:quibble.cmd:Running stages: 
+[36mDEBUG[0m:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+[36mDEBUG[0m:quibble.cmd:Project dir: /workspace/src/extensions/Echo
+[36mDEBUG[0m:quibble.cmd:Reporting URL: not specified
+[36mDEBUG[0m:quibble.cmd:Execution plan:
+[36mDEBUG[0m:quibble.cmd:Report durations
+[36mDEBUG[0m:quibble.cmd:Versions
+[36mDEBUG[0m:quibble.cmd:Ensure dir: '/workspace/log'
+[36mDEBUG[0m:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Echo", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}
+[36mDEBUG[0m:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+[36mDEBUG[0m:quibble.cmd:Submodule update: /workspace/src
+[36mDEBUG[0m:quibble.cmd:Install composer dev-requires for vendor.git
+[36mDEBUG[0m:quibble.cmd:Start backends: <MySQL (no socket)>
+[36mDEBUG[0m:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+[36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+[36mDEBUG[0m:quibble.cmd:User commands: true
+[33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
+(5s)
+
+========================================
+= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-13 11:20:39 UTC
+========================================
+
+
+
+========================================
+= run_selenium_tests is running: dirname ./run_selenium_tests
+
+
+========================================
+= run_selenium_tests is running: . ./lib/silent_output
+
+
+
+========================================
+= run_selenium_tests is running: '[' -z 1 ']'
+
+
+========================================
+= run_selenium_tests is running: dirname ./run_selenium_tests
+
+========================================
+= run_selenium_tests is running: . ./lib/run_quibble_test
+
+
+
+========================================
+= run_selenium_tests is running: dirname ./lib/run_quibble_test
+
+
+========================================
+= run_selenium_tests is running: . ./lib/print_quibble_command
+
+========================================
+= run_selenium_tests is running: run_quibble_test --run selenium
+
+========================================
+= run_selenium_tests is running: cmd=('docker' 'run' '-it' '--rm' '--entrypoint=quibble-with-supervisord' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src' '-e' 'CI=true' '-e' 'ZUUL_PROJECT=mediawiki/extensions/Echo' 'docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest' '--dry-run' '--skip-zuul' '--skip-deps' '--run' 'selenium')
+
+========================================
+= run_selenium_tests is running: local cmd
+
+========================================
+= run_selenium_tests is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
+
+========================================
+= run_selenium_tests is running: local _xtrace_was_on=
+
+========================================
+= run_selenium_tests is running: case "$-" in
+
+========================================
+= run_selenium_tests is running: _xtrace_was_on=1
+
+========================================
+= run_selenium_tests is running: set +x
+########################################
+docker run \
+  -it \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e CI=true \
+  -e ZUUL_PROJECT=mediawiki/extensions/Echo \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --skip-zuul \
+  --skip-deps \
+  --run selenium
+########################################
+
+========================================
+= run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
++ /usr/bin/supervisord
+2026-05-13 11:20:39,896 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 11:20:39,900 INFO RPC interface 'supervisor' initialized
+2026-05-13 11:20:39,900 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 11:20:39,902 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
+2026-05-13 11:20:39,902 CRIT could not write pidfile /var/run/supervisord.pid
+[36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
+[32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
+[32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
+[32mINFO[0m:zuul.CloneMapper:Workspace path set to: ./
+[32mINFO[0m:zuul.CloneMapper:Mapping projects to workspace...
+[32mINFO[0m:zuul.CloneMapper:  mediawiki/extensions/Echo -> extensions/Echo
+[32mINFO[0m:zuul.CloneMapper:Expansion completed.
+[36mDEBUG[0m:quibble.cmd:Running stages: selenium
+[36mDEBUG[0m:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+[36mDEBUG[0m:quibble.cmd:Project dir: /workspace/src/extensions/Echo
+[36mDEBUG[0m:quibble.cmd:Reporting URL: not specified
+[36mDEBUG[0m:quibble.cmd:Execution plan:
+[36mDEBUG[0m:quibble.cmd:Report durations
+[36mDEBUG[0m:quibble.cmd:Versions
+[36mDEBUG[0m:quibble.cmd:Ensure dir: '/workspace/log'
+[36mDEBUG[0m:quibble.cmd:Start backends: <MySQL (no socket)>
+[36mDEBUG[0m:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=1):
+* Install MediaWiki, db=<MySQL (no socket)>
+[36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+[36mDEBUG[0m:quibble.cmd:Run all browser tests
+[33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
+(1s)
+
+========================================
+= FOUND: minimum dependencies for extensions/Echo
+========================================
+
+No dependencies needed.
+(4m 12s)

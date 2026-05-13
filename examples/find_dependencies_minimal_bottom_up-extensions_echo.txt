@@ -19,14 +19,13 @@ Optional dependencies to vary (1):
   Error: ref/integration/config.git not found. Run ./prepare first.
 
 Total combinations to test: 2 (from 0 to 1 optional dependencies)
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
-pre-clone(Error: ref/integration/config.git not found. Run ./prepare first.) .
+pre-clone(Error: ref/integration/config.git not found. Run ./prepare first.) ..
 
-=== Combination 1/2: (none) === 2026-05-13 10:37:46 UTC
-fresh_install .. FAIL (0s) SKIP (fresh_install/restore failed)
+=== Combination 1/2: (none) === 2026-05-13 11:13:25 UTC
+fresh_install .................................................................................................................................................................................................................................................................................... ok (2m 48s) install ................................................. ok (8s) save  ok (1s) install ................................................ ok (5s) run_selenium_tests ............................................. ok (1s) 
+========================================
+= FOUND: minimum dependencies for extensions/Echo
+========================================
 
-=== Combination 2/2: Error: ref/integration/config.git not found. Run ./prepare first. === 2026-05-13 10:37:46 UTC
-fresh_install .. FAIL (1s) SKIP (fresh_install/restore failed)
-
-No working combination found.
-(1s)
+No dependencies needed.
+(3m 3s)

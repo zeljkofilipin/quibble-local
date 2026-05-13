@@ -2,7 +2,7 @@ $ DRY_RUN=1 VERBOSE=1 ./test_integration
 
 
 ========================================
-= Running: ./help 2026-05-13 10:41:47 UTC
+= Running: ./help 2026-05-13 13:01:41 UTC
 ========================================
 ./ci
   Run the same checks that GitLab CI runs, using Docker.
@@ -155,7 +155,7 @@ $ DRY_RUN=1 VERBOSE=1 ./test_integration
 (0s)
 
 ========================================
-= Running: ./help install 2026-05-13 10:41:47 UTC
+= Running: ./help install 2026-05-13 13:01:41 UTC
 ========================================
 ./install
 
@@ -181,18 +181,18 @@ $ DRY_RUN=1 VERBOSE=1 ./test_integration
 (0s)
 
 ========================================
-= Running: ./lint 2026-05-13 10:41:47 UTC
+= Running: ./lint 2026-05-13 13:01:41 UTC
 ========================================
 (10s)
 
 ========================================
-= Running: ./ci 2026-05-13 10:41:57 UTC
+= Running: ./ci 2026-05-13 13:01:51 UTC
 ========================================
 Running shellcheck...
 shellcheck passed
 
 Running bats...
-1..215
+1..216
 ok 1 find_dependencies_minimal_bottom_up: shows usage with no arguments
 ok 2 find_dependencies_minimal_greedy: shows usage with no arguments
 ok 3 find_dependencies_minimal_thorough: shows usage with no arguments
@@ -249,177 +249,178 @@ ok 53 run_step: returns 1 on failure
 ok 54 run_step: prints component and command in verbose mode
 ok 55 run_step: prints UTC timestamp in verbose mode
 ok 56 batch_setup: initializes passed and failed as empty
-ok 57 build_component_list: uses argument when provided
-ok 58 build_component_list: reads from list_gated when no argument
-ok 59 build_full_combo: combines required and optional
-ok 60 build_full_combo: required only when no optional
-ok 61 build_full_combo: optional only when no required
-ok 62 build_full_combo: empty when both empty
-ok 63 clone_or_fetch: defines the clone_or_fetch function
-ok 64 clone_or_fetch: fetches existing bare repo
-ok 65 clone_or_fetch: fetches with --quiet flag
-ok 66 clone_or_fetch: creates parent directories for new repos
-ok 67 cmd_to_filename: no args
-ok 68 cmd_to_filename: positional arg
-ok 69 cmd_to_filename: positional arg with slash
-ok 70 cmd_to_filename: positional arg with dots and slashes
-ok 71 cmd_to_filename: env var with non-empty value
-ok 72 cmd_to_filename: env var with empty value
-ok 73 cmd_to_filename: --flag drops value
-ok 74 cmd_to_filename: --spec with long path drops value
-ok 75 cmd_to_filename: command substitution in env var produces clean suffix
-ok 76 cmd_to_filename: multiple env vars with simple values
-ok 77 cmd_to_filename: quoted multi-word --flag value treated as single token
-ok 78 debug_info: suppresses output when stdout is not a terminal
-ok 79 debug_info: prints banner with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal
-ok 80 debug_info: exits 0 when git is installed
-ok 81 debug_info: _quibble_print_host_resources prints CPU and RAM
-ok 82 debug_info: defines _quibble_print_docker_resources
-ok 83 dep_repo_path: converts extension name to repo path
-ok 84 dep_repo_path: converts skin name to repo path
-ok 85 dep_repo_path: handles nested extension name
-ok 86 docker_chmod: defines the docker_chmod function
-ok 87 docker_chmod: sets permissions on user-owned directory
-ok 88 docker_chmod: handles multiple directories
-ok 89 duration_trap: provides format_duration function
-ok 90 duration_trap: does not set trap when stdout is not a terminal
-ok 91 duration_trap: sets trap with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal
-ok 92 ensure_config: skips clone when src/config already exists
-ok 93 ensure_config: errors when bare repo missing and src/config missing
-ok 94 ensure_config: sets config_ref_dir and config_src_dir variables
-ok 95 format_duration: 0 seconds
-ok 96 format_duration: seconds only
-ok 97 format_duration: minutes and seconds
-ok 98 format_duration: exact minute
-ok 99 format_duration: hours, minutes, and seconds
-ok 100 format_duration: exact hour
-ok 101 format_duration: hours and seconds, no minutes
-ok 102 format_duration: days, hours, minutes, and seconds
-ok 103 format_duration: exact day
-ok 104 run_with_dots: returns 0 for successful command
-ok 105 run_with_dots: returns non-zero for failing command
-ok 106 run_with_dots: saves output to log file
-ok 107 run_with_dots: prints dots for each line
-ok 108 inhibit_sleep: skips when _QUIBBLE_NO_INHIBIT is set
-ok 109 inhibit_sleep: no background processes when skipped
-ok 110 inhibit_sleep: leaves no descendant processes after script exits
-ok 111 parse_component_args: parses extension component
-ok 112 parse_component_args: parses skin component
-ok 113 parse_component_args: collects extra args
-ok 114 parse_component_args: separates component from extra args
-ok 115 parse_component_args: no args sets empty defaults
-ok 116 print_dep_summary: lists all dependencies
-ok 117 print_dep_summary: lists required dependencies
-ok 118 print_dep_summary: skips required section when none required
-ok 119 print_dep_summary: shows (none) when no optional deps
-ok 120 print_dep_summary: lists optional dependencies
-ok 121 print_dep_summary: shows total combinations
-ok 122 print_found: prints required and optional deps
-ok 123 print_found: required only when no optional
-ok 124 print_found: no dependencies needed
-ok 125 print_found: optional only when no required
-ok 126 print_header: prints separator in verbose mode
-ok 127 print_header: prints label only in silent mode
-ok 128 print_header: includes UTC timestamp in verbose mode
-ok 129 print_quibble_command: defines the print_quibble_command function
-ok 130 print_quibble_command: brackets the command with a # banner
-ok 131 print_quibble_command: keeps -v flag together with its value on one line
-ok 132 print_quibble_command: --command and its value stay on one line
-ok 133 print_quibble_command: image (positional after flags) is on its own line
-ok 134 print_quibble_command: continuation backslashes on all but last command line
-ok 135 print_quibble_command: --key=value flag stays as one element
-ok 136 print_results: prints all passed when nothing failed
-ok 137 print_results: exits 1 when something failed
-ok 138 print_results: shows log hint in silent mode
-ok 139 print_results: no log hint in verbose mode
-ok 140 print_results: prints results header
-ok 141 record_passed: adds component to passed list
-ok 142 record_passed: skips if component already failed
-ok 143 remove_worker_dirs: removes src_worker_* directories
-ok 144 remove_worker_dirs: no error when no worker dirs exist
-ok 145 resolve_deps: builds extension repo paths
-ok 146 resolve_deps: builds skin repo paths with mediawiki/ prefix
-ok 147 resolve_deps: handles mixed extensions and skins
-ok 148 resolve_deps: empty QUIBBLE_DEPS produces no deps
-ok 149 run_quibble_test: defines the run_quibble_test function
-ok 150 run_quibble_test: prints the docker command before running it
-ok 151 run_quibble_test: passes --dry-run when QUIBBLE_DRY_RUN is set
-ok 152 run_quibble_test: omits --dry-run when QUIBBLE_DRY_RUN is empty
-ok 153 setup: sets QUIBBLE_IMAGE
-ok 154 setup: QUIBBLE_IMAGE can be overridden
-ok 155 setup: sets QUIBBLE_VOLUMES array
-ok 156 setup: sets QUIBBLE_DOCKER_FLAGS to -it in verbose mode
-ok 157 setup: sets QUIBBLE_DOCKER_FLAGS to -i in silent mode
-ok 158 setup: sets QUIBBLE_DIR to current directory
-ok 159 setup: QUIBBLE_SRC defaults to src
-ok 160 setup: QUIBBLE_SRC can be overridden
-ok 161 setup: ENVIRONMENT sets QUIBBLE_SRC and QUIBBLE_SAVE
-ok 162 setup: ENVIRONMENT does not override explicit QUIBBLE_SRC
-ok 163 setup: QUIBBLE_SAVE defaults to src_save
-ok 164 setup: QUIBBLE_DRY_RUN is empty by default
-ok 165 setup: QUIBBLE_DRY_RUN is --dry-run when DRY_RUN=1
-ok 166 setup: QUIBBLE_DOCKER_FLAGS empty in background mode
-ok 167 silent_output: does not activate in verbose mode
-ok 168 silent_output: does not activate when _QUIBBLE_OUTPUT_MANAGED is set
-ok 169 silent_output: does not activate when stdout is not a terminal
-ok 170 silent_output: activates with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal
-ok 171 utc_timestamp: outputs UTC timestamp in expected format
-ok 172 lint: all scripts pass shellcheck # skip shellcheck not installed
-ok 173 list_dependencies: shows usage with no arguments
-ok 174 list_dependencies: lists extension dependencies
-ok 175 list_dependencies: lists skin dependencies
-ok 176 list_dependencies: returns nothing for unknown component
-ok 177 list_dependencies: strips extensions/ prefix for lookup
-ok 178 list_dependencies_combinations: shows usage with no arguments
-ok 179 list_dependencies_combinations: single dependency produces one combination
-ok 180 list_dependencies_combinations: two dependencies produce three combinations
-ok 181 list_dependencies_combinations: no dependencies produces no output
-ok 182 list_dependencies_optional: shows usage with no arguments
-ok 183 list_dependencies_optional: filters out required deps
-ok 184 list_dependencies_optional: all deps optional when no requires
-ok 185 list_dependencies_optional: no optional deps when all are required
-ok 186 list_dependencies_required: shows usage with no arguments
-ok 187 list_dependencies_required: extracts required extensions from src/
-ok 188 list_dependencies_required: extracts required skins with prefix
-ok 189 list_dependencies_required: exits 0 with no output when no requires
-ok 190 list_dependencies_required: exits 0 when extension.json missing
-ok 191 list_dependencies_required: reads skin.json for skins
-ok 192 list_gated: lists gated extensions and skins
-ok 193 list_gated: handles empty lists
-ok 194 list_gated: errors when config file missing
-ok 195 run_php_unit_tests: parses component argument
-ok 196 run_php_unit_tests: parses --filter argument
-ok 197 run_php_unit_tests: no args uses --run phpunit
-ok 198 run_selenium_tests: parses component argument
-ok 199 run_selenium_tests: parses --spec argument
-ok 200 run_selenium_tests: parses component with --spec and --mochaOpts.grep
-ok 201 run_selenium_tests: no args uses --run selenium
-ok 202 run_selenium_tests: --spec without component runs from repo root
-ok 203 selenium_tests_exist: exits 0 when core has selenium-test script
-ok 204 selenium_tests_exist: exits 1 when core has no selenium-test script
-ok 205 selenium_tests_exist: exits 1 when core package.json missing
-ok 206 selenium_tests_exist: exits 0 for extension with selenium-test
-ok 207 selenium_tests_exist: exits 1 for extension without selenium-test
-ok 208 selenium_tests_exist: exits 1 for extension with no package.json
-ok 209 selenium_tests_exist: exits 0 for skin with selenium-test
-ok 210 selenium_tests_exist: reads core from ref and finds selenium-test
-ok 211 selenium_tests_exist: reads core from ref and exits 1 when no selenium-test
-ok 212 selenium_tests_exist: reads extension from ref and finds selenium-test
-ok 213 selenium_tests_exist: reads skin from ref and finds selenium-test
-ok 214 suggest_parallel: outputs a number
-ok 215 suggest_parallel: output is at least 1
+ok 57 batch_setup: fails loudly when log/silent can't be created in silent mode
+ok 58 build_component_list: uses argument when provided
+ok 59 build_component_list: reads from list_gated when no argument
+ok 60 build_full_combo: combines required and optional
+ok 61 build_full_combo: required only when no optional
+ok 62 build_full_combo: optional only when no required
+ok 63 build_full_combo: empty when both empty
+ok 64 clone_or_fetch: defines the clone_or_fetch function
+ok 65 clone_or_fetch: fetches existing bare repo
+ok 66 clone_or_fetch: fetches with --quiet flag
+ok 67 clone_or_fetch: creates parent directories for new repos
+ok 68 cmd_to_filename: no args
+ok 69 cmd_to_filename: positional arg
+ok 70 cmd_to_filename: positional arg with slash
+ok 71 cmd_to_filename: positional arg with dots and slashes
+ok 72 cmd_to_filename: env var with non-empty value
+ok 73 cmd_to_filename: env var with empty value
+ok 74 cmd_to_filename: --flag drops value
+ok 75 cmd_to_filename: --spec with long path drops value
+ok 76 cmd_to_filename: command substitution in env var produces clean suffix
+ok 77 cmd_to_filename: multiple env vars with simple values
+ok 78 cmd_to_filename: quoted multi-word --flag value treated as single token
+ok 79 debug_info: suppresses output when stdout is not a terminal
+ok 80 debug_info: prints banner with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal
+ok 81 debug_info: exits 0 when git is installed
+ok 82 debug_info: _quibble_print_host_resources prints CPU and RAM
+ok 83 debug_info: defines _quibble_print_docker_resources
+ok 84 dep_repo_path: converts extension name to repo path
+ok 85 dep_repo_path: converts skin name to repo path
+ok 86 dep_repo_path: handles nested extension name
+ok 87 docker_chmod: defines the docker_chmod function
+ok 88 docker_chmod: sets permissions on user-owned directory
+ok 89 docker_chmod: handles multiple directories
+ok 90 duration_trap: provides format_duration function
+ok 91 duration_trap: does not set trap when stdout is not a terminal
+ok 92 duration_trap: sets trap with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal
+ok 93 ensure_config: skips clone when src/config already exists
+ok 94 ensure_config: errors when bare repo missing and src/config missing
+ok 95 ensure_config: sets config_ref_dir and config_src_dir variables
+ok 96 format_duration: 0 seconds
+ok 97 format_duration: seconds only
+ok 98 format_duration: minutes and seconds
+ok 99 format_duration: exact minute
+ok 100 format_duration: hours, minutes, and seconds
+ok 101 format_duration: exact hour
+ok 102 format_duration: hours and seconds, no minutes
+ok 103 format_duration: days, hours, minutes, and seconds
+ok 104 format_duration: exact day
+ok 105 run_with_dots: returns 0 for successful command
+ok 106 run_with_dots: returns non-zero for failing command
+ok 107 run_with_dots: saves output to log file
+ok 108 run_with_dots: prints dots for each line
+ok 109 inhibit_sleep: skips when _QUIBBLE_NO_INHIBIT is set
+ok 110 inhibit_sleep: no background processes when skipped
+ok 111 inhibit_sleep: leaves no descendant processes after script exits
+ok 112 parse_component_args: parses extension component
+ok 113 parse_component_args: parses skin component
+ok 114 parse_component_args: collects extra args
+ok 115 parse_component_args: separates component from extra args
+ok 116 parse_component_args: no args sets empty defaults
+ok 117 print_dep_summary: lists all dependencies
+ok 118 print_dep_summary: lists required dependencies
+ok 119 print_dep_summary: skips required section when none required
+ok 120 print_dep_summary: shows (none) when no optional deps
+ok 121 print_dep_summary: lists optional dependencies
+ok 122 print_dep_summary: shows total combinations
+ok 123 print_found: prints required and optional deps
+ok 124 print_found: required only when no optional
+ok 125 print_found: no dependencies needed
+ok 126 print_found: optional only when no required
+ok 127 print_header: prints separator in verbose mode
+ok 128 print_header: prints label only in silent mode
+ok 129 print_header: includes UTC timestamp in verbose mode
+ok 130 print_quibble_command: defines the print_quibble_command function
+ok 131 print_quibble_command: brackets the command with a # banner
+ok 132 print_quibble_command: keeps -v flag together with its value on one line
+ok 133 print_quibble_command: --command and its value stay on one line
+ok 134 print_quibble_command: image (positional after flags) is on its own line
+ok 135 print_quibble_command: continuation backslashes on all but last command line
+ok 136 print_quibble_command: --key=value flag stays as one element
+ok 137 print_results: prints all passed when nothing failed
+ok 138 print_results: exits 1 when something failed
+ok 139 print_results: shows log hint in silent mode
+ok 140 print_results: no log hint in verbose mode
+ok 141 print_results: prints results header
+ok 142 record_passed: adds component to passed list
+ok 143 record_passed: skips if component already failed
+ok 144 remove_worker_dirs: removes src_worker_* directories
+ok 145 remove_worker_dirs: no error when no worker dirs exist
+ok 146 resolve_deps: builds extension repo paths
+ok 147 resolve_deps: builds skin repo paths with mediawiki/ prefix
+ok 148 resolve_deps: handles mixed extensions and skins
+ok 149 resolve_deps: empty QUIBBLE_DEPS produces no deps
+ok 150 run_quibble_test: defines the run_quibble_test function
+ok 151 run_quibble_test: prints the docker command before running it
+ok 152 run_quibble_test: passes --dry-run when QUIBBLE_DRY_RUN is set
+ok 153 run_quibble_test: omits --dry-run when QUIBBLE_DRY_RUN is empty
+ok 154 setup: sets QUIBBLE_IMAGE
+ok 155 setup: QUIBBLE_IMAGE can be overridden
+ok 156 setup: sets QUIBBLE_VOLUMES array
+ok 157 setup: sets QUIBBLE_DOCKER_FLAGS to -it in verbose mode
+ok 158 setup: sets QUIBBLE_DOCKER_FLAGS to -i in silent mode
+ok 159 setup: sets QUIBBLE_DIR to current directory
+ok 160 setup: QUIBBLE_SRC defaults to src
+ok 161 setup: QUIBBLE_SRC can be overridden
+ok 162 setup: ENVIRONMENT sets QUIBBLE_SRC and QUIBBLE_SAVE
+ok 163 setup: ENVIRONMENT does not override explicit QUIBBLE_SRC
+ok 164 setup: QUIBBLE_SAVE defaults to src_save
+ok 165 setup: QUIBBLE_DRY_RUN is empty by default
+ok 166 setup: QUIBBLE_DRY_RUN is --dry-run when DRY_RUN=1
+ok 167 setup: QUIBBLE_DOCKER_FLAGS empty in background mode
+ok 168 silent_output: does not activate in verbose mode
+ok 169 silent_output: does not activate when _QUIBBLE_OUTPUT_MANAGED is set
+ok 170 silent_output: does not activate when stdout is not a terminal
+ok 171 silent_output: activates with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal
+ok 172 utc_timestamp: outputs UTC timestamp in expected format
+ok 173 lint: all scripts pass shellcheck # skip shellcheck not installed
+ok 174 list_dependencies: shows usage with no arguments
+ok 175 list_dependencies: lists extension dependencies
+ok 176 list_dependencies: lists skin dependencies
+ok 177 list_dependencies: returns nothing for unknown component
+ok 178 list_dependencies: strips extensions/ prefix for lookup
+ok 179 list_dependencies_combinations: shows usage with no arguments
+ok 180 list_dependencies_combinations: single dependency produces one combination
+ok 181 list_dependencies_combinations: two dependencies produce three combinations
+ok 182 list_dependencies_combinations: no dependencies produces no output
+ok 183 list_dependencies_optional: shows usage with no arguments
+ok 184 list_dependencies_optional: filters out required deps
+ok 185 list_dependencies_optional: all deps optional when no requires
+ok 186 list_dependencies_optional: no optional deps when all are required
+ok 187 list_dependencies_required: shows usage with no arguments
+ok 188 list_dependencies_required: extracts required extensions from src/
+ok 189 list_dependencies_required: extracts required skins with prefix
+ok 190 list_dependencies_required: exits 0 with no output when no requires
+ok 191 list_dependencies_required: exits 0 when extension.json missing
+ok 192 list_dependencies_required: reads skin.json for skins
+ok 193 list_gated: lists gated extensions and skins
+ok 194 list_gated: handles empty lists
+ok 195 list_gated: errors when config file missing
+ok 196 run_php_unit_tests: parses component argument
+ok 197 run_php_unit_tests: parses --filter argument
+ok 198 run_php_unit_tests: no args uses --run phpunit
+ok 199 run_selenium_tests: parses component argument
+ok 200 run_selenium_tests: parses --spec argument
+ok 201 run_selenium_tests: parses component with --spec and --mochaOpts.grep
+ok 202 run_selenium_tests: no args uses --run selenium
+ok 203 run_selenium_tests: --spec without component runs from repo root
+ok 204 selenium_tests_exist: exits 0 when core has selenium-test script
+ok 205 selenium_tests_exist: exits 1 when core has no selenium-test script
+ok 206 selenium_tests_exist: exits 1 when core package.json missing
+ok 207 selenium_tests_exist: exits 0 for extension with selenium-test
+ok 208 selenium_tests_exist: exits 1 for extension without selenium-test
+ok 209 selenium_tests_exist: exits 1 for extension with no package.json
+ok 210 selenium_tests_exist: exits 0 for skin with selenium-test
+ok 211 selenium_tests_exist: reads core from ref and finds selenium-test
+ok 212 selenium_tests_exist: reads core from ref and exits 1 when no selenium-test
+ok 213 selenium_tests_exist: reads extension from ref and finds selenium-test
+ok 214 selenium_tests_exist: reads skin from ref and finds selenium-test
+ok 215 suggest_parallel: outputs a number
+ok 216 suggest_parallel: output is at least 1
 bats passed
-(32s)
+(33s)
 
 ========================================
-= Running: ./generate_example log/generate_example_test.txt ./help 2026-05-13 10:42:29 UTC
+= Running: ./generate_example log/generate_example_test.txt ./help 2026-05-13 13:02:24 UTC
 ========================================
 Generating log/generate_example_test.txt...
 Done!
 (0s)
 
 ========================================
-= Running: env DRY_RUN=1 ./generate_examples 2026-05-13 10:42:29 UTC
+= Running: env DRY_RUN=1 ./generate_examples 2026-05-13 13:02:24 UTC
 ========================================
 generate_examples: FAST mode enabled — do not commit the resulting examples/
 Would generate examples/ci.txt from: DRY_RUN=1 ./ci
@@ -537,7 +538,7 @@ Would generate examples/test_unit-test_lib_awk_bats.txt from: DRY_RUN=1 ./test_u
 (1s)
 
 ========================================
-= Running: ./prepare 2026-05-13 10:42:30 UTC
+= Running: ./prepare 2026-05-13 13:02:25 UTC
 ========================================
 
 
@@ -561,7 +562,7 @@ mkdir: cannot create directory ‘ref/integration’: Permission denied
 (0s)
 
 ========================================
-= Running: ./fetch 2026-05-13 10:42:30 UTC
+= Running: ./fetch 2026-05-13 13:02:25 UTC
 ========================================
 
 
@@ -609,7 +610,7 @@ No repos to fetch.
 (0s)
 
 ========================================
-= Running: ./fetch ref/mediawiki/core.git 2026-05-13 10:42:30 UTC
+= Running: ./fetch ref/mediawiki/core.git 2026-05-13 13:02:25 UTC
 ========================================
 
 
@@ -657,7 +658,7 @@ No repos to fetch.
 (0s)
 
 ========================================
-= Running: env PARALLEL=2 ./fetch 2026-05-13 10:42:30 UTC
+= Running: env PARALLEL=2 ./fetch 2026-05-13 13:02:25 UTC
 ========================================
 
 
@@ -705,69 +706,7 @@ No repos to fetch.
 (0s)
 
 ========================================
-= Running: ./fresh_install 2026-05-13 10:42:30 UTC
-========================================
-
-
-
-========================================
-= fresh_install is running: dirname ./fresh_install
-
-
-========================================
-= fresh_install is running: . ./lib/silent_output
-
-
-
-========================================
-= fresh_install is running: '[' -z 1 ']'
-
-
-========================================
-= fresh_install is running: dirname ./fresh_install
-
-========================================
-= fresh_install is running: . ./lib/docker_chmod
-
-
-========================================
-= fresh_install is running: dirname ./fresh_install
-
-========================================
-= fresh_install is running: . ./lib/print_quibble_command
-
-========================================
-= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
-
-
-========================================
-= fresh_install is running: dirname ./fresh_install
-
-========================================
-= fresh_install is running: ./prepare
-
-
-
-========================================
-= prepare is running: dirname ./prepare
-
-
-========================================
-= prepare is running: . ./lib/silent_output
-
-
-
-========================================
-= prepare is running: '[' -z 1 ']'
-
-========================================
-= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
-mkdir: cannot create directory ‘ref/integration’: Permission denied
-(1s)
-
-========================================
-= Running: env DRY_RUN=1 ./fresh_install 2026-05-13 10:42:31 UTC
+= Running: ./fresh_install 2026-05-13 13:02:25 UTC
 ========================================
 
 
@@ -829,7 +768,69 @@ mkdir: cannot create directory ‘ref/integration’: Permission denied
 (0s)
 
 ========================================
-= Running: ./save 2026-05-13 10:42:31 UTC
+= Running: env DRY_RUN=1 ./fresh_install 2026-05-13 13:02:25 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+
+========================================
+= Running: ./save 2026-05-13 13:02:25 UTC
 ========================================
 
 
@@ -865,7 +866,7 @@ Error: src/ is empty or missing. Run ./fresh_install first.
 (0s)
 
 ========================================
-= Running: ./restore 2026-05-13 10:42:31 UTC
+= Running: ./restore 2026-05-13 13:02:25 UTC
 ========================================
 
 
@@ -901,7 +902,7 @@ Error: src_save/ is empty or missing. Run ./save first.
 (0s)
 
 ========================================
-= Running: env ENVIRONMENT=0 ./fresh_install 2026-05-13 10:42:31 UTC
+= Running: env ENVIRONMENT=0 ./fresh_install 2026-05-13 13:02:25 UTC
 ========================================
 
 
@@ -963,7 +964,7 @@ mkdir: cannot create directory ‘ref/integration’: Permission denied
 (0s)
 
 ========================================
-= Running: env ENVIRONMENT=0 ./save 2026-05-13 10:42:31 UTC
+= Running: env ENVIRONMENT=0 ./save 2026-05-13 13:02:25 UTC
 ========================================
 
 
@@ -999,7 +1000,7 @@ Error: src_0/ is empty or missing. Run ./fresh_install first.
 (0s)
 
 ========================================
-= Running: env ENVIRONMENT=0 ./restore 2026-05-13 10:42:31 UTC
+= Running: env ENVIRONMENT=0 ./restore 2026-05-13 13:02:25 UTC
 ========================================
 
 
@@ -1032,10 +1033,10 @@ Error: src_save_0/ is empty or missing. Run ./save first.
 
 ========================================
 = restore is running: exit 1
-(0s)
+(1s)
 
 ========================================
-= Running: env ENVIRONMENT=0 ./remove 2026-05-13 10:42:31 UTC
+= Running: env ENVIRONMENT=0 ./remove 2026-05-13 13:02:26 UTC
 ========================================
 
 
@@ -1057,16 +1058,16 @@ Error: src_save_0/ is empty or missing. Run ./save first.
 
 ========================================
 = remove is running: rm -rf src_0
-(1s)
+(0s)
 
 ========================================
-= Running: ./selenium_tests_exist 2026-05-13 10:42:32 UTC
+= Running: ./selenium_tests_exist 2026-05-13 13:02:26 UTC
 ========================================
 mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
 (0s)
 
 ========================================
-= Running: ./run_selenium_tests 2026-05-13 10:42:32 UTC
+= Running: ./run_selenium_tests 2026-05-13 13:02:26 UTC
 ========================================
 
 
@@ -1142,12 +1143,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-13 10:42:32,721 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 10:42:32,724 INFO RPC interface 'supervisor' initialized
-2026-05-13 10:42:32,724 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 10:42:32,725 INFO daemonizing the supervisord process
+2026-05-13 13:02:26,791 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 13:02:26,794 INFO RPC interface 'supervisor' initialized
+2026-05-13 13:02:26,794 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 13:02:26,795 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-13 10:42:32,726 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-13 13:02:26,796 CRIT could not write pidfile /var/run/supervisord.pid
 [33mWARNING[0m:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -1172,7 +1173,7 @@ docker run \
 (1s)
 
 ========================================
-= Running: ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js 2026-05-13 10:42:33 UTC
+= Running: ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js 2026-05-13 13:02:27 UTC
 ========================================
 
 
@@ -1248,12 +1249,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --command 'npm run selenium-test -- --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js'
 + /usr/bin/supervisord
-2026-05-13 10:42:33,726 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 10:42:33,728 INFO RPC interface 'supervisor' initialized
-2026-05-13 10:42:33,729 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 10:42:33,730 INFO daemonizing the supervisord process
+2026-05-13 13:02:27,573 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 13:02:27,575 INFO RPC interface 'supervisor' initialized
+2026-05-13 13:02:27,575 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 13:02:27,577 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --command 'npm run selenium-test -- --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js'
-2026-05-13 10:42:33,731 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-13 13:02:27,578 CRIT could not write pidfile /var/run/supervisord.pid
 [33mWARNING[0m:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -1275,10 +1276,10 @@ docker run \
 [36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 [36mDEBUG[0m:quibble.cmd:User commands: npm run selenium-test -- --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js
 [33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
-(1s)
+(0s)
 
 ========================================
-= Running: ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account 2026-05-13 10:42:34 UTC
+= Running: ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account 2026-05-13 13:02:27 UTC
 ========================================
 
 
@@ -1354,12 +1355,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --command 'npm run selenium-test -- --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account'
 + /usr/bin/supervisord
-2026-05-13 10:42:34,737 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 10:42:34,740 INFO RPC interface 'supervisor' initialized
-2026-05-13 10:42:34,740 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 10:42:34,741 INFO daemonizing the supervisord process
+2026-05-13 13:02:28,337 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 13:02:28,340 INFO RPC interface 'supervisor' initialized
+2026-05-13 13:02:28,340 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 13:02:28,341 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --command 'npm run selenium-test -- --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account'
-2026-05-13 10:42:34,742 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-13 13:02:28,342 CRIT could not write pidfile /var/run/supervisord.pid
 [33mWARNING[0m:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -1384,7 +1385,7 @@ docker run \
 (1s)
 
 ========================================
-= Running: ./install extensions/Echo 2026-05-13 10:42:35 UTC
+= Running: ./install extensions/Echo 2026-05-13 13:02:28 UTC
 ========================================
 
 
@@ -1443,7 +1444,7 @@ mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
 (0s)
 
 ========================================
-= Running: env DRY_RUN=1 ./install extensions/Echo 2026-05-13 10:42:35 UTC
+= Running: env DRY_RUN=1 ./install extensions/Echo 2026-05-13 13:02:28 UTC
 ========================================
 
 
@@ -1502,7 +1503,7 @@ mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
 (0s)
 
 ========================================
-= Running: env QUIBBLE_DEPS= ./install extensions/Echo 2026-05-13 10:42:35 UTC
+= Running: env QUIBBLE_DEPS= ./install extensions/Echo 2026-05-13 13:02:28 UTC
 ========================================
 
 
@@ -1561,7 +1562,7 @@ mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
 (0s)
 
 ========================================
-= Running: env QUIBBLE_DEPS=EventLogging ./install extensions/Echo 2026-05-13 10:42:35 UTC
+= Running: env QUIBBLE_DEPS=EventLogging ./install extensions/Echo 2026-05-13 13:02:28 UTC
 ========================================
 
 
@@ -1620,13 +1621,13 @@ mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
 (0s)
 
 ========================================
-= Running: ./selenium_tests_exist extensions/Echo 2026-05-13 10:42:35 UTC
+= Running: ./selenium_tests_exist extensions/Echo 2026-05-13 13:02:28 UTC
 ========================================
 mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
 (0s)
 
 ========================================
-= Running: ./run_selenium_tests extensions/Echo 2026-05-13 10:42:35 UTC
+= Running: ./run_selenium_tests extensions/Echo 2026-05-13 13:02:28 UTC
 ========================================
 
 
@@ -1703,12 +1704,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-13 10:42:36,048 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 10:42:36,051 INFO RPC interface 'supervisor' initialized
-2026-05-13 10:42:36,051 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 13:02:29,392 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 13:02:29,395 INFO RPC interface 'supervisor' initialized
+2026-05-13 13:02:29,395 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 13:02:29,396 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-13 10:42:36,052 INFO daemonizing the supervisord process
-2026-05-13 10:42:36,053 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-13 13:02:29,397 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -1733,7 +1734,7 @@ docker run \
 (1s)
 
 ========================================
-= Running: ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js 2026-05-13 10:42:36 UTC
+= Running: ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js 2026-05-13 13:02:29 UTC
 ========================================
 
 
@@ -1810,12 +1811,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --command 'cd extensions/Echo && npm run selenium-test -- --spec tests/selenium/specs/notifications.js'
 + /usr/bin/supervisord
-2026-05-13 10:42:37,049 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 10:42:37,052 INFO RPC interface 'supervisor' initialized
-2026-05-13 10:42:37,052 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 10:42:37,053 INFO daemonizing the supervisord process
+2026-05-13 13:02:30,169 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 13:02:30,172 INFO RPC interface 'supervisor' initialized
+2026-05-13 13:02:30,172 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 13:02:30,173 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --command 'cd extensions/Echo && npm run selenium-test -- --spec tests/selenium/specs/notifications.js'
-2026-05-13 10:42:37,054 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-13 13:02:30,174 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -1840,7 +1841,7 @@ docker run \
 (1s)
 
 ========================================
-= Running: ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep alerts and notices are visible 2026-05-13 10:42:37 UTC
+= Running: ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep alerts and notices are visible 2026-05-13 13:02:30 UTC
 ========================================
 
 
@@ -1917,12 +1918,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --command 'cd extensions/Echo && npm run selenium-test -- --spec tests/selenium/specs/notifications.js --mochaOpts.grep alerts and notices are visible'
 + /usr/bin/supervisord
-2026-05-13 10:42:38,108 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 10:42:38,111 INFO RPC interface 'supervisor' initialized
-2026-05-13 10:42:38,111 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 10:42:38,112 INFO daemonizing the supervisord process
+2026-05-13 13:02:30,966 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 13:02:30,968 INFO RPC interface 'supervisor' initialized
+2026-05-13 13:02:30,968 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 13:02:30,970 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --command 'cd extensions/Echo && npm run selenium-test -- --spec tests/selenium/specs/notifications.js --mochaOpts.grep alerts and notices are visible'
-2026-05-13 10:42:38,113 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-13 13:02:30,970 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -1947,7 +1948,7 @@ docker run \
 (1s)
 
 ========================================
-= Running: ./run_php_unit_tests extensions/Echo 2026-05-13 10:42:38 UTC
+= Running: ./run_php_unit_tests extensions/Echo 2026-05-13 13:02:31 UTC
 ========================================
 
 
@@ -2024,12 +2025,12 @@ docker run \
 ========================================
 = run_php_unit_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run phpunit
 + /usr/bin/supervisord
-2026-05-13 10:42:39,115 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 10:42:39,118 INFO RPC interface 'supervisor' initialized
-2026-05-13 10:42:39,118 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 10:42:39,119 INFO daemonizing the supervisord process
+2026-05-13 13:02:31,755 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 13:02:31,758 INFO RPC interface 'supervisor' initialized
+2026-05-13 13:02:31,758 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 13:02:31,759 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run phpunit
-2026-05-13 10:42:39,120 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-13 13:02:31,760 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -2054,7 +2055,7 @@ docker run \
 (1s)
 
 ========================================
-= Running: ./run_php_unit_tests extensions/Echo --filter testNotificationCount 2026-05-13 10:42:39 UTC
+= Running: ./run_php_unit_tests extensions/Echo --filter testNotificationCount 2026-05-13 13:02:32 UTC
 ========================================
 
 
@@ -2131,12 +2132,12 @@ docker run \
 ========================================
 = run_php_unit_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --command 'composer run --timeout=0 phpunit -- --filter testNotificationCount'
 + /usr/bin/supervisord
-2026-05-13 10:42:40,141 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 10:42:40,144 INFO RPC interface 'supervisor' initialized
-2026-05-13 10:42:40,144 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 10:42:40,146 INFO daemonizing the supervisord process
+2026-05-13 13:02:32,554 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 13:02:32,557 INFO RPC interface 'supervisor' initialized
+2026-05-13 13:02:32,557 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 13:02:32,558 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --command 'composer run --timeout=0 phpunit -- --filter testNotificationCount'
-2026-05-13 10:42:40,146 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-13 13:02:32,559 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -2158,10 +2159,10 @@ docker run \
 [36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 [36mDEBUG[0m:quibble.cmd:User commands: composer run --timeout=0 phpunit -- --filter testNotificationCount
 [33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
-(1s)
+(0s)
 
 ========================================
-= Running: env DRY_RUN=1 ./run_php_unit_tests extensions/Echo 2026-05-13 10:42:40 UTC
+= Running: env DRY_RUN=1 ./run_php_unit_tests extensions/Echo 2026-05-13 13:02:32 UTC
 ========================================
 
 
@@ -2238,12 +2239,12 @@ docker run \
 ========================================
 = run_php_unit_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run phpunit
 + /usr/bin/supervisord
-2026-05-13 10:42:41,126 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 10:42:41,129 INFO RPC interface 'supervisor' initialized
-2026-05-13 10:42:41,129 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 10:42:41,130 INFO daemonizing the supervisord process
+2026-05-13 13:02:33,342 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 13:02:33,344 INFO RPC interface 'supervisor' initialized
+2026-05-13 13:02:33,344 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 13:02:33,346 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run phpunit
-2026-05-13 10:42:41,131 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-13 13:02:33,346 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -2268,7 +2269,7 @@ docker run \
 (1s)
 
 ========================================
-= Running: ./install skins/MinervaNeue 2026-05-13 10:42:41 UTC
+= Running: ./install skins/MinervaNeue 2026-05-13 13:02:33 UTC
 ========================================
 
 
@@ -2327,13 +2328,13 @@ mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
 (0s)
 
 ========================================
-= Running: ./selenium_tests_exist skins/MinervaNeue 2026-05-13 10:42:41 UTC
+= Running: ./selenium_tests_exist skins/MinervaNeue 2026-05-13 13:02:33 UTC
 ========================================
 mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
 (0s)
 
 ========================================
-= Running: ./run_selenium_tests skins/MinervaNeue 2026-05-13 10:42:41 UTC
+= Running: ./run_selenium_tests skins/MinervaNeue 2026-05-13 13:02:33 UTC
 ========================================
 
 
@@ -2410,12 +2411,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/skins/MinervaNeue docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-13 10:42:42,224 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 10:42:42,227 INFO RPC interface 'supervisor' initialized
-2026-05-13 10:42:42,227 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 10:42:42,228 INFO daemonizing the supervisord process
+2026-05-13 13:02:34,213 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 13:02:34,216 INFO RPC interface 'supervisor' initialized
+2026-05-13 13:02:34,216 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 13:02:34,218 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-13 10:42:42,229 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-13 13:02:34,218 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/skins/MinervaNeue
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/MinervaNeue, mediawiki/skins/Vector, mediawiki/vendor
@@ -2440,65 +2441,65 @@ docker run \
 (1s)
 
 ========================================
-= Running: ./list_dependencies extensions/Echo 2026-05-13 10:42:42 UTC
+= Running: ./list_dependencies extensions/Echo 2026-05-13 13:02:34 UTC
 ========================================
 Error: ref/integration/config.git not found. Run ./prepare first.
 (0s)
 
 ========================================
-= Running: ./list_dependencies_required extensions/Echo 2026-05-13 10:42:42 UTC
+= Running: ./list_dependencies_required extensions/Echo 2026-05-13 13:02:34 UTC
 ========================================
 (0s)
 
 ========================================
-= Running: ./list_dependencies_optional extensions/Echo 2026-05-13 10:42:42 UTC
+= Running: ./list_dependencies_optional extensions/Echo 2026-05-13 13:02:34 UTC
 ========================================
 Error: ref/integration/config.git not found. Run ./prepare first.
 (0s)
 
 ========================================
-= Running: ./list_dependencies_combinations extensions/Echo 2026-05-13 10:42:42 UTC
+= Running: ./list_dependencies_combinations extensions/Echo 2026-05-13 13:02:34 UTC
 ========================================
 Error: ref/integration/config.git not found. Run ./prepare first.
 (0s)
 
 ========================================
-= Running: ./list_dependencies skins/MinervaNeue 2026-05-13 10:42:42 UTC
+= Running: ./list_dependencies skins/MinervaNeue 2026-05-13 13:02:34 UTC
 ========================================
 Error: ref/integration/config.git not found. Run ./prepare first.
 (0s)
 
 ========================================
-= Running: ./list_dependencies_required skins/MinervaNeue 2026-05-13 10:42:42 UTC
+= Running: ./list_dependencies_required skins/MinervaNeue 2026-05-13 13:02:34 UTC
 ========================================
 (0s)
 
 ========================================
-= Running: ./list_dependencies_optional skins/MinervaNeue 2026-05-13 10:42:42 UTC
+= Running: ./list_dependencies_optional skins/MinervaNeue 2026-05-13 13:02:34 UTC
 ========================================
 Error: ref/integration/config.git not found. Run ./prepare first.
 (0s)
 
 ========================================
-= Running: ./list_dependencies_combinations skins/MinervaNeue 2026-05-13 10:42:42 UTC
+= Running: ./list_dependencies_combinations skins/MinervaNeue 2026-05-13 13:02:34 UTC
 ========================================
 Error: ref/integration/config.git not found. Run ./prepare first.
 (0s)
 
 ========================================
-= Running: ./list_gated 2026-05-13 10:42:42 UTC
+= Running: ./list_gated 2026-05-13 13:02:34 UTC
 ========================================
 Error: ref/integration/config.git not found. Run ./prepare first.
 (0s)
 
 ========================================
-= Running: ./suggest_parallel 2026-05-13 10:42:42 UTC
+= Running: ./suggest_parallel 2026-05-13 13:02:34 UTC
 ========================================
 2
 (0s)
 
 ========================================
-= Running: ./remove 2026-05-13 10:42:42 UTC
+= Running: ./remove 2026-05-13 13:02:34 UTC
 ========================================
 
 
@@ -2574,4 +2575,4 @@ FAILED:
   ./list_dependencies extensions/Echo
   ./list_dependencies skins/MinervaNeue
   ./list_gated
-(56s)
+(54s)
