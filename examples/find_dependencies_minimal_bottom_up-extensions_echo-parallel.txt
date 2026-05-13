@@ -23,6 +23,6 @@ mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
 pre-clone(Error: ref/integration/config.git not found. Run ./prepare first.) .
 
 Parallel mode: 2 workers
-fresh_install .. FAIL (1s) 
+fresh_install .. FAIL (0s) 
 fresh_install/save failed. Cannot proceed.
-(1s)
+(0s)

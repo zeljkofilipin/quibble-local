@@ -2,11 +2,11 @@ $ DRY_RUN=1 VERBOSE=1 ./install_each_gated
 
 
 ########################################
-# Error: ref/integration/config.git not found. Run ./prepare first. 2026-05-13 10:03:22 UTC
+# Error: ref/integration/config.git not found. Run ./prepare first. 2026-05-13 10:37:53 UTC
 ########################################
 
 ========================================
-= Error: ref/integration/config.git not found. Run ./prepare first.: ./fresh_install 2026-05-13 10:03:22 UTC
+= Error: ref/integration/config.git not found. Run ./prepare first.: ./fresh_install 2026-05-13 10:37:53 UTC
 ========================================
 
 
@@ -66,7 +66,7 @@ $ DRY_RUN=1 VERBOSE=1 ./install_each_gated
 mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
 mkdir: cannot create directory ‘ref/integration’: Permission denied
 (0s)
- 2026-05-13 10:03:22 UTC
+ 2026-05-13 10:37:53 UTC
 
 ========================================
 = Results

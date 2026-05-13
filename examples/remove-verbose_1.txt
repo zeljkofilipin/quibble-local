@@ -35,4 +35,4 @@ docker RAM: 15.6 GB
 
 ========================================
 = remove is running: local exit_code=0
-(1s)
+(0s)
