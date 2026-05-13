@@ -12,10 +12,9 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
-skipped (no Selenium tests): extensions/Echo
 
-No components need find_dependencies_minimal_greedy.
+1 components to process.
+extensions/Echo find_dependencies_minimal_greedy ......................................... ok (1m 3s)  2026-05-13 11:38:06 UTC
 
 ========================================
 = Results
@@ -24,4 +23,4 @@ PASSED:
   extensions/Echo
 
 All passed.
-(0s)
+(1m 5s)

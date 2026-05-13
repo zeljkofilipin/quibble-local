@@ -46,30 +46,109 @@ docker RAM: 15.6 GB
 = fresh_install is running: dirname ./fresh_install
 
 ========================================
-= fresh_install is running: ./prepare
+= fresh_install is running: ./remove
 
 
 
 ========================================
-= prepare is running: dirname ./prepare
+= remove is running: dirname ./remove
 
 
 ========================================
-= prepare is running: . ./lib/silent_output
+= remove is running: . ./lib/silent_output
 
 
 
 ========================================
-= prepare is running: '[' -z 1 ']'
+= remove is running: '[' -z 1 ']'
 
 ========================================
-= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
-mkdir: cannot create directory ‘ref/integration’: Permission denied
+= remove is running: docker run --rm --entrypoint bash --user root -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete'
+
+========================================
+= remove is running: rm -rf src
+
+========================================
+= fresh_install is running: mkdir -p cache log src
+
+========================================
+= fresh_install is running: docker_chmod cache log src
+
+========================================
+= fresh_install is running: chmod 777 cache log src
+
+========================================
+= fresh_install is running: return 0
+
+========================================
+= fresh_install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --command true)
+
+========================================
+= fresh_install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
+
+========================================
+= fresh_install is running: local _xtrace_was_on=
+
+========================================
+= fresh_install is running: case "$-" in
+
+========================================
+= fresh_install is running: _xtrace_was_on=1
+
+========================================
+= fresh_install is running: set +x
+########################################
+docker run \
+  -it \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --command true
+########################################
+
+========================================
+= fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
++ /usr/bin/supervisord
+2026-05-13 11:59:54,209 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 11:59:54,212 INFO RPC interface 'supervisor' initialized
+2026-05-13 11:59:54,212 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 11:59:54,214 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
+2026-05-13 11:59:54,214 CRIT could not write pidfile /var/run/supervisord.pid
+[33mWARNING[0m:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
+[32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
+[32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
+[32mINFO[0m:zuul.CloneMapper:Workspace path set to: ./
+[32mINFO[0m:zuul.CloneMapper:Mapping projects to workspace...
+[32mINFO[0m:zuul.CloneMapper:  mediawiki/core -> .
+[32mINFO[0m:zuul.CloneMapper:Expansion completed.
+[36mDEBUG[0m:quibble.cmd:Running stages: 
+[36mDEBUG[0m:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+[36mDEBUG[0m:quibble.cmd:Project dir: /workspace/src
+[36mDEBUG[0m:quibble.cmd:Reporting URL: not specified
+[36mDEBUG[0m:quibble.cmd:Execution plan:
+[36mDEBUG[0m:quibble.cmd:Report durations
+[36mDEBUG[0m:quibble.cmd:Versions
+[36mDEBUG[0m:quibble.cmd:Ensure dir: '/workspace/log'
+[36mDEBUG[0m:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src"}
+[36mDEBUG[0m:quibble.cmd:Submodule update: /workspace/src
+[36mDEBUG[0m:quibble.cmd:Install composer dev-requires for vendor.git
+[36mDEBUG[0m:quibble.cmd:Start backends: <MySQL (no socket)>
+[36mDEBUG[0m:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+[36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+[36mDEBUG[0m:quibble.cmd:User commands: true
+[33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
 
 ========================================
 = fresh_install is running: _quibble_duration_exit
 
 ========================================
-= fresh_install is running: local exit_code=1
-(0s)
+= fresh_install is running: local exit_code=0
+(2s)

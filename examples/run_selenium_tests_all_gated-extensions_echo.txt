@@ -12,8 +12,8 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-core fresh_install .. FAIL (0s)  2026-05-13 10:40:32 UTC
-extensions/Echo fresh_install .. FAIL (0s)  2026-05-13 10:40:32 UTC
+core fresh_install .. FAIL (0s)  2026-05-13 13:00:26 UTC
+extensions/Echo fresh_install .. FAIL (1s)  2026-05-13 13:00:27 UTC
 
 ========================================
 = Results
@@ -23,4 +23,4 @@ FAILED:
   extensions/Echo (fresh_install)
 
 Logs: log/silent/
-(0s)
+(1s)

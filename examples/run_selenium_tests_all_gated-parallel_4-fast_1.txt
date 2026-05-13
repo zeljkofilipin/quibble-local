@@ -12,9 +12,9 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-core fresh_install .. FAIL (0s)  2026-05-13 10:40:34 UTC
+core fresh_install .. FAIL (0s)  2026-05-13 13:00:28 UTC
 
 Parallel mode: 4 workers
 
 Error: FAST mode requires src_save/ (run ./save first or let core step create it).
-(1s)
+(0s)

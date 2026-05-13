@@ -2,11 +2,11 @@ $ DRY_RUN=1 VERBOSE=1 ./run_selenium_tests_required_gated
 
 
 ########################################
-# Error: ref/integration/config.git not found. Run ./prepare first. 2026-05-13 10:40:35 UTC
+# Error: ref/integration/config.git not found. Run ./prepare first. 2026-05-13 13:00:29 UTC
 ########################################
 
 ========================================
-= Error: ref/integration/config.git not found. Run ./prepare first.: ./fresh_install 2026-05-13 10:40:35 UTC
+= Error: ref/integration/config.git not found. Run ./prepare first.: ./fresh_install 2026-05-13 13:00:29 UTC
 ========================================
 
 
@@ -67,7 +67,7 @@ mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
 mkdir: cannot create directory ‘ref/integration’: Permission denied
 (0s)
 
-  (0 passed, 1 failed, 0 skipped) 2026-05-13 10:40:35 UTC
+  (0 passed, 1 failed, 0 skipped) 2026-05-13 13:00:29 UTC
 
 ========================================
 = Results

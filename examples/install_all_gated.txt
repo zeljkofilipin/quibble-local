@@ -11,6 +11,2604 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
-mkdir: cannot create directory ‘ref/integration’: Permission denied
-(0s)
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:01:09,879 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:01:09,882 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:01:09,882 CRIT Server 'unix_http_server' running without any HTTP authentication checking
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
+2026-05-13 12:01:09,883 INFO daemonizing the supervisord process
+2026-05-13 12:01:09,884 CRIT could not write pidfile /var/run/supervisord.pid
+WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/core -> .
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src"}
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/AbuseFilter \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/CheckUser mediawiki/extensions/CodeEditor mediawiki/extensions/ConfirmEdit mediawiki/extensions/Echo mediawiki/extensions/EventLogging mediawiki/extensions/Scribunto mediawiki/extensions/WikiEditor
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:01:28,666 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:01:28,668 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:01:28,669 CRIT Server 'unix_http_server' running without any HTTP authentication checking
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/CheckUser mediawiki/extensions/CodeEditor mediawiki/extensions/ConfirmEdit mediawiki/extensions/Echo mediawiki/extensions/EventLogging mediawiki/extensions/Scribunto mediawiki/extensions/WikiEditor
+2026-05-13 12:01:28,670 INFO daemonizing the supervisord process
+2026-05-13 12:01:28,671 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/AbuseFilter
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AbuseFilter, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/CheckUser, mediawiki/extensions/CodeEditor, mediawiki/extensions/ConfirmEdit, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/Scribunto, mediawiki/extensions/WikiEditor, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/AbuseFilter -> extensions/AbuseFilter
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/AbuseFilter
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AbuseFilter", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/CheckUser", "mediawiki/extensions/CodeEditor", "mediawiki/extensions/ConfirmEdit", "mediawiki/extensions/Echo", "mediawiki/extensions/EventLogging", "mediawiki/extensions/Scribunto", "mediawiki/extensions/WikiEditor", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/AbuseFilter"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/AntiSpoof \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:01:32,952 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:01:32,954 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:01:32,954 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:01:32,956 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:01:32,956 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/AntiSpoof
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/AntiSpoof -> extensions/AntiSpoof
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/AntiSpoof
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/AntiSpoof"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Babel \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/CommunityConfiguration
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:01:38,747 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:01:38,750 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:01:38,750 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:01:38,751 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CommunityConfiguration
+2026-05-13 12:01:38,752 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Babel
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Babel, mediawiki/extensions/CommunityConfiguration, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/Babel -> extensions/Babel
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/Babel
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Babel", "mediawiki/extensions/CommunityConfiguration", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Babel"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/BetaFeatures \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:01:43,093 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:01:43,095 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:01:43,096 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:01:43,097 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:01:43,098 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/BetaFeatures
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/BetaFeatures, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/BetaFeatures -> extensions/BetaFeatures
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/BetaFeatures
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/BetaFeatures", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/BetaFeatures"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/CampaignEvents \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/cldr mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/Translate mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/UserMerge mediawiki/extensions/WikimediaCampaignEvents
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:01:58,225 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:01:58,228 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:01:58,228 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:01:58,229 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/cldr mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/Translate mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/UserMerge mediawiki/extensions/WikimediaCampaignEvents
+2026-05-13 12:01:58,230 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/CampaignEvents
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CampaignEvents, mediawiki/extensions/CentralAuth, mediawiki/extensions/Translate, mediawiki/extensions/UniversalLanguageSelector, mediawiki/extensions/UserMerge, mediawiki/extensions/WikimediaCampaignEvents, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/CampaignEvents -> extensions/CampaignEvents
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/CampaignEvents
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CampaignEvents", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/Translate", "mediawiki/extensions/UniversalLanguageSelector", "mediawiki/extensions/UserMerge", "mediawiki/extensions/WikimediaCampaignEvents", "mediawiki/extensions/cldr", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/CampaignEvents"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+Cloning dependency: GlobalBlocking
+Cloning into bare repository 'ref/mediawiki/extensions/GlobalBlocking.git'...
+Cloning dependency: TorBlock
+Cloning into bare repository 'ref/mediawiki/extensions/TorBlock.git'...
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/CheckUser \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/AbuseFilter mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/CommunityConfiguration mediawiki/extensions/DiscussionTools mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/FlaggedRevs mediawiki/extensions/GlobalBlocking mediawiki/extensions/GlobalPreferences mediawiki/extensions/GrowthExperiments mediawiki/extensions/IPInfo mediawiki/extensions/MobileFrontend mediawiki/extensions/TorBlock mediawiki/extensions/VisualEditor
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:02:31,897 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:02:31,900 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:02:31,900 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:02:31,901 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AbuseFilter mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/CommunityConfiguration mediawiki/extensions/DiscussionTools mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/FlaggedRevs mediawiki/extensions/GlobalBlocking mediawiki/extensions/GlobalPreferences mediawiki/extensions/GrowthExperiments mediawiki/extensions/IPInfo mediawiki/extensions/MobileFrontend mediawiki/extensions/TorBlock mediawiki/extensions/VisualEditor
+2026-05-13 12:02:31,902 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/CheckUser
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AbuseFilter, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/CheckUser, mediawiki/extensions/CommunityConfiguration, mediawiki/extensions/DiscussionTools, mediawiki/extensions/EventBus, mediawiki/extensions/EventLogging, mediawiki/extensions/FlaggedRevs, mediawiki/extensions/GlobalBlocking, mediawiki/extensions/GlobalPreferences, mediawiki/extensions/GrowthExperiments, mediawiki/extensions/IPInfo, mediawiki/extensions/MobileFrontend, mediawiki/extensions/TorBlock, mediawiki/extensions/VisualEditor, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/CheckUser -> extensions/CheckUser
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/CheckUser
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AbuseFilter", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/CheckUser", "mediawiki/extensions/CommunityConfiguration", "mediawiki/extensions/DiscussionTools", "mediawiki/extensions/EventBus", "mediawiki/extensions/EventLogging", "mediawiki/extensions/FlaggedRevs", "mediawiki/extensions/GlobalBlocking", "mediawiki/extensions/GlobalPreferences", "mediawiki/extensions/GrowthExperiments", "mediawiki/extensions/IPInfo", "mediawiki/extensions/MobileFrontend", "mediawiki/extensions/TorBlock", "mediawiki/extensions/VisualEditor", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/CheckUser"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+Cloning dependency: PdfHandler
+Cloning into bare repository 'ref/mediawiki/extensions/PdfHandler.git'...
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/CirrusSearch \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/Elastica mediawiki/extensions/BetaFeatures mediawiki/extensions/Cite mediawiki/extensions/EventBus mediawiki/extensions/EventStreamConfig mediawiki/extensions/GeoData mediawiki/extensions/PdfHandler mediawiki/extensions/SiteMatrix mediawiki/extensions/TimedMediaHandler
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:02:49,970 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:02:49,972 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:02:49,972 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:02:49,974 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Elastica mediawiki/extensions/BetaFeatures mediawiki/extensions/Cite mediawiki/extensions/EventBus mediawiki/extensions/EventStreamConfig mediawiki/extensions/GeoData mediawiki/extensions/PdfHandler mediawiki/extensions/SiteMatrix mediawiki/extensions/TimedMediaHandler
+2026-05-13 12:02:49,975 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/CirrusSearch
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/BetaFeatures, mediawiki/extensions/CirrusSearch, mediawiki/extensions/Cite, mediawiki/extensions/Elastica, mediawiki/extensions/EventBus, mediawiki/extensions/EventStreamConfig, mediawiki/extensions/GeoData, mediawiki/extensions/PdfHandler, mediawiki/extensions/SiteMatrix, mediawiki/extensions/TimedMediaHandler, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/CirrusSearch -> extensions/CirrusSearch
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/CirrusSearch
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/BetaFeatures", "mediawiki/extensions/CirrusSearch", "mediawiki/extensions/Cite", "mediawiki/extensions/Elastica", "mediawiki/extensions/EventBus", "mediawiki/extensions/EventStreamConfig", "mediawiki/extensions/GeoData", "mediawiki/extensions/PdfHandler", "mediawiki/extensions/SiteMatrix", "mediawiki/extensions/TimedMediaHandler", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/CirrusSearch"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/cldr \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:02:54,359 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:02:54,362 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:02:54,362 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:02:54,364 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:02:54,364 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/cldr
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/cldr -> extensions/cldr
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/cldr
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/cldr", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/cldr"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/ContentTranslation \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/Cite mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/VisualEditor mediawiki/extensions/WikimediaMessages mediawiki/extensions/AbuseFilter mediawiki/extensions/Echo mediawiki/extensions/EventLogging
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:03:11,065 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:03:11,068 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:03:11,068 CRIT Server 'unix_http_server' running without any HTTP authentication checking
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Cite mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/VisualEditor mediawiki/extensions/WikimediaMessages mediawiki/extensions/AbuseFilter mediawiki/extensions/Echo mediawiki/extensions/EventLogging
+2026-05-13 12:03:11,069 INFO daemonizing the supervisord process
+2026-05-13 12:03:11,070 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/ContentTranslation
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AbuseFilter, mediawiki/extensions/Cite, mediawiki/extensions/ContentTranslation, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/UniversalLanguageSelector, mediawiki/extensions/VisualEditor, mediawiki/extensions/WikimediaMessages, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/ContentTranslation -> extensions/ContentTranslation
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/ContentTranslation
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AbuseFilter", "mediawiki/extensions/Cite", "mediawiki/extensions/ContentTranslation", "mediawiki/extensions/Echo", "mediawiki/extensions/EventLogging", "mediawiki/extensions/UniversalLanguageSelector", "mediawiki/extensions/VisualEditor", "mediawiki/extensions/WikimediaMessages", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/ContentTranslation"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/CommunityConfiguration \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/CommunityConfigurationExample
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:03:16,514 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:03:16,517 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:03:16,517 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:03:16,518 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CommunityConfigurationExample
+2026-05-13 12:03:16,519 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/CommunityConfiguration
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CommunityConfiguration, mediawiki/extensions/CommunityConfigurationExample, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/CommunityConfiguration -> extensions/CommunityConfiguration
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/CommunityConfiguration
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/CommunityConfiguration", "mediawiki/extensions/CommunityConfigurationExample", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/CommunityConfiguration"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/CommunityConfigurationExample \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/CommunityConfiguration
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:03:21,931 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:03:21,934 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:03:21,934 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:03:21,935 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CommunityConfiguration
+2026-05-13 12:03:21,936 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/CommunityConfigurationExample
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CommunityConfiguration, mediawiki/extensions/CommunityConfigurationExample, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/CommunityConfigurationExample -> extensions/CommunityConfigurationExample
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/CommunityConfigurationExample
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/CommunityConfiguration", "mediawiki/extensions/CommunityConfigurationExample", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/CommunityConfigurationExample"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Disambiguator \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/VisualEditor
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:03:28,092 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:03:28,094 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:03:28,094 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:03:28,096 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/VisualEditor
+2026-05-13 12:03:28,096 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Disambiguator
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Disambiguator, mediawiki/extensions/VisualEditor, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/Disambiguator -> extensions/Disambiguator
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/Disambiguator
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Disambiguator", "mediawiki/extensions/VisualEditor", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Disambiguator"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Echo \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:03:39,402 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:03:39,404 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:03:39,405 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:03:39,406 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+2026-05-13 12:03:39,407 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/Echo -> extensions/Echo
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/Echo
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/Echo", "mediawiki/extensions/EventLogging", "mediawiki/extensions/MobileFrontend", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Elastica \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:03:43,543 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:03:43,546 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:03:43,546 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:03:43,547 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:03:43,548 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Elastica
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Elastica, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/Elastica -> extensions/Elastica
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/Elastica
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Elastica", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Elastica"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/EventBus \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/EventStreamConfig
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:03:49,030 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:03:49,032 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:03:49,032 CRIT Server 'unix_http_server' running without any HTTP authentication checking
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/EventStreamConfig
+2026-05-13 12:03:49,034 INFO daemonizing the supervisord process
+2026-05-13 12:03:49,034 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/EventBus
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventBus, mediawiki/extensions/EventStreamConfig, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/EventBus -> extensions/EventBus
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/EventBus
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/EventBus", "mediawiki/extensions/EventStreamConfig", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/EventBus"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/EventLogging \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/EventBus mediawiki/extensions/EventStreamConfig
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:03:55,874 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:03:55,876 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:03:55,876 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:03:55,878 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/EventBus mediawiki/extensions/EventStreamConfig
+2026-05-13 12:03:55,878 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/EventLogging
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventBus, mediawiki/extensions/EventLogging, mediawiki/extensions/EventStreamConfig, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/EventLogging -> extensions/EventLogging
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/EventLogging
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/EventBus", "mediawiki/extensions/EventLogging", "mediawiki/extensions/EventStreamConfig", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/EventLogging"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/EventStreamConfig \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:03:59,998 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:04:00,001 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:04:00,001 CRIT Server 'unix_http_server' running without any HTTP authentication checking
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:04:00,003 INFO daemonizing the supervisord process
+2026-05-13 12:04:00,003 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/EventStreamConfig
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventStreamConfig, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/EventStreamConfig -> extensions/EventStreamConfig
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/EventStreamConfig
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/EventStreamConfig", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/EventStreamConfig"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/FileImporter \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/WikiEditor
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:04:09,066 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:04:09,069 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:04:09,069 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:04:09,070 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/WikiEditor
+2026-05-13 12:04:09,071 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/FileImporter
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/FileImporter, mediawiki/extensions/WikiEditor, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/FileImporter -> extensions/FileImporter
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/FileImporter
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/FileImporter", "mediawiki/extensions/WikiEditor", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/FileImporter"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/GeoData \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/CirrusSearch mediawiki/extensions/Elastica
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:04:16,481 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:04:16,484 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:04:16,484 CRIT Server 'unix_http_server' running without any HTTP authentication checking
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CirrusSearch mediawiki/extensions/Elastica
+2026-05-13 12:04:16,485 INFO daemonizing the supervisord process
+2026-05-13 12:04:16,486 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/GeoData
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CirrusSearch, mediawiki/extensions/Elastica, mediawiki/extensions/GeoData, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/GeoData -> extensions/GeoData
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/GeoData
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/CirrusSearch", "mediawiki/extensions/Elastica", "mediawiki/extensions/GeoData", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/GeoData"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/GlobalCssJs \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:04:20,673 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:04:20,675 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:04:20,676 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:04:20,677 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:04:20,678 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/GlobalCssJs
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/GlobalCssJs, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/GlobalCssJs -> extensions/GlobalCssJs
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/GlobalCssJs
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/GlobalCssJs", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/GlobalCssJs"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/GlobalPreferences \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:04:24,978 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:04:24,981 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:04:24,981 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:04:24,983 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:04:24,983 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/GlobalPreferences
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/GlobalPreferences, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/GlobalPreferences -> extensions/GlobalPreferences
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/GlobalPreferences
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/GlobalPreferences", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/GlobalPreferences"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+Cloning dependency: CentralNotice
+Cloning into bare repository 'ref/mediawiki/extensions/CentralNotice.git'...
+Cloning dependency: Flow
+Cloning into bare repository 'ref/mediawiki/extensions/Flow.git'...
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/GrowthExperiments \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/CommunityConfiguration mediawiki/extensions/VisualEditor mediawiki/extensions/CentralNotice mediawiki/extensions/CirrusSearch mediawiki/extensions/Echo mediawiki/extensions/Elastica mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/EventStreamConfig mediawiki/extensions/Flow mediawiki/extensions/GuidedTour mediawiki/extensions/MobileFrontend mediawiki/extensions/PageImages mediawiki/extensions/PageViewInfo mediawiki/skins/MinervaNeue mediawiki/extensions/TestKitchen mediawiki/extensions/Thanks mediawiki/extensions/WikimediaMessages
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:05:04,175 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:05:04,178 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:05:04,178 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:05:04,179 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CommunityConfiguration mediawiki/extensions/VisualEditor mediawiki/extensions/CentralNotice mediawiki/extensions/CirrusSearch mediawiki/extensions/Echo mediawiki/extensions/Elastica mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/EventStreamConfig mediawiki/extensions/Flow mediawiki/extensions/GuidedTour mediawiki/extensions/MobileFrontend mediawiki/extensions/PageImages mediawiki/extensions/PageViewInfo mediawiki/skins/MinervaNeue mediawiki/extensions/TestKitchen mediawiki/extensions/Thanks mediawiki/extensions/WikimediaMessages
+2026-05-13 12:05:04,180 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/GrowthExperiments
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CentralNotice, mediawiki/extensions/CirrusSearch, mediawiki/extensions/CommunityConfiguration, mediawiki/extensions/Echo, mediawiki/extensions/Elastica, mediawiki/extensions/EventBus, mediawiki/extensions/EventLogging, mediawiki/extensions/EventStreamConfig, mediawiki/extensions/Flow, mediawiki/extensions/GrowthExperiments, mediawiki/extensions/GuidedTour, mediawiki/extensions/MobileFrontend, mediawiki/extensions/PageImages, mediawiki/extensions/PageViewInfo, mediawiki/extensions/TestKitchen, mediawiki/extensions/Thanks, mediawiki/extensions/VisualEditor, mediawiki/extensions/WikimediaMessages, mediawiki/skins/MinervaNeue, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/GrowthExperiments -> extensions/GrowthExperiments
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/GrowthExperiments
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/CentralNotice", "mediawiki/extensions/CirrusSearch", "mediawiki/extensions/CommunityConfiguration", "mediawiki/extensions/Echo", "mediawiki/extensions/Elastica", "mediawiki/extensions/EventBus", "mediawiki/extensions/EventLogging", "mediawiki/extensions/EventStreamConfig", "mediawiki/extensions/Flow", "mediawiki/extensions/GrowthExperiments", "mediawiki/extensions/GuidedTour", "mediawiki/extensions/MobileFrontend", "mediawiki/extensions/PageImages", "mediawiki/extensions/PageViewInfo", "mediawiki/extensions/TestKitchen", "mediawiki/extensions/Thanks", "mediawiki/extensions/VisualEditor", "mediawiki/extensions/WikimediaMessages", "mediawiki/skins/MinervaNeue", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/GrowthExperiments"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/GuidedTour \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/EventLogging
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:05:09,968 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:05:09,970 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:05:09,971 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:05:09,972 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/EventLogging
+2026-05-13 12:05:09,973 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/GuidedTour
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventLogging, mediawiki/extensions/GuidedTour, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/GuidedTour -> extensions/GuidedTour
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/GuidedTour
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/EventLogging", "mediawiki/extensions/GuidedTour", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/GuidedTour"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+Cloning dependency: IPReputation
+Cloning into bare repository 'ref/mediawiki/extensions/IPReputation.git'...
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/IPInfo \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/AbuseFilter mediawiki/extensions/BetaFeatures mediawiki/extensions/CheckUser mediawiki/extensions/GlobalPreferences mediawiki/extensions/IPReputation mediawiki/extensions/MobileFrontend
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:05:24,630 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:05:24,633 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:05:24,633 CRIT Server 'unix_http_server' running without any HTTP authentication checking
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AbuseFilter mediawiki/extensions/BetaFeatures mediawiki/extensions/CheckUser mediawiki/extensions/GlobalPreferences mediawiki/extensions/IPReputation mediawiki/extensions/MobileFrontend
+2026-05-13 12:05:24,634 INFO daemonizing the supervisord process
+2026-05-13 12:05:24,635 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/IPInfo
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AbuseFilter, mediawiki/extensions/BetaFeatures, mediawiki/extensions/CheckUser, mediawiki/extensions/GlobalPreferences, mediawiki/extensions/IPInfo, mediawiki/extensions/IPReputation, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/IPInfo -> extensions/IPInfo
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/IPInfo
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AbuseFilter", "mediawiki/extensions/BetaFeatures", "mediawiki/extensions/CheckUser", "mediawiki/extensions/GlobalPreferences", "mediawiki/extensions/IPInfo", "mediawiki/extensions/IPReputation", "mediawiki/extensions/MobileFrontend", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/IPInfo"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/JsonConfig \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/Kartographer mediawiki/extensions/Scribunto mediawiki/extensions/VisualEditor mediawiki/extensions/WikimediaMessages
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:05:35,823 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:05:35,826 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:05:35,826 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:05:35,828 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Kartographer mediawiki/extensions/Scribunto mediawiki/extensions/VisualEditor mediawiki/extensions/WikimediaMessages
+2026-05-13 12:05:35,828 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/JsonConfig
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/JsonConfig, mediawiki/extensions/Kartographer, mediawiki/extensions/Scribunto, mediawiki/extensions/VisualEditor, mediawiki/extensions/WikimediaMessages, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/JsonConfig -> extensions/JsonConfig
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/JsonConfig
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/JsonConfig", "mediawiki/extensions/Kartographer", "mediawiki/extensions/Scribunto", "mediawiki/extensions/VisualEditor", "mediawiki/extensions/WikimediaMessages", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/JsonConfig"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Kartographer \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/JsonConfig mediawiki/extensions/FlaggedRevs mediawiki/extensions/ParserFunctions mediawiki/extensions/VisualEditor mediawiki/extensions/WikimediaMessages
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:05:48,099 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:05:48,102 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:05:48,102 CRIT Server 'unix_http_server' running without any HTTP authentication checking
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/JsonConfig mediawiki/extensions/FlaggedRevs mediawiki/extensions/ParserFunctions mediawiki/extensions/VisualEditor mediawiki/extensions/WikimediaMessages
+2026-05-13 12:05:48,103 INFO daemonizing the supervisord process
+2026-05-13 12:05:48,104 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Kartographer
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/FlaggedRevs, mediawiki/extensions/JsonConfig, mediawiki/extensions/Kartographer, mediawiki/extensions/ParserFunctions, mediawiki/extensions/VisualEditor, mediawiki/extensions/WikimediaMessages, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/Kartographer -> extensions/Kartographer
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/Kartographer
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/FlaggedRevs", "mediawiki/extensions/JsonConfig", "mediawiki/extensions/Kartographer", "mediawiki/extensions/ParserFunctions", "mediawiki/extensions/VisualEditor", "mediawiki/extensions/WikimediaMessages", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Kartographer"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Math \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/VisualEditor mediawiki/extensions/Wikibase
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:05:57,131 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:05:57,134 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:05:57,134 CRIT Server 'unix_http_server' running without any HTTP authentication checking
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/VisualEditor mediawiki/extensions/Wikibase
+2026-05-13 12:05:57,135 INFO daemonizing the supervisord process
+2026-05-13 12:05:57,136 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Math
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Math, mediawiki/extensions/VisualEditor, mediawiki/extensions/Wikibase, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/Math -> extensions/Math
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/Math
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Math", "mediawiki/extensions/VisualEditor", "mediawiki/extensions/Wikibase", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Math"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/MediaModeration \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:06:01,302 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:06:01,305 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:06:01,305 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:06:01,306 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:06:01,307 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/MediaModeration
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/MediaModeration, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/MediaModeration -> extensions/MediaModeration
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/MediaModeration
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/MediaModeration", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/MediaModeration"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/MobileApp \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/AbuseFilter mediawiki/extensions/Echo mediawiki/extensions/MobileFrontend mediawiki/extensions/VisualEditor
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:06:13,033 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:06:13,036 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:06:13,036 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:06:13,037 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AbuseFilter mediawiki/extensions/Echo mediawiki/extensions/MobileFrontend mediawiki/extensions/VisualEditor
+2026-05-13 12:06:13,038 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/MobileApp
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AbuseFilter, mediawiki/extensions/Echo, mediawiki/extensions/MobileApp, mediawiki/extensions/MobileFrontend, mediawiki/extensions/VisualEditor, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/MobileApp -> extensions/MobileApp
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/MobileApp
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AbuseFilter", "mediawiki/extensions/Echo", "mediawiki/extensions/MobileApp", "mediawiki/extensions/MobileFrontend", "mediawiki/extensions/VisualEditor", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/MobileApp"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/MobileFrontend \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/Echo mediawiki/extensions/MobileApp mediawiki/skins/MinervaNeue mediawiki/extensions/VisualEditor
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:06:24,785 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:06:24,788 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:06:24,788 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:06:24,790 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Echo mediawiki/extensions/MobileApp mediawiki/skins/MinervaNeue mediawiki/extensions/VisualEditor
+2026-05-13 12:06:24,791 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/MobileFrontend
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/extensions/MobileApp, mediawiki/extensions/MobileFrontend, mediawiki/extensions/VisualEditor, mediawiki/skins/MinervaNeue, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/MobileFrontend -> extensions/MobileFrontend
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/MobileFrontend
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Echo", "mediawiki/extensions/MobileApp", "mediawiki/extensions/MobileFrontend", "mediawiki/extensions/VisualEditor", "mediawiki/skins/MinervaNeue", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/MobileFrontend"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/NavigationTiming \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/EventLogging
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:06:30,425 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:06:30,428 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:06:30,428 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:06:30,430 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/EventLogging
+2026-05-13 12:06:30,430 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/NavigationTiming
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventLogging, mediawiki/extensions/NavigationTiming, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/NavigationTiming -> extensions/NavigationTiming
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/NavigationTiming
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/EventLogging", "mediawiki/extensions/NavigationTiming", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/NavigationTiming"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/PageImages \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:06:34,592 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:06:34,595 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:06:34,595 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:06:34,596 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:06:34,597 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/PageImages
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/PageImages, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/PageImages -> extensions/PageImages
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/PageImages
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/PageImages", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/PageImages"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/PageTriage \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/Echo mediawiki/extensions/ORES mediawiki/extensions/PageViewInfo mediawiki/extensions/WikiLove
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:06:45,762 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:06:45,765 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:06:45,765 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:06:45,766 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Echo mediawiki/extensions/ORES mediawiki/extensions/PageViewInfo mediawiki/extensions/WikiLove
+2026-05-13 12:06:45,767 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/PageTriage
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/extensions/ORES, mediawiki/extensions/PageTriage, mediawiki/extensions/PageViewInfo, mediawiki/extensions/WikiLove, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/PageTriage -> extensions/PageTriage
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/PageTriage
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Echo", "mediawiki/extensions/ORES", "mediawiki/extensions/PageTriage", "mediawiki/extensions/PageViewInfo", "mediawiki/extensions/WikiLove", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/PageTriage"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/PageViewInfo \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:06:50,585 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:06:50,588 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:06:50,588 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:06:50,589 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:06:50,590 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/PageViewInfo
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/PageViewInfo, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/PageViewInfo -> extensions/PageViewInfo
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/PageViewInfo
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/PageViewInfo", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/PageViewInfo"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/ProofreadPage \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/BetaFeatures mediawiki/extensions/LabeledSectionTransclusion mediawiki/extensions/ParserFunctions mediawiki/extensions/Scribunto mediawiki/extensions/VisualEditor
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:07:02,480 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:07:02,483 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:07:02,483 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:07:02,485 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/BetaFeatures mediawiki/extensions/LabeledSectionTransclusion mediawiki/extensions/ParserFunctions mediawiki/extensions/Scribunto mediawiki/extensions/VisualEditor
+2026-05-13 12:07:02,485 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/ProofreadPage
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/BetaFeatures, mediawiki/extensions/LabeledSectionTransclusion, mediawiki/extensions/ParserFunctions, mediawiki/extensions/ProofreadPage, mediawiki/extensions/Scribunto, mediawiki/extensions/VisualEditor, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/ProofreadPage -> extensions/ProofreadPage
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/ProofreadPage
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/BetaFeatures", "mediawiki/extensions/LabeledSectionTransclusion", "mediawiki/extensions/ParserFunctions", "mediawiki/extensions/ProofreadPage", "mediawiki/extensions/Scribunto", "mediawiki/extensions/VisualEditor", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/ProofreadPage"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/SandboxLink \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:07:06,400 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:07:06,402 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:07:06,402 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:07:06,404 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:07:06,404 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/SandboxLink
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/SandboxLink, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/SandboxLink -> extensions/SandboxLink
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/SandboxLink
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/SandboxLink", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/SandboxLink"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Scribunto \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:07:10,627 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:07:10,630 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:07:10,630 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:07:10,631 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:07:10,632 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Scribunto
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Scribunto, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/Scribunto -> extensions/Scribunto
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/Scribunto
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Scribunto", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Scribunto"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/SiteMatrix \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:07:14,702 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:07:14,704 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:07:14,705 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:07:14,706 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:07:14,707 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/SiteMatrix
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/SiteMatrix, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/SiteMatrix -> extensions/SiteMatrix
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/SiteMatrix
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/SiteMatrix", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/SiteMatrix"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/TemplateData \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:07:18,931 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:07:18,934 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:07:18,934 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:07:18,936 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:07:18,936 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/TemplateData
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/TemplateData, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/TemplateData -> extensions/TemplateData
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/TemplateData
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/TemplateData", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/TemplateData"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Thanks \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/Echo mediawiki/extensions/AbuseFilter mediawiki/extensions/Flow mediawiki/extensions/MobileFrontend mediawiki/extensions/VisualEditor
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:07:32,343 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:07:32,345 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:07:32,345 CRIT Server 'unix_http_server' running without any HTTP authentication checking
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Echo mediawiki/extensions/AbuseFilter mediawiki/extensions/Flow mediawiki/extensions/MobileFrontend mediawiki/extensions/VisualEditor
+2026-05-13 12:07:32,347 INFO daemonizing the supervisord process
+2026-05-13 12:07:32,347 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Thanks
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AbuseFilter, mediawiki/extensions/Echo, mediawiki/extensions/Flow, mediawiki/extensions/MobileFrontend, mediawiki/extensions/Thanks, mediawiki/extensions/VisualEditor, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/Thanks -> extensions/Thanks
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/Thanks
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AbuseFilter", "mediawiki/extensions/Echo", "mediawiki/extensions/Flow", "mediawiki/extensions/MobileFrontend", "mediawiki/extensions/Thanks", "mediawiki/extensions/VisualEditor", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Thanks"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/TimedMediaHandler \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:07:36,632 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:07:36,635 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:07:36,635 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:07:36,637 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:07:36,637 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/TimedMediaHandler
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/TimedMediaHandler, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/TimedMediaHandler -> extensions/TimedMediaHandler
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/TimedMediaHandler
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/TimedMediaHandler", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/TimedMediaHandler"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Translate \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/cldr mediawiki/extensions/EventLogging mediawiki/extensions/Scribunto mediawiki/extensions/VisualEditor
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:07:49,270 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:07:49,273 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:07:49,273 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:07:49,274 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/cldr mediawiki/extensions/EventLogging mediawiki/extensions/Scribunto mediawiki/extensions/VisualEditor
+2026-05-13 12:07:49,275 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Translate
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventLogging, mediawiki/extensions/Scribunto, mediawiki/extensions/Translate, mediawiki/extensions/UniversalLanguageSelector, mediawiki/extensions/VisualEditor, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/Translate -> extensions/Translate
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/Translate
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/EventLogging", "mediawiki/extensions/Scribunto", "mediawiki/extensions/Translate", "mediawiki/extensions/UniversalLanguageSelector", "mediawiki/extensions/VisualEditor", "mediawiki/extensions/cldr", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Translate"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/UniversalLanguageSelector \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/EventLogging
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:07:55,053 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:07:55,056 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:07:55,056 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:07:55,057 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/EventLogging
+2026-05-13 12:07:55,058 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/UniversalLanguageSelector
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventLogging, mediawiki/extensions/UniversalLanguageSelector, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/UniversalLanguageSelector -> extensions/UniversalLanguageSelector
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/UniversalLanguageSelector
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/EventLogging", "mediawiki/extensions/UniversalLanguageSelector", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/UniversalLanguageSelector"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/VisualEditor \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/Cite mediawiki/extensions/ConfirmEdit mediawiki/extensions/DiscussionTools mediawiki/extensions/FlaggedRevs mediawiki/extensions/Linter mediawiki/extensions/TemplateData
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:08:09,179 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:08:09,182 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:08:09,182 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:08:09,184 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Cite mediawiki/extensions/ConfirmEdit mediawiki/extensions/DiscussionTools mediawiki/extensions/FlaggedRevs mediawiki/extensions/Linter mediawiki/extensions/TemplateData
+2026-05-13 12:08:09,184 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/VisualEditor
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Cite, mediawiki/extensions/ConfirmEdit, mediawiki/extensions/DiscussionTools, mediawiki/extensions/FlaggedRevs, mediawiki/extensions/Linter, mediawiki/extensions/TemplateData, mediawiki/extensions/VisualEditor, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/VisualEditor -> extensions/VisualEditor
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/VisualEditor
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Cite", "mediawiki/extensions/ConfirmEdit", "mediawiki/extensions/DiscussionTools", "mediawiki/extensions/FlaggedRevs", "mediawiki/extensions/Linter", "mediawiki/extensions/TemplateData", "mediawiki/extensions/VisualEditor", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/VisualEditor"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+Cloning dependency: ArticlePlaceholder
+Cloning into bare repository 'ref/mediawiki/extensions/ArticlePlaceholder.git'...
+Cloning dependency: PropertySuggester
+Cloning into bare repository 'ref/mediawiki/extensions/PropertySuggester.git'...
+Cloning dependency: SpamBlacklist
+Cloning into bare repository 'ref/mediawiki/extensions/SpamBlacklist.git'...
+Cloning dependency: WikibaseLexeme
+Cloning into bare repository 'ref/mediawiki/extensions/WikibaseLexeme.git'...
+Cloning dependency: WikibaseQualityConstraints
+Cloning into bare repository 'ref/mediawiki/extensions/WikibaseQualityConstraints.git'...
+Cloning dependency: WikimediaBadges
+Cloning into bare repository 'ref/mediawiki/extensions/WikimediaBadges.git'...
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Wikibase \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/ArticlePlaceholder mediawiki/extensions/CirrusSearch mediawiki/extensions/cldr mediawiki/extensions/Echo mediawiki/extensions/Elastica mediawiki/extensions/GeoData mediawiki/extensions/MobileFrontend mediawiki/extensions/PropertySuggester mediawiki/extensions/Scribunto mediawiki/skins/MinervaNeue mediawiki/extensions/SpamBlacklist mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/WikibaseCirrusSearch mediawiki/extensions/WikibaseLexeme mediawiki/extensions/WikibaseMediaInfo mediawiki/extensions/WikibaseQualityConstraints mediawiki/extensions/WikimediaBadges
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:08:47,201 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:08:47,204 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:08:47,204 CRIT Server 'unix_http_server' running without any HTTP authentication checking
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/ArticlePlaceholder mediawiki/extensions/CirrusSearch mediawiki/extensions/cldr mediawiki/extensions/Echo mediawiki/extensions/Elastica mediawiki/extensions/GeoData mediawiki/extensions/MobileFrontend mediawiki/extensions/PropertySuggester mediawiki/extensions/Scribunto mediawiki/skins/MinervaNeue mediawiki/extensions/SpamBlacklist mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/WikibaseCirrusSearch mediawiki/extensions/WikibaseLexeme mediawiki/extensions/WikibaseMediaInfo mediawiki/extensions/WikibaseQualityConstraints mediawiki/extensions/WikimediaBadges
+2026-05-13 12:08:47,206 INFO daemonizing the supervisord process
+2026-05-13 12:08:47,206 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Wikibase
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/ArticlePlaceholder, mediawiki/extensions/CirrusSearch, mediawiki/extensions/Echo, mediawiki/extensions/Elastica, mediawiki/extensions/GeoData, mediawiki/extensions/MobileFrontend, mediawiki/extensions/PropertySuggester, mediawiki/extensions/Scribunto, mediawiki/extensions/SpamBlacklist, mediawiki/extensions/UniversalLanguageSelector, mediawiki/extensions/Wikibase, mediawiki/extensions/WikibaseCirrusSearch, mediawiki/extensions/WikibaseLexeme, mediawiki/extensions/WikibaseMediaInfo, mediawiki/extensions/WikibaseQualityConstraints, mediawiki/extensions/WikimediaBadges, mediawiki/extensions/cldr, mediawiki/skins/MinervaNeue, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/Wikibase -> extensions/Wikibase
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/Wikibase
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/ArticlePlaceholder", "mediawiki/extensions/CirrusSearch", "mediawiki/extensions/Echo", "mediawiki/extensions/Elastica", "mediawiki/extensions/GeoData", "mediawiki/extensions/MobileFrontend", "mediawiki/extensions/PropertySuggester", "mediawiki/extensions/Scribunto", "mediawiki/extensions/SpamBlacklist", "mediawiki/extensions/UniversalLanguageSelector", "mediawiki/extensions/Wikibase", "mediawiki/extensions/WikibaseCirrusSearch", "mediawiki/extensions/WikibaseLexeme", "mediawiki/extensions/WikibaseMediaInfo", "mediawiki/extensions/WikibaseQualityConstraints", "mediawiki/extensions/WikimediaBadges", "mediawiki/extensions/cldr", "mediawiki/skins/MinervaNeue", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Wikibase"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/WikibaseCirrusSearch \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/CirrusSearch mediawiki/extensions/cldr mediawiki/extensions/Elastica mediawiki/extensions/Wikibase
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:08:58,040 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:08:58,042 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:08:58,042 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:08:58,044 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CirrusSearch mediawiki/extensions/cldr mediawiki/extensions/Elastica mediawiki/extensions/Wikibase
+2026-05-13 12:08:58,044 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/WikibaseCirrusSearch
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CirrusSearch, mediawiki/extensions/Elastica, mediawiki/extensions/Wikibase, mediawiki/extensions/WikibaseCirrusSearch, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/WikibaseCirrusSearch -> extensions/WikibaseCirrusSearch
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/WikibaseCirrusSearch
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/CirrusSearch", "mediawiki/extensions/Elastica", "mediawiki/extensions/Wikibase", "mediawiki/extensions/WikibaseCirrusSearch", "mediawiki/extensions/cldr", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/WikibaseCirrusSearch"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/WikibaseMediaInfo \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/WikibaseCirrusSearch mediawiki/extensions/CirrusSearch mediawiki/extensions/cldr mediawiki/extensions/Elastica mediawiki/extensions/Wikibase
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:09:12,081 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:09:12,083 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:09:12,084 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:09:12,085 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/WikibaseCirrusSearch mediawiki/extensions/CirrusSearch mediawiki/extensions/cldr mediawiki/extensions/Elastica mediawiki/extensions/Wikibase
+2026-05-13 12:09:12,085 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/WikibaseMediaInfo
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CirrusSearch, mediawiki/extensions/Elastica, mediawiki/extensions/UniversalLanguageSelector, mediawiki/extensions/Wikibase, mediawiki/extensions/WikibaseCirrusSearch, mediawiki/extensions/WikibaseMediaInfo, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/WikibaseMediaInfo -> extensions/WikibaseMediaInfo
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/WikibaseMediaInfo
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/CirrusSearch", "mediawiki/extensions/Elastica", "mediawiki/extensions/UniversalLanguageSelector", "mediawiki/extensions/Wikibase", "mediawiki/extensions/WikibaseCirrusSearch", "mediawiki/extensions/WikibaseMediaInfo", "mediawiki/extensions/cldr", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/WikibaseMediaInfo"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/WikiLove \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:09:16,146 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:09:16,149 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:09:16,149 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:09:16,150 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:09:16,151 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/WikiLove
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/WikiLove, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/WikiLove -> extensions/WikiLove
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/WikiLove
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/WikiLove", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/WikiLove"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/WikimediaCampaignEvents \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/CampaignEvents mediawiki/extensions/cldr
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:09:23,010 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:09:23,012 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:09:23,012 CRIT Server 'unix_http_server' running without any HTTP authentication checking
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CampaignEvents mediawiki/extensions/cldr
+2026-05-13 12:09:23,014 INFO daemonizing the supervisord process
+2026-05-13 12:09:23,014 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/WikimediaCampaignEvents
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CampaignEvents, mediawiki/extensions/WikimediaCampaignEvents, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/WikimediaCampaignEvents -> extensions/WikimediaCampaignEvents
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/WikimediaCampaignEvents
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/CampaignEvents", "mediawiki/extensions/WikimediaCampaignEvents", "mediawiki/extensions/cldr", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/WikimediaCampaignEvents"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/WikimediaMessages \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/cldr
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:09:28,737 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:09:28,740 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:09:28,740 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:09:28,741 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/cldr
+2026-05-13 12:09:28,742 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/WikimediaMessages
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/WikimediaMessages, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/WikimediaMessages -> extensions/WikimediaMessages
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/WikimediaMessages
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/WikimediaMessages", "mediawiki/extensions/cldr", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/WikimediaMessages"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/skins/MinervaNeue \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/Cite mediawiki/extensions/Echo mediawiki/extensions/MobileFrontend mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/EventStreamConfig mediawiki/extensions/TestKitchen
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:09:43,402 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:09:43,405 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:09:43,405 CRIT Server 'unix_http_server' running without any HTTP authentication checking
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Cite mediawiki/extensions/Echo mediawiki/extensions/MobileFrontend mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/EventStreamConfig mediawiki/extensions/TestKitchen
+2026-05-13 12:09:43,407 INFO daemonizing the supervisord process
+2026-05-13 12:09:43,407 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/skins/MinervaNeue
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Cite, mediawiki/extensions/Echo, mediawiki/extensions/EventBus, mediawiki/extensions/EventLogging, mediawiki/extensions/EventStreamConfig, mediawiki/extensions/MobileFrontend, mediawiki/extensions/TestKitchen, mediawiki/skins/MinervaNeue, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/skins/MinervaNeue -> skins/MinervaNeue
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/skins/MinervaNeue
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Cite", "mediawiki/extensions/Echo", "mediawiki/extensions/EventBus", "mediawiki/extensions/EventLogging", "mediawiki/extensions/EventStreamConfig", "mediawiki/extensions/MobileFrontend", "mediawiki/extensions/TestKitchen", "mediawiki/skins/MinervaNeue", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/skins/MinervaNeue"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+########################################
+docker run \
+  -i \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/skins/Vector \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true
+########################################
++ /usr/bin/supervisord
+2026-05-13 12:09:47,787 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 12:09:47,790 INFO RPC interface 'supervisor' initialized
+2026-05-13 12:09:47,790 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 12:09:47,791 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
+2026-05-13 12:09:47,792 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/skins/Vector
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/skins/Vector -> skins/Vector
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/skins/Vector
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/skins/Vector"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+(8m 40s)

@@ -1,3 +1,9 @@
 $ DRY_RUN=1 ./list_dependencies_optional skins/MinervaNeue
 
-Error: ref/integration/config.git not found. Run ./prepare first.
+Cite
+Echo
+MobileFrontend
+EventBus
+EventLogging
+EventStreamConfig
+TestKitchen

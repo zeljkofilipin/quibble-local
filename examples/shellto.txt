@@ -28,12 +28,12 @@ docker run \
   --command bash
 ########################################
 + /usr/bin/supervisord
-2026-05-13 10:40:37,486 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 10:40:37,489 INFO RPC interface 'supervisor' initialized
-2026-05-13 10:40:37,489 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 10:40:37,490 INFO daemonizing the supervisord process
+2026-05-13 13:00:31,351 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 13:00:31,353 INFO RPC interface 'supervisor' initialized
+2026-05-13 13:00:31,354 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 13:00:31,355 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --skip-zuul --skip-deps --command bash
-2026-05-13 10:40:37,491 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-13 13:00:31,356 CRIT could not write pidfile /var/run/supervisord.pid
 [33mWARNING[0m:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -72,38 +72,51 @@ docker run \
 [32mINFO[0m:quibble.commands:Zend Engine v4.3.30, Copyright (c) Zend Technologies
 [32mINFO[0m:quibble.commands:    with Zend OPcache v8.3.30, Copyright (c), by Zend Technologies
 [32mINFO[0m:quibble.commands:psql --version: psql (PostgreSQL) 13.23 (Debian 13.23-0+deb11u3)
-[32mINFO[0m:quibble.commands:<<< Finish: Versions, in 0.173 s
+[32mINFO[0m:quibble.commands:<<< Finish: Versions, in 0.180 s
 [32mINFO[0m:quibble.commands:>>> Start: Ensure dir: '/workspace/log'
 [32mINFO[0m:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.000 s
 [32mINFO[0m:quibble.commands:>>> Start: Start backends: <MySQL (no socket)>
 [32mINFO[0m:backend.MySQL:Starting MySQL
 [32mINFO[0m:backend.MySQL:Initializing MySQL data directory
-2026-05-13 10:40:38,493 INFO spawned: 'apache' with pid 112
-2026-05-13 10:40:38,495 INFO spawned: 'memcached' with pid 113
-2026-05-13 10:40:38,499 INFO spawned: 'php-fpm' with pid 114
-2026-05-13 10:40:38,514 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
-2026-05-13 10:40:38,525 INFO exited: apache (exit status 1; not expected)
+2026-05-13 13:00:32,359 INFO spawned: 'apache' with pid 114
+2026-05-13 13:00:32,362 INFO spawned: 'memcached' with pid 115
+2026-05-13 13:00:32,364 INFO spawned: 'php-fpm' with pid 116
+2026-05-13 13:00:32,383 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-05-13 13:00:33,431 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2026-05-13 13:00:33,432 INFO success: memcached entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 [32mINFO[0m:backend.MySQL:Waiting for MySQL socket
-2026-05-13 10:40:39,555 INFO spawned: 'apache' with pid 157
-2026-05-13 10:40:39,555 INFO success: memcached entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2026-05-13 10:40:39,583 INFO exited: apache (exit status 1; not expected)
 [32mINFO[0m:backend.MySQL:Creating the wiki database and grant
 [32mINFO[0m:backend.MySQL:MySQL is ready
-[32mINFO[0m:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 2.589 s
+[32mINFO[0m:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 2.950 s
 [32mINFO[0m:quibble.commands:>>> Start: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=1):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-qc7qbyf8/socket>
-[32mINFO[0m:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-qc7qbyf8/socket>
-[32mINFO[0m:mw.maintenance.install:php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-qc7qbyf8/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-r21xvole/socket>
+[32mINFO[0m:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-r21xvole/socket>
+[32mINFO[0m:mw.maintenance.install:php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-r21xvole/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
 Could not open input file: maintenance/install.php
-[32mINFO[0m:quibble.commands:<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-qc7qbyf8/socket>, in 0.042 s
+[32mINFO[0m:quibble.commands:<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-r21xvole/socket>, in 0.044 s
 [32mINFO[0m:quibble.commands:<<< Finish: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=1):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-qc7qbyf8/socket>, in 0.043 s
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-r21xvole/socket>, in 0.045 s
 [32mINFO[0m:backend.MySQL:Terminating MySQL
+[32mINFO[0m:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
+
+                   [ REPORT FOR COMMAND DURATIONS ]
+
+╒════════╤═══════════════════════════════════════════════════════════╕
+│ 0.000s │ Report durations                                          │
+│ 0.180s │ Versions                                                  │
+│ 0.000s │ Ensure dir: '/workspace/log'                              │
+│ 2.950s │ Start backends: <MySQL (no socket)>                       │
+│ 0.044s │ Install MediaWiki, db=<MySQL /tmp/quibble-                │
+│        │ mysql-r21xvole/socket>                                    │
+│ 0.045s │ Run Post-dependency install, pre-database dependent steps │
+│        │ in parallel (concurrency=1): * Install MediaWiki,         │
+│        │ db=<MySQL /tmp/quibble-mysql-r21xvole/socket>             │
+╘════════╧═══════════════════════════════════════════════════════════╛
 Traceback (most recent call last):
-  File "/usr/lib/python3.9/contextlib.py", line 135, in __exit__
-    self.gen.throw(type, value, traceback)
-  File "/usr/local/lib/python3.9/dist-packages/quibble/commands.py", line 690, in _exit
-    yield
+  File "/usr/local/bin/quibble", line 6, in <module>
+    sys.exit(main())
+  File "/usr/local/lib/python3.9/dist-packages/quibble/cmd.py", line 1026, in main
+    cmd.execute(
   File "/usr/local/lib/python3.9/dist-packages/quibble/cmd.py", line 648, in execute
     quibble.commands.execute_command(command)
   File "/usr/local/lib/python3.9/dist-packages/quibble/commands.py", line 36, in execute_command
@@ -117,23 +130,4 @@ Traceback (most recent call last):
   File "/usr/local/lib/python3.9/dist-packages/quibble/mediawiki/maintenance.py", line 94, in install
     raise Exception('Install failed with exit code: %s' % p.returncode)
 Exception: Install failed with exit code: 1
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/usr/local/bin/quibble", line 6, in <module>
-    sys.exit(main())
-  File "/usr/local/lib/python3.9/dist-packages/quibble/cmd.py", line 1026, in main
-    cmd.execute(
-  File "/usr/local/lib/python3.9/dist-packages/quibble/cmd.py", line 659, in execute
-    raise called_process_error
-  File "/usr/lib/python3.9/contextlib.py", line 513, in __exit__
-    raise exc_details[1]
-  File "/usr/lib/python3.9/contextlib.py", line 498, in __exit__
-    if cb(*exc_details):
-  File "/usr/local/lib/python3.9/dist-packages/quibble/commands.py", line 171, in __exit__
-    self.writeJsonReport(exc_type, exc_value)
-  File "/usr/local/lib/python3.9/dist-packages/quibble/commands.py", line 268, in writeJsonReport
-    json.dump(json_report, open(json_file, 'w'))
-PermissionError: [Errno 13] Permission denied: '/workspace/log/quibble-durations.json'
 (5s)
