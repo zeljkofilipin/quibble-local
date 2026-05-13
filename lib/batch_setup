@@ -18,7 +18,21 @@ verbose="${VERBOSE:-}" # VERBOSE=1 enables verbose mode; empty string means sile
 if [ -z "$verbose" ]; then
   _QUIBBLE_LOG="log/silent/" # tell lib/debug_info where silent mode logs are saved
   . "$(dirname "$0")"/lib/debug_info # check prerequisites and print debug info before output is redirected
-  mkdir -p log/silent   # create log directory for captured output
+  # Best-effort fix-up of log/ permissions before creating log/silent/. Docker mounts log/
+  # as a volume and writes to it as the container user, which can leave log/ root-owned on
+  # the host. `chmod 777 log` succeeds when the current user owns log/ (fast path) and is
+  # a no-op when log/ is already 777. Suppress errors and don't fail here — the mkdir
+  # below is the authoritative check.
+  chmod 777 log 2>/dev/null || :
+  mkdir -p log/silent 2>/dev/null || : # create log directory for captured output (errors handled below)
+  # Fail loudly if log/silent could not be created. Without this check, subsequent `tee`
+  # commands in run_with_dots would fail per-step with `tee: log/silent/...: No such file or
+  # directory` and the script would limp along producing noise instead of useful output.
+  if [ ! -d log/silent ]; then
+    echo "Error: cannot create log/silent. log/ is likely owned by root from a previous Docker run." >&2
+    echo "Fix: run ./remove_all to wipe all generated directories (uses Docker-as-root to delete root-owned files), then start fresh." >&2
+    exit 1
+  fi
   rm -f log/silent/*.log # clear old logs to avoid confusion from stale results
 fi
 

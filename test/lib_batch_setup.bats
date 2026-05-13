@@ -89,3 +89,29 @@ teardown() {
   [ "$status" -eq 0 ]
   [[ "$output" == *"passed=[] failed=[]"* ]]
 }
+
+@test "batch_setup: fails loudly when log/silent can't be created in silent mode" {
+  # Sandbox: instead of faking root-ownership (which would require sudo), we make
+  # `log` a regular file. Semantically different from the production bug (a
+  # root-owned dir left over from Docker) but exercises the same failure path:
+  # the chmod 777 fast-path is a no-op, `mkdir -p log/silent` fails with "Not a
+  # directory", and `[ ! -d log/silent ]` is true — so batch_setup must print the
+  # actionable error and exit 1 instead of limping along.
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+  ln -s "$PWD/lib" "$tmpdir/lib"
+  : > "$tmpdir/log"   # create log as an empty file, blocking the directory below it
+
+  run bash -c "
+    cd '$tmpdir'
+    export _QUIBBLE_NO_INHIBIT=1
+    unset VERBOSE
+    . lib/batch_setup
+  "
+
+  rm -rf "$tmpdir"
+
+  [ "$status" -eq 1 ]
+  [[ "$output" == *"cannot create log/silent"* ]]
+  [[ "$output" == *"./remove_all"* ]]
+}
