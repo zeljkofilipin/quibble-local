@@ -11,10 +11,10 @@ mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
 Pre-cloning dependency: Error: ref/integration/config.git not found. Run ./prepare first.
 fatal: could not create leading directories of 'ref/mediawiki/extensions/Error: ref/integration/config.git not found. Run ./prepare first..git'
 
-=== Combination 1/2: (none) === 2026-05-13 10:03:16 UTC
+=== Combination 1/2: (none) === 2026-05-13 10:37:47 UTC
 
 ========================================
-= extensions/Echo: ./fresh_install 2026-05-13 10:03:16 UTC
+= extensions/Echo: ./fresh_install 2026-05-13 10:37:47 UTC
 ========================================
 
 
@@ -76,10 +76,10 @@ mkdir: cannot create directory ‘ref/integration’: Permission denied
 (0s)
 SKIP (fresh_install/restore failed)
 
-=== Combination 2/2: Error: ref/integration/config.git not found. Run ./prepare first. === 2026-05-13 10:03:16 UTC
+=== Combination 2/2: Error: ref/integration/config.git not found. Run ./prepare first. === 2026-05-13 10:37:47 UTC
 
 ========================================
-= extensions/Echo: ./fresh_install 2026-05-13 10:03:16 UTC
+= extensions/Echo: ./fresh_install 2026-05-13 10:37:47 UTC
 ========================================
 
 

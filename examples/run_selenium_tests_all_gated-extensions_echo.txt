@@ -12,8 +12,8 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-core fresh_install .. FAIL (0s)  2026-05-13 10:05:53 UTC
-extensions/Echo fresh_install .. FAIL (0s)  2026-05-13 10:05:53 UTC
+core fresh_install .. FAIL (0s)  2026-05-13 10:40:32 UTC
+extensions/Echo fresh_install .. FAIL (0s)  2026-05-13 10:40:32 UTC
 
 ========================================
 = Results

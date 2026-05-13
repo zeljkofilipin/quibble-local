@@ -12,7 +12,7 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-Error: ref/integration/config.git not found. Run ./prepare first. fresh_install .. FAIL (0s)  2026-05-13 10:03:21 UTC
+Error: ref/integration/config.git not found. Run ./prepare first. fresh_install .. FAIL (0s)  2026-05-13 10:37:52 UTC
 
 ========================================
 = Results

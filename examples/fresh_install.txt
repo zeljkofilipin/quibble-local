@@ -12,4 +12,4 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-fresh_install .. FAIL (1s) (see log/fresh_install.log)
+fresh_install .. FAIL (0s) (see log/fresh_install.log)

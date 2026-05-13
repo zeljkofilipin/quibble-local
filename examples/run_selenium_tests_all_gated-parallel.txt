@@ -12,7 +12,7 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-core fresh_install .. FAIL (0s)  2026-05-13 10:05:54 UTC
+core fresh_install .. FAIL (0s)  2026-05-13 10:40:33 UTC
 
 Parallel mode: 2 workers
 

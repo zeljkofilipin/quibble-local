@@ -1,0 +1,2031 @@
+$ DRY_RUN=1 VERBOSE=1 ./test_integration_slow
+
+
+========================================
+= Running: ./fresh_install 2026-05-13 10:42:49 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(1s)
+
+========================================
+= Running: ./run_php_unit_tests 2026-05-13 10:42:50 UTC
+========================================
+
+
+
+========================================
+= run_php_unit_tests is running: dirname ./run_php_unit_tests
+
+
+========================================
+= run_php_unit_tests is running: . ./lib/silent_output
+
+
+
+========================================
+= run_php_unit_tests is running: '[' -z 1 ']'
+
+
+========================================
+= run_php_unit_tests is running: dirname ./run_php_unit_tests
+
+========================================
+= run_php_unit_tests is running: . ./lib/run_quibble_test
+
+
+
+========================================
+= run_php_unit_tests is running: dirname ./lib/run_quibble_test
+
+
+========================================
+= run_php_unit_tests is running: . ./lib/print_quibble_command
+
+========================================
+= run_php_unit_tests is running: run_quibble_test --run phpunit
+
+========================================
+= run_php_unit_tests is running: cmd=('docker' 'run' '-it' '--rm' '--entrypoint=quibble-with-supervisord' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src' '-e' 'CI=true' 'docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest' '--dry-run' '--skip-zuul' '--skip-deps' '--run' 'phpunit')
+
+========================================
+= run_php_unit_tests is running: local cmd
+
+========================================
+= run_php_unit_tests is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run phpunit
+
+========================================
+= run_php_unit_tests is running: local _xtrace_was_on=
+
+========================================
+= run_php_unit_tests is running: case "$-" in
+
+========================================
+= run_php_unit_tests is running: _xtrace_was_on=1
+
+========================================
+= run_php_unit_tests is running: set +x
+########################################
+docker run \
+  -it \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e CI=true \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --skip-zuul \
+  --skip-deps \
+  --run phpunit
+########################################
+
+========================================
+= run_php_unit_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run phpunit
++ /usr/bin/supervisord
+2026-05-13 10:42:50,606 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 10:42:50,608 INFO RPC interface 'supervisor' initialized
+2026-05-13 10:42:50,609 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 10:42:50,610 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run phpunit
+2026-05-13 10:42:50,611 CRIT could not write pidfile /var/run/supervisord.pid
+[33mWARNING[0m:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
+[32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
+[32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
+[32mINFO[0m:zuul.CloneMapper:Workspace path set to: ./
+[32mINFO[0m:zuul.CloneMapper:Mapping projects to workspace...
+[32mINFO[0m:zuul.CloneMapper:  mediawiki/core -> .
+[32mINFO[0m:zuul.CloneMapper:Expansion completed.
+[36mDEBUG[0m:quibble.cmd:Running stages: phpunit
+[36mDEBUG[0m:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+[36mDEBUG[0m:quibble.cmd:Project dir: /workspace/src
+[36mDEBUG[0m:quibble.cmd:Reporting URL: not specified
+[36mDEBUG[0m:quibble.cmd:Execution plan:
+[36mDEBUG[0m:quibble.cmd:Report durations
+[36mDEBUG[0m:quibble.cmd:Versions
+[36mDEBUG[0m:quibble.cmd:Ensure dir: '/workspace/log'
+[36mDEBUG[0m:quibble.cmd:Start backends: <MySQL (no socket)>
+[36mDEBUG[0m:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=1):
+* Install MediaWiki, db=<MySQL (no socket)>
+[36mDEBUG[0m:quibble.cmd:PHPUnit default suite (without database or standalone)
+[36mDEBUG[0m:quibble.cmd:PHPUnit default suite (with database)
+[33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
+(1s)
+
+========================================
+= Running: ./run_php_unit_tests --filter testValidSpecialPageAliases 2026-05-13 10:42:51 UTC
+========================================
+
+
+
+========================================
+= run_php_unit_tests is running: dirname ./run_php_unit_tests
+
+
+========================================
+= run_php_unit_tests is running: . ./lib/silent_output
+
+
+
+========================================
+= run_php_unit_tests is running: '[' -z 1 ']'
+
+
+========================================
+= run_php_unit_tests is running: dirname ./run_php_unit_tests
+
+========================================
+= run_php_unit_tests is running: . ./lib/run_quibble_test
+
+
+
+========================================
+= run_php_unit_tests is running: dirname ./lib/run_quibble_test
+
+
+========================================
+= run_php_unit_tests is running: . ./lib/print_quibble_command
+
+========================================
+= run_php_unit_tests is running: run_quibble_test --command 'composer run --timeout=0 phpunit -- --filter testValidSpecialPageAliases'
+
+========================================
+= run_php_unit_tests is running: cmd=('docker' 'run' '-it' '--rm' '--entrypoint=quibble-with-supervisord' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src' '-e' 'CI=true' 'docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest' '--dry-run' '--skip-zuul' '--skip-deps' '--command' 'composer run --timeout=0 phpunit -- --filter testValidSpecialPageAliases')
+
+========================================
+= run_php_unit_tests is running: local cmd
+
+========================================
+= run_php_unit_tests is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --command 'composer run --timeout=0 phpunit -- --filter testValidSpecialPageAliases'
+
+========================================
+= run_php_unit_tests is running: local _xtrace_was_on=
+
+========================================
+= run_php_unit_tests is running: case "$-" in
+
+========================================
+= run_php_unit_tests is running: _xtrace_was_on=1
+
+========================================
+= run_php_unit_tests is running: set +x
+########################################
+docker run \
+  -it \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
+  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -e CI=true \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --skip-zuul \
+  --skip-deps \
+  --command composer run --timeout=0 phpunit -- --filter testValidSpecialPageAliases
+########################################
+
+========================================
+= run_php_unit_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --command 'composer run --timeout=0 phpunit -- --filter testValidSpecialPageAliases'
++ /usr/bin/supervisord
+2026-05-13 10:42:51,655 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-13 10:42:51,658 INFO RPC interface 'supervisor' initialized
+2026-05-13 10:42:51,658 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-13 10:42:51,660 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --command 'composer run --timeout=0 phpunit -- --filter testValidSpecialPageAliases'
+2026-05-13 10:42:51,660 CRIT could not write pidfile /var/run/supervisord.pid
+[33mWARNING[0m:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
+[32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
+[32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
+[32mINFO[0m:zuul.CloneMapper:Workspace path set to: ./
+[32mINFO[0m:zuul.CloneMapper:Mapping projects to workspace...
+[32mINFO[0m:zuul.CloneMapper:  mediawiki/core -> .
+[32mINFO[0m:zuul.CloneMapper:Expansion completed.
+[36mDEBUG[0m:quibble.cmd:Running stages: 
+[36mDEBUG[0m:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+[36mDEBUG[0m:quibble.cmd:Project dir: /workspace/src
+[36mDEBUG[0m:quibble.cmd:Reporting URL: not specified
+[36mDEBUG[0m:quibble.cmd:Execution plan:
+[36mDEBUG[0m:quibble.cmd:Report durations
+[36mDEBUG[0m:quibble.cmd:Versions
+[36mDEBUG[0m:quibble.cmd:Ensure dir: '/workspace/log'
+[36mDEBUG[0m:quibble.cmd:Start backends: <MySQL (no socket)>
+[36mDEBUG[0m:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=1):
+* Install MediaWiki, db=<MySQL (no socket)>
+[36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+[36mDEBUG[0m:quibble.cmd:User commands: composer run --timeout=0 phpunit -- --filter testValidSpecialPageAliases
+[33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
+(1s)
+
+========================================
+= Running: ./find_dependencies_minimal_bottom_up extensions/Echo 2026-05-13 10:42:52 UTC
+========================================
+All dependencies for extensions/Echo (1):
+  Error: ref/integration/config.git not found. Run ./prepare first.
+
+Optional dependencies to vary (1):
+  Error: ref/integration/config.git not found. Run ./prepare first.
+
+Total combinations to test: 2 (from 0 to 1 optional dependencies)
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+Pre-cloning dependency: Error: ref/integration/config.git not found. Run ./prepare first.
+fatal: could not create leading directories of 'ref/mediawiki/extensions/Error: ref/integration/config.git not found. Run ./prepare first..git'
+
+=== Combination 1/2: (none) === 2026-05-13 10:42:52 UTC
+
+========================================
+= extensions/Echo: ./fresh_install 2026-05-13 10:42:52 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+SKIP (fresh_install/restore failed)
+
+=== Combination 2/2: Error: ref/integration/config.git not found. Run ./prepare first. === 2026-05-13 10:42:52 UTC
+
+========================================
+= extensions/Echo: ./fresh_install 2026-05-13 10:42:52 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+SKIP (fresh_install/restore failed)
+
+No working combination found.
+(0s)
+
+========================================
+= Running: env PARALLEL=2 ./find_dependencies_minimal_bottom_up extensions/Echo 2026-05-13 10:42:52 UTC
+========================================
+All dependencies for extensions/Echo (1):
+  Error: ref/integration/config.git not found. Run ./prepare first.
+
+Optional dependencies to vary (1):
+  Error: ref/integration/config.git not found. Run ./prepare first.
+
+Total combinations to test: 2 (from 0 to 1 optional dependencies)
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+Pre-cloning dependency: Error: ref/integration/config.git not found. Run ./prepare first.
+fatal: could not create leading directories of 'ref/mediawiki/extensions/Error: ref/integration/config.git not found. Run ./prepare first..git'
+
+Parallel mode: 2 workers
+
+========================================
+= extensions/Echo: ./fresh_install 2026-05-13 10:42:52 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+
+fresh_install/save failed. Cannot proceed.
+(0s)
+
+========================================
+= Running: ./find_dependencies_minimal_greedy extensions/CommunityConfiguration 2026-05-13 10:42:52 UTC
+========================================
+All dependencies for extensions/CommunityConfiguration (1):
+  Error: ref/integration/config.git not found. Run ./prepare first.
+
+Optional dependencies to vary (1):
+  Error: ref/integration/config.git not found. Run ./prepare first.
+
+Total combinations to test: 2 (from 0 to 1 optional dependencies)
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+Pre-cloning dependency: Error: ref/integration/config.git not found. Run ./prepare first.
+fatal: could not create leading directories of 'ref/mediawiki/extensions/Error: ref/integration/config.git not found. Run ./prepare first..git'
+
+Greedy mode: starting with all 1 optional deps, removing one at a time.
+
+=== Baseline: all dependencies === 2026-05-13 10:42:52 UTC
+
+========================================
+= extensions/CommunityConfiguration: ./fresh_install 2026-05-13 10:42:52 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+SKIP (fresh_install/restore failed)
+
+Cannot establish baseline.
+(0s)
+
+========================================
+= Running: ./find_dependencies_minimal_thorough extensions/Echo 2026-05-13 10:42:52 UTC
+========================================
+All dependencies for extensions/Echo (1):
+  Error: ref/integration/config.git not found. Run ./prepare first.
+
+Optional dependencies to vary (1):
+  Error: ref/integration/config.git not found. Run ./prepare first.
+
+Total combinations to test: 2 (from 0 to 1 optional dependencies)
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+Pre-cloning dependency: Error: ref/integration/config.git not found. Run ./prepare first.
+fatal: could not create leading directories of 'ref/mediawiki/extensions/Error: ref/integration/config.git not found. Run ./prepare first..git'
+
+=== Phase 1: Greedy estimate ===
+
+Greedy mode: starting with all 1 optional deps, removing one at a time.
+
+=== Baseline: all dependencies === 2026-05-13 10:42:52 UTC
+
+========================================
+= extensions/Echo: ./fresh_install 2026-05-13 10:42:52 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(1s)
+SKIP (fresh_install/restore failed)
+
+Cannot establish baseline.
+(1s)
+
+========================================
+= Running: env PARALLEL=2 ./find_dependencies_minimal_thorough extensions/Echo 2026-05-13 10:42:53 UTC
+========================================
+All dependencies for extensions/Echo (1):
+  Error: ref/integration/config.git not found. Run ./prepare first.
+
+Optional dependencies to vary (1):
+  Error: ref/integration/config.git not found. Run ./prepare first.
+
+Total combinations to test: 2 (from 0 to 1 optional dependencies)
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+Pre-cloning dependency: Error: ref/integration/config.git not found. Run ./prepare first.
+fatal: could not create leading directories of 'ref/mediawiki/extensions/Error: ref/integration/config.git not found. Run ./prepare first..git'
+
+=== Phase 1: Greedy estimate ===
+
+Greedy mode: starting with all 1 optional deps, removing one at a time.
+
+=== Baseline: all dependencies === 2026-05-13 10:42:53 UTC
+
+========================================
+= extensions/Echo: ./fresh_install 2026-05-13 10:42:53 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+SKIP (fresh_install/restore failed)
+
+Cannot establish baseline.
+(0s)
+
+========================================
+= Running: ./find_dependencies_minimal_gated extensions/Echo 2026-05-13 10:42:53 UTC
+========================================
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+skipped (no Selenium tests): extensions/Echo
+
+No components need find_dependencies_minimal_greedy.
+
+========================================
+= Results
+========================================
+PASSED:
+  extensions/Echo
+
+All passed.
+(0s)
+
+========================================
+= Running: env PARALLEL=2 ./find_dependencies_minimal_gated extensions/Echo 2026-05-13 10:42:53 UTC
+========================================
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+skipped (no Selenium tests): extensions/Echo
+
+No components need find_dependencies_minimal_greedy.
+
+========================================
+= Results
+========================================
+PASSED:
+  extensions/Echo
+
+All passed.
+(0s)
+
+========================================
+= Running: ./prepare_gated 2026-05-13 10:42:53 UTC
+========================================
+
+
+
+========================================
+= prepare_gated is running: dirname ./prepare_gated
+
+
+========================================
+= prepare_gated is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare_gated is running: '[' -z 1 ']'
+
+
+========================================
+= prepare_gated is running: dirname ./prepare_gated
+
+========================================
+= prepare_gated is running: . ./lib/clone_or_fetch
+
+========================================
+= prepare_gated is running: IFS=
+
+========================================
+= prepare_gated is running: read -r component
+
+
+
+========================================
+= prepare_gated is running: dirname ./prepare_gated
+
+
+========================================
+= prepare_gated is running: ./list_gated
+
+========================================
+= prepare_gated is running: repo='mediawiki/Error: ref/integration/config.git not found. Run ./prepare first.'
+
+========================================
+= prepare_gated is running: clone_or_fetch 'mediawiki/Error: ref/integration/config.git not found. Run ./prepare first.'
+
+========================================
+= prepare_gated is running: local quiet=
+
+========================================
+= prepare_gated is running: '[' 'mediawiki/Error: ref/integration/config.git not found. Run ./prepare first.' = --quiet ']'
+
+========================================
+= prepare_gated is running: local 'repo=mediawiki/Error: ref/integration/config.git not found. Run ./prepare first.'
+
+========================================
+= prepare_gated is running: local 'ref_dir=ref/mediawiki/Error: ref/integration/config.git not found. Run ./prepare first..git'
+
+========================================
+= prepare_gated is running: '[' -d 'ref/mediawiki/Error: ref/integration/config.git not found. Run ./prepare first..git' ']'
+
+
+========================================
+= prepare_gated is running: dirname 'ref/mediawiki/Error: ref/integration/config.git not found. Run ./prepare first..git'
+
+========================================
+= prepare_gated is running: mkdir -p 'ref/mediawiki/Error: ref/integration/config.git not found. Run .'
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+(0s)
+
+========================================
+= Running: ./install_each_gated extensions/Echo 2026-05-13 10:42:53 UTC
+========================================
+
+########################################
+# extensions/Echo 2026-05-13 10:42:53 UTC
+########################################
+
+========================================
+= extensions/Echo: ./fresh_install 2026-05-13 10:42:53 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+ 2026-05-13 10:42:53 UTC
+
+========================================
+= Results
+========================================
+FAILED:
+  extensions/Echo (fresh_install)
+(0s)
+
+========================================
+= Running: env FAST=1 ./install_each_gated extensions/Echo 2026-05-13 10:42:53 UTC
+========================================
+
+########################################
+# extensions/Echo 2026-05-13 10:42:53 UTC
+########################################
+
+========================================
+= extensions/Echo: ./fresh_install 2026-05-13 10:42:53 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+ 2026-05-13 10:42:53 UTC
+
+========================================
+= Results
+========================================
+FAILED:
+  extensions/Echo (fresh_install)
+(0s)
+
+========================================
+= Running: env PARALLEL=2 ./install_each_gated extensions/Echo 2026-05-13 10:42:53 UTC
+========================================
+
+Parallel mode: 2 workers
+
+########################################
+# setup (fresh_install + save) 2026-05-13 10:42:53 UTC
+########################################
+
+========================================
+= setup: ./fresh_install 2026-05-13 10:42:53 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+
+fresh_install failed. Cannot proceed.
+(1s)
+
+========================================
+= Running: env PARALLEL=2 FAST=1 ./install_each_gated extensions/Echo 2026-05-13 10:42:54 UTC
+========================================
+
+Parallel mode: 2 workers
+
+########################################
+# setup (fresh_install + save) 2026-05-13 10:42:54 UTC
+########################################
+
+========================================
+= setup: ./fresh_install 2026-05-13 10:42:54 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+
+fresh_install failed. Cannot proceed.
+(0s)
+
+========================================
+= Running: ./run_selenium_tests_all_gated extensions/Echo 2026-05-13 10:42:54 UTC
+========================================
+
+########################################
+# core 2026-05-13 10:42:54 UTC
+########################################
+
+========================================
+= core: ./fresh_install 2026-05-13 10:42:54 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+ 2026-05-13 10:42:54 UTC
+
+########################################
+# extensions/Echo 2026-05-13 10:42:54 UTC
+########################################
+
+========================================
+= extensions/Echo: ./fresh_install 2026-05-13 10:42:54 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+ 2026-05-13 10:42:54 UTC
+
+========================================
+= Results
+========================================
+FAILED:
+  core (fresh_install)
+  extensions/Echo (fresh_install)
+(0s)
+
+========================================
+= Running: env FAST=1 ./run_selenium_tests_all_gated extensions/Echo 2026-05-13 10:42:54 UTC
+========================================
+
+########################################
+# core 2026-05-13 10:42:54 UTC
+########################################
+
+========================================
+= core: ./fresh_install 2026-05-13 10:42:54 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+ 2026-05-13 10:42:54 UTC
+
+########################################
+# extensions/Echo 2026-05-13 10:42:54 UTC
+########################################
+
+========================================
+= extensions/Echo: ./fresh_install 2026-05-13 10:42:54 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+ 2026-05-13 10:42:54 UTC
+
+========================================
+= Results
+========================================
+FAILED:
+  core (fresh_install)
+  extensions/Echo (fresh_install)
+(0s)
+
+========================================
+= Running: env PARALLEL=2 ./run_selenium_tests_all_gated extensions/Echo 2026-05-13 10:42:54 UTC
+========================================
+
+########################################
+# core 2026-05-13 10:42:54 UTC
+########################################
+
+========================================
+= core: ./fresh_install 2026-05-13 10:42:54 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+ 2026-05-13 10:42:54 UTC
+
+Parallel mode: 2 workers
+
+Error: FAST mode requires src_save/ (run ./save first or let core step create it).
+(0s)
+
+========================================
+= Running: env PARALLEL=2 FAST=1 ./run_selenium_tests_all_gated extensions/Echo 2026-05-13 10:42:54 UTC
+========================================
+
+########################################
+# core 2026-05-13 10:42:55 UTC
+########################################
+
+========================================
+= core: ./fresh_install 2026-05-13 10:42:55 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+ 2026-05-13 10:42:55 UTC
+
+Parallel mode: 2 workers
+
+Error: FAST mode requires src_save/ (run ./save first or let core step create it).
+(1s)
+
+========================================
+= Running: ./run_selenium_tests_required_gated extensions/Echo 2026-05-13 10:42:55 UTC
+========================================
+
+########################################
+# extensions/Echo 2026-05-13 10:42:55 UTC
+########################################
+
+========================================
+= extensions/Echo: ./fresh_install 2026-05-13 10:42:55 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+
+  (0 passed, 1 failed, 0 skipped) 2026-05-13 10:42:55 UTC
+
+========================================
+= Results
+========================================
+FAILED:
+  extensions/Echo (fresh_install)
+(0s)
+
+========================================
+= Running: env FAST=1 ./run_selenium_tests_required_gated extensions/Echo 2026-05-13 10:42:55 UTC
+========================================
+
+########################################
+# extensions/Echo 2026-05-13 10:42:55 UTC
+########################################
+
+========================================
+= extensions/Echo: ./fresh_install 2026-05-13 10:42:55 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+
+  (0 passed, 1 failed, 0 skipped) 2026-05-13 10:42:55 UTC
+
+========================================
+= Results
+========================================
+FAILED:
+  extensions/Echo (fresh_install)
+(0s)
+
+========================================
+= Running: env PARALLEL=2 ./run_selenium_tests_required_gated extensions/Echo 2026-05-13 10:42:55 UTC
+========================================
+
+Parallel mode: 2 workers
+
+########################################
+# setup (fresh_install + save) 2026-05-13 10:42:55 UTC
+########################################
+
+========================================
+= setup: ./fresh_install 2026-05-13 10:42:55 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+
+fresh_install failed. Cannot proceed.
+(0s)
+
+========================================
+= Running: env PARALLEL=2 FAST=1 ./run_selenium_tests_required_gated extensions/Echo 2026-05-13 10:42:55 UTC
+========================================
+
+Parallel mode: 2 workers
+
+########################################
+# setup (fresh_install + save) 2026-05-13 10:42:55 UTC
+########################################
+
+========================================
+= setup: ./fresh_install 2026-05-13 10:42:55 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(0s)
+
+fresh_install failed. Cannot proceed.
+(0s)
+
+========================================
+= Running: ./run_selenium_tests_gated 2026-05-13 10:42:55 UTC
+========================================
+
+########################################
+# install_all_gated 2026-05-13 10:42:55 UTC
+########################################
+
+========================================
+= install: ./install_all_gated 2026-05-13 10:42:55 UTC
+========================================
+
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+
+========================================
+= fresh_install is running: . ./lib/silent_output
+
+
+
+========================================
+= fresh_install is running: '[' -z 1 ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/docker_chmod
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: . ./lib/print_quibble_command
+
+========================================
+= fresh_install is running: '[' '!' -d ref/mediawiki/core.git ']'
+
+
+========================================
+= fresh_install is running: dirname ./fresh_install
+
+========================================
+= fresh_install is running: ./prepare
+
+
+
+========================================
+= prepare is running: dirname ./prepare
+
+
+========================================
+= prepare is running: . ./lib/silent_output
+
+
+
+========================================
+= prepare is running: '[' -z 1 ']'
+
+========================================
+= prepare is running: mkdir -p ref/mediawiki/skins ref/integration
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+mkdir: cannot create directory ‘ref/integration’: Permission denied
+(1s)
+ 2026-05-13 10:42:56 UTC
+
+========================================
+= Results
+========================================
+FAILED:
+  install (install_all_gated)
+(1s)
+
+========================================
+= Results
+========================================
+PASSED:
+  ./run_php_unit_tests
+  ./run_php_unit_tests --filter testValidSpecialPageAliases
+  ./find_dependencies_minimal_gated extensions/Echo
+  env PARALLEL=2 ./find_dependencies_minimal_gated extensions/Echo
+FAILED:
+  ./fresh_install
+  ./find_dependencies_minimal_bottom_up extensions/Echo
+  env PARALLEL=2 ./find_dependencies_minimal_bottom_up extensions/Echo
+  ./find_dependencies_minimal_greedy extensions/CommunityConfiguration
+  ./find_dependencies_minimal_thorough extensions/Echo
+  env PARALLEL=2 ./find_dependencies_minimal_thorough extensions/Echo
+  ./prepare_gated
+  ./install_each_gated extensions/Echo
+  env FAST=1 ./install_each_gated extensions/Echo
+  env PARALLEL=2 ./install_each_gated extensions/Echo
+  env PARALLEL=2 FAST=1 ./install_each_gated extensions/Echo
+  ./run_selenium_tests_all_gated extensions/Echo
+  env FAST=1 ./run_selenium_tests_all_gated extensions/Echo
+  env PARALLEL=2 ./run_selenium_tests_all_gated extensions/Echo
+  env PARALLEL=2 FAST=1 ./run_selenium_tests_all_gated extensions/Echo
+  ./run_selenium_tests_required_gated extensions/Echo
+  env FAST=1 ./run_selenium_tests_required_gated extensions/Echo
+  env PARALLEL=2 ./run_selenium_tests_required_gated extensions/Echo
+  env PARALLEL=2 FAST=1 ./run_selenium_tests_required_gated extensions/Echo
+  ./run_selenium_tests_gated
+(7s)

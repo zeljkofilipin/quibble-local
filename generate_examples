@@ -58,9 +58,13 @@ for script in *; do
     echo "Skipping $script: no # Usage: block" >&2 # >&2 prints to stderr
     continue
   fi
-  # Iterate each Usage line. `<<<` feeds the captured block to the loop; the loop
-  # runs in the current shell so `set -e` and exits behave normally.
-  while IFS= read -r cmd; do
+  # Iterate each Usage line. The herestring goes to FD 3, NOT stdin, so child processes
+  # (e.g. `docker run -i ...` invoked by ./install, ./fresh_install, ./run_selenium_tests,
+  # ./run_php_unit_tests) can't drain the remaining lines. The `-i` flag attaches docker
+  # to stdin and forwards it to the container; with the herestring on stdin, docker would
+  # swallow every subsequent Usage line and the next `read` would silently hit EOF,
+  # generating only the first Usage variant per script.
+  while IFS= read -r cmd <&3; do
     [ -n "$cmd" ] || continue                                       # skip blank lines (defensive)
     file="$(cmd_to_filename "$cmd")"                                # derive examples/*.txt filename from the command
     case "$seen" in
@@ -85,5 +89,5 @@ for script in *; do
     else
       ./generate_example "$file" "$run_cmd"                         # actually run the command and capture output
     fi
-  done <<< "$usage_block"
+  done 3<<< "$usage_block"                                            # herestring on FD 3 — see note above
 done
