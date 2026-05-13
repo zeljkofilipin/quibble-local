@@ -46,6 +46,58 @@
   [ "$status" -eq 0 ]
 }
 
+@test "generate_examples: pins prep scripts first and destructive scripts last" {
+  # Iteration order is critical: prep scripts (prepare, prepare_gated, fresh_install, save)
+  # must run before everything else so cache/, log/, src/, ref/, and the Docker image exist.
+  # Destructive scripts (remove_srcs, remove, remove_all) must run last so they don't wipe
+  # state needed by later scripts. The rest stays alphabetical.
+  run env DRY_RUN=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+  [ "$status" -eq 0 ]
+
+  # First-line index (1-based) of the first output line matching a pattern; empty if none.
+  pos() {
+    echo "$output" | awk -v p="$1" '$0 ~ p { print NR; exit }'
+  }
+
+  # Early-block: pinned order = prepare → prepare_gated → fresh_install → save.
+  # Match the default Usage filename (the *.txt root, no flag/env suffix) so each anchor is unique.
+  p_prepare=$(pos "Would generate examples/prepare\\.txt ")
+  p_prepare_gated=$(pos "Would generate examples/prepare_gated\\.txt ")
+  p_fresh_install=$(pos "Would generate examples/fresh_install\\.txt ")
+  p_save=$(pos "Would generate examples/save\\.txt ")
+  [ -n "$p_prepare" ]
+  [ -n "$p_prepare_gated" ]
+  [ -n "$p_fresh_install" ]
+  [ -n "$p_save" ]
+  [ "$p_prepare" -lt "$p_prepare_gated" ]
+  [ "$p_prepare_gated" -lt "$p_fresh_install" ]
+  [ "$p_fresh_install" -lt "$p_save" ]
+
+  # Late-block: pinned order = remove_srcs → remove → remove_all (least → most destructive).
+  p_remove_srcs=$(pos "Would generate examples/remove_srcs\\.txt ")
+  p_remove=$(pos "Would generate examples/remove\\.txt ")
+  p_remove_all=$(pos "Would generate examples/remove_all\\.txt ")
+  [ -n "$p_remove_srcs" ]
+  [ -n "$p_remove" ]
+  [ -n "$p_remove_all" ]
+  [ "$p_remove_srcs" -lt "$p_remove" ]
+  [ "$p_remove" -lt "$p_remove_all" ]
+
+  # Cross-block invariants: every early line strictly before every middle line; every middle
+  # line strictly before every late line. Middle scripts include install*, restore*, run_*.
+  last_early=$(echo "$output" | awk '/Would generate examples\/(prepare|fresh_install|save)/ { last = NR } END { print last+0 }')
+  first_middle=$(echo "$output" | awk '/Would generate examples\/(install|restore|run_)/ { print NR; exit }')
+  last_middle=$(echo "$output" | awk '/Would generate examples\/(install|restore|run_)/ { last = NR } END { print last+0 }')
+  first_late=$(echo "$output" | awk '/Would generate examples\/remove/ { print NR; exit }')
+
+  [ "$last_early" -gt 0 ]
+  [ "$first_middle" -gt 0 ]
+  [ "$last_middle" -gt 0 ]
+  [ "$first_late" -gt 0 ]
+  [ "$last_early" -lt "$first_middle" ]
+  [ "$last_middle" -lt "$first_late" ]
+}
+
 @test "generate_examples: FD 3 loop pattern survives a child draining stdin" {
   # Demonstrate the underlying fix in isolation: a loop reading from FD 3 keeps
   # iterating even when the body spawns a child that drains stdin (cat > /dev/null
