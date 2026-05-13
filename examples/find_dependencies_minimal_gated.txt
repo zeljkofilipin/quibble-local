@@ -1,116 +1,27 @@
-$ ./find_dependencies_minimal_gated
+$ DRY_RUN=1 ./find_dependencies_minimal_gated
 
-skipped (no Selenium tests): extensions/AntiSpoof
-skipped (no Selenium tests): extensions/Babel
-skipped (no Selenium tests): extensions/BetaFeatures
-skipped (no Selenium tests): extensions/CheckUser
-skipped (no Selenium tests): extensions/CirrusSearch
-skipped (no Selenium tests): extensions/cldr
-skipped (no Selenium tests): extensions/ContentTranslation
-skipped (no Selenium tests): extensions/CommunityConfigurationExample
-skipped (no Selenium tests): extensions/Disambiguator
-skipped (no Selenium tests): extensions/Elastica
-skipped (no Selenium tests): extensions/EventBus
-skipped (no Selenium tests): extensions/EventLogging
-skipped (no Selenium tests): extensions/EventStreamConfig
-skipped (no Selenium tests): extensions/FileImporter
-skipped (no Selenium tests): extensions/GeoData
-skipped (no Selenium tests): extensions/GlobalCssJs
-skipped (no Selenium tests): extensions/GlobalPreferences
-skipped (no Selenium tests): extensions/GrowthExperiments
-skipped (no Selenium tests): extensions/IPInfo
-skipped (no Selenium tests): extensions/JsonConfig
-skipped (no Selenium tests): extensions/Kartographer
-skipped (no Selenium tests): extensions/MediaModeration
-skipped (no Selenium tests): extensions/MobileApp
-skipped (no Selenium tests): extensions/MobileFrontend
-skipped (no Selenium tests): extensions/NavigationTiming
-skipped (no Selenium tests): extensions/PageImages
-skipped (no Selenium tests): extensions/PageViewInfo
-skipped (no Selenium tests): extensions/SandboxLink
-skipped (no Selenium tests): extensions/Scribunto
-skipped (no Selenium tests): extensions/SiteMatrix
-skipped (no optional dependencies): extensions/TemplateData
-skipped (no Selenium tests): extensions/Thanks
-skipped (no Selenium tests): extensions/TimedMediaHandler
-skipped (no Selenium tests): extensions/Translate
-skipped (no Selenium tests): extensions/UniversalLanguageSelector
-skipped (no Selenium tests): extensions/Wikibase
-skipped (no Selenium tests): extensions/WikibaseCirrusSearch
-skipped (no Selenium tests): extensions/WikibaseMediaInfo
-skipped (no Selenium tests): extensions/WikiLove
-skipped (no Selenium tests): extensions/WikimediaCampaignEvents
-skipped (no Selenium tests): extensions/WikimediaMessages
-skipped (no Selenium tests): skins/Vector
+use VERBOSE=1 for full output
+logs: log/silent/
 
-10 components to process.
-extensions/AbuseFilter dependencies_minimal ....................................................................... ok (30m 40s)  2026-04-29 15:46:07 UTC
-extensions/CampaignEvents dependencies_minimal ............................................................. ok (24m 35s)  2026-04-29 16:10:42 UTC
-extensions/CommunityConfiguration dependencies_minimal ....................... ok (8m 33s)  2026-04-29 16:19:15 UTC
-extensions/Echo dependencies_minimal .............................................. ok (19m 52s)  2026-04-29 16:39:07 UTC
-extensions/GuidedTour dependencies_minimal ....................... ok (9m 21s)  2026-04-29 16:48:28 UTC
-extensions/Math dependencies_minimal ................. FAIL (3m 27s)  2026-04-29 16:51:55 UTC
-extensions/PageTriage dependencies_minimal ......................................... ok (20m 23s)  2026-04-29 17:12:18 UTC
-extensions/ProofreadPage dependencies_minimal ............................................... ok (25m 21s)  2026-04-29 17:37:39 UTC
-extensions/VisualEditor dependencies_minimal ..................................................... ok (32m 59s)  2026-04-29 18:10:38 UTC
-skins/MinervaNeue dependencies_minimal ................................................................ ok (39m 24s)  2026-04-29 18:50:02 UTC
+OS: Linux 6.14.0-37-generic
+CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
+RAM: 15.6 GB
+bash: 5.2.21(1)-release
+git: git version 2.43.0
+docker: Docker version 29.4.3, build 055a478
+docker CPUs: 4
+docker RAM: 15.6 GB
+
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+skipped (no Selenium tests): Error: ref/integration/config.git not found. Run ./prepare first.
+
+No components need find_dependencies_minimal_greedy.
 
 ========================================
 = Results
 ========================================
 PASSED:
-  extensions/AntiSpoof
-  extensions/Babel
-  extensions/BetaFeatures
-  extensions/CheckUser
-  extensions/CirrusSearch
-  extensions/cldr
-  extensions/ContentTranslation
-  extensions/CommunityConfigurationExample
-  extensions/Disambiguator
-  extensions/Elastica
-  extensions/EventBus
-  extensions/EventLogging
-  extensions/EventStreamConfig
-  extensions/FileImporter
-  extensions/GeoData
-  extensions/GlobalCssJs
-  extensions/GlobalPreferences
-  extensions/GrowthExperiments
-  extensions/IPInfo
-  extensions/JsonConfig
-  extensions/Kartographer
-  extensions/MediaModeration
-  extensions/MobileApp
-  extensions/MobileFrontend
-  extensions/NavigationTiming
-  extensions/PageImages
-  extensions/PageViewInfo
-  extensions/SandboxLink
-  extensions/Scribunto
-  extensions/SiteMatrix
-  extensions/TemplateData
-  extensions/Thanks
-  extensions/TimedMediaHandler
-  extensions/Translate
-  extensions/UniversalLanguageSelector
-  extensions/Wikibase
-  extensions/WikibaseCirrusSearch
-  extensions/WikibaseMediaInfo
-  extensions/WikiLove
-  extensions/WikimediaCampaignEvents
-  extensions/WikimediaMessages
-  skins/Vector
-  extensions/AbuseFilter
-  extensions/CampaignEvents
-  extensions/CommunityConfiguration
-  extensions/Echo
-  extensions/GuidedTour
-  extensions/PageTriage
-  extensions/ProofreadPage
-  extensions/VisualEditor
-  skins/MinervaNeue
-FAILED:
-  extensions/Math (dependencies_minimal)
+  Error: ref/integration/config.git not found. Run ./prepare first.
 
-Logs: log/silent/
+All passed.
+(0s)

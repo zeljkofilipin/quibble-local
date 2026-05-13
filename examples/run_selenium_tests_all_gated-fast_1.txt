@@ -1,0 +1,26 @@
+$ DRY_RUN=1 FAST=1 ./run_selenium_tests_all_gated
+
+use VERBOSE=1 for full output
+logs: log/silent/
+
+OS: Linux 6.14.0-37-generic
+CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
+RAM: 15.6 GB
+bash: 5.2.21(1)-release
+git: git version 2.43.0
+docker: Docker version 29.4.3, build 055a478
+docker CPUs: 4
+docker RAM: 15.6 GB
+
+core fresh_install .. FAIL (1s)  2026-05-13 10:05:54 UTC
+Error: ref/integration/config.git not found. Run ./prepare first. fresh_install .. FAIL (0s)  2026-05-13 10:05:54 UTC
+
+========================================
+= Results
+========================================
+FAILED:
+  core (fresh_install)
+  Error: ref/integration/config.git not found. Run ./prepare first. (fresh_install)
+
+Logs: log/silent/
+(1s)

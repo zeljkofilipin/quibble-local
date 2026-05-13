@@ -1,0 +1,49 @@
+$ DRY_RUN=1 VERBOSE=1 ./restore
+
+OS: Linux 6.14.0-37-generic
+CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
+RAM: 15.6 GB
+bash: 5.2.21(1)-release
+git: git version 2.43.0
+docker: Docker version 29.4.3, build 055a478
+docker CPUs: 4
+docker RAM: 15.6 GB
+
+
+
+
+========================================
+= restore is running: dirname ./restore
+
+
+========================================
+= restore is running: . ./lib/silent_output
+
+
+
+========================================
+= restore is running: '[' -z 1 ']'
+
+
+========================================
+= restore is running: dirname ./restore
+
+========================================
+= restore is running: . ./lib/docker_chmod
+
+========================================
+= restore is running: '[' '!' -d src_save ']'
+
+========================================
+= restore is running: echo 'Error: src_save/ is empty or missing. Run ./save first.'
+Error: src_save/ is empty or missing. Run ./save first.
+
+========================================
+= restore is running: exit 1
+
+========================================
+= restore is running: _quibble_duration_exit
+
+========================================
+= restore is running: local exit_code=1
+(0s)

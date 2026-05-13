@@ -1,3 +1,0 @@
-$ ./find_dependencies_minimal_thorough
-
-Usage: ./find_dependencies_minimal_thorough extensions/EXTENSION or ./find_dependencies_minimal_thorough skins/SKIN

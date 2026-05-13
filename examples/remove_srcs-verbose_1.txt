@@ -1,0 +1,101 @@
+$ DRY_RUN=1 VERBOSE=1 ./remove_srcs
+
+OS: Linux 6.14.0-37-generic
+CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
+RAM: 15.6 GB
+bash: 5.2.21(1)-release
+git: git version 2.43.0
+docker: Docker version 29.4.3, build 055a478
+docker CPUs: 4
+docker RAM: 15.6 GB
+
+
+
+
+========================================
+= remove_srcs is running: dirname ./remove_srcs
+
+
+========================================
+= remove_srcs is running: . ./lib/silent_output
+
+
+
+========================================
+= remove_srcs is running: '[' -z 1 ']'
+
+
+
+========================================
+= remove_srcs is running: printf '%s ' 'src_[0-9]*' 'src_save_[0-9]*' 'src_worker_*'
+
+
+========================================
+= remove_srcs is running: printf '%s ' src src_save 'src_[0-9]*' 'src_save_[0-9]*' 'src_worker_*'
+
+========================================
+= remove_srcs is running: src_dirs='src src_save src_[0-9]* src_save_[0-9]* src_worker_* '
+
+========================================
+= remove_srcs is running: volumes=
+
+========================================
+= remove_srcs is running: paths=
+
+========================================
+= remove_srcs is running: for dir in $src_dirs
+
+========================================
+= remove_srcs is running: '[' -d src ']'
+
+========================================
+= remove_srcs is running: continue
+
+========================================
+= remove_srcs is running: for dir in $src_dirs
+
+========================================
+= remove_srcs is running: '[' -d src_save ']'
+
+========================================
+= remove_srcs is running: continue
+
+========================================
+= remove_srcs is running: for dir in $src_dirs
+
+========================================
+= remove_srcs is running: '[' -d 'src_[0-9]*' ']'
+
+========================================
+= remove_srcs is running: continue
+
+========================================
+= remove_srcs is running: for dir in $src_dirs
+
+========================================
+= remove_srcs is running: '[' -d 'src_save_[0-9]*' ']'
+
+========================================
+= remove_srcs is running: continue
+
+========================================
+= remove_srcs is running: for dir in $src_dirs
+
+========================================
+= remove_srcs is running: '[' -d 'src_worker_*' ']'
+
+========================================
+= remove_srcs is running: continue
+
+========================================
+= remove_srcs is running: '[' -n '' ']'
+
+========================================
+= remove_srcs is running: rm -rf src src_save 'src_[0-9]*' 'src_save_[0-9]*' 'src_worker_*'
+
+========================================
+= remove_srcs is running: _quibble_duration_exit
+
+========================================
+= remove_srcs is running: local exit_code=0
+(0s)

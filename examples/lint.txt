@@ -1,2 +1,3 @@
-$ ./lint
+$ DRY_RUN=1 ./lint
 
+(10s)

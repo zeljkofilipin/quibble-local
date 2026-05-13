@@ -1,0 +1,72 @@
+$ DRY_RUN=1 VERBOSE=1 ./install extensions/Echo
+
+OS: Linux 6.14.0-37-generic
+CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
+RAM: 15.6 GB
+bash: 5.2.21(1)-release
+git: git version 2.43.0
+docker: Docker version 29.4.3, build 055a478
+docker CPUs: 4
+docker RAM: 15.6 GB
+
+
+
+
+========================================
+= install is running: dirname ./install
+
+
+========================================
+= install is running: . ./lib/silent_output
+
+
+
+========================================
+= install is running: '[' -z 1 ']'
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/clone_or_fetch
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/print_quibble_command
+
+========================================
+= install is running: clone_or_fetch mediawiki/extensions/Echo
+
+========================================
+= install is running: local quiet=
+
+========================================
+= install is running: '[' mediawiki/extensions/Echo = --quiet ']'
+
+========================================
+= install is running: local repo=mediawiki/extensions/Echo
+
+========================================
+= install is running: local ref_dir=ref/mediawiki/extensions/Echo.git
+
+========================================
+= install is running: '[' -d ref/mediawiki/extensions/Echo.git ']'
+
+
+========================================
+= install is running: dirname ref/mediawiki/extensions/Echo.git
+
+========================================
+= install is running: mkdir -p ref/mediawiki/extensions
+mkdir: cannot create directory ‘ref/mediawiki’: Permission denied
+
+========================================
+= install is running: _quibble_duration_exit
+
+========================================
+= install is running: local exit_code=1
+(0s)
