@@ -52,6 +52,20 @@ setup() {
   [[ "$output" == *"Usage:"* ]]
 }
 
+@test "generate_example: captures output directly to file, not through a streaming pipe" {
+  # Regression guard: piping the captured eval output through `awk | >> "$file"` makes any
+  # libc-using child in the captured pipeline switch from block-buffered to fully-buffered
+  # stdout (writer sees "stdout is a pipe", not a regular file), which stalls `tail -f` on
+  # the destination file. Direct redirection preserves the streaming UX; path scrubbing
+  # runs as a separate post-processing step after the capture is complete.
+  run grep -E "eval \"\\\$cmd\"\\) >> \"\\\$file\" 2>&1" generate_example
+  [ "$status" -eq 0 ]
+  # And the awk scrub must run as a SECOND pass on the finished file (not a pipe in the
+  # eval line), reading the file as an argument rather than from stdin.
+  run grep -E "awk -v pwd=\"\\\$PWD\" -f lib/scrub_pwd.awk \"\\\$file\"" generate_example
+  [ "$status" -eq 0 ]
+}
+
 @test "generate_example: scrubs project absolute path to \$PWD placeholder in captured output" {
   # generate_example pipes captured stdout+stderr through lib/scrub_pwd.awk so docker -v
   # mount lines (and any other absolute path) become "$PWD/..." in examples/*.txt. This

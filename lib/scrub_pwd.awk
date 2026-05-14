@@ -29,5 +29,4 @@ BEGIN {
     s = substr(s, i + nlen)                      # advance past the match
   }
   print out s                    # print accumulated prefix + the rest (no more matches)
-  fflush()                       # flush stdout per line so `tail -f` on the destination file shows progress in real time
-}                                # (awk full-buffers stdout when it's a pipe/file, so output otherwise lands in ~8KB chunks)
+}

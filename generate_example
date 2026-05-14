@@ -30,18 +30,28 @@ echo "Generating $file..." # progress message so the user sees what's being gene
 # Write the "$ <cmd>" header followed by a blank line. Truncates the file if it existed.
 printf '$ %s\n\n' "$cmd" > "$file"
 
-# Run the command and append stdout+stderr to the file, scrubbing the project's absolute
-# path on the way so captured Docker -v mount lines (e.g. "$PWD/cache:/cache") don't
-# embed whatever absolute path the generating machine has. See lib/scrub_pwd.awk.
+# Run the command and append stdout+stderr DIRECTLY to the file (no intermediate pipe).
+# Direct redirection preserves the line-by-line streaming UX so a user running
+# `tail -f examples/<file>.txt` against a long capture sees progress in real time.
+# An earlier version piped through `awk` for path scrubbing, but introducing a pipe
+# makes any libc-using child in the captured pipeline switch from block-buffered to
+# fully-buffered output (the writer side sees "stdout is a pipe", not a regular file),
+# so captures stalled until ~8KB chunks filled. Path scrubbing now happens in a
+# second pass once the capture completes, below.
 # eval is needed because $cmd is a single string with arguments and quoting baked in.
 # || true lets the script continue when the captured command exits non-zero (common
-# for usage-on-failure outputs); without it, set -e (and -o pipefail) would abort before "Done!".
+# for usage-on-failure outputs); without it, set -e would abort before "Done!".
 # Subshell with exported _QUIBBLE_FORCE_TERMINAL=1 makes the captured script act as if
 # its stdout were a terminal (see lib/silent_output, lib/duration_trap, lib/debug_info)
 # so examples/*.txt contains the silent-mode UX a user would see, not the piped-stdout
 # verbose passthrough. The subshell scopes the export so it does not leak.
-# 2>&1 must come before the pipe so stderr is also scrubbed and captured.
-(export _QUIBBLE_FORCE_TERMINAL=1; eval "$cmd") 2>&1 \
-  | awk -v pwd="$PWD" -f lib/scrub_pwd.awk >> "$file" || true
+(export _QUIBBLE_FORCE_TERMINAL=1; eval "$cmd") >> "$file" 2>&1 || true
+
+# Scrub the project's absolute path to "$PWD" once the capture is complete so the
+# saved file is machine-independent (see lib/scrub_pwd.awk for the rationale). Running
+# awk on the finished file rather than mid-stream keeps `tail -f` working above.
+# `awk file > file.tmp && mv file.tmp file` is the standard pattern for in-place
+# awk edits — awk can't safely write to the same file it's reading.
+awk -v pwd="$PWD" -f lib/scrub_pwd.awk "$file" > "$file".tmp && mv "$file".tmp "$file"
 
 echo "Done!" # signal completion to the user
