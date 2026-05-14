@@ -51,3 +51,19 @@ setup() {
   [ "$status" -eq 1 ]
   [[ "$output" == *"Usage:"* ]]
 }
+
+@test "generate_example: scrubs project absolute path to \$PWD placeholder in captured output" {
+  # generate_example pipes captured stdout+stderr through lib/scrub_pwd.awk so docker -v
+  # mount lines (and any other absolute path) become "$PWD/..." in examples/*.txt. This
+  # keeps regenerated files machine-independent. See plan §6.
+  # The cmd string uses single quotes here so the $PWD inside it reaches generate_example
+  # un-expanded — the expansion happens inside generate_example's `eval` (after it cd's
+  # to its own directory), then scrub_pwd.awk substitutes the expanded path back to "$PWD".
+  run ./generate_example "$output_file" 'echo "  -v $PWD/cache:/cache"'
+  [ "$status" -eq 0 ]
+  # The scrubbed body line should contain the literal "$PWD" placeholder.
+  grep -qF '  -v $PWD/cache:/cache' "$output_file"
+  # And the absolute path of this test's $PWD should not appear anywhere in the file
+  # (would only appear if scrubbing failed). -F = fixed string match.
+  ! grep -qF "$PWD/cache:/cache" "$output_file"
+}
