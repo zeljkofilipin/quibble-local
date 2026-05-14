@@ -11,7 +11,7 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-1..24
+1..30
 ok 1 combinations.awk: single item
 ok 2 combinations.awk: two items
 ok 3 combinations.awk: three items ordered by size
@@ -36,4 +36,10 @@ ok 21 parse_usage.awk: stops at non-comment line
 ok 22 parse_usage.awk: stops at single-space comment line
 ok 23 parse_usage.awk: returns nothing when no Usage block
 ok 24 parse_usage.awk: strips trailing inline # comment
+ok 25 scrub_pwd.awk: replaces single occurrence with $PWD placeholder
+ok 26 scrub_pwd.awk: leaves unrelated paths alone
+ok 27 scrub_pwd.awk: leaves prefix-only matches alone (requires trailing slash)
+ok 28 scrub_pwd.awk: handles multiple occurrences on one line
+ok 29 scrub_pwd.awk: treats path as a literal string (no regex metachars)
+ok 30 scrub_pwd.awk: passes lines through unchanged when no path appears
 (1s)

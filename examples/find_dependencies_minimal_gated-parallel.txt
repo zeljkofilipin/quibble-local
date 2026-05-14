@@ -59,31 +59,31 @@ skipped (no Selenium tests): skins/Vector
 
 Parallel mode: 2 workers
 
---- Wave 1-2 of 10 (2 workers) --- 2026-05-13 11:52:29 UTC
+--- Wave 1-2 of 10 (2 workers) --- 2026-05-14 17:38:56 UTC
   Worker 1: extensions/AbuseFilter (ENVIRONMENT=1)
   Worker 2: extensions/CampaignEvents (ENVIRONMENT=2)
   extensions/AbuseFilter: ok
   extensions/CampaignEvents: ok
 
---- Wave 3-4 of 10 (2 workers) --- 2026-05-13 11:53:09 UTC
+--- Wave 3-4 of 10 (2 workers) --- 2026-05-14 17:44:35 UTC
   Worker 1: extensions/CommunityConfiguration (ENVIRONMENT=1)
   Worker 2: extensions/Echo (ENVIRONMENT=2)
   extensions/CommunityConfiguration: ok
   extensions/Echo: ok
 
---- Wave 5-6 of 10 (2 workers) --- 2026-05-13 11:53:35 UTC
+--- Wave 5-6 of 10 (2 workers) --- 2026-05-14 17:46:30 UTC
   Worker 1: extensions/GuidedTour (ENVIRONMENT=1)
   Worker 2: extensions/Math (ENVIRONMENT=2)
   extensions/GuidedTour: ok
   extensions/Math: ok
 
---- Wave 7-8 of 10 (2 workers) --- 2026-05-13 11:53:55 UTC
+--- Wave 7-8 of 10 (2 workers) --- 2026-05-14 17:47:40 UTC
   Worker 1: extensions/PageTriage (ENVIRONMENT=1)
   Worker 2: extensions/ProofreadPage (ENVIRONMENT=2)
   extensions/PageTriage: ok
   extensions/ProofreadPage: ok
 
---- Wave 9-10 of 10 (2 workers) --- 2026-05-13 11:54:21 UTC
+--- Wave 9-10 of 10 (2 workers) --- 2026-05-14 17:50:40 UTC
   Worker 1: extensions/VisualEditor (ENVIRONMENT=1)
   Worker 2: skins/MinervaNeue (ENVIRONMENT=2)
   extensions/VisualEditor: ok
@@ -147,4 +147,4 @@ PASSED:
   skins/MinervaNeue
 
 All passed.
-(3m 42s)
+(17m 39s)

@@ -12,15 +12,118 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-core fresh_install .. FAIL (0s)  2026-05-13 13:00:26 UTC
-Error: ref/integration/config.git not found. Run ./prepare first. fresh_install .. FAIL (0s)  2026-05-13 13:00:26 UTC
+core fresh_install ............................................. ok (1s) save . FAIL (1s)  2026-05-14 18:56:05 UTC
+extensions/AbuseFilter restore  ok (0s) install ................................................. ok (19s) run_selenium_tests ............................................. ok (1s)  2026-05-14 18:56:27 UTC
+extensions/AntiSpoof restore  ok (1s) install ................................................ ok (4s)  2026-05-14 18:56:34 UTC
+extensions/Babel restore  ok (1s) install ................................................. ok (6s)  2026-05-14 18:56:42 UTC
+extensions/BetaFeatures restore  ok (1s) install ................................................ ok (4s)  2026-05-14 18:56:49 UTC
+extensions/CampaignEvents restore  ok (1s) install ................................................. ok (15s) run_selenium_tests ............................................. ok (1s)  2026-05-14 18:57:08 UTC
+extensions/CheckUser restore  ok (1s) install ................................................. ok (29s)  2026-05-14 18:57:39 UTC
+extensions/CirrusSearch restore  ok (1s) install ................................................. ok (18s)  2026-05-14 18:57:59 UTC
+extensions/cldr restore  ok (1s) install ................................................ ok (4s)  2026-05-14 18:58:06 UTC
+extensions/ContentTranslation restore  ok (0s) install ................................................. ok (17s)  2026-05-14 18:58:25 UTC
+extensions/CommunityConfiguration restore  ok (0s) install ................................................. ok (5s) run_selenium_tests ............................................. ok (0s)  2026-05-14 18:58:32 UTC
+extensions/CommunityConfigurationExample restore  ok (1s) install ................................................. ok (5s)  2026-05-14 18:58:39 UTC
+extensions/Disambiguator restore  ok (0s) install ................................................. ok (6s)  2026-05-14 18:58:47 UTC
+extensions/Echo restore  ok (0s) install ................................................. ok (11s) run_selenium_tests ............................................. ok (1s)  2026-05-14 18:59:01 UTC
+extensions/Elastica restore  ok (0s) install ................................................ ok (4s)  2026-05-14 18:59:07 UTC
+extensions/EventBus restore  ok (0s) install ................................................. ok (5s)  2026-05-14 18:59:14 UTC
+extensions/EventLogging restore  ok (0s) install ................................................. ok (7s)  2026-05-14 18:59:23 UTC
+extensions/EventStreamConfig restore  ok (0s) install ................................................ ok (4s)  2026-05-14 18:59:28 UTC
+extensions/FileImporter restore  ok (1s) install ................................................. ok (9s)  2026-05-14 18:59:39 UTC
+extensions/GeoData restore  ok (1s) install ................................................. ok (7s)  2026-05-14 18:59:48 UTC
+extensions/GlobalCssJs restore  ok (1s) install ................................................ ok (4s)  2026-05-14 18:59:54 UTC
+extensions/GlobalPreferences restore  ok (1s) install ................................................ ok (4s)  2026-05-14 19:00:00 UTC
+extensions/GrowthExperiments restore  ok (1s) install ................................................. ok (32s)  2026-05-14 19:00:35 UTC
+extensions/GuidedTour restore  ok (0s) install ................................................. ok (6s) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:00:43 UTC
+extensions/IPInfo restore  ok (1s) install ................................................. ok (14s)  2026-05-14 19:00:59 UTC
+extensions/JsonConfig restore  ok (1s) install ................................................. ok (10s)  2026-05-14 19:01:12 UTC
+extensions/Kartographer restore  ok (0s) install ................................................. ok (13s)  2026-05-14 19:01:26 UTC
+extensions/Math restore  ok (1s) install ................................................. ok (8s) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:01:38 UTC
+extensions/MediaModeration restore  ok (0s) install ................................................ ok (4s)  2026-05-14 19:01:44 UTC
+extensions/MobileApp restore  ok (0s) install ................................................. ok (12s)  2026-05-14 19:01:57 UTC
+extensions/MobileFrontend restore  ok (1s) install ................................................. ok (11s)  2026-05-14 19:02:11 UTC
+extensions/NavigationTiming restore  ok (1s) install ................................................. ok (5s)  2026-05-14 19:02:18 UTC
+extensions/PageImages restore  ok (1s) install ................................................ ok (4s)  2026-05-14 19:02:24 UTC
+extensions/PageTriage restore  ok (1s) install ................................................. ok (10s) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:02:38 UTC
+extensions/PageViewInfo restore  ok (0s) install ................................................ ok (4s)  2026-05-14 19:02:43 UTC
+extensions/ProofreadPage restore  ok (1s) install ................................................. ok (12s) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:02:58 UTC
+extensions/SandboxLink restore  ok (1s) install ................................................ ok (4s)  2026-05-14 19:03:04 UTC
+extensions/Scribunto restore  ok (1s) install ................................................ ok (4s)  2026-05-14 19:03:10 UTC
+extensions/SiteMatrix restore  ok (1s) install ................................................ ok (4s)  2026-05-14 19:03:16 UTC
+extensions/TemplateData restore  ok (1s) install ................................................ ok (4s) run_selenium_tests ............................................. ok (0s)  2026-05-14 19:03:23 UTC
+extensions/Thanks restore  ok (1s) install ................................................. ok (13s)  2026-05-14 19:03:39 UTC
+extensions/TimedMediaHandler restore  ok (0s) install ................................................ ok (5s)  2026-05-14 19:03:45 UTC
+extensions/Translate restore  ok (1s) install ................................................. ok (12s)  2026-05-14 19:04:00 UTC
+extensions/UniversalLanguageSelector restore  ok (1s) install ................................................. ok (6s)  2026-05-14 19:04:08 UTC
+extensions/VisualEditor restore  ok (1s) install ................................................. ok (14s) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:04:26 UTC
+extensions/Wikibase restore  ok (0s) install ................................................. ok (31s)  2026-05-14 19:05:00 UTC
+extensions/WikibaseCirrusSearch restore  ok (0s) install ................................................. ok (11s)  2026-05-14 19:05:12 UTC
+extensions/WikibaseMediaInfo restore  ok (1s) install ................................................. ok (14s)  2026-05-14 19:05:28 UTC
+extensions/WikiLove restore  ok (1s) install ................................................ ok (4s)  2026-05-14 19:05:34 UTC
+extensions/WikimediaCampaignEvents restore  ok (1s) install ................................................. ok (7s)  2026-05-14 19:05:43 UTC
+extensions/WikimediaMessages restore  ok (1s) install ................................................. ok (6s)  2026-05-14 19:05:51 UTC
+skins/MinervaNeue restore  ok (1s) install ................................................. ok (15s) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:06:09 UTC
+skins/Vector restore  ok (1s) install ................................................ ok (4s)  2026-05-14 19:06:16 UTC
 
 ========================================
 = Results
 ========================================
+PASSED:
+  extensions/AbuseFilter
+  extensions/AntiSpoof
+  extensions/Babel
+  extensions/BetaFeatures
+  extensions/CampaignEvents
+  extensions/CheckUser
+  extensions/CirrusSearch
+  extensions/cldr
+  extensions/ContentTranslation
+  extensions/CommunityConfiguration
+  extensions/CommunityConfigurationExample
+  extensions/Disambiguator
+  extensions/Echo
+  extensions/Elastica
+  extensions/EventBus
+  extensions/EventLogging
+  extensions/EventStreamConfig
+  extensions/FileImporter
+  extensions/GeoData
+  extensions/GlobalCssJs
+  extensions/GlobalPreferences
+  extensions/GrowthExperiments
+  extensions/GuidedTour
+  extensions/IPInfo
+  extensions/JsonConfig
+  extensions/Kartographer
+  extensions/Math
+  extensions/MediaModeration
+  extensions/MobileApp
+  extensions/MobileFrontend
+  extensions/NavigationTiming
+  extensions/PageImages
+  extensions/PageTriage
+  extensions/PageViewInfo
+  extensions/ProofreadPage
+  extensions/SandboxLink
+  extensions/Scribunto
+  extensions/SiteMatrix
+  extensions/TemplateData
+  extensions/Thanks
+  extensions/TimedMediaHandler
+  extensions/Translate
+  extensions/UniversalLanguageSelector
+  extensions/VisualEditor
+  extensions/Wikibase
+  extensions/WikibaseCirrusSearch
+  extensions/WikibaseMediaInfo
+  extensions/WikiLove
+  extensions/WikimediaCampaignEvents
+  extensions/WikimediaMessages
+  skins/MinervaNeue
+  skins/Vector
 FAILED:
-  core (fresh_install)
-  Error: ref/integration/config.git not found. Run ./prepare first. (fresh_install)
+  core (save)
 
 Logs: log/silent/
-(0s)
+(10m 13s)

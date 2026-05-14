@@ -15,16 +15,10 @@ Running shellcheck...
 shellcheck passed
 
 Running bats...
-1..216
-not ok 1 find_dependencies_minimal_bottom_up: shows usage with no arguments
-# (in test file test/find_dependencies_minimal_bottom_up.bats, line 8)
-#   `[[ "$output" == *"Usage:"* ]]' failed
-not ok 2 find_dependencies_minimal_greedy: shows usage with no arguments
-# (in test file test/find_dependencies_minimal_greedy.bats, line 8)
-#   `[[ "$output" == *"Usage:"* ]]' failed
-not ok 3 find_dependencies_minimal_thorough: shows usage with no arguments
-# (in test file test/find_dependencies_minimal_thorough.bats, line 8)
-#   `[[ "$output" == *"Usage:"* ]]' failed
+1..226
+ok 1 find_dependencies_minimal_bottom_up: shows usage with no arguments
+ok 2 find_dependencies_minimal_greedy: shows usage with no arguments
+ok 3 find_dependencies_minimal_thorough: shows usage with no arguments
 ok 4 generate_example: writes command header and output to file
 ok 5 generate_example: captures command output in file
 ok 6 generate_example: captures stderr in file
@@ -32,210 +26,221 @@ ok 7 generate_example: continues even when command fails
 ok 8 generate_example: exits 1 with no arguments
 ok 9 generate_example: exits 1 with one argument
 ok 10 generate_example: exits 1 with three arguments
-ok 11 generate_examples: DRY_RUN lists what would be generated
-ok 12 generate_examples: DRY_RUN runs every Usage line per script
-ok 13 generate_examples: DRY_RUN skips itself and generate_example
-ok 14 generate_examples: warns and skips filename collisions
-ok 15 generate_examples: Usage-line loop reads from FD 3, not stdin
-ok 16 generate_examples: FD 3 loop pattern survives a child draining stdin
-ok 17 help: exits 0
-ok 18 help: lists scripts
-ok 19 help: includes descriptions
-ok 20 help: includes usage lines
-ok 21 help SCRIPT: shows detailed help for a script
-ok 22 help SCRIPT: accepts ./ prefix
-ok 23 help SCRIPT: fails for nonexistent script
-ok 24 help SCRIPT: fails for non-bash file
-ok 25 install: shows usage with no arguments
-ok 26 combinations.awk: single item
-ok 27 combinations.awk: two items
-ok 28 combinations.awk: three items ordered by size
-ok 29 combinations.awk: empty input produces no output
-ok 30 combinations_with_empty.awk: single item includes empty line
-ok 31 combinations_with_empty.awk: two items includes empty line
-ok 32 combinations_with_empty.awk: empty input produces one empty line
-ok 33 parse_yaml_list.awk: extracts list under matching key
-ok 34 parse_yaml_list.awk: returns nothing for missing key
-ok 35 parse_yaml_list.awk: stops at next top-level key
-ok 36 parse_python_list.awk: extracts list entries
-ok 37 parse_python_list.awk: returns nothing for missing list
-ok 38 parse_python_list.awk: handles multiple lists
-ok 39 parse_requires.awk: extracts required extensions
-ok 40 parse_requires.awk: extracts required skins with prefix
-ok 41 parse_requires.awk: extracts both extensions and skins
-ok 42 parse_requires.awk: returns nothing when no requires
-ok 43 parse_usage.awk: single-line Usage
-ok 44 parse_usage.awk: multi-line Usage with continuations
-ok 45 parse_usage.awk: stops at blank comment line
-ok 46 parse_usage.awk: stops at non-comment line
-ok 47 parse_usage.awk: stops at single-space comment line
-ok 48 parse_usage.awk: returns nothing when no Usage block
-ok 49 parse_usage.awk: strips trailing inline # comment
-ok 50 run_step: records pass for successful command
-ok 51 run_step: records failure for failing command
-ok 52 run_step: returns 0 on success
-ok 53 run_step: returns 1 on failure
-ok 54 run_step: prints component and command in verbose mode
-ok 55 run_step: prints UTC timestamp in verbose mode
-ok 56 batch_setup: initializes passed and failed as empty
-ok 57 batch_setup: fails loudly when log/silent can't be created in silent mode
-ok 58 build_component_list: uses argument when provided
-ok 59 build_component_list: reads from list_gated when no argument
-ok 60 build_full_combo: combines required and optional
-ok 61 build_full_combo: required only when no optional
-ok 62 build_full_combo: optional only when no required
-ok 63 build_full_combo: empty when both empty
-ok 64 clone_or_fetch: defines the clone_or_fetch function
-ok 65 clone_or_fetch: fetches existing bare repo
-ok 66 clone_or_fetch: fetches with --quiet flag
-ok 67 clone_or_fetch: creates parent directories for new repos
-ok 68 cmd_to_filename: no args
-ok 69 cmd_to_filename: positional arg
-ok 70 cmd_to_filename: positional arg with slash
-ok 71 cmd_to_filename: positional arg with dots and slashes
-ok 72 cmd_to_filename: env var with non-empty value
-ok 73 cmd_to_filename: env var with empty value
-ok 74 cmd_to_filename: --flag drops value
-ok 75 cmd_to_filename: --spec with long path drops value
-ok 76 cmd_to_filename: command substitution in env var produces clean suffix
-ok 77 cmd_to_filename: multiple env vars with simple values
-ok 78 cmd_to_filename: quoted multi-word --flag value treated as single token
-ok 79 debug_info: suppresses output when stdout is not a terminal
-ok 80 debug_info: prints banner with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal
-ok 81 debug_info: exits 0 when git is installed
-ok 82 debug_info: _quibble_print_host_resources prints CPU and RAM
-ok 83 debug_info: defines _quibble_print_docker_resources
-ok 84 dep_repo_path: converts extension name to repo path
-ok 85 dep_repo_path: converts skin name to repo path
-ok 86 dep_repo_path: handles nested extension name
-ok 87 docker_chmod: defines the docker_chmod function
-ok 88 docker_chmod: sets permissions on user-owned directory
-ok 89 docker_chmod: handles multiple directories
-ok 90 duration_trap: provides format_duration function
-ok 91 duration_trap: does not set trap when stdout is not a terminal
-ok 92 duration_trap: sets trap with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal
-ok 93 ensure_config: skips clone when src/config already exists
-ok 94 ensure_config: errors when bare repo missing and src/config missing
-ok 95 ensure_config: sets config_ref_dir and config_src_dir variables
-ok 96 format_duration: 0 seconds
-ok 97 format_duration: seconds only
-ok 98 format_duration: minutes and seconds
-ok 99 format_duration: exact minute
-ok 100 format_duration: hours, minutes, and seconds
-ok 101 format_duration: exact hour
-ok 102 format_duration: hours and seconds, no minutes
-ok 103 format_duration: days, hours, minutes, and seconds
-ok 104 format_duration: exact day
-ok 105 run_with_dots: returns 0 for successful command
-ok 106 run_with_dots: returns non-zero for failing command
-ok 107 run_with_dots: saves output to log file
-ok 108 run_with_dots: prints dots for each line
-ok 109 inhibit_sleep: skips when _QUIBBLE_NO_INHIBIT is set
-ok 110 inhibit_sleep: no background processes when skipped
-ok 111 inhibit_sleep: leaves no descendant processes after script exits
-ok 112 parse_component_args: parses extension component
-ok 113 parse_component_args: parses skin component
-ok 114 parse_component_args: collects extra args
-ok 115 parse_component_args: separates component from extra args
-ok 116 parse_component_args: no args sets empty defaults
-ok 117 print_dep_summary: lists all dependencies
-ok 118 print_dep_summary: lists required dependencies
-ok 119 print_dep_summary: skips required section when none required
-ok 120 print_dep_summary: shows (none) when no optional deps
-ok 121 print_dep_summary: lists optional dependencies
-ok 122 print_dep_summary: shows total combinations
-ok 123 print_found: prints required and optional deps
-ok 124 print_found: required only when no optional
-ok 125 print_found: no dependencies needed
-ok 126 print_found: optional only when no required
-ok 127 print_header: prints separator in verbose mode
-ok 128 print_header: prints label only in silent mode
-ok 129 print_header: includes UTC timestamp in verbose mode
-ok 130 print_quibble_command: defines the print_quibble_command function
-ok 131 print_quibble_command: brackets the command with a # banner
-ok 132 print_quibble_command: keeps -v flag together with its value on one line
-ok 133 print_quibble_command: --command and its value stay on one line
-ok 134 print_quibble_command: image (positional after flags) is on its own line
-ok 135 print_quibble_command: continuation backslashes on all but last command line
-ok 136 print_quibble_command: --key=value flag stays as one element
-ok 137 print_results: prints all passed when nothing failed
-ok 138 print_results: exits 1 when something failed
-ok 139 print_results: shows log hint in silent mode
-ok 140 print_results: no log hint in verbose mode
-ok 141 print_results: prints results header
-ok 142 record_passed: adds component to passed list
-ok 143 record_passed: skips if component already failed
-ok 144 remove_worker_dirs: removes src_worker_* directories
-ok 145 remove_worker_dirs: no error when no worker dirs exist
-ok 146 resolve_deps: builds extension repo paths
-ok 147 resolve_deps: builds skin repo paths with mediawiki/ prefix
-ok 148 resolve_deps: handles mixed extensions and skins
-ok 149 resolve_deps: empty QUIBBLE_DEPS produces no deps
-ok 150 run_quibble_test: defines the run_quibble_test function
-ok 151 run_quibble_test: prints the docker command before running it
-ok 152 run_quibble_test: passes --dry-run when QUIBBLE_DRY_RUN is set
-ok 153 run_quibble_test: omits --dry-run when QUIBBLE_DRY_RUN is empty
-ok 154 setup: sets QUIBBLE_IMAGE
-ok 155 setup: QUIBBLE_IMAGE can be overridden
-ok 156 setup: sets QUIBBLE_VOLUMES array
-ok 157 setup: sets QUIBBLE_DOCKER_FLAGS to -it in verbose mode
-ok 158 setup: sets QUIBBLE_DOCKER_FLAGS to -i in silent mode
-ok 159 setup: sets QUIBBLE_DIR to current directory
-ok 160 setup: QUIBBLE_SRC defaults to src
-ok 161 setup: QUIBBLE_SRC can be overridden
-ok 162 setup: ENVIRONMENT sets QUIBBLE_SRC and QUIBBLE_SAVE
-ok 163 setup: ENVIRONMENT does not override explicit QUIBBLE_SRC
-ok 164 setup: QUIBBLE_SAVE defaults to src_save
-ok 165 setup: QUIBBLE_DRY_RUN is empty by default
-ok 166 setup: QUIBBLE_DRY_RUN is --dry-run when DRY_RUN=1
-ok 167 setup: QUIBBLE_DOCKER_FLAGS empty in background mode
-ok 168 silent_output: does not activate in verbose mode
-ok 169 silent_output: does not activate when _QUIBBLE_OUTPUT_MANAGED is set
-ok 170 silent_output: does not activate when stdout is not a terminal
-ok 171 silent_output: activates with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal
-ok 172 utc_timestamp: outputs UTC timestamp in expected format
-ok 173 lint: all scripts pass shellcheck # skip shellcheck not installed
-ok 174 list_dependencies: shows usage with no arguments
-ok 175 list_dependencies: lists extension dependencies
-ok 176 list_dependencies: lists skin dependencies
-ok 177 list_dependencies: returns nothing for unknown component
-ok 178 list_dependencies: strips extensions/ prefix for lookup
-ok 179 list_dependencies_combinations: shows usage with no arguments
-ok 180 list_dependencies_combinations: single dependency produces one combination
-ok 181 list_dependencies_combinations: two dependencies produce three combinations
-ok 182 list_dependencies_combinations: no dependencies produces no output
-ok 183 list_dependencies_optional: shows usage with no arguments
-ok 184 list_dependencies_optional: filters out required deps
-ok 185 list_dependencies_optional: all deps optional when no requires
-ok 186 list_dependencies_optional: no optional deps when all are required
-ok 187 list_dependencies_required: shows usage with no arguments
-ok 188 list_dependencies_required: extracts required extensions from src/
-ok 189 list_dependencies_required: extracts required skins with prefix
-ok 190 list_dependencies_required: exits 0 with no output when no requires
-ok 191 list_dependencies_required: exits 0 when extension.json missing
-ok 192 list_dependencies_required: reads skin.json for skins
-ok 193 list_gated: lists gated extensions and skins
-ok 194 list_gated: handles empty lists
-ok 195 list_gated: errors when config file missing
-ok 196 run_php_unit_tests: parses component argument
-ok 197 run_php_unit_tests: parses --filter argument
-ok 198 run_php_unit_tests: no args uses --run phpunit
-ok 199 run_selenium_tests: parses component argument
-ok 200 run_selenium_tests: parses --spec argument
-ok 201 run_selenium_tests: parses component with --spec and --mochaOpts.grep
-ok 202 run_selenium_tests: no args uses --run selenium
-ok 203 run_selenium_tests: --spec without component runs from repo root
-ok 204 selenium_tests_exist: exits 0 when core has selenium-test script
-ok 205 selenium_tests_exist: exits 1 when core has no selenium-test script
-ok 206 selenium_tests_exist: exits 1 when core package.json missing
-ok 207 selenium_tests_exist: exits 0 for extension with selenium-test
-ok 208 selenium_tests_exist: exits 1 for extension without selenium-test
-ok 209 selenium_tests_exist: exits 1 for extension with no package.json
-ok 210 selenium_tests_exist: exits 0 for skin with selenium-test
-ok 211 selenium_tests_exist: reads core from ref and finds selenium-test
-ok 212 selenium_tests_exist: reads core from ref and exits 1 when no selenium-test
-ok 213 selenium_tests_exist: reads extension from ref and finds selenium-test
-ok 214 selenium_tests_exist: reads skin from ref and finds selenium-test
-ok 215 suggest_parallel: outputs a number
-ok 216 suggest_parallel: output is at least 1
+ok 11 generate_example: captures output directly to file, not through a streaming pipe
+ok 12 generate_example: scrubs project absolute path to $PWD placeholder in captured output
+ok 13 generate_examples: DRY_RUN lists what would be generated
+ok 14 generate_examples: DRY_RUN runs every Usage line per script
+ok 15 generate_examples: DRY_RUN skips itself and generate_example
+ok 16 generate_examples: DRY_RUN skips shellto (interactive, can't be captured)
+ok 17 generate_examples: warns and skips filename collisions
+ok 18 generate_examples: Usage-line loop reads from FD 3, not stdin
+ok 19 generate_examples: pins prep scripts first and destructive scripts last
+ok 20 generate_examples: FD 3 loop pattern survives a child draining stdin
+ok 21 help: exits 0
+ok 22 help: lists scripts
+ok 23 help: includes descriptions
+ok 24 help: includes usage lines
+ok 25 help SCRIPT: shows detailed help for a script
+ok 26 help SCRIPT: accepts ./ prefix
+ok 27 help SCRIPT: fails for nonexistent script
+ok 28 help SCRIPT: fails for non-bash file
+ok 29 install: shows usage with no arguments
+ok 30 combinations.awk: single item
+ok 31 combinations.awk: two items
+ok 32 combinations.awk: three items ordered by size
+ok 33 combinations.awk: empty input produces no output
+ok 34 combinations_with_empty.awk: single item includes empty line
+ok 35 combinations_with_empty.awk: two items includes empty line
+ok 36 combinations_with_empty.awk: empty input produces one empty line
+ok 37 parse_yaml_list.awk: extracts list under matching key
+ok 38 parse_yaml_list.awk: returns nothing for missing key
+ok 39 parse_yaml_list.awk: stops at next top-level key
+ok 40 parse_python_list.awk: extracts list entries
+ok 41 parse_python_list.awk: returns nothing for missing list
+ok 42 parse_python_list.awk: handles multiple lists
+ok 43 parse_requires.awk: extracts required extensions
+ok 44 parse_requires.awk: extracts required skins with prefix
+ok 45 parse_requires.awk: extracts both extensions and skins
+ok 46 parse_requires.awk: returns nothing when no requires
+ok 47 parse_usage.awk: single-line Usage
+ok 48 parse_usage.awk: multi-line Usage with continuations
+ok 49 parse_usage.awk: stops at blank comment line
+ok 50 parse_usage.awk: stops at non-comment line
+ok 51 parse_usage.awk: stops at single-space comment line
+ok 52 parse_usage.awk: returns nothing when no Usage block
+ok 53 parse_usage.awk: strips trailing inline # comment
+ok 54 scrub_pwd.awk: replaces single occurrence with $PWD placeholder
+ok 55 scrub_pwd.awk: leaves unrelated paths alone
+ok 56 scrub_pwd.awk: leaves prefix-only matches alone (requires trailing slash)
+ok 57 scrub_pwd.awk: handles multiple occurrences on one line
+ok 58 scrub_pwd.awk: treats path as a literal string (no regex metachars)
+ok 59 scrub_pwd.awk: passes lines through unchanged when no path appears
+ok 60 run_step: records pass for successful command
+ok 61 run_step: records failure for failing command
+ok 62 run_step: returns 0 on success
+ok 63 run_step: returns 1 on failure
+ok 64 run_step: prints component and command in verbose mode
+ok 65 run_step: prints UTC timestamp in verbose mode
+ok 66 batch_setup: initializes passed and failed as empty
+ok 67 batch_setup: fails loudly when log/silent can't be created in silent mode
+ok 68 build_component_list: uses argument when provided
+ok 69 build_component_list: reads from list_gated when no argument
+ok 70 build_full_combo: combines required and optional
+ok 71 build_full_combo: required only when no optional
+ok 72 build_full_combo: optional only when no required
+ok 73 build_full_combo: empty when both empty
+ok 74 clone_or_fetch: defines the clone_or_fetch function
+ok 75 clone_or_fetch: fetches existing bare repo
+ok 76 clone_or_fetch: fetches with --quiet flag
+ok 77 clone_or_fetch: creates parent directories for new repos
+ok 78 cmd_to_filename: no args
+ok 79 cmd_to_filename: positional arg
+ok 80 cmd_to_filename: positional arg with slash
+ok 81 cmd_to_filename: positional arg with dots and slashes
+ok 82 cmd_to_filename: env var with non-empty value
+ok 83 cmd_to_filename: env var with empty value
+ok 84 cmd_to_filename: --flag drops value
+ok 85 cmd_to_filename: --spec with long path drops value
+ok 86 cmd_to_filename: command substitution in env var produces clean suffix
+ok 87 cmd_to_filename: multiple env vars with simple values
+ok 88 cmd_to_filename: quoted multi-word --flag value treated as single token
+ok 89 debug_info: suppresses output when stdout is not a terminal
+ok 90 debug_info: prints banner with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal
+ok 91 debug_info: exits 0 when git is installed
+ok 92 debug_info: _quibble_print_host_resources prints CPU and RAM
+ok 93 debug_info: defines _quibble_print_docker_resources
+ok 94 dep_repo_path: converts extension name to repo path
+ok 95 dep_repo_path: converts skin name to repo path
+ok 96 dep_repo_path: handles nested extension name
+ok 97 docker_chmod: defines the docker_chmod function
+ok 98 docker_chmod: sets permissions on user-owned directory
+ok 99 docker_chmod: handles multiple directories
+ok 100 duration_trap: provides format_duration function
+ok 101 duration_trap: does not set trap when stdout is not a terminal
+ok 102 duration_trap: sets trap with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal
+ok 103 ensure_config: skips clone when src/config already exists
+ok 104 ensure_config: errors when bare repo missing and src/config missing
+ok 105 ensure_config: sets config_ref_dir and config_src_dir variables
+ok 106 format_duration: 0 seconds
+ok 107 format_duration: seconds only
+ok 108 format_duration: minutes and seconds
+ok 109 format_duration: exact minute
+ok 110 format_duration: hours, minutes, and seconds
+ok 111 format_duration: exact hour
+ok 112 format_duration: hours and seconds, no minutes
+ok 113 format_duration: days, hours, minutes, and seconds
+ok 114 format_duration: exact day
+ok 115 run_with_dots: returns 0 for successful command
+ok 116 run_with_dots: returns non-zero for failing command
+ok 117 run_with_dots: saves output to log file
+ok 118 run_with_dots: prints dots for each line
+ok 119 inhibit_sleep: skips when _QUIBBLE_NO_INHIBIT is set
+ok 120 inhibit_sleep: no background processes when skipped
+ok 121 inhibit_sleep: leaves no descendant processes after script exits
+ok 122 parse_component_args: parses extension component
+ok 123 parse_component_args: parses skin component
+ok 124 parse_component_args: collects extra args
+ok 125 parse_component_args: separates component from extra args
+ok 126 parse_component_args: no args sets empty defaults
+ok 127 print_dep_summary: lists all dependencies
+ok 128 print_dep_summary: lists required dependencies
+ok 129 print_dep_summary: skips required section when none required
+ok 130 print_dep_summary: shows (none) when no optional deps
+ok 131 print_dep_summary: lists optional dependencies
+ok 132 print_dep_summary: shows total combinations
+ok 133 print_found: prints required and optional deps
+ok 134 print_found: required only when no optional
+ok 135 print_found: no dependencies needed
+ok 136 print_found: optional only when no required
+ok 137 print_header: prints separator in verbose mode
+ok 138 print_header: prints label only in silent mode
+ok 139 print_header: includes UTC timestamp in verbose mode
+ok 140 print_quibble_command: defines the print_quibble_command function
+ok 141 print_quibble_command: brackets the command with a # banner
+ok 142 print_quibble_command: keeps -v flag together with its value on one line
+ok 143 print_quibble_command: --command and its value stay on one line
+ok 144 print_quibble_command: image (positional after flags) is on its own line
+ok 145 print_quibble_command: continuation backslashes on all but last command line
+ok 146 print_quibble_command: --key=value flag stays as one element
+ok 147 print_results: prints all passed when nothing failed
+ok 148 print_results: exits 1 when something failed
+ok 149 print_results: shows log hint in silent mode
+ok 150 print_results: no log hint in verbose mode
+ok 151 print_results: prints results header
+ok 152 record_passed: adds component to passed list
+ok 153 record_passed: skips if component already failed
+ok 154 remove_worker_dirs: removes src_worker_* directories
+ok 155 remove_worker_dirs: no error when no worker dirs exist
+ok 156 resolve_deps: builds extension repo paths
+ok 157 resolve_deps: builds skin repo paths with mediawiki/ prefix
+ok 158 resolve_deps: handles mixed extensions and skins
+ok 159 resolve_deps: empty QUIBBLE_DEPS produces no deps
+ok 160 run_quibble_test: defines the run_quibble_test function
+ok 161 run_quibble_test: prints the docker command before running it
+ok 162 run_quibble_test: passes --dry-run when QUIBBLE_DRY_RUN is set
+ok 163 run_quibble_test: omits --dry-run when QUIBBLE_DRY_RUN is empty
+ok 164 setup: sets QUIBBLE_IMAGE
+ok 165 setup: QUIBBLE_IMAGE can be overridden
+ok 166 setup: sets QUIBBLE_VOLUMES array
+ok 167 setup: sets QUIBBLE_DOCKER_FLAGS to -it in verbose mode
+ok 168 setup: sets QUIBBLE_DOCKER_FLAGS to -i in silent mode
+ok 169 setup: sets QUIBBLE_DIR to current directory
+ok 170 setup: QUIBBLE_SRC defaults to src
+ok 171 setup: QUIBBLE_SRC can be overridden
+ok 172 setup: ENVIRONMENT sets QUIBBLE_SRC and QUIBBLE_SAVE
+ok 173 setup: ENVIRONMENT does not override explicit QUIBBLE_SRC
+ok 174 setup: QUIBBLE_SAVE defaults to src_save
+ok 175 setup: QUIBBLE_DRY_RUN is empty by default
+ok 176 setup: QUIBBLE_DRY_RUN is --dry-run when DRY_RUN=1
+ok 177 setup: QUIBBLE_DOCKER_FLAGS empty in background mode
+ok 178 silent_output: does not activate in verbose mode
+ok 179 silent_output: does not activate when _QUIBBLE_OUTPUT_MANAGED is set
+ok 180 silent_output: does not activate when stdout is not a terminal
+ok 181 silent_output: activates with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal
+ok 182 utc_timestamp: outputs UTC timestamp in expected format
+ok 183 lint: all scripts pass shellcheck # skip shellcheck not installed
+ok 184 list_dependencies: shows usage with no arguments
+ok 185 list_dependencies: lists extension dependencies
+ok 186 list_dependencies: lists skin dependencies
+ok 187 list_dependencies: returns nothing for unknown component
+ok 188 list_dependencies: strips extensions/ prefix for lookup
+ok 189 list_dependencies_combinations: shows usage with no arguments
+ok 190 list_dependencies_combinations: single dependency produces one combination
+ok 191 list_dependencies_combinations: two dependencies produce three combinations
+ok 192 list_dependencies_combinations: no dependencies produces no output
+ok 193 list_dependencies_optional: shows usage with no arguments
+ok 194 list_dependencies_optional: filters out required deps
+ok 195 list_dependencies_optional: all deps optional when no requires
+ok 196 list_dependencies_optional: no optional deps when all are required
+ok 197 list_dependencies_required: shows usage with no arguments
+ok 198 list_dependencies_required: extracts required extensions from src/
+ok 199 list_dependencies_required: extracts required skins with prefix
+ok 200 list_dependencies_required: exits 0 with no output when no requires
+ok 201 list_dependencies_required: exits 0 when extension.json missing
+ok 202 list_dependencies_required: reads skin.json for skins
+ok 203 list_gated: lists gated extensions and skins
+ok 204 list_gated: handles empty lists
+ok 205 list_gated: errors when config file missing
+ok 206 run_php_unit_tests: parses component argument
+ok 207 run_php_unit_tests: parses --filter argument
+ok 208 run_php_unit_tests: no args uses --run phpunit
+ok 209 run_selenium_tests: parses component argument
+ok 210 run_selenium_tests: parses --spec argument
+ok 211 run_selenium_tests: parses component with --spec and --mochaOpts.grep
+ok 212 run_selenium_tests: no args uses --run selenium
+ok 213 run_selenium_tests: --spec without component runs from repo root
+ok 214 selenium_tests_exist: exits 0 when core has selenium-test script
+ok 215 selenium_tests_exist: exits 1 when core has no selenium-test script
+ok 216 selenium_tests_exist: exits 1 when core package.json missing
+ok 217 selenium_tests_exist: exits 0 for extension with selenium-test
+ok 218 selenium_tests_exist: exits 1 for extension without selenium-test
+ok 219 selenium_tests_exist: exits 1 for extension with no package.json
+ok 220 selenium_tests_exist: exits 0 for skin with selenium-test
+ok 221 selenium_tests_exist: reads core from ref and finds selenium-test
+ok 222 selenium_tests_exist: reads core from ref and exits 1 when no selenium-test
+ok 223 selenium_tests_exist: reads extension from ref and finds selenium-test
+ok 224 selenium_tests_exist: reads skin from ref and finds selenium-test
+ok 225 suggest_parallel: outputs a number
+ok 226 suggest_parallel: output is at least 1
+bats passed
 (35s)

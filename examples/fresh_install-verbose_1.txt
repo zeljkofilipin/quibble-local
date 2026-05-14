@@ -63,7 +63,7 @@ docker RAM: 15.6 GB
 = remove is running: '[' -z 1 ']'
 
 ========================================
-= remove is running: docker run --rm --entrypoint bash --user root -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete'
+= remove is running: docker run --rm --entrypoint bash --user root -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete'
 
 ========================================
 = remove is running: rm -rf src
@@ -84,7 +84,7 @@ docker RAM: 15.6 GB
 = fresh_install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --command true)
 
 ========================================
-= fresh_install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
+= fresh_install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
 
 ========================================
 = fresh_install is running: local _xtrace_was_on=
@@ -102,24 +102,24 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
   --command true
 ########################################
 
 ========================================
-= fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
+= fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
 + /usr/bin/supervisord
-2026-05-13 11:59:54,209 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 11:59:54,212 INFO RPC interface 'supervisor' initialized
-2026-05-13 11:59:54,212 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 11:59:54,214 INFO daemonizing the supervisord process
+2026-05-14 17:03:53,608 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 17:03:53,610 INFO RPC interface 'supervisor' initialized
+2026-05-14 17:03:53,610 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 17:03:53,612 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
-2026-05-13 11:59:54,214 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 17:03:53,612 CRIT could not write pidfile /var/run/supervisord.pid
 [33mWARNING[0m:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -151,4 +151,4 @@ docker run \
 
 ========================================
 = fresh_install is running: local exit_code=0
-(2s)
+(1s)

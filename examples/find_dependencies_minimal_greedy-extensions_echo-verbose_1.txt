@@ -28,10 +28,10 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
 
 Greedy mode: starting with all 4 optional deps, removing one at a time.
 
-=== Baseline: all dependencies === 2026-05-13 11:55:56 UTC
+=== Baseline: all dependencies === 2026-05-14 17:56:26 UTC
 
 ========================================
-= extensions/Echo: ./fresh_install 2026-05-13 11:55:56 UTC
+= extensions/Echo: ./fresh_install 2026-05-14 17:56:26 UTC
 ========================================
 
 
@@ -87,7 +87,7 @@ Greedy mode: starting with all 4 optional deps, removing one at a time.
 = remove is running: '[' -z 1 ']'
 
 ========================================
-= remove is running: docker run --rm --entrypoint bash --user root -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete'
+= remove is running: docker run --rm --entrypoint bash --user root -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete'
 
 ========================================
 = remove is running: rm -rf src
@@ -108,7 +108,7 @@ Greedy mode: starting with all 4 optional deps, removing one at a time.
 = fresh_install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --command true)
 
 ========================================
-= fresh_install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
+= fresh_install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
 
 ========================================
 = fresh_install is running: local _xtrace_was_on=
@@ -126,24 +126,24 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
   --command true
 ########################################
 
 ========================================
-= fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
+= fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
 + /usr/bin/supervisord
-2026-05-13 11:55:57,748 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 11:55:57,751 INFO RPC interface 'supervisor' initialized
-2026-05-13 11:55:57,751 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 11:55:57,752 INFO daemonizing the supervisord process
+2026-05-14 17:56:27,487 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 17:56:27,490 INFO RPC interface 'supervisor' initialized
+2026-05-14 17:56:27,490 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
-2026-05-13 11:55:57,753 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 17:56:27,491 INFO daemonizing the supervisord process
+2026-05-14 17:56:27,492 CRIT could not write pidfile /var/run/supervisord.pid
 [33mWARNING[0m:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -169,10 +169,10 @@ docker run \
 [36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 [36mDEBUG[0m:quibble.cmd:User commands: true
 [33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
-(2s)
+(1s)
 
 ========================================
-= extensions/Echo: ./install extensions/Echo 2026-05-13 11:55:58 UTC
+= extensions/Echo: ./install extensions/Echo 2026-05-14 17:56:27 UTC
 ========================================
 
 
@@ -287,7 +287,7 @@ docker run \
 = install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --resolve-requires --command true ${deps[@]+"${deps[@]}"})
 
 ========================================
-= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true
+= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true
 
 ========================================
 = install is running: local _xtrace_was_on=
@@ -305,10 +305,10 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -317,14 +317,14 @@ docker run \
 ########################################
 
 ========================================
-= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true
+= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true
 + /usr/bin/supervisord
-2026-05-13 11:56:02,187 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 11:56:02,190 INFO RPC interface 'supervisor' initialized
-2026-05-13 11:56:02,190 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 11:56:02,191 INFO daemonizing the supervisord process
+2026-05-14 17:56:32,274 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 17:56:32,277 INFO RPC interface 'supervisor' initialized
+2026-05-14 17:56:32,277 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 17:56:32,278 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 11:56:02,192 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 17:56:32,279 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -351,10 +351,10 @@ docker run \
 [36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 [36mDEBUG[0m:quibble.cmd:User commands: true
 [33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
-(4s)
+(5s)
 
 ========================================
-= extensions/Echo: ./save 2026-05-13 11:56:02 UTC
+= extensions/Echo: ./save 2026-05-14 17:56:32 UTC
 ========================================
 
 
@@ -401,11 +401,11 @@ docker run \
 = save is running: return 0
 
 ========================================
-= save is running: docker run --rm --entrypoint bash --user root -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src_save:/workspace/src_save docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src_save -mindepth 1 -delete && cp -a /workspace/src/. /workspace/src_save/'
+= save is running: docker run --rm --entrypoint bash --user root -v $PWD/src:/workspace/src:ro -v $PWD/src_save:/workspace/src_save docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src_save -mindepth 1 -delete && cp -a /workspace/src/. /workspace/src_save/'
 (1s)
 
 ========================================
-= extensions/Echo: ./install extensions/Echo 2026-05-13 11:56:03 UTC
+= extensions/Echo: ./install extensions/Echo 2026-05-14 17:56:33 UTC
 ========================================
 
 
@@ -512,7 +512,7 @@ docker run \
 = install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --resolve-requires --command true ${deps[@]+"${deps[@]}"})
 
 ========================================
-= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 
 ========================================
 = install is running: local _xtrace_was_on=
@@ -530,10 +530,10 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -543,14 +543,14 @@ docker run \
 ########################################
 
 ========================================
-= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 + /usr/bin/supervisord
-2026-05-13 11:56:13,753 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 11:56:13,756 INFO RPC interface 'supervisor' initialized
-2026-05-13 11:56:13,756 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 11:56:13,758 INFO daemonizing the supervisord process
+2026-05-14 17:56:44,396 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 17:56:44,399 INFO RPC interface 'supervisor' initialized
+2026-05-14 17:56:44,399 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-13 11:56:13,759 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 17:56:44,400 INFO daemonizing the supervisord process
+2026-05-14 17:56:44,401 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -580,7 +580,7 @@ docker run \
 (11s)
 
 ========================================
-= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-13 11:56:14 UTC
+= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-14 17:56:44 UTC
 ========================================
 
 
@@ -617,13 +617,13 @@ docker run \
 = run_selenium_tests is running: run_quibble_test --run selenium
 
 ========================================
-= run_selenium_tests is running: cmd=('docker' 'run' '-it' '--rm' '--entrypoint=quibble-with-supervisord' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src' '-e' 'CI=true' '-e' 'ZUUL_PROJECT=mediawiki/extensions/Echo' 'docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest' '--dry-run' '--skip-zuul' '--skip-deps' '--run' 'selenium')
+= run_selenium_tests is running: cmd=('docker' 'run' '-it' '--rm' '--entrypoint=quibble-with-supervisord' '-v' '$PWD/cache:/cache' '-v' '$PWD/log:/workspace/log' '-v' '$PWD/ref:/srv/git:ro' '-v' '$PWD/src:/workspace/src' '-e' 'CI=true' '-e' 'ZUUL_PROJECT=mediawiki/extensions/Echo' 'docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest' '--dry-run' '--skip-zuul' '--skip-deps' '--run' 'selenium')
 
 ========================================
 = run_selenium_tests is running: local cmd
 
 ========================================
-= run_selenium_tests is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
+= run_selenium_tests is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 
 ========================================
 = run_selenium_tests is running: local _xtrace_was_on=
@@ -641,10 +641,10 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e CI=true \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
@@ -655,14 +655,14 @@ docker run \
 ########################################
 
 ========================================
-= run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
+= run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-13 11:56:14,547 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 11:56:14,550 INFO RPC interface 'supervisor' initialized
-2026-05-13 11:56:14,550 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 11:56:14,551 INFO daemonizing the supervisord process
+2026-05-14 17:56:45,417 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 17:56:45,420 INFO RPC interface 'supervisor' initialized
+2026-05-14 17:56:45,420 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 17:56:45,421 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-13 11:56:14,552 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 17:56:45,422 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -684,12 +684,12 @@ docker run \
 [36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 [36mDEBUG[0m:quibble.cmd:Run all browser tests
 [33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
-(0s)
+(1s)
 
-=== Try removing AntiSpoof (1/4, pass 1) === 2026-05-13 11:56:14 UTC
+=== Try removing AntiSpoof (1/4, pass 1) === 2026-05-14 17:56:45 UTC
 
 ========================================
-= extensions/Echo: ./restore 2026-05-13 11:56:14 UTC
+= extensions/Echo: ./restore 2026-05-14 17:56:45 UTC
 ========================================
 
 
@@ -736,11 +736,11 @@ docker run \
 = restore is running: return 0
 
 ========================================
-= restore is running: docker run --rm --entrypoint bash --user root -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -v /home/z/Documents/gitlab/zfilipin/quibble-local/src_save:/workspace/src_save:ro docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/'
+= restore is running: docker run --rm --entrypoint bash --user root -v $PWD/src:/workspace/src -v $PWD/src_save:/workspace/src_save:ro docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/'
 (1s)
 
 ========================================
-= extensions/Echo: ./install extensions/Echo 2026-05-13 11:56:15 UTC
+= extensions/Echo: ./install extensions/Echo 2026-05-14 17:56:46 UTC
 ========================================
 
 
@@ -847,7 +847,7 @@ docker run \
 = install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --resolve-requires --command true ${deps[@]+"${deps[@]}"})
 
 ========================================
-= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 
 ========================================
 = install is running: local _xtrace_was_on=
@@ -865,10 +865,10 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -878,14 +878,14 @@ docker run \
 ########################################
 
 ========================================
-= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 + /usr/bin/supervisord
-2026-05-13 11:56:24,688 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 11:56:24,690 INFO RPC interface 'supervisor' initialized
-2026-05-13 11:56:24,690 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 11:56:24,692 INFO daemonizing the supervisord process
+2026-05-14 17:56:56,165 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 17:56:56,168 INFO RPC interface 'supervisor' initialized
+2026-05-14 17:56:56,168 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 17:56:56,169 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-13 11:56:24,692 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 17:56:56,170 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -915,7 +915,7 @@ docker run \
 (10s)
 
 ========================================
-= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-13 11:56:25 UTC
+= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-14 17:56:56 UTC
 ========================================
 
 
@@ -952,13 +952,13 @@ docker run \
 = run_selenium_tests is running: run_quibble_test --run selenium
 
 ========================================
-= run_selenium_tests is running: cmd=('docker' 'run' '-it' '--rm' '--entrypoint=quibble-with-supervisord' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src' '-e' 'CI=true' '-e' 'ZUUL_PROJECT=mediawiki/extensions/Echo' 'docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest' '--dry-run' '--skip-zuul' '--skip-deps' '--run' 'selenium')
+= run_selenium_tests is running: cmd=('docker' 'run' '-it' '--rm' '--entrypoint=quibble-with-supervisord' '-v' '$PWD/cache:/cache' '-v' '$PWD/log:/workspace/log' '-v' '$PWD/ref:/srv/git:ro' '-v' '$PWD/src:/workspace/src' '-e' 'CI=true' '-e' 'ZUUL_PROJECT=mediawiki/extensions/Echo' 'docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest' '--dry-run' '--skip-zuul' '--skip-deps' '--run' 'selenium')
 
 ========================================
 = run_selenium_tests is running: local cmd
 
 ========================================
-= run_selenium_tests is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
+= run_selenium_tests is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 
 ========================================
 = run_selenium_tests is running: local _xtrace_was_on=
@@ -976,10 +976,10 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e CI=true \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
@@ -990,14 +990,14 @@ docker run \
 ########################################
 
 ========================================
-= run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
+= run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-13 11:56:25,475 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 11:56:25,478 INFO RPC interface 'supervisor' initialized
-2026-05-13 11:56:25,478 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 11:56:25,480 INFO daemonizing the supervisord process
+2026-05-14 17:56:57,193 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 17:56:57,196 INFO RPC interface 'supervisor' initialized
+2026-05-14 17:56:57,196 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 17:56:57,197 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-13 11:56:25,480 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 17:56:57,198 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -1019,13 +1019,13 @@ docker run \
 [36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 [36mDEBUG[0m:quibble.cmd:Run all browser tests
 [33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
-(0s)
+(1s)
 Tests passed without AntiSpoof, removing it
 
-=== Try removing CentralAuth (2/4, pass 1) === 2026-05-13 11:56:25 UTC
+=== Try removing CentralAuth (2/4, pass 1) === 2026-05-14 17:56:57 UTC
 
 ========================================
-= extensions/Echo: ./restore 2026-05-13 11:56:25 UTC
+= extensions/Echo: ./restore 2026-05-14 17:56:57 UTC
 ========================================
 
 
@@ -1072,11 +1072,11 @@ Tests passed without AntiSpoof, removing it
 = restore is running: return 0
 
 ========================================
-= restore is running: docker run --rm --entrypoint bash --user root -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -v /home/z/Documents/gitlab/zfilipin/quibble-local/src_save:/workspace/src_save:ro docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/'
+= restore is running: docker run --rm --entrypoint bash --user root -v $PWD/src:/workspace/src -v $PWD/src_save:/workspace/src_save:ro docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/'
 (1s)
 
 ========================================
-= extensions/Echo: ./install extensions/Echo 2026-05-13 11:56:26 UTC
+= extensions/Echo: ./install extensions/Echo 2026-05-14 17:56:58 UTC
 ========================================
 
 
@@ -1183,7 +1183,7 @@ Tests passed without AntiSpoof, removing it
 = install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --resolve-requires --command true ${deps[@]+"${deps[@]}"})
 
 ========================================
-= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 
 ========================================
 = install is running: local _xtrace_was_on=
@@ -1201,10 +1201,10 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1214,14 +1214,14 @@ docker run \
 ########################################
 
 ========================================
-= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 + /usr/bin/supervisord
-2026-05-13 11:56:33,908 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 11:56:33,910 INFO RPC interface 'supervisor' initialized
-2026-05-13 11:56:33,911 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 11:56:33,912 INFO daemonizing the supervisord process
+2026-05-14 17:57:06,046 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 17:57:06,049 INFO RPC interface 'supervisor' initialized
+2026-05-14 17:57:06,049 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 17:57:06,051 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-13 11:56:33,912 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 17:57:06,051 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -1251,7 +1251,7 @@ docker run \
 (8s)
 
 ========================================
-= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-13 11:56:34 UTC
+= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-14 17:57:06 UTC
 ========================================
 
 
@@ -1288,13 +1288,13 @@ docker run \
 = run_selenium_tests is running: run_quibble_test --run selenium
 
 ========================================
-= run_selenium_tests is running: cmd=('docker' 'run' '-it' '--rm' '--entrypoint=quibble-with-supervisord' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src' '-e' 'CI=true' '-e' 'ZUUL_PROJECT=mediawiki/extensions/Echo' 'docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest' '--dry-run' '--skip-zuul' '--skip-deps' '--run' 'selenium')
+= run_selenium_tests is running: cmd=('docker' 'run' '-it' '--rm' '--entrypoint=quibble-with-supervisord' '-v' '$PWD/cache:/cache' '-v' '$PWD/log:/workspace/log' '-v' '$PWD/ref:/srv/git:ro' '-v' '$PWD/src:/workspace/src' '-e' 'CI=true' '-e' 'ZUUL_PROJECT=mediawiki/extensions/Echo' 'docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest' '--dry-run' '--skip-zuul' '--skip-deps' '--run' 'selenium')
 
 ========================================
 = run_selenium_tests is running: local cmd
 
 ========================================
-= run_selenium_tests is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
+= run_selenium_tests is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 
 ========================================
 = run_selenium_tests is running: local _xtrace_was_on=
@@ -1312,10 +1312,10 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e CI=true \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
@@ -1326,14 +1326,14 @@ docker run \
 ########################################
 
 ========================================
-= run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
+= run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-13 11:56:34,700 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 11:56:34,702 INFO RPC interface 'supervisor' initialized
-2026-05-13 11:56:34,703 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 11:56:34,704 INFO daemonizing the supervisord process
+2026-05-14 17:57:07,081 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 17:57:07,084 INFO RPC interface 'supervisor' initialized
+2026-05-14 17:57:07,085 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 17:57:07,086 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-13 11:56:34,704 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 17:57:07,087 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -1358,10 +1358,10 @@ docker run \
 (1s)
 Tests passed without CentralAuth, removing it
 
-=== Try removing EventLogging (3/4, pass 1) === 2026-05-13 11:56:35 UTC
+=== Try removing EventLogging (3/4, pass 1) === 2026-05-14 17:57:07 UTC
 
 ========================================
-= extensions/Echo: ./restore 2026-05-13 11:56:35 UTC
+= extensions/Echo: ./restore 2026-05-14 17:57:07 UTC
 ========================================
 
 
@@ -1408,11 +1408,11 @@ Tests passed without CentralAuth, removing it
 = restore is running: return 0
 
 ========================================
-= restore is running: docker run --rm --entrypoint bash --user root -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -v /home/z/Documents/gitlab/zfilipin/quibble-local/src_save:/workspace/src_save:ro docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/'
-(0s)
+= restore is running: docker run --rm --entrypoint bash --user root -v $PWD/src:/workspace/src -v $PWD/src_save:/workspace/src_save:ro docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/'
+(1s)
 
 ========================================
-= extensions/Echo: ./install extensions/Echo 2026-05-13 11:56:35 UTC
+= extensions/Echo: ./install extensions/Echo 2026-05-14 17:57:08 UTC
 ========================================
 
 
@@ -1519,7 +1519,7 @@ Tests passed without CentralAuth, removing it
 = install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --resolve-requires --command true ${deps[@]+"${deps[@]}"})
 
 ========================================
-= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/MobileFrontend
+= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/MobileFrontend
 
 ========================================
 = install is running: local _xtrace_was_on=
@@ -1537,10 +1537,10 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1550,14 +1550,14 @@ docker run \
 ########################################
 
 ========================================
-= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/MobileFrontend
+= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/MobileFrontend
 + /usr/bin/supervisord
-2026-05-13 11:56:41,577 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 11:56:41,580 INFO RPC interface 'supervisor' initialized
-2026-05-13 11:56:41,580 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 11:56:41,581 INFO daemonizing the supervisord process
+2026-05-14 17:57:14,557 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 17:57:14,560 INFO RPC interface 'supervisor' initialized
+2026-05-14 17:57:14,560 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 17:57:14,562 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/MobileFrontend
-2026-05-13 11:56:41,582 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 17:57:14,562 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -1584,10 +1584,10 @@ docker run \
 [36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 [36mDEBUG[0m:quibble.cmd:User commands: true
 [33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
-(6s)
+(7s)
 
 ========================================
-= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-13 11:56:41 UTC
+= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-14 17:57:15 UTC
 ========================================
 
 
@@ -1624,13 +1624,13 @@ docker run \
 = run_selenium_tests is running: run_quibble_test --run selenium
 
 ========================================
-= run_selenium_tests is running: cmd=('docker' 'run' '-it' '--rm' '--entrypoint=quibble-with-supervisord' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src' '-e' 'CI=true' '-e' 'ZUUL_PROJECT=mediawiki/extensions/Echo' 'docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest' '--dry-run' '--skip-zuul' '--skip-deps' '--run' 'selenium')
+= run_selenium_tests is running: cmd=('docker' 'run' '-it' '--rm' '--entrypoint=quibble-with-supervisord' '-v' '$PWD/cache:/cache' '-v' '$PWD/log:/workspace/log' '-v' '$PWD/ref:/srv/git:ro' '-v' '$PWD/src:/workspace/src' '-e' 'CI=true' '-e' 'ZUUL_PROJECT=mediawiki/extensions/Echo' 'docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest' '--dry-run' '--skip-zuul' '--skip-deps' '--run' 'selenium')
 
 ========================================
 = run_selenium_tests is running: local cmd
 
 ========================================
-= run_selenium_tests is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
+= run_selenium_tests is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 
 ========================================
 = run_selenium_tests is running: local _xtrace_was_on=
@@ -1648,10 +1648,10 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e CI=true \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
@@ -1662,14 +1662,14 @@ docker run \
 ########################################
 
 ========================================
-= run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
+= run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-13 11:56:42,348 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 11:56:42,351 INFO RPC interface 'supervisor' initialized
-2026-05-13 11:56:42,351 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 11:56:42,353 INFO daemonizing the supervisord process
+2026-05-14 17:57:15,599 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 17:57:15,602 INFO RPC interface 'supervisor' initialized
+2026-05-14 17:57:15,602 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 17:57:15,603 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-13 11:56:42,353 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 17:57:15,604 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -1694,10 +1694,10 @@ docker run \
 (1s)
 Tests passed without EventLogging, removing it
 
-=== Try removing MobileFrontend (4/4, pass 1) === 2026-05-13 11:56:42 UTC
+=== Try removing MobileFrontend (4/4, pass 1) === 2026-05-14 17:57:16 UTC
 
 ========================================
-= extensions/Echo: ./restore 2026-05-13 11:56:42 UTC
+= extensions/Echo: ./restore 2026-05-14 17:57:16 UTC
 ========================================
 
 
@@ -1744,11 +1744,11 @@ Tests passed without EventLogging, removing it
 = restore is running: return 0
 
 ========================================
-= restore is running: docker run --rm --entrypoint bash --user root -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -v /home/z/Documents/gitlab/zfilipin/quibble-local/src_save:/workspace/src_save:ro docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/'
-(1s)
+= restore is running: docker run --rm --entrypoint bash --user root -v $PWD/src:/workspace/src -v $PWD/src_save:/workspace/src_save:ro docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/'
+(0s)
 
 ========================================
-= extensions/Echo: ./install extensions/Echo 2026-05-13 11:56:43 UTC
+= extensions/Echo: ./install extensions/Echo 2026-05-14 17:57:16 UTC
 ========================================
 
 
@@ -1855,7 +1855,7 @@ Tests passed without EventLogging, removing it
 = install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --resolve-requires --command true ${deps[@]+"${deps[@]}"})
 
 ========================================
-= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true
+= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true
 
 ========================================
 = install is running: local _xtrace_was_on=
@@ -1873,10 +1873,10 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1885,14 +1885,14 @@ docker run \
 ########################################
 
 ========================================
-= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true
+= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true
 + /usr/bin/supervisord
-2026-05-13 11:56:47,380 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 11:56:47,382 INFO RPC interface 'supervisor' initialized
-2026-05-13 11:56:47,382 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 11:56:47,384 INFO daemonizing the supervisord process
+2026-05-14 17:57:21,034 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 17:57:21,037 INFO RPC interface 'supervisor' initialized
+2026-05-14 17:57:21,037 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 17:57:21,038 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 11:56:47,384 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 17:57:21,039 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -1919,10 +1919,10 @@ docker run \
 [36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 [36mDEBUG[0m:quibble.cmd:User commands: true
 [33mWARNING[0m:quibble.cmd:Exiting without execution: --dry-run
-(4s)
+(5s)
 
 ========================================
-= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-13 11:56:47 UTC
+= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-14 17:57:21 UTC
 ========================================
 
 
@@ -1959,13 +1959,13 @@ docker run \
 = run_selenium_tests is running: run_quibble_test --run selenium
 
 ========================================
-= run_selenium_tests is running: cmd=('docker' 'run' '-it' '--rm' '--entrypoint=quibble-with-supervisord' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro' '-v' '/home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src' '-e' 'CI=true' '-e' 'ZUUL_PROJECT=mediawiki/extensions/Echo' 'docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest' '--dry-run' '--skip-zuul' '--skip-deps' '--run' 'selenium')
+= run_selenium_tests is running: cmd=('docker' 'run' '-it' '--rm' '--entrypoint=quibble-with-supervisord' '-v' '$PWD/cache:/cache' '-v' '$PWD/log:/workspace/log' '-v' '$PWD/ref:/srv/git:ro' '-v' '$PWD/src:/workspace/src' '-e' 'CI=true' '-e' 'ZUUL_PROJECT=mediawiki/extensions/Echo' 'docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest' '--dry-run' '--skip-zuul' '--skip-deps' '--run' 'selenium')
 
 ========================================
 = run_selenium_tests is running: local cmd
 
 ========================================
-= run_selenium_tests is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
+= run_selenium_tests is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 
 ========================================
 = run_selenium_tests is running: local _xtrace_was_on=
@@ -1983,10 +1983,10 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e CI=true \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
@@ -1997,14 +1997,14 @@ docker run \
 ########################################
 
 ========================================
-= run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
+= run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-13 11:56:48,168 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 11:56:48,171 INFO RPC interface 'supervisor' initialized
-2026-05-13 11:56:48,172 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 11:56:48,173 INFO daemonizing the supervisord process
+2026-05-14 17:57:22,076 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 17:57:22,079 INFO RPC interface 'supervisor' initialized
+2026-05-14 17:57:22,079 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 17:57:22,080 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-13 11:56:48,174 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 17:57:22,081 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -2036,4 +2036,4 @@ Tests passed without MobileFrontend, removing it
 ========================================
 
 No dependencies needed.
-(58s)
+(1m 3s)

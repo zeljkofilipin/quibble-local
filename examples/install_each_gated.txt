@@ -12,58 +12,58 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-extensions/AbuseFilter restore  ok (1s) install ................................................. ok (18s)  2026-05-13 12:18:17 UTC
-extensions/AntiSpoof restore  ok (1s) install ................................................ ok (4s)  2026-05-13 12:18:22 UTC
-extensions/Babel restore  ok (1s) install ................................................. ok (5s)  2026-05-13 12:18:28 UTC
-extensions/BetaFeatures restore  ok (1s) install ................................................ ok (4s)  2026-05-13 12:18:33 UTC
-extensions/CampaignEvents restore  ok (1s) install ................................................. ok (15s)  2026-05-13 12:18:49 UTC
-extensions/CheckUser restore  ok (0s) install ................................................. ok (29s)  2026-05-13 12:19:18 UTC
-extensions/CirrusSearch restore  ok (0s) install ................................................. ok (17s)  2026-05-13 12:19:35 UTC
-extensions/cldr restore  ok (1s) install ................................................ ok (4s)  2026-05-13 12:19:40 UTC
-extensions/ContentTranslation restore  ok (0s) install ................................................. ok (17s)  2026-05-13 12:19:57 UTC
-extensions/CommunityConfiguration restore  ok (0s) install ................................................. ok (5s)  2026-05-13 12:20:02 UTC
-extensions/CommunityConfigurationExample restore  ok (1s) install ................................................. ok (5s)  2026-05-13 12:20:08 UTC
-extensions/Disambiguator restore  ok (1s) install ................................................. ok (6s)  2026-05-13 12:20:15 UTC
-extensions/Echo restore  ok (0s) install ................................................. ok (11s)  2026-05-13 12:20:26 UTC
-extensions/Elastica restore  ok (0s) install ................................................ ok (4s)  2026-05-13 12:20:30 UTC
-extensions/EventBus restore  ok (1s) install ................................................. ok (5s)  2026-05-13 12:20:36 UTC
-extensions/EventLogging restore  ok (1s) install ................................................. ok (8s)  2026-05-13 12:20:45 UTC
-extensions/EventStreamConfig restore  ok (3s) install ................................................ ok (4s)  2026-05-13 12:20:52 UTC
-extensions/FileImporter restore  ok (1s) install ................................................. ok (9s)  2026-05-13 12:21:02 UTC
-extensions/GeoData restore  ok (0s) install ................................................. ok (7s)  2026-05-13 12:21:09 UTC
-extensions/GlobalCssJs restore  ok (1s) install ................................................ ok (4s)  2026-05-13 12:21:14 UTC
-extensions/GlobalPreferences restore  ok (1s) install ................................................ ok (4s)  2026-05-13 12:21:19 UTC
-extensions/GrowthExperiments restore  ok (0s) install ................................................. ok (33s)  2026-05-13 12:21:52 UTC
-extensions/GuidedTour restore  ok (0s) install ................................................. ok (6s)  2026-05-13 12:21:58 UTC
-extensions/IPInfo restore  ok (0s) install ................................................. ok (14s)  2026-05-13 12:22:12 UTC
-extensions/JsonConfig restore  ok (0s) install ................................................. ok (11s)  2026-05-13 12:22:23 UTC
-extensions/Kartographer restore  ok (1s) install ................................................. ok (12s)  2026-05-13 12:22:36 UTC
-extensions/Math restore  ok (1s) install ................................................. ok (8s)  2026-05-13 12:22:45 UTC
-extensions/MediaModeration restore  ok (1s) install ................................................ ok (4s)  2026-05-13 12:22:50 UTC
-extensions/MobileApp restore  ok (0s) install ................................................. ok (12s)  2026-05-13 12:23:02 UTC
-extensions/MobileFrontend restore  ok (0s) install ................................................. ok (12s)  2026-05-13 12:23:14 UTC
-extensions/NavigationTiming restore  ok (0s) install ................................................. ok (6s)  2026-05-13 12:23:20 UTC
-extensions/PageImages restore  ok (0s) install ................................................ ok (4s)  2026-05-13 12:23:24 UTC
-extensions/PageTriage restore  ok (1s) install ................................................. ok (10s)  2026-05-13 12:23:35 UTC
-extensions/PageViewInfo restore  ok (0s) install ................................................ ok (4s)  2026-05-13 12:23:39 UTC
-extensions/ProofreadPage restore  ok (1s) install ................................................. ok (12s)  2026-05-13 12:23:52 UTC
-extensions/SandboxLink restore  ok (0s) install ................................................ ok (4s)  2026-05-13 12:23:56 UTC
-extensions/Scribunto restore  ok (1s) install ................................................ ok (4s)  2026-05-13 12:24:01 UTC
-extensions/SiteMatrix restore  ok (1s) install ................................................ ok (4s)  2026-05-13 12:24:06 UTC
-extensions/TemplateData restore  ok (0s) install ................................................ ok (4s)  2026-05-13 12:24:10 UTC
-extensions/Thanks restore  ok (1s) install ................................................. ok (13s)  2026-05-13 12:24:24 UTC
-extensions/TimedMediaHandler restore  ok (1s) install ................................................ ok (4s)  2026-05-13 12:24:29 UTC
-extensions/Translate restore  ok (1s) install ................................................. ok (12s)  2026-05-13 12:24:42 UTC
-extensions/UniversalLanguageSelector restore  ok (1s) install ................................................. ok (5s)  2026-05-13 12:24:49 UTC
-extensions/VisualEditor restore  ok (0s) install ................................................. ok (14s)  2026-05-13 12:25:03 UTC
-extensions/Wikibase restore  ok (1s) install ................................................. ok (30s)  2026-05-13 12:25:34 UTC
-extensions/WikibaseCirrusSearch restore  ok (1s) install ................................................. ok (11s)  2026-05-13 12:25:46 UTC
-extensions/WikibaseMediaInfo restore  ok (0s) install ................................................. ok (14s)  2026-05-13 12:26:00 UTC
-extensions/WikiLove restore  ok (1s) install ................................................ ok (5s)  2026-05-13 12:26:06 UTC
-extensions/WikimediaCampaignEvents restore  ok (0s) install ................................................. ok (8s)  2026-05-13 12:26:14 UTC
-extensions/WikimediaMessages restore  ok (1s) install ................................................. ok (5s)  2026-05-13 12:26:20 UTC
-skins/MinervaNeue restore  ok (1s) install ................................................. ok (15s)  2026-05-13 12:26:36 UTC
-skins/Vector restore  ok (1s) install ................................................ ok (5s)  2026-05-13 12:26:42 UTC
+extensions/AbuseFilter restore  ok (0s) install ................................................. ok (19s)  2026-05-14 18:18:38 UTC
+extensions/AntiSpoof restore  ok (0s) install ................................................ ok (5s)  2026-05-14 18:18:43 UTC
+extensions/Babel restore  ok (0s) install ................................................. ok (6s)  2026-05-14 18:18:49 UTC
+extensions/BetaFeatures restore  ok (0s) install ................................................ ok (5s)  2026-05-14 18:18:54 UTC
+extensions/CampaignEvents restore  ok (0s) install ................................................. ok (15s)  2026-05-14 18:19:09 UTC
+extensions/CheckUser restore  ok (1s) install ................................................. ok (28s)  2026-05-14 18:19:38 UTC
+extensions/CirrusSearch restore  ok (0s) install ................................................. ok (18s)  2026-05-14 18:19:56 UTC
+extensions/cldr restore  ok (0s) install ................................................ ok (4s)  2026-05-14 18:20:00 UTC
+extensions/ContentTranslation restore  ok (1s) install ................................................. ok (16s)  2026-05-14 18:20:17 UTC
+extensions/CommunityConfiguration restore  ok (1s) install ................................................. ok (5s)  2026-05-14 18:20:23 UTC
+extensions/CommunityConfigurationExample restore  ok (1s) install ................................................. ok (5s)  2026-05-14 18:20:29 UTC
+extensions/Disambiguator restore  ok (0s) install ................................................. ok (6s)  2026-05-14 18:20:35 UTC
+extensions/Echo restore  ok (1s) install ................................................. ok (11s)  2026-05-14 18:20:47 UTC
+extensions/Elastica restore  ok (0s) install ................................................ ok (4s)  2026-05-14 18:20:51 UTC
+extensions/EventBus restore  ok (1s) install ................................................. ok (5s)  2026-05-14 18:20:57 UTC
+extensions/EventLogging restore  ok (1s) install ................................................. ok (7s)  2026-05-14 18:21:05 UTC
+extensions/EventStreamConfig restore  ok (0s) install ................................................ ok (4s)  2026-05-14 18:21:09 UTC
+extensions/FileImporter restore  ok (1s) install ................................................. ok (8s)  2026-05-14 18:21:18 UTC
+extensions/GeoData restore  ok (1s) install ................................................. ok (7s)  2026-05-14 18:21:26 UTC
+extensions/GlobalCssJs restore  ok (1s) install ................................................ ok (4s)  2026-05-14 18:21:31 UTC
+extensions/GlobalPreferences restore  ok (0s) install ................................................ ok (4s)  2026-05-14 18:21:35 UTC
+extensions/GrowthExperiments restore  ok (1s) install ................................................. ok (32s)  2026-05-14 18:22:08 UTC
+extensions/GuidedTour restore  ok (0s) install ................................................. ok (6s)  2026-05-14 18:22:14 UTC
+extensions/IPInfo restore  ok (1s) install ................................................. ok (13s)  2026-05-14 18:22:28 UTC
+extensions/JsonConfig restore  ok (1s) install ................................................. ok (11s)  2026-05-14 18:22:40 UTC
+extensions/Kartographer restore  ok (0s) install ................................................. ok (13s)  2026-05-14 18:22:53 UTC
+extensions/Math restore  ok (0s) install ................................................. ok (9s)  2026-05-14 18:23:02 UTC
+extensions/MediaModeration restore  ok (1s) install ................................................ ok (4s)  2026-05-14 18:23:07 UTC
+extensions/MobileApp restore  ok (0s) install ................................................. ok (12s)  2026-05-14 18:23:19 UTC
+extensions/MobileFrontend restore  ok (0s) install ................................................. ok (12s)  2026-05-14 18:23:31 UTC
+extensions/NavigationTiming restore  ok (0s) install ................................................. ok (6s)  2026-05-14 18:23:37 UTC
+extensions/PageImages restore  ok (0s) install ................................................ ok (4s)  2026-05-14 18:23:41 UTC
+extensions/PageTriage restore  ok (1s) install ................................................. ok (10s)  2026-05-14 18:23:52 UTC
+extensions/PageViewInfo restore  ok (0s) install ................................................ ok (4s)  2026-05-14 18:23:56 UTC
+extensions/ProofreadPage restore  ok (1s) install ................................................. ok (12s)  2026-05-14 18:24:09 UTC
+extensions/SandboxLink restore  ok (0s) install ................................................ ok (4s)  2026-05-14 18:24:13 UTC
+extensions/Scribunto restore  ok (1s) install ................................................ ok (4s)  2026-05-14 18:24:18 UTC
+extensions/SiteMatrix restore  ok (1s) install ................................................ ok (4s)  2026-05-14 18:24:23 UTC
+extensions/TemplateData restore  ok (0s) install ................................................ ok (4s)  2026-05-14 18:24:27 UTC
+extensions/Thanks restore  ok (1s) install ................................................. ok (13s)  2026-05-14 18:24:41 UTC
+extensions/TimedMediaHandler restore  ok (1s) install ................................................ ok (4s)  2026-05-14 18:24:46 UTC
+extensions/Translate restore  ok (1s) install ................................................. ok (13s)  2026-05-14 18:25:00 UTC
+extensions/UniversalLanguageSelector restore  ok (0s) install ................................................. ok (6s)  2026-05-14 18:25:06 UTC
+extensions/VisualEditor restore  ok (0s) install ................................................. ok (14s)  2026-05-14 18:25:20 UTC
+extensions/Wikibase restore  ok (1s) install ................................................. ok (31s)  2026-05-14 18:25:52 UTC
+extensions/WikibaseCirrusSearch restore  ok (0s) install ................................................. ok (11s)  2026-05-14 18:26:03 UTC
+extensions/WikibaseMediaInfo restore  ok (1s) install ................................................. ok (14s)  2026-05-14 18:26:18 UTC
+extensions/WikiLove restore  ok (0s) install ................................................ ok (4s)  2026-05-14 18:26:22 UTC
+extensions/WikimediaCampaignEvents restore  ok (1s) install ................................................. ok (7s)  2026-05-14 18:26:30 UTC
+extensions/WikimediaMessages restore  ok (0s) install ................................................. ok (6s)  2026-05-14 18:26:36 UTC
+skins/MinervaNeue restore  ok (1s) install ................................................. ok (15s)  2026-05-14 18:26:52 UTC
+skins/Vector restore  ok (0s) install ................................................ ok (5s)  2026-05-14 18:26:57 UTC
 
 ========================================
 = Results
@@ -123,4 +123,4 @@ PASSED:
   skins/Vector
 
 All passed.
-(8m 44s)
+(8m 39s)

@@ -12,13 +12,118 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-install_all_gated install_all_gated .. FAIL (0s)  2026-05-13 13:00:28 UTC
+install_all_gated install_all_gated ................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................ ok (8m 15s)  2026-05-14 19:46:52 UTC
+core(selenium)  2026-05-14 19:46:52 UTC
+extensions/AbuseFilter(selenium) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:46:54 UTC
+extensions/AntiSpoof(selenium)  2026-05-14 19:46:56 UTC
+extensions/Babel(selenium)  2026-05-14 19:46:57 UTC
+extensions/BetaFeatures(selenium)  2026-05-14 19:46:59 UTC
+extensions/CampaignEvents(selenium) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:47:01 UTC
+extensions/CheckUser(selenium)  2026-05-14 19:47:03 UTC
+extensions/CirrusSearch(selenium)  2026-05-14 19:47:04 UTC
+extensions/cldr(selenium)  2026-05-14 19:47:06 UTC
+extensions/ContentTranslation(selenium)  2026-05-14 19:47:08 UTC
+extensions/CommunityConfiguration(selenium) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:47:10 UTC
+extensions/CommunityConfigurationExample(selenium)  2026-05-14 19:47:11 UTC
+extensions/Disambiguator(selenium)  2026-05-14 19:47:12 UTC
+extensions/Echo(selenium) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:47:15 UTC
+extensions/Elastica(selenium)  2026-05-14 19:47:16 UTC
+extensions/EventBus(selenium)  2026-05-14 19:47:18 UTC
+extensions/EventLogging(selenium)  2026-05-14 19:47:19 UTC
+extensions/EventStreamConfig(selenium)  2026-05-14 19:47:20 UTC
+extensions/FileImporter(selenium)  2026-05-14 19:47:22 UTC
+extensions/GeoData(selenium)  2026-05-14 19:47:23 UTC
+extensions/GlobalCssJs(selenium)  2026-05-14 19:47:25 UTC
+extensions/GlobalPreferences(selenium)  2026-05-14 19:47:26 UTC
+extensions/GrowthExperiments(selenium)  2026-05-14 19:47:28 UTC
+extensions/GuidedTour(selenium) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:47:30 UTC
+extensions/IPInfo(selenium)  2026-05-14 19:47:32 UTC
+extensions/JsonConfig(selenium)  2026-05-14 19:47:33 UTC
+extensions/Kartographer(selenium)  2026-05-14 19:47:35 UTC
+extensions/Math(selenium) run_selenium_tests ............................................. ok (0s)  2026-05-14 19:47:37 UTC
+extensions/MediaModeration(selenium)  2026-05-14 19:47:39 UTC
+extensions/MobileApp(selenium)  2026-05-14 19:47:40 UTC
+extensions/MobileFrontend(selenium)  2026-05-14 19:47:42 UTC
+extensions/NavigationTiming(selenium)  2026-05-14 19:47:43 UTC
+extensions/PageImages(selenium)  2026-05-14 19:47:45 UTC
+extensions/PageTriage(selenium) run_selenium_tests ............................................. ok (0s)  2026-05-14 19:47:47 UTC
+extensions/PageViewInfo(selenium)  2026-05-14 19:47:49 UTC
+extensions/ProofreadPage(selenium) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:47:51 UTC
+extensions/SandboxLink(selenium)  2026-05-14 19:47:52 UTC
+extensions/Scribunto(selenium)  2026-05-14 19:47:54 UTC
+extensions/SiteMatrix(selenium)  2026-05-14 19:47:55 UTC
+extensions/TemplateData(selenium) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:47:58 UTC
+extensions/Thanks(selenium)  2026-05-14 19:47:59 UTC
+extensions/TimedMediaHandler(selenium)  2026-05-14 19:48:01 UTC
+extensions/Translate(selenium)  2026-05-14 19:48:03 UTC
+extensions/UniversalLanguageSelector(selenium)  2026-05-14 19:48:04 UTC
+extensions/VisualEditor(selenium) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:48:07 UTC
+extensions/Wikibase(selenium)  2026-05-14 19:48:10 UTC
+extensions/WikibaseCirrusSearch(selenium)  2026-05-14 19:48:11 UTC
+extensions/WikibaseMediaInfo(selenium)  2026-05-14 19:48:13 UTC
+extensions/WikiLove(selenium)  2026-05-14 19:48:14 UTC
+extensions/WikimediaCampaignEvents(selenium)  2026-05-14 19:48:15 UTC
+extensions/WikimediaMessages(selenium)  2026-05-14 19:48:17 UTC
+skins/MinervaNeue(selenium) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:48:20 UTC
+skins/Vector(selenium)  2026-05-14 19:48:21 UTC
 
 ========================================
 = Results
 ========================================
-FAILED:
-  install (install_all_gated)
+PASSED:
+  core
+  extensions/AbuseFilter
+  extensions/AntiSpoof
+  extensions/Babel
+  extensions/BetaFeatures
+  extensions/CampaignEvents
+  extensions/CheckUser
+  extensions/CirrusSearch
+  extensions/cldr
+  extensions/ContentTranslation
+  extensions/CommunityConfiguration
+  extensions/CommunityConfigurationExample
+  extensions/Disambiguator
+  extensions/Echo
+  extensions/Elastica
+  extensions/EventBus
+  extensions/EventLogging
+  extensions/EventStreamConfig
+  extensions/FileImporter
+  extensions/GeoData
+  extensions/GlobalCssJs
+  extensions/GlobalPreferences
+  extensions/GrowthExperiments
+  extensions/GuidedTour
+  extensions/IPInfo
+  extensions/JsonConfig
+  extensions/Kartographer
+  extensions/Math
+  extensions/MediaModeration
+  extensions/MobileApp
+  extensions/MobileFrontend
+  extensions/NavigationTiming
+  extensions/PageImages
+  extensions/PageTriage
+  extensions/PageViewInfo
+  extensions/ProofreadPage
+  extensions/SandboxLink
+  extensions/Scribunto
+  extensions/SiteMatrix
+  extensions/TemplateData
+  extensions/Thanks
+  extensions/TimedMediaHandler
+  extensions/Translate
+  extensions/UniversalLanguageSelector
+  extensions/VisualEditor
+  extensions/Wikibase
+  extensions/WikibaseCirrusSearch
+  extensions/WikibaseMediaInfo
+  extensions/WikiLove
+  extensions/WikimediaCampaignEvents
+  extensions/WikimediaMessages
+  skins/MinervaNeue
+  skins/Vector
 
-Logs: log/silent/
-(0s)
+All passed.
+(9m 45s)

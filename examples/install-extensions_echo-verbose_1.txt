@@ -114,7 +114,7 @@ docker RAM: 15.6 GB
 = install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} --resolve-requires --command true ${deps[@]+"${deps[@]}"})
 
 ========================================
-= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 
 ========================================
 = install is running: local _xtrace_was_on=
@@ -132,10 +132,10 @@ docker run \
   -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -145,14 +145,14 @@ docker run \
 ########################################
 
 ========================================
-= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 + /usr/bin/supervisord
-2026-05-13 12:00:45,658 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:00:45,660 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:00:45,660 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:00:45,662 INFO daemonizing the supervisord process
+2026-05-14 18:01:23,924 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:01:23,927 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:01:23,927 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-13 12:00:45,663 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:01:23,928 INFO daemonizing the supervisord process
+2026-05-14 18:01:23,929 CRIT could not write pidfile /var/run/supervisord.pid
 [36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 [32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
 [32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor

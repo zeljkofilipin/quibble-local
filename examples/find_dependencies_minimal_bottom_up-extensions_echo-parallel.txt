@@ -31,8 +31,8 @@ fetch(EventLogging) ..
 fetch(MobileFrontend) ..
 
 Parallel mode: 2 workers
-fresh_install ............................................. ok (1s) install ................................................ ok (4s) save  ok (1s) 
---- Wave 1-2 of 16 (2 workers) --- 2026-05-13 11:20:53 UTC
+fresh_install ............................................. ok (1s) install ................................................ ok (5s) save  ok (0s) 
+--- Wave 1-2 of 16 (2 workers) --- 2026-05-14 17:10:16 UTC
   Worker 1: combo 1/16: (none)
   Worker 2: combo 2/16: AntiSpoof
 
@@ -43,4 +43,4 @@ fresh_install ............................................. ok (1s) install ....
 ========================================
 
 No dependencies needed.
-(20s)
+(21s)

@@ -25,7 +25,7 @@ docker RAM: 15.6 GB
 = remove is running: '[' -z 1 ']'
 
 ========================================
-= remove is running: docker run --rm --entrypoint bash --user root -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete'
+= remove is running: docker run --rm --entrypoint bash --user root -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete'
 
 ========================================
 = remove is running: rm -rf src

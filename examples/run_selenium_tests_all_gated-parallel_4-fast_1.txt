@@ -12,9 +12,198 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-core fresh_install .. FAIL (0s)  2026-05-13 13:00:28 UTC
+core fresh_install ............................................. ok (2s) save . FAIL (0s)  2026-05-14 19:34:08 UTC
 
 Parallel mode: 4 workers
 
-Error: FAST mode requires src_save/ (run ./save first or let core step create it).
-(0s)
+--- Wave 1-4 of 52 (4 workers) --- 2026-05-14 19:34:08 UTC
+  Worker 1: extensions/AbuseFilter
+  Worker 2: extensions/AntiSpoof
+  Worker 3: extensions/Babel
+  Worker 4: extensions/BetaFeatures
+  extensions/AbuseFilter: ok
+  extensions/AntiSpoof: ok
+  extensions/Babel: ok
+  extensions/BetaFeatures: ok
+
+--- Wave 5-8 of 52 (4 workers) --- 2026-05-14 19:34:31 UTC
+  Worker 1: extensions/CampaignEvents
+  Worker 2: extensions/CheckUser
+  Worker 3: extensions/CirrusSearch
+  Worker 4: extensions/cldr
+  extensions/CampaignEvents: ok
+  extensions/CheckUser: ok
+  extensions/CirrusSearch: ok
+  extensions/cldr: ok
+
+--- Wave 9-12 of 52 (4 workers) --- 2026-05-14 19:35:04 UTC
+  Worker 1: extensions/ContentTranslation
+  Worker 2: extensions/CommunityConfiguration
+  Worker 3: extensions/CommunityConfigurationExample
+  Worker 4: extensions/Disambiguator
+  extensions/ContentTranslation: ok
+  extensions/CommunityConfiguration: ok
+  extensions/CommunityConfigurationExample: ok
+  extensions/Disambiguator: ok
+
+--- Wave 13-16 of 52 (4 workers) --- 2026-05-14 19:35:23 UTC
+  Worker 1: extensions/Echo
+  Worker 2: extensions/Elastica
+  Worker 3: extensions/EventBus
+  Worker 4: extensions/EventLogging
+  extensions/Echo: ok
+  extensions/Elastica: ok
+  extensions/EventBus: ok
+  extensions/EventLogging: ok
+
+--- Wave 17-20 of 52 (4 workers) --- 2026-05-14 19:35:38 UTC
+  Worker 1: extensions/EventStreamConfig
+  Worker 2: extensions/FileImporter
+  Worker 3: extensions/GeoData
+  Worker 4: extensions/GlobalCssJs
+  extensions/EventStreamConfig: ok
+  extensions/FileImporter: ok
+  extensions/GeoData: ok
+  extensions/GlobalCssJs: ok
+
+--- Wave 21-24 of 52 (4 workers) --- 2026-05-14 19:35:49 UTC
+  Worker 1: extensions/GlobalPreferences
+  Worker 2: extensions/GrowthExperiments
+  Worker 3: extensions/GuidedTour
+  Worker 4: extensions/IPInfo
+  extensions/GlobalPreferences: ok
+  extensions/GrowthExperiments: ok
+  extensions/GuidedTour: ok
+  extensions/IPInfo: ok
+
+--- Wave 25-28 of 52 (4 workers) --- 2026-05-14 19:36:24 UTC
+  Worker 1: extensions/JsonConfig
+  Worker 2: extensions/Kartographer
+  Worker 3: extensions/Math
+  Worker 4: extensions/MediaModeration
+  extensions/JsonConfig: ok
+  extensions/Kartographer: ok
+  extensions/Math: ok
+  extensions/MediaModeration: ok
+
+--- Wave 29-32 of 52 (4 workers) --- 2026-05-14 19:36:39 UTC
+  Worker 1: extensions/MobileApp
+  Worker 2: extensions/MobileFrontend
+  Worker 3: extensions/NavigationTiming
+  Worker 4: extensions/PageImages
+  extensions/MobileApp: ok
+  extensions/MobileFrontend: ok
+  extensions/NavigationTiming: ok
+  extensions/PageImages: ok
+
+--- Wave 33-36 of 52 (4 workers) --- 2026-05-14 19:36:54 UTC
+  Worker 1: extensions/PageTriage
+  Worker 2: extensions/PageViewInfo
+  Worker 3: extensions/ProofreadPage
+  Worker 4: extensions/SandboxLink
+  extensions/PageTriage: ok
+  extensions/PageViewInfo: ok
+  extensions/ProofreadPage: ok
+  extensions/SandboxLink: ok
+
+--- Wave 37-40 of 52 (4 workers) --- 2026-05-14 19:37:09 UTC
+  Worker 1: extensions/Scribunto
+  Worker 2: extensions/SiteMatrix
+  Worker 3: extensions/TemplateData
+  Worker 4: extensions/Thanks
+  extensions/Scribunto: ok
+  extensions/SiteMatrix: ok
+  extensions/TemplateData: ok
+  extensions/Thanks: ok
+
+--- Wave 41-44 of 52 (4 workers) --- 2026-05-14 19:37:25 UTC
+  Worker 1: extensions/TimedMediaHandler
+  Worker 2: extensions/Translate
+  Worker 3: extensions/UniversalLanguageSelector
+  Worker 4: extensions/VisualEditor
+  extensions/TimedMediaHandler: ok
+  extensions/Translate: ok
+  extensions/UniversalLanguageSelector: ok
+  extensions/VisualEditor: ok
+
+--- Wave 45-48 of 52 (4 workers) --- 2026-05-14 19:37:44 UTC
+  Worker 1: extensions/Wikibase
+  Worker 2: extensions/WikibaseCirrusSearch
+  Worker 3: extensions/WikibaseMediaInfo
+  Worker 4: extensions/WikiLove
+  extensions/Wikibase: ok
+  extensions/WikibaseCirrusSearch: ok
+  extensions/WikibaseMediaInfo: ok
+  extensions/WikiLove: ok
+
+--- Wave 49-52 of 52 (4 workers) --- 2026-05-14 19:38:18 UTC
+  Worker 1: extensions/WikimediaCampaignEvents
+  Worker 2: extensions/WikimediaMessages
+  Worker 3: skins/MinervaNeue
+  Worker 4: skins/Vector
+  extensions/WikimediaCampaignEvents: ok
+  extensions/WikimediaMessages: ok
+  skins/MinervaNeue: ok
+  skins/Vector: ok
+
+========================================
+= Results
+========================================
+PASSED:
+  extensions/AbuseFilter
+  extensions/AntiSpoof
+  extensions/Babel
+  extensions/BetaFeatures
+  extensions/CampaignEvents
+  extensions/CheckUser
+  extensions/CirrusSearch
+  extensions/cldr
+  extensions/ContentTranslation
+  extensions/CommunityConfiguration
+  extensions/CommunityConfigurationExample
+  extensions/Disambiguator
+  extensions/Echo
+  extensions/Elastica
+  extensions/EventBus
+  extensions/EventLogging
+  extensions/EventStreamConfig
+  extensions/FileImporter
+  extensions/GeoData
+  extensions/GlobalCssJs
+  extensions/GlobalPreferences
+  extensions/GrowthExperiments
+  extensions/GuidedTour
+  extensions/IPInfo
+  extensions/JsonConfig
+  extensions/Kartographer
+  extensions/Math
+  extensions/MediaModeration
+  extensions/MobileApp
+  extensions/MobileFrontend
+  extensions/NavigationTiming
+  extensions/PageImages
+  extensions/PageTriage
+  extensions/PageViewInfo
+  extensions/ProofreadPage
+  extensions/SandboxLink
+  extensions/Scribunto
+  extensions/SiteMatrix
+  extensions/TemplateData
+  extensions/Thanks
+  extensions/TimedMediaHandler
+  extensions/Translate
+  extensions/UniversalLanguageSelector
+  extensions/VisualEditor
+  extensions/Wikibase
+  extensions/WikibaseCirrusSearch
+  extensions/WikibaseMediaInfo
+  extensions/WikiLove
+  extensions/WikimediaCampaignEvents
+  extensions/WikimediaMessages
+  skins/MinervaNeue
+  skins/Vector
+FAILED:
+  core (save)
+
+Logs: log/silent/
+(4m 30s)

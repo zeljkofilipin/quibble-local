@@ -16,21 +16,21 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:01:09,879 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:01:09,882 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:01:09,882 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:01:48,598 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:01:48,601 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:01:48,601 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:01:48,603 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
-2026-05-13 12:01:09,883 INFO daemonizing the supervisord process
-2026-05-13 12:01:09,884 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:01:48,603 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -61,10 +61,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/AbuseFilter \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -73,12 +73,12 @@ docker run \
   mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/CheckUser mediawiki/extensions/CodeEditor mediawiki/extensions/ConfirmEdit mediawiki/extensions/Echo mediawiki/extensions/EventLogging mediawiki/extensions/Scribunto mediawiki/extensions/WikiEditor
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:01:28,666 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:01:28,668 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:01:28,669 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:02:08,097 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:02:08,100 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:02:08,100 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/CheckUser mediawiki/extensions/CodeEditor mediawiki/extensions/ConfirmEdit mediawiki/extensions/Echo mediawiki/extensions/EventLogging mediawiki/extensions/Scribunto mediawiki/extensions/WikiEditor
-2026-05-13 12:01:28,670 INFO daemonizing the supervisord process
-2026-05-13 12:01:28,671 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:02:08,101 INFO daemonizing the supervisord process
+2026-05-14 18:02:08,102 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/AbuseFilter
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AbuseFilter, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/CheckUser, mediawiki/extensions/CodeEditor, mediawiki/extensions/ConfirmEdit, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/Scribunto, mediawiki/extensions/WikiEditor, mediawiki/skins/Vector, mediawiki/vendor
@@ -110,10 +110,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/AntiSpoof \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -121,12 +121,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:01:32,952 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:01:32,954 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:01:32,954 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:01:32,956 INFO daemonizing the supervisord process
+2026-05-14 18:02:12,448 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:02:12,451 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:02:12,451 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:02:12,453 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:01:32,956 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:02:12,453 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/AntiSpoof
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/skins/Vector, mediawiki/vendor
@@ -158,10 +158,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Babel \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -170,12 +170,12 @@ docker run \
   mediawiki/extensions/CommunityConfiguration
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:01:38,747 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:01:38,750 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:01:38,750 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:01:38,751 INFO daemonizing the supervisord process
+2026-05-14 18:02:18,634 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:02:18,637 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:02:18,637 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:02:18,638 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CommunityConfiguration
-2026-05-13 12:01:38,752 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:02:18,639 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Babel
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Babel, mediawiki/extensions/CommunityConfiguration, mediawiki/skins/Vector, mediawiki/vendor
@@ -207,10 +207,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/BetaFeatures \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -218,12 +218,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:01:43,093 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:01:43,095 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:01:43,096 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:01:43,097 INFO daemonizing the supervisord process
+2026-05-14 18:02:23,190 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:02:23,192 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:02:23,192 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:02:23,194 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:01:43,098 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:02:23,194 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/BetaFeatures
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/BetaFeatures, mediawiki/skins/Vector, mediawiki/vendor
@@ -255,10 +255,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/CampaignEvents \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -267,12 +267,12 @@ docker run \
   mediawiki/extensions/cldr mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/Translate mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/UserMerge mediawiki/extensions/WikimediaCampaignEvents
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:01:58,225 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:01:58,228 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:01:58,228 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:01:58,229 INFO daemonizing the supervisord process
+2026-05-14 18:02:38,653 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:02:38,656 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:02:38,656 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/cldr mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/Translate mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/UserMerge mediawiki/extensions/WikimediaCampaignEvents
-2026-05-13 12:01:58,230 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:02:38,657 INFO daemonizing the supervisord process
+2026-05-14 18:02:38,658 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/CampaignEvents
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CampaignEvents, mediawiki/extensions/CentralAuth, mediawiki/extensions/Translate, mediawiki/extensions/UniversalLanguageSelector, mediawiki/extensions/UserMerge, mediawiki/extensions/WikimediaCampaignEvents, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
@@ -299,19 +299,15 @@ DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in p
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-Cloning dependency: GlobalBlocking
-Cloning into bare repository 'ref/mediawiki/extensions/GlobalBlocking.git'...
-Cloning dependency: TorBlock
-Cloning into bare repository 'ref/mediawiki/extensions/TorBlock.git'...
 ########################################
 docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/CheckUser \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -320,12 +316,12 @@ docker run \
   mediawiki/extensions/AbuseFilter mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/CommunityConfiguration mediawiki/extensions/DiscussionTools mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/FlaggedRevs mediawiki/extensions/GlobalBlocking mediawiki/extensions/GlobalPreferences mediawiki/extensions/GrowthExperiments mediawiki/extensions/IPInfo mediawiki/extensions/MobileFrontend mediawiki/extensions/TorBlock mediawiki/extensions/VisualEditor
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:02:31,897 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:02:31,900 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:02:31,900 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:02:31,901 INFO daemonizing the supervisord process
+2026-05-14 18:03:07,743 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:03:07,746 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:03:07,746 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:03:07,747 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AbuseFilter mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/CommunityConfiguration mediawiki/extensions/DiscussionTools mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/FlaggedRevs mediawiki/extensions/GlobalBlocking mediawiki/extensions/GlobalPreferences mediawiki/extensions/GrowthExperiments mediawiki/extensions/IPInfo mediawiki/extensions/MobileFrontend mediawiki/extensions/TorBlock mediawiki/extensions/VisualEditor
-2026-05-13 12:02:31,902 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:03:07,748 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/CheckUser
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AbuseFilter, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/CheckUser, mediawiki/extensions/CommunityConfiguration, mediawiki/extensions/DiscussionTools, mediawiki/extensions/EventBus, mediawiki/extensions/EventLogging, mediawiki/extensions/FlaggedRevs, mediawiki/extensions/GlobalBlocking, mediawiki/extensions/GlobalPreferences, mediawiki/extensions/GrowthExperiments, mediawiki/extensions/IPInfo, mediawiki/extensions/MobileFrontend, mediawiki/extensions/TorBlock, mediawiki/extensions/VisualEditor, mediawiki/skins/Vector, mediawiki/vendor
@@ -352,17 +348,15 @@ DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in p
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-Cloning dependency: PdfHandler
-Cloning into bare repository 'ref/mediawiki/extensions/PdfHandler.git'...
 ########################################
 docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/CirrusSearch \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -371,12 +365,12 @@ docker run \
   mediawiki/extensions/Elastica mediawiki/extensions/BetaFeatures mediawiki/extensions/Cite mediawiki/extensions/EventBus mediawiki/extensions/EventStreamConfig mediawiki/extensions/GeoData mediawiki/extensions/PdfHandler mediawiki/extensions/SiteMatrix mediawiki/extensions/TimedMediaHandler
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:02:49,970 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:02:49,972 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:02:49,972 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:02:49,974 INFO daemonizing the supervisord process
+2026-05-14 18:03:24,859 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:03:24,862 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:03:24,862 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:03:24,863 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Elastica mediawiki/extensions/BetaFeatures mediawiki/extensions/Cite mediawiki/extensions/EventBus mediawiki/extensions/EventStreamConfig mediawiki/extensions/GeoData mediawiki/extensions/PdfHandler mediawiki/extensions/SiteMatrix mediawiki/extensions/TimedMediaHandler
-2026-05-13 12:02:49,975 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:03:24,864 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/CirrusSearch
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/BetaFeatures, mediawiki/extensions/CirrusSearch, mediawiki/extensions/Cite, mediawiki/extensions/Elastica, mediawiki/extensions/EventBus, mediawiki/extensions/EventStreamConfig, mediawiki/extensions/GeoData, mediawiki/extensions/PdfHandler, mediawiki/extensions/SiteMatrix, mediawiki/extensions/TimedMediaHandler, mediawiki/skins/Vector, mediawiki/vendor
@@ -408,10 +402,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/cldr \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -419,12 +413,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:02:54,359 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:02:54,362 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:02:54,362 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:02:54,364 INFO daemonizing the supervisord process
+2026-05-14 18:03:29,157 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:03:29,160 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:03:29,160 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:03:29,161 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:02:54,364 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:03:29,162 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/cldr
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
@@ -456,10 +450,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/ContentTranslation \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -468,12 +462,12 @@ docker run \
   mediawiki/extensions/Cite mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/VisualEditor mediawiki/extensions/WikimediaMessages mediawiki/extensions/AbuseFilter mediawiki/extensions/Echo mediawiki/extensions/EventLogging
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:03:11,065 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:03:11,068 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:03:11,068 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:03:45,629 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:03:45,632 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:03:45,632 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Cite mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/VisualEditor mediawiki/extensions/WikimediaMessages mediawiki/extensions/AbuseFilter mediawiki/extensions/Echo mediawiki/extensions/EventLogging
-2026-05-13 12:03:11,069 INFO daemonizing the supervisord process
-2026-05-13 12:03:11,070 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:03:45,633 INFO daemonizing the supervisord process
+2026-05-14 18:03:45,634 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/ContentTranslation
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AbuseFilter, mediawiki/extensions/Cite, mediawiki/extensions/ContentTranslation, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/UniversalLanguageSelector, mediawiki/extensions/VisualEditor, mediawiki/extensions/WikimediaMessages, mediawiki/skins/Vector, mediawiki/vendor
@@ -505,10 +499,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/CommunityConfiguration \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -517,12 +511,12 @@ docker run \
   mediawiki/extensions/CommunityConfigurationExample
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:03:16,514 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:03:16,517 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:03:16,517 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:03:16,518 INFO daemonizing the supervisord process
+2026-05-14 18:03:50,824 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:03:50,827 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:03:50,827 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CommunityConfigurationExample
-2026-05-13 12:03:16,519 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:03:50,828 INFO daemonizing the supervisord process
+2026-05-14 18:03:50,829 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/CommunityConfiguration
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CommunityConfiguration, mediawiki/extensions/CommunityConfigurationExample, mediawiki/skins/Vector, mediawiki/vendor
@@ -554,10 +548,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/CommunityConfigurationExample \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -566,12 +560,12 @@ docker run \
   mediawiki/extensions/CommunityConfiguration
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:03:21,931 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:03:21,934 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:03:21,934 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:03:21,935 INFO daemonizing the supervisord process
+2026-05-14 18:03:56,042 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:03:56,045 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:03:56,045 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:03:56,046 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CommunityConfiguration
-2026-05-13 12:03:21,936 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:03:56,047 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/CommunityConfigurationExample
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CommunityConfiguration, mediawiki/extensions/CommunityConfigurationExample, mediawiki/skins/Vector, mediawiki/vendor
@@ -603,10 +597,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Disambiguator \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -615,12 +609,12 @@ docker run \
   mediawiki/extensions/VisualEditor
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:03:28,092 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:03:28,094 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:03:28,094 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:03:28,096 INFO daemonizing the supervisord process
+2026-05-14 18:04:02,035 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:04:02,037 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:04:02,037 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/VisualEditor
-2026-05-13 12:03:28,096 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:04:02,039 INFO daemonizing the supervisord process
+2026-05-14 18:04:02,039 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Disambiguator
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Disambiguator, mediawiki/extensions/VisualEditor, mediawiki/skins/Vector, mediawiki/vendor
@@ -652,10 +646,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -664,12 +658,12 @@ docker run \
   mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:03:39,402 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:03:39,404 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:03:39,405 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:03:39,406 INFO daemonizing the supervisord process
+2026-05-14 18:04:13,209 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:04:13,212 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:04:13,212 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-13 12:03:39,407 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:04:13,213 INFO daemonizing the supervisord process
+2026-05-14 18:04:13,214 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -701,10 +695,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Elastica \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -712,12 +706,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:03:43,543 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:03:43,546 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:03:43,546 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:03:43,547 INFO daemonizing the supervisord process
+2026-05-14 18:04:17,284 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:04:17,287 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:04:17,287 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:04:17,289 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:03:43,548 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:04:17,289 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Elastica
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Elastica, mediawiki/skins/Vector, mediawiki/vendor
@@ -749,10 +743,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/EventBus \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -761,12 +755,12 @@ docker run \
   mediawiki/extensions/EventStreamConfig
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:03:49,030 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:03:49,032 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:03:49,032 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:04:22,551 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:04:22,555 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:04:22,555 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:04:22,557 INFO daemonizing the supervisord process
+2026-05-14 18:04:22,558 CRIT could not write pidfile /var/run/supervisord.pid
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/EventStreamConfig
-2026-05-13 12:03:49,034 INFO daemonizing the supervisord process
-2026-05-13 12:03:49,034 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/EventBus
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventBus, mediawiki/extensions/EventStreamConfig, mediawiki/skins/Vector, mediawiki/vendor
@@ -798,10 +792,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/EventLogging \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -810,12 +804,12 @@ docker run \
   mediawiki/extensions/EventBus mediawiki/extensions/EventStreamConfig
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:03:55,874 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:03:55,876 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:03:55,876 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:03:55,878 INFO daemonizing the supervisord process
+2026-05-14 18:04:29,425 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:04:29,428 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:04:29,428 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/EventBus mediawiki/extensions/EventStreamConfig
-2026-05-13 12:03:55,878 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:04:29,429 INFO daemonizing the supervisord process
+2026-05-14 18:04:29,429 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/EventLogging
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventBus, mediawiki/extensions/EventLogging, mediawiki/extensions/EventStreamConfig, mediawiki/skins/Vector, mediawiki/vendor
@@ -847,10 +841,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/EventStreamConfig \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -858,12 +852,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:03:59,998 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:04:00,001 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:04:00,001 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:04:33,363 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:04:33,366 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:04:33,366 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:04:00,003 INFO daemonizing the supervisord process
-2026-05-13 12:04:00,003 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:04:33,367 INFO daemonizing the supervisord process
+2026-05-14 18:04:33,368 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/EventStreamConfig
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventStreamConfig, mediawiki/skins/Vector, mediawiki/vendor
@@ -895,10 +889,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/FileImporter \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -907,12 +901,12 @@ docker run \
   mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/WikiEditor
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:04:09,066 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:04:09,069 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:04:09,069 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:04:09,070 INFO daemonizing the supervisord process
+2026-05-14 18:04:42,268 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:04:42,271 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:04:42,271 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:04:42,272 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/WikiEditor
-2026-05-13 12:04:09,071 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:04:42,273 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/FileImporter
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/FileImporter, mediawiki/extensions/WikiEditor, mediawiki/skins/Vector, mediawiki/vendor
@@ -944,10 +938,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/GeoData \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -956,12 +950,12 @@ docker run \
   mediawiki/extensions/CirrusSearch mediawiki/extensions/Elastica
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:04:16,481 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:04:16,484 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:04:16,484 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:04:49,406 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:04:49,409 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:04:49,409 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:04:49,411 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CirrusSearch mediawiki/extensions/Elastica
-2026-05-13 12:04:16,485 INFO daemonizing the supervisord process
-2026-05-13 12:04:16,486 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:04:49,411 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/GeoData
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CirrusSearch, mediawiki/extensions/Elastica, mediawiki/extensions/GeoData, mediawiki/skins/Vector, mediawiki/vendor
@@ -993,10 +987,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/GlobalCssJs \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1004,12 +998,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:04:20,673 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:04:20,675 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:04:20,676 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:04:20,677 INFO daemonizing the supervisord process
+2026-05-14 18:04:53,391 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:04:53,393 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:04:53,393 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:04:20,678 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:04:53,395 INFO daemonizing the supervisord process
+2026-05-14 18:04:53,396 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/GlobalCssJs
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/GlobalCssJs, mediawiki/skins/Vector, mediawiki/vendor
@@ -1041,10 +1035,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/GlobalPreferences \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1052,12 +1046,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:04:24,978 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:04:24,981 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:04:24,981 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:04:24,983 INFO daemonizing the supervisord process
+2026-05-14 18:04:57,639 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:04:57,641 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:04:57,641 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:04:57,643 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:04:24,983 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:04:57,644 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/GlobalPreferences
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/GlobalPreferences, mediawiki/skins/Vector, mediawiki/vendor
@@ -1084,19 +1078,15 @@ DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in p
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-Cloning dependency: CentralNotice
-Cloning into bare repository 'ref/mediawiki/extensions/CentralNotice.git'...
-Cloning dependency: Flow
-Cloning into bare repository 'ref/mediawiki/extensions/Flow.git'...
 ########################################
 docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/GrowthExperiments \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1105,12 +1095,12 @@ docker run \
   mediawiki/extensions/CommunityConfiguration mediawiki/extensions/VisualEditor mediawiki/extensions/CentralNotice mediawiki/extensions/CirrusSearch mediawiki/extensions/Echo mediawiki/extensions/Elastica mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/EventStreamConfig mediawiki/extensions/Flow mediawiki/extensions/GuidedTour mediawiki/extensions/MobileFrontend mediawiki/extensions/PageImages mediawiki/extensions/PageViewInfo mediawiki/skins/MinervaNeue mediawiki/extensions/TestKitchen mediawiki/extensions/Thanks mediawiki/extensions/WikimediaMessages
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:05:04,175 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:05:04,178 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:05:04,178 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:05:04,179 INFO daemonizing the supervisord process
+2026-05-14 18:05:29,991 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:05:29,994 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:05:29,994 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CommunityConfiguration mediawiki/extensions/VisualEditor mediawiki/extensions/CentralNotice mediawiki/extensions/CirrusSearch mediawiki/extensions/Echo mediawiki/extensions/Elastica mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/EventStreamConfig mediawiki/extensions/Flow mediawiki/extensions/GuidedTour mediawiki/extensions/MobileFrontend mediawiki/extensions/PageImages mediawiki/extensions/PageViewInfo mediawiki/skins/MinervaNeue mediawiki/extensions/TestKitchen mediawiki/extensions/Thanks mediawiki/extensions/WikimediaMessages
-2026-05-13 12:05:04,180 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:05:29,995 INFO daemonizing the supervisord process
+2026-05-14 18:05:29,996 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/GrowthExperiments
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CentralNotice, mediawiki/extensions/CirrusSearch, mediawiki/extensions/CommunityConfiguration, mediawiki/extensions/Echo, mediawiki/extensions/Elastica, mediawiki/extensions/EventBus, mediawiki/extensions/EventLogging, mediawiki/extensions/EventStreamConfig, mediawiki/extensions/Flow, mediawiki/extensions/GrowthExperiments, mediawiki/extensions/GuidedTour, mediawiki/extensions/MobileFrontend, mediawiki/extensions/PageImages, mediawiki/extensions/PageViewInfo, mediawiki/extensions/TestKitchen, mediawiki/extensions/Thanks, mediawiki/extensions/VisualEditor, mediawiki/extensions/WikimediaMessages, mediawiki/skins/MinervaNeue, mediawiki/skins/Vector, mediawiki/vendor
@@ -1142,10 +1132,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/GuidedTour \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1154,12 +1144,12 @@ docker run \
   mediawiki/extensions/EventLogging
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:05:09,968 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:05:09,970 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:05:09,971 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:05:09,972 INFO daemonizing the supervisord process
+2026-05-14 18:05:35,478 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:05:35,481 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:05:35,481 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:05:35,482 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/EventLogging
-2026-05-13 12:05:09,973 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:05:35,483 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/GuidedTour
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventLogging, mediawiki/extensions/GuidedTour, mediawiki/skins/Vector, mediawiki/vendor
@@ -1186,17 +1176,15 @@ DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in p
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-Cloning dependency: IPReputation
-Cloning into bare repository 'ref/mediawiki/extensions/IPReputation.git'...
 ########################################
 docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/IPInfo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1205,12 +1193,12 @@ docker run \
   mediawiki/extensions/AbuseFilter mediawiki/extensions/BetaFeatures mediawiki/extensions/CheckUser mediawiki/extensions/GlobalPreferences mediawiki/extensions/IPReputation mediawiki/extensions/MobileFrontend
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:05:24,630 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:05:24,633 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:05:24,633 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:05:49,346 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:05:49,349 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:05:49,349 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:05:49,350 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AbuseFilter mediawiki/extensions/BetaFeatures mediawiki/extensions/CheckUser mediawiki/extensions/GlobalPreferences mediawiki/extensions/IPReputation mediawiki/extensions/MobileFrontend
-2026-05-13 12:05:24,634 INFO daemonizing the supervisord process
-2026-05-13 12:05:24,635 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:05:49,351 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/IPInfo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AbuseFilter, mediawiki/extensions/BetaFeatures, mediawiki/extensions/CheckUser, mediawiki/extensions/GlobalPreferences, mediawiki/extensions/IPInfo, mediawiki/extensions/IPReputation, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -1242,10 +1230,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/JsonConfig \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1254,12 +1242,12 @@ docker run \
   mediawiki/extensions/Kartographer mediawiki/extensions/Scribunto mediawiki/extensions/VisualEditor mediawiki/extensions/WikimediaMessages
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:05:35,823 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:05:35,826 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:05:35,826 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:05:35,828 INFO daemonizing the supervisord process
+2026-05-14 18:06:00,208 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:06:00,210 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:06:00,210 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:06:00,212 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Kartographer mediawiki/extensions/Scribunto mediawiki/extensions/VisualEditor mediawiki/extensions/WikimediaMessages
-2026-05-13 12:05:35,828 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:06:00,212 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/JsonConfig
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/JsonConfig, mediawiki/extensions/Kartographer, mediawiki/extensions/Scribunto, mediawiki/extensions/VisualEditor, mediawiki/extensions/WikimediaMessages, mediawiki/skins/Vector, mediawiki/vendor
@@ -1291,10 +1279,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Kartographer \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1303,12 +1291,12 @@ docker run \
   mediawiki/extensions/JsonConfig mediawiki/extensions/FlaggedRevs mediawiki/extensions/ParserFunctions mediawiki/extensions/VisualEditor mediawiki/extensions/WikimediaMessages
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:05:48,099 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:05:48,102 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:05:48,102 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:06:13,017 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:06:13,020 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:06:13,020 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:06:13,021 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/JsonConfig mediawiki/extensions/FlaggedRevs mediawiki/extensions/ParserFunctions mediawiki/extensions/VisualEditor mediawiki/extensions/WikimediaMessages
-2026-05-13 12:05:48,103 INFO daemonizing the supervisord process
-2026-05-13 12:05:48,104 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:06:13,022 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Kartographer
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/FlaggedRevs, mediawiki/extensions/JsonConfig, mediawiki/extensions/Kartographer, mediawiki/extensions/ParserFunctions, mediawiki/extensions/VisualEditor, mediawiki/extensions/WikimediaMessages, mediawiki/skins/Vector, mediawiki/vendor
@@ -1340,10 +1328,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Math \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1352,12 +1340,12 @@ docker run \
   mediawiki/extensions/VisualEditor mediawiki/extensions/Wikibase
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:05:57,131 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:05:57,134 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:05:57,134 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:06:21,758 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:06:21,760 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:06:21,760 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:06:21,762 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/VisualEditor mediawiki/extensions/Wikibase
-2026-05-13 12:05:57,135 INFO daemonizing the supervisord process
-2026-05-13 12:05:57,136 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:06:21,762 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Math
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Math, mediawiki/extensions/VisualEditor, mediawiki/extensions/Wikibase, mediawiki/skins/Vector, mediawiki/vendor
@@ -1389,10 +1377,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/MediaModeration \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1400,12 +1388,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:06:01,302 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:06:01,305 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:06:01,305 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:06:01,306 INFO daemonizing the supervisord process
+2026-05-14 18:06:25,678 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:06:25,681 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:06:25,681 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:06:01,307 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:06:25,682 INFO daemonizing the supervisord process
+2026-05-14 18:06:25,682 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/MediaModeration
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/MediaModeration, mediawiki/skins/Vector, mediawiki/vendor
@@ -1437,10 +1425,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/MobileApp \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1449,12 +1437,12 @@ docker run \
   mediawiki/extensions/AbuseFilter mediawiki/extensions/Echo mediawiki/extensions/MobileFrontend mediawiki/extensions/VisualEditor
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:06:13,033 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:06:13,036 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:06:13,036 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:06:13,037 INFO daemonizing the supervisord process
+2026-05-14 18:06:37,497 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:06:37,500 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:06:37,500 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AbuseFilter mediawiki/extensions/Echo mediawiki/extensions/MobileFrontend mediawiki/extensions/VisualEditor
-2026-05-13 12:06:13,038 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:06:37,501 INFO daemonizing the supervisord process
+2026-05-14 18:06:37,501 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/MobileApp
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AbuseFilter, mediawiki/extensions/Echo, mediawiki/extensions/MobileApp, mediawiki/extensions/MobileFrontend, mediawiki/extensions/VisualEditor, mediawiki/skins/Vector, mediawiki/vendor
@@ -1486,10 +1474,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/MobileFrontend \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1498,12 +1486,12 @@ docker run \
   mediawiki/extensions/Echo mediawiki/extensions/MobileApp mediawiki/skins/MinervaNeue mediawiki/extensions/VisualEditor
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:06:24,785 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:06:24,788 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:06:24,788 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:06:24,790 INFO daemonizing the supervisord process
+2026-05-14 18:06:49,092 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:06:49,095 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:06:49,095 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:06:49,096 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Echo mediawiki/extensions/MobileApp mediawiki/skins/MinervaNeue mediawiki/extensions/VisualEditor
-2026-05-13 12:06:24,791 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:06:49,097 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/MobileFrontend
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/extensions/MobileApp, mediawiki/extensions/MobileFrontend, mediawiki/extensions/VisualEditor, mediawiki/skins/MinervaNeue, mediawiki/skins/Vector, mediawiki/vendor
@@ -1535,10 +1523,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/NavigationTiming \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1547,12 +1535,12 @@ docker run \
   mediawiki/extensions/EventLogging
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:06:30,425 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:06:30,428 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:06:30,428 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:06:30,430 INFO daemonizing the supervisord process
+2026-05-14 18:06:54,463 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:06:54,466 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:06:54,466 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:06:54,468 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/EventLogging
-2026-05-13 12:06:30,430 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:06:54,468 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/NavigationTiming
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventLogging, mediawiki/extensions/NavigationTiming, mediawiki/skins/Vector, mediawiki/vendor
@@ -1584,10 +1572,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/PageImages \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1595,12 +1583,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:06:34,592 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:06:34,595 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:06:34,595 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:06:34,596 INFO daemonizing the supervisord process
+2026-05-14 18:06:58,659 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:06:58,662 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:06:58,662 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:06:34,597 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:06:58,663 INFO daemonizing the supervisord process
+2026-05-14 18:06:58,664 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/PageImages
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/PageImages, mediawiki/skins/Vector, mediawiki/vendor
@@ -1632,10 +1620,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/PageTriage \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1644,12 +1632,12 @@ docker run \
   mediawiki/extensions/Echo mediawiki/extensions/ORES mediawiki/extensions/PageViewInfo mediawiki/extensions/WikiLove
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:06:45,762 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:06:45,765 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:06:45,765 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:06:45,766 INFO daemonizing the supervisord process
+2026-05-14 18:07:08,774 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:07:08,776 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:07:08,776 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:07:08,778 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Echo mediawiki/extensions/ORES mediawiki/extensions/PageViewInfo mediawiki/extensions/WikiLove
-2026-05-13 12:06:45,767 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:07:08,778 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/PageTriage
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/extensions/ORES, mediawiki/extensions/PageTriage, mediawiki/extensions/PageViewInfo, mediawiki/extensions/WikiLove, mediawiki/skins/Vector, mediawiki/vendor
@@ -1681,10 +1669,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/PageViewInfo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1692,12 +1680,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:06:50,585 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:06:50,588 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:06:50,588 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:06:50,589 INFO daemonizing the supervisord process
+2026-05-14 18:07:12,773 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:07:12,776 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:07:12,776 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:07:12,777 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:06:50,590 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:07:12,778 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/PageViewInfo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/PageViewInfo, mediawiki/skins/Vector, mediawiki/vendor
@@ -1729,10 +1717,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/ProofreadPage \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1741,12 +1729,12 @@ docker run \
   mediawiki/extensions/BetaFeatures mediawiki/extensions/LabeledSectionTransclusion mediawiki/extensions/ParserFunctions mediawiki/extensions/Scribunto mediawiki/extensions/VisualEditor
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:07:02,480 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:07:02,483 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:07:02,483 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:07:02,485 INFO daemonizing the supervisord process
+2026-05-14 18:07:24,700 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:07:24,703 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:07:24,703 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/BetaFeatures mediawiki/extensions/LabeledSectionTransclusion mediawiki/extensions/ParserFunctions mediawiki/extensions/Scribunto mediawiki/extensions/VisualEditor
-2026-05-13 12:07:02,485 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:07:24,704 INFO daemonizing the supervisord process
+2026-05-14 18:07:24,705 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/ProofreadPage
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/BetaFeatures, mediawiki/extensions/LabeledSectionTransclusion, mediawiki/extensions/ParserFunctions, mediawiki/extensions/ProofreadPage, mediawiki/extensions/Scribunto, mediawiki/extensions/VisualEditor, mediawiki/skins/Vector, mediawiki/vendor
@@ -1778,10 +1766,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/SandboxLink \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1789,12 +1777,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:07:06,400 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:07:06,402 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:07:06,402 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:07:06,404 INFO daemonizing the supervisord process
+2026-05-14 18:07:28,760 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:07:28,763 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:07:28,763 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:07:28,765 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:07:06,404 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:07:28,766 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/SandboxLink
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/SandboxLink, mediawiki/skins/Vector, mediawiki/vendor
@@ -1826,10 +1814,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Scribunto \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1837,12 +1825,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:07:10,627 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:07:10,630 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:07:10,630 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:07:10,631 INFO daemonizing the supervisord process
+2026-05-14 18:07:32,956 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:07:32,958 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:07:32,959 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:07:32,960 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:07:10,632 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:07:32,961 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Scribunto
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Scribunto, mediawiki/skins/Vector, mediawiki/vendor
@@ -1874,10 +1862,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/SiteMatrix \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1885,12 +1873,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:07:14,702 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:07:14,704 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:07:14,705 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:07:14,706 INFO daemonizing the supervisord process
+2026-05-14 18:07:37,099 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:07:37,101 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:07:37,101 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:07:37,103 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:07:14,707 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:07:37,104 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/SiteMatrix
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/SiteMatrix, mediawiki/skins/Vector, mediawiki/vendor
@@ -1922,10 +1910,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/TemplateData \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1933,12 +1921,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:07:18,931 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:07:18,934 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:07:18,934 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:07:18,936 INFO daemonizing the supervisord process
+2026-05-14 18:07:41,450 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:07:41,453 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:07:41,453 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:07:41,455 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:07:18,936 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:07:41,455 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/TemplateData
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/TemplateData, mediawiki/skins/Vector, mediawiki/vendor
@@ -1970,10 +1958,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Thanks \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -1982,12 +1970,12 @@ docker run \
   mediawiki/extensions/Echo mediawiki/extensions/AbuseFilter mediawiki/extensions/Flow mediawiki/extensions/MobileFrontend mediawiki/extensions/VisualEditor
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:07:32,343 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:07:32,345 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:07:32,345 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:07:55,092 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:07:55,095 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:07:55,095 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Echo mediawiki/extensions/AbuseFilter mediawiki/extensions/Flow mediawiki/extensions/MobileFrontend mediawiki/extensions/VisualEditor
-2026-05-13 12:07:32,347 INFO daemonizing the supervisord process
-2026-05-13 12:07:32,347 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:07:55,096 INFO daemonizing the supervisord process
+2026-05-14 18:07:55,097 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Thanks
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AbuseFilter, mediawiki/extensions/Echo, mediawiki/extensions/Flow, mediawiki/extensions/MobileFrontend, mediawiki/extensions/Thanks, mediawiki/extensions/VisualEditor, mediawiki/skins/Vector, mediawiki/vendor
@@ -2019,10 +2007,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/TimedMediaHandler \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -2030,12 +2018,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:07:36,632 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:07:36,635 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:07:36,635 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:07:36,637 INFO daemonizing the supervisord process
+2026-05-14 18:07:59,490 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:07:59,493 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:07:59,493 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:07:59,494 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:07:36,637 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:07:59,495 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/TimedMediaHandler
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/TimedMediaHandler, mediawiki/skins/Vector, mediawiki/vendor
@@ -2067,10 +2055,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Translate \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -2079,12 +2067,12 @@ docker run \
   mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/cldr mediawiki/extensions/EventLogging mediawiki/extensions/Scribunto mediawiki/extensions/VisualEditor
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:07:49,270 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:07:49,273 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:07:49,273 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:07:49,274 INFO daemonizing the supervisord process
+2026-05-14 18:08:12,237 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:08:12,240 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:08:12,240 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:08:12,241 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/cldr mediawiki/extensions/EventLogging mediawiki/extensions/Scribunto mediawiki/extensions/VisualEditor
-2026-05-13 12:07:49,275 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:08:12,242 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Translate
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventLogging, mediawiki/extensions/Scribunto, mediawiki/extensions/Translate, mediawiki/extensions/UniversalLanguageSelector, mediawiki/extensions/VisualEditor, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
@@ -2116,10 +2104,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/UniversalLanguageSelector \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -2128,12 +2116,12 @@ docker run \
   mediawiki/extensions/EventLogging
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:07:55,053 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:07:55,056 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:07:55,056 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:07:55,057 INFO daemonizing the supervisord process
+2026-05-14 18:08:18,107 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:08:18,109 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:08:18,109 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/EventLogging
-2026-05-13 12:07:55,058 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:08:18,111 INFO daemonizing the supervisord process
+2026-05-14 18:08:18,111 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/UniversalLanguageSelector
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/EventLogging, mediawiki/extensions/UniversalLanguageSelector, mediawiki/skins/Vector, mediawiki/vendor
@@ -2165,10 +2153,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/VisualEditor \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -2177,12 +2165,12 @@ docker run \
   mediawiki/extensions/Cite mediawiki/extensions/ConfirmEdit mediawiki/extensions/DiscussionTools mediawiki/extensions/FlaggedRevs mediawiki/extensions/Linter mediawiki/extensions/TemplateData
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:08:09,179 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:08:09,182 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:08:09,182 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:08:09,184 INFO daemonizing the supervisord process
+2026-05-14 18:08:32,164 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:08:32,167 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:08:32,167 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Cite mediawiki/extensions/ConfirmEdit mediawiki/extensions/DiscussionTools mediawiki/extensions/FlaggedRevs mediawiki/extensions/Linter mediawiki/extensions/TemplateData
-2026-05-13 12:08:09,184 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:08:32,169 INFO daemonizing the supervisord process
+2026-05-14 18:08:32,169 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/VisualEditor
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Cite, mediawiki/extensions/ConfirmEdit, mediawiki/extensions/DiscussionTools, mediawiki/extensions/FlaggedRevs, mediawiki/extensions/Linter, mediawiki/extensions/TemplateData, mediawiki/extensions/VisualEditor, mediawiki/skins/Vector, mediawiki/vendor
@@ -2209,27 +2197,15 @@ DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in p
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-Cloning dependency: ArticlePlaceholder
-Cloning into bare repository 'ref/mediawiki/extensions/ArticlePlaceholder.git'...
-Cloning dependency: PropertySuggester
-Cloning into bare repository 'ref/mediawiki/extensions/PropertySuggester.git'...
-Cloning dependency: SpamBlacklist
-Cloning into bare repository 'ref/mediawiki/extensions/SpamBlacklist.git'...
-Cloning dependency: WikibaseLexeme
-Cloning into bare repository 'ref/mediawiki/extensions/WikibaseLexeme.git'...
-Cloning dependency: WikibaseQualityConstraints
-Cloning into bare repository 'ref/mediawiki/extensions/WikibaseQualityConstraints.git'...
-Cloning dependency: WikimediaBadges
-Cloning into bare repository 'ref/mediawiki/extensions/WikimediaBadges.git'...
 ########################################
 docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Wikibase \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -2238,12 +2214,12 @@ docker run \
   mediawiki/extensions/ArticlePlaceholder mediawiki/extensions/CirrusSearch mediawiki/extensions/cldr mediawiki/extensions/Echo mediawiki/extensions/Elastica mediawiki/extensions/GeoData mediawiki/extensions/MobileFrontend mediawiki/extensions/PropertySuggester mediawiki/extensions/Scribunto mediawiki/skins/MinervaNeue mediawiki/extensions/SpamBlacklist mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/WikibaseCirrusSearch mediawiki/extensions/WikibaseLexeme mediawiki/extensions/WikibaseMediaInfo mediawiki/extensions/WikibaseQualityConstraints mediawiki/extensions/WikimediaBadges
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:08:47,201 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:08:47,204 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:08:47,204 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:09:03,377 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:09:03,380 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:09:03,380 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:09:03,381 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/ArticlePlaceholder mediawiki/extensions/CirrusSearch mediawiki/extensions/cldr mediawiki/extensions/Echo mediawiki/extensions/Elastica mediawiki/extensions/GeoData mediawiki/extensions/MobileFrontend mediawiki/extensions/PropertySuggester mediawiki/extensions/Scribunto mediawiki/skins/MinervaNeue mediawiki/extensions/SpamBlacklist mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/WikibaseCirrusSearch mediawiki/extensions/WikibaseLexeme mediawiki/extensions/WikibaseMediaInfo mediawiki/extensions/WikibaseQualityConstraints mediawiki/extensions/WikimediaBadges
-2026-05-13 12:08:47,206 INFO daemonizing the supervisord process
-2026-05-13 12:08:47,206 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:09:03,382 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Wikibase
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/ArticlePlaceholder, mediawiki/extensions/CirrusSearch, mediawiki/extensions/Echo, mediawiki/extensions/Elastica, mediawiki/extensions/GeoData, mediawiki/extensions/MobileFrontend, mediawiki/extensions/PropertySuggester, mediawiki/extensions/Scribunto, mediawiki/extensions/SpamBlacklist, mediawiki/extensions/UniversalLanguageSelector, mediawiki/extensions/Wikibase, mediawiki/extensions/WikibaseCirrusSearch, mediawiki/extensions/WikibaseLexeme, mediawiki/extensions/WikibaseMediaInfo, mediawiki/extensions/WikibaseQualityConstraints, mediawiki/extensions/WikimediaBadges, mediawiki/extensions/cldr, mediawiki/skins/MinervaNeue, mediawiki/skins/Vector, mediawiki/vendor
@@ -2275,10 +2251,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/WikibaseCirrusSearch \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -2287,12 +2263,12 @@ docker run \
   mediawiki/extensions/CirrusSearch mediawiki/extensions/cldr mediawiki/extensions/Elastica mediawiki/extensions/Wikibase
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:08:58,040 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:08:58,042 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:08:58,042 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:08:58,044 INFO daemonizing the supervisord process
+2026-05-14 18:09:14,353 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:09:14,356 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:09:14,356 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:09:14,357 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CirrusSearch mediawiki/extensions/cldr mediawiki/extensions/Elastica mediawiki/extensions/Wikibase
-2026-05-13 12:08:58,044 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:09:14,358 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/WikibaseCirrusSearch
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CirrusSearch, mediawiki/extensions/Elastica, mediawiki/extensions/Wikibase, mediawiki/extensions/WikibaseCirrusSearch, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
@@ -2324,10 +2300,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/WikibaseMediaInfo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -2336,12 +2312,12 @@ docker run \
   mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/WikibaseCirrusSearch mediawiki/extensions/CirrusSearch mediawiki/extensions/cldr mediawiki/extensions/Elastica mediawiki/extensions/Wikibase
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:09:12,081 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:09:12,083 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:09:12,084 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:09:12,085 INFO daemonizing the supervisord process
+2026-05-14 18:09:28,281 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:09:28,284 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:09:28,284 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:09:28,285 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/UniversalLanguageSelector mediawiki/extensions/WikibaseCirrusSearch mediawiki/extensions/CirrusSearch mediawiki/extensions/cldr mediawiki/extensions/Elastica mediawiki/extensions/Wikibase
-2026-05-13 12:09:12,085 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:09:28,286 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/WikibaseMediaInfo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CirrusSearch, mediawiki/extensions/Elastica, mediawiki/extensions/UniversalLanguageSelector, mediawiki/extensions/Wikibase, mediawiki/extensions/WikibaseCirrusSearch, mediawiki/extensions/WikibaseMediaInfo, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
@@ -2373,10 +2349,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/WikiLove \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -2384,12 +2360,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:09:16,146 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:09:16,149 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:09:16,149 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:09:16,150 INFO daemonizing the supervisord process
+2026-05-14 18:09:32,342 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:09:32,345 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:09:32,345 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:09:32,347 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:09:16,151 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:09:32,347 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/WikiLove
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/WikiLove, mediawiki/skins/Vector, mediawiki/vendor
@@ -2421,10 +2397,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/WikimediaCampaignEvents \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -2433,12 +2409,12 @@ docker run \
   mediawiki/extensions/CampaignEvents mediawiki/extensions/cldr
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:09:23,010 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:09:23,012 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:09:23,012 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:09:39,283 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:09:39,285 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:09:39,285 CRIT Server 'unix_http_server' running without any HTTP authentication checking
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/CampaignEvents mediawiki/extensions/cldr
-2026-05-13 12:09:23,014 INFO daemonizing the supervisord process
-2026-05-13 12:09:23,014 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:09:39,287 INFO daemonizing the supervisord process
+2026-05-14 18:09:39,287 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/WikimediaCampaignEvents
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CampaignEvents, mediawiki/extensions/WikimediaCampaignEvents, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
@@ -2470,10 +2446,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/WikimediaMessages \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -2482,12 +2458,12 @@ docker run \
   mediawiki/extensions/cldr
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:09:28,737 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:09:28,740 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:09:28,740 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:09:28,741 INFO daemonizing the supervisord process
+2026-05-14 18:09:44,932 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:09:44,935 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:09:44,935 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:09:44,937 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/cldr
-2026-05-13 12:09:28,742 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:09:44,937 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/WikimediaMessages
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/WikimediaMessages, mediawiki/extensions/cldr, mediawiki/skins/Vector, mediawiki/vendor
@@ -2519,10 +2495,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/skins/MinervaNeue \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -2531,12 +2507,12 @@ docker run \
   mediawiki/extensions/Cite mediawiki/extensions/Echo mediawiki/extensions/MobileFrontend mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/EventStreamConfig mediawiki/extensions/TestKitchen
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:09:43,402 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:09:43,405 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:09:43,405 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:09:59,901 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:09:59,904 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:09:59,904 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:09:59,906 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Cite mediawiki/extensions/Echo mediawiki/extensions/MobileFrontend mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/EventStreamConfig mediawiki/extensions/TestKitchen
-2026-05-13 12:09:43,407 INFO daemonizing the supervisord process
-2026-05-13 12:09:43,407 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:09:59,906 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/skins/MinervaNeue
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Cite, mediawiki/extensions/Echo, mediawiki/extensions/EventBus, mediawiki/extensions/EventLogging, mediawiki/extensions/EventStreamConfig, mediawiki/extensions/MobileFrontend, mediawiki/extensions/TestKitchen, mediawiki/skins/MinervaNeue, mediawiki/skins/Vector, mediawiki/vendor
@@ -2568,10 +2544,10 @@ docker run \
   -i \
   --rm \
   --entrypoint=quibble-with-supervisord \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/cache:/cache \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/log:/workspace/log \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/ref:/srv/git:ro \
-  -v /home/z/Documents/gitlab/zfilipin/quibble-local/src:/workspace/src \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/skins/Vector \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
   --dry-run \
@@ -2579,12 +2555,12 @@ docker run \
   --command true
 ########################################
 + /usr/bin/supervisord
-2026-05-13 12:09:47,787 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-13 12:09:47,790 INFO RPC interface 'supervisor' initialized
-2026-05-13 12:09:47,790 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-13 12:09:47,791 INFO daemonizing the supervisord process
+2026-05-14 18:10:04,304 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-14 18:10:04,307 INFO RPC interface 'supervisor' initialized
+2026-05-14 18:10:04,307 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-14 18:10:04,308 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-13 12:09:47,792 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-14 18:10:04,309 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/skins/Vector
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -2611,4 +2587,4 @@ DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in p
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(8m 40s)
+(8m 17s)

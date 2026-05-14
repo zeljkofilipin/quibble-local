@@ -12,53 +12,53 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-./help .................................................................................................................................................... ok (1s) 2026-05-13 13:00:45 UTC
-./help install ..................... ok (0s) 2026-05-13 13:00:45 UTC
-./lint  ok (10s) 2026-05-13 13:00:55 UTC
-./ci .............................................................................................................................................................................................................................. ok (32s) 2026-05-13 13:01:27 UTC
-./generate_example log/generate_example_test.txt ./help .. ok (1s) 2026-05-13 13:01:28 UTC
-env DRY_RUN=1 ./generate_examples ................................................................................................................. ok (1s) 2026-05-13 13:01:29 UTC
-./prepare .. FAIL (0s) 2026-05-13 13:01:29 UTC
-./fetch . ok (0s) 2026-05-13 13:01:29 UTC
-./fetch ref/mediawiki/core.git .. ok (0s) 2026-05-13 13:01:29 UTC
-env PARALLEL=2 ./fetch . ok (0s) 2026-05-13 13:01:29 UTC
-./fresh_install .. FAIL (0s) 2026-05-13 13:01:29 UTC
-env DRY_RUN=1 ./fresh_install .. FAIL (0s) 2026-05-13 13:01:29 UTC
-./save . FAIL (0s) 2026-05-13 13:01:29 UTC
-./restore . FAIL (0s) 2026-05-13 13:01:29 UTC
-env ENVIRONMENT=0 ./fresh_install .. FAIL (0s) 2026-05-13 13:01:29 UTC
-env ENVIRONMENT=0 ./save . FAIL (0s) 2026-05-13 13:01:29 UTC
-env ENVIRONMENT=0 ./restore . FAIL (0s) 2026-05-13 13:01:29 UTC
-env ENVIRONMENT=0 ./remove  ok (1s) 2026-05-13 13:01:30 UTC
-./selenium_tests_exist  FAIL (0s) 2026-05-13 13:01:30 UTC
-./run_selenium_tests ............................................ ok (1s) 2026-05-13 13:01:31 UTC
-./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js ............................................ ok (1s) 2026-05-13 13:01:32 UTC
-./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account ............................................ ok (1s) 2026-05-13 13:01:33 UTC
-./install extensions/Echo . FAIL (0s) 2026-05-13 13:01:33 UTC
-env DRY_RUN=1 ./install extensions/Echo . FAIL (0s) 2026-05-13 13:01:33 UTC
-env QUIBBLE_DEPS= ./install extensions/Echo . FAIL (0s) 2026-05-13 13:01:33 UTC
-env QUIBBLE_DEPS=EventLogging ./install extensions/Echo . FAIL (1s) 2026-05-13 13:01:34 UTC
-./selenium_tests_exist extensions/Echo . FAIL (0s) 2026-05-13 13:01:34 UTC
-./run_selenium_tests extensions/Echo ............................................. ok (1s) 2026-05-13 13:01:35 UTC
-./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js ............................................. ok (1s) 2026-05-13 13:01:36 UTC
-./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep alerts and notices are visible ............................................. ok (1s) 2026-05-13 13:01:37 UTC
-./run_php_unit_tests extensions/Echo ............................................. ok (1s) 2026-05-13 13:01:38 UTC
-./run_php_unit_tests extensions/Echo --filter testNotificationCount ............................................. ok (1s) 2026-05-13 13:01:39 UTC
-env DRY_RUN=1 ./run_php_unit_tests extensions/Echo ............................................. ok (1s) 2026-05-13 13:01:40 UTC
-./install skins/MinervaNeue . FAIL (0s) 2026-05-13 13:01:40 UTC
-./selenium_tests_exist skins/MinervaNeue . FAIL (0s) 2026-05-13 13:01:40 UTC
-./run_selenium_tests skins/MinervaNeue ............................................. ok (1s) 2026-05-13 13:01:41 UTC
-./list_dependencies extensions/Echo . FAIL (0s) 2026-05-13 13:01:41 UTC
-./list_dependencies_required extensions/Echo  ok (0s) 2026-05-13 13:01:41 UTC
-./list_dependencies_optional extensions/Echo . ok (0s) 2026-05-13 13:01:41 UTC
-./list_dependencies_combinations extensions/Echo . ok (0s) 2026-05-13 13:01:41 UTC
-./list_dependencies skins/MinervaNeue . FAIL (0s) 2026-05-13 13:01:41 UTC
-./list_dependencies_required skins/MinervaNeue  ok (0s) 2026-05-13 13:01:41 UTC
-./list_dependencies_optional skins/MinervaNeue . ok (0s) 2026-05-13 13:01:41 UTC
-./list_dependencies_combinations skins/MinervaNeue . ok (0s) 2026-05-13 13:01:41 UTC
-./list_gated . FAIL (0s) 2026-05-13 13:01:41 UTC
-./suggest_parallel . ok (0s) 2026-05-13 13:01:41 UTC
-./remove  ok (0s) 2026-05-13 13:01:41 UTC
+./help .................................................................................................................................................... ok (0s) 2026-05-14 20:22:49 UTC
+./help install ..................... ok (0s) 2026-05-14 20:22:49 UTC
+./lint  ok (10s) 2026-05-14 20:22:59 UTC
+./ci ........................................................................................................................................................................................................................................ ok (35s) 2026-05-14 20:23:34 UTC
+./generate_example log/generate_example_test.txt ./help .. ok (0s) 2026-05-14 20:23:34 UTC
+env DRY_RUN=1 ./generate_examples .............................................................................................................. ok (1s) 2026-05-14 20:23:35 UTC
+./prepare ............ ok (7s) 2026-05-14 20:23:42 UTC
+./fetch ................................................................................................................................................................ ok (2m 5s) 2026-05-14 20:25:47 UTC
+./fetch ref/mediawiki/core.git .. ok (5s) 2026-05-14 20:25:52 UTC
+env PARALLEL=2 ./fetch ................................................................................................................................................................ ok (1m 8s) 2026-05-14 20:27:00 UTC
+./fresh_install ............................................. ok (1s) 2026-05-14 20:27:01 UTC
+env DRY_RUN=1 ./fresh_install ............................................. ok (1s) 2026-05-14 20:27:02 UTC
+./save . FAIL (0s) 2026-05-14 20:27:02 UTC
+./restore  ok (1s) 2026-05-14 20:27:03 UTC
+env ENVIRONMENT=0 ./fresh_install ............................................. ok (3s) 2026-05-14 20:27:06 UTC
+env ENVIRONMENT=0 ./save . FAIL (0s) 2026-05-14 20:27:06 UTC
+env ENVIRONMENT=0 ./restore  ok (10s) 2026-05-14 20:27:16 UTC
+env ENVIRONMENT=0 ./remove  ok (2s) 2026-05-14 20:27:18 UTC
+./selenium_tests_exist  FAIL (0s) 2026-05-14 20:27:18 UTC
+./run_selenium_tests ............................................ ok (1s) 2026-05-14 20:27:19 UTC
+./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js ............................................ ok (1s) 2026-05-14 20:27:20 UTC
+./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account ............................................ ok (1s) 2026-05-14 20:27:21 UTC
+./install extensions/Echo ................................................. ok (12s) 2026-05-14 20:27:33 UTC
+env DRY_RUN=1 ./install extensions/Echo ................................................. ok (11s) 2026-05-14 20:27:44 UTC
+env QUIBBLE_DEPS= ./install extensions/Echo ................................................ ok (5s) 2026-05-14 20:27:49 UTC
+env QUIBBLE_DEPS=EventLogging ./install extensions/Echo ................................................. ok (6s) 2026-05-14 20:27:55 UTC
+./selenium_tests_exist extensions/Echo  ok (2s) 2026-05-14 20:27:57 UTC
+./run_selenium_tests extensions/Echo ............................................. ok (1s) 2026-05-14 20:27:58 UTC
+./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js ............................................. ok (1s) 2026-05-14 20:27:59 UTC
+./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep alerts and notices are visible ............................................. ok (1s) 2026-05-14 20:28:00 UTC
+./run_php_unit_tests extensions/Echo ............................................. ok (1s) 2026-05-14 20:28:01 UTC
+./run_php_unit_tests extensions/Echo --filter testNotificationCount ............................................. ok (1s) 2026-05-14 20:28:02 UTC
+env DRY_RUN=1 ./run_php_unit_tests extensions/Echo ............................................. ok (1s) 2026-05-14 20:28:03 UTC
+./install skins/MinervaNeue ................................................. ok (16s) 2026-05-14 20:28:19 UTC
+./selenium_tests_exist skins/MinervaNeue  ok (1s) 2026-05-14 20:28:20 UTC
+./run_selenium_tests skins/MinervaNeue ............................................. ok (1s) 2026-05-14 20:28:21 UTC
+./list_dependencies extensions/Echo .... ok (0s) 2026-05-14 20:28:21 UTC
+./list_dependencies_required extensions/Echo  ok (0s) 2026-05-14 20:28:21 UTC
+./list_dependencies_optional extensions/Echo .... ok (0s) 2026-05-14 20:28:21 UTC
+./list_dependencies_combinations extensions/Echo ............... ok (0s) 2026-05-14 20:28:21 UTC
+./list_dependencies skins/MinervaNeue ....... ok (0s) 2026-05-14 20:28:21 UTC
+./list_dependencies_required skins/MinervaNeue  ok (0s) 2026-05-14 20:28:21 UTC
+./list_dependencies_optional skins/MinervaNeue ....... ok (1s) 2026-05-14 20:28:22 UTC
+./list_dependencies_combinations skins/MinervaNeue ............................................................................................................................... ok (0s) 2026-05-14 20:28:22 UTC
+./list_gated .................................................... ok (0s) 2026-05-14 20:28:22 UTC
+./suggest_parallel . ok (0s) 2026-05-14 20:28:22 UTC
+./remove  ok (0s) 2026-05-14 20:28:22 UTC
 
 ========================================
 = Results
@@ -70,48 +70,48 @@ PASSED:
   ./ci
   ./generate_example log/generate_example_test.txt ./help
   env DRY_RUN=1 ./generate_examples
+  ./prepare
   ./fetch
   ./fetch ref/mediawiki/core.git
   env PARALLEL=2 ./fetch
+  ./fresh_install
+  env DRY_RUN=1 ./fresh_install
+  ./restore
+  env ENVIRONMENT=0 ./fresh_install
+  env ENVIRONMENT=0 ./restore
   env ENVIRONMENT=0 ./remove
   ./run_selenium_tests
   ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js
   ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account
+  ./install extensions/Echo
+  env DRY_RUN=1 ./install extensions/Echo
+  env QUIBBLE_DEPS= ./install extensions/Echo
+  env QUIBBLE_DEPS=EventLogging ./install extensions/Echo
+  ./selenium_tests_exist extensions/Echo
   ./run_selenium_tests extensions/Echo
   ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js
   ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep alerts and notices are visible
   ./run_php_unit_tests extensions/Echo
   ./run_php_unit_tests extensions/Echo --filter testNotificationCount
   env DRY_RUN=1 ./run_php_unit_tests extensions/Echo
+  ./install skins/MinervaNeue
+  ./selenium_tests_exist skins/MinervaNeue
   ./run_selenium_tests skins/MinervaNeue
+  ./list_dependencies extensions/Echo
   ./list_dependencies_required extensions/Echo
   ./list_dependencies_optional extensions/Echo
   ./list_dependencies_combinations extensions/Echo
+  ./list_dependencies skins/MinervaNeue
   ./list_dependencies_required skins/MinervaNeue
   ./list_dependencies_optional skins/MinervaNeue
   ./list_dependencies_combinations skins/MinervaNeue
+  ./list_gated
   ./suggest_parallel
   ./remove
 FAILED:
-  ./prepare
-  ./fresh_install
-  env DRY_RUN=1 ./fresh_install
   ./save
-  ./restore
-  env ENVIRONMENT=0 ./fresh_install
   env ENVIRONMENT=0 ./save
-  env ENVIRONMENT=0 ./restore
   ./selenium_tests_exist
-  ./install extensions/Echo
-  env DRY_RUN=1 ./install extensions/Echo
-  env QUIBBLE_DEPS= ./install extensions/Echo
-  env QUIBBLE_DEPS=EventLogging ./install extensions/Echo
-  ./selenium_tests_exist extensions/Echo
-  ./install skins/MinervaNeue
-  ./selenium_tests_exist skins/MinervaNeue
-  ./list_dependencies extensions/Echo
-  ./list_dependencies skins/MinervaNeue
-  ./list_gated
 
 Logs: log/silent/
-(57s)
+(5m 33s)

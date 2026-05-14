@@ -67,22 +67,19 @@ docker RAM: 15.6 GB
 = prepare is running: ref_dir=ref/mediawiki/vendor.git
 
 ========================================
-= prepare is running: git -C ref/mediawiki/core.git fetch
-
-========================================
 = prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/vendor
 
 ========================================
+
+========================================
 = prepare is running: '[' -d ref/mediawiki/vendor.git ']'
+= prepare is running: git -C ref/mediawiki/core.git fetch
 
 ========================================
 = prepare is running: pids+=($!)
 
 ========================================
-
-========================================
 = prepare is running: pid_names+=("$ref_dir")
-= prepare is running: git -C ref/mediawiki/vendor.git fetch
 
 ========================================
 = prepare is running: for ref_repo in "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"
@@ -91,12 +88,13 @@ docker RAM: 15.6 GB
 = prepare is running: ref_dir=ref/mediawiki/skins/Vector.git
 
 ========================================
+= prepare is running: git -C ref/mediawiki/vendor.git fetch
+
+========================================
 = prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
 
 ========================================
 = prepare is running: '[' -d ref/mediawiki/skins/Vector.git ']'
-
-========================================
 
 ========================================
 = prepare is running: pids+=($!)
@@ -109,13 +107,15 @@ docker RAM: 15.6 GB
 
 ========================================
 = prepare is running: ref_dir=ref/integration/config.git
-= prepare is running: git -C ref/mediawiki/skins/Vector.git fetch
 
 ========================================
 = prepare is running: ref_url=https://gerrit.wikimedia.org/r/integration/config
 
 ========================================
 = prepare is running: '[' -d ref/integration/config.git ']'
+
+========================================
+= prepare is running: git -C ref/mediawiki/skins/Vector.git fetch
 
 ========================================
 = prepare is running: pids+=($!)
@@ -130,7 +130,7 @@ docker RAM: 15.6 GB
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 763879
+= prepare is running: wait 962801
 
 ========================================
 = prepare is running: git -C ref/integration/config.git fetch
@@ -143,7 +143,7 @@ docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 763880
+= prepare is running: wait 962802
 From https://gerrit.wikimedia.org/r/mediawiki/vendor
  * branch                HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
@@ -157,19 +157,19 @@ From https://gerrit.wikimedia.org/r/mediawiki/core
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 763881
+= prepare is running: wait 962803
 
 ========================================
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 763882
+= prepare is running: wait 962804
 
 ========================================
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 763894
+= prepare is running: wait 962805
 
 ========================================
 = prepare is running: '[' 0 -gt 0 ']'

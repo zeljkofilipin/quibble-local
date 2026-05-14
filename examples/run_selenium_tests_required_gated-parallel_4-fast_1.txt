@@ -14,6 +14,196 @@ docker RAM: 15.6 GB
 
 
 Parallel mode: 4 workers
-setup (fresh_install + save) fresh_install .. FAIL (0s) 
-fresh_install failed. Cannot proceed.
-(1s)
+
+--- Wave 1-4 of 52 (4 workers) --- 2026-05-14 20:20:37 UTC
+  Worker 1: extensions/AbuseFilter
+  Worker 2: extensions/AntiSpoof
+  Worker 3: extensions/Babel
+  Worker 4: extensions/BetaFeatures
+  extensions/AbuseFilter: ok
+  extensions/AntiSpoof: skipped (no Selenium tests)
+  extensions/Babel: skipped (no Selenium tests)
+  extensions/BetaFeatures: skipped (no Selenium tests)
+
+--- Wave 5-8 of 52 (4 workers) --- 2026-05-14 20:20:46 UTC
+  Worker 1: extensions/CampaignEvents
+  Worker 2: extensions/CheckUser
+  Worker 3: extensions/CirrusSearch
+  Worker 4: extensions/cldr
+  extensions/CampaignEvents: ok
+  extensions/CheckUser: skipped (no Selenium tests)
+  extensions/CirrusSearch: skipped (no Selenium tests)
+  extensions/cldr: skipped (no Selenium tests)
+
+--- Wave 9-12 of 52 (4 workers) --- 2026-05-14 20:20:57 UTC
+  Worker 1: extensions/ContentTranslation
+  Worker 2: extensions/CommunityConfiguration
+  Worker 3: extensions/CommunityConfigurationExample
+  Worker 4: extensions/Disambiguator
+  extensions/ContentTranslation: skipped (no Selenium tests)
+  extensions/CommunityConfiguration: ok
+  extensions/CommunityConfigurationExample: skipped (no Selenium tests)
+  extensions/Disambiguator: skipped (no Selenium tests)
+
+--- Wave 13-16 of 52 (4 workers) --- 2026-05-14 20:21:12 UTC
+  Worker 1: extensions/Echo
+  Worker 2: extensions/Elastica
+  Worker 3: extensions/EventBus
+  Worker 4: extensions/EventLogging
+  extensions/Echo: ok
+  extensions/Elastica: skipped (no Selenium tests)
+  extensions/EventBus: skipped (no Selenium tests)
+  extensions/EventLogging: skipped (no Selenium tests)
+
+--- Wave 17-20 of 52 (4 workers) --- 2026-05-14 20:21:21 UTC
+  Worker 1: extensions/EventStreamConfig
+  Worker 2: extensions/FileImporter
+  Worker 3: extensions/GeoData
+  Worker 4: extensions/GlobalCssJs
+  extensions/EventStreamConfig: skipped (no Selenium tests)
+  extensions/FileImporter: skipped (no Selenium tests)
+  extensions/GeoData: skipped (no Selenium tests)
+  extensions/GlobalCssJs: skipped (no Selenium tests)
+
+--- Wave 21-24 of 52 (4 workers) --- 2026-05-14 20:21:29 UTC
+  Worker 1: extensions/GlobalPreferences
+  Worker 2: extensions/GrowthExperiments
+  Worker 3: extensions/GuidedTour
+  Worker 4: extensions/IPInfo
+  extensions/GlobalPreferences: skipped (no Selenium tests)
+  extensions/GrowthExperiments: skipped (no Selenium tests)
+  extensions/GuidedTour: ok
+  extensions/IPInfo: skipped (no Selenium tests)
+
+--- Wave 25-28 of 52 (4 workers) --- 2026-05-14 20:21:41 UTC
+  Worker 1: extensions/JsonConfig
+  Worker 2: extensions/Kartographer
+  Worker 3: extensions/Math
+  Worker 4: extensions/MediaModeration
+  extensions/JsonConfig: skipped (no Selenium tests)
+  extensions/Kartographer: skipped (no Selenium tests)
+  extensions/Math: ok
+  extensions/MediaModeration: skipped (no Selenium tests)
+
+--- Wave 29-32 of 52 (4 workers) --- 2026-05-14 20:21:49 UTC
+  Worker 1: extensions/MobileApp
+  Worker 2: extensions/MobileFrontend
+  Worker 3: extensions/NavigationTiming
+  Worker 4: extensions/PageImages
+  extensions/MobileApp: skipped (no Selenium tests)
+  extensions/MobileFrontend: skipped (no Selenium tests)
+  extensions/NavigationTiming: skipped (no Selenium tests)
+  extensions/PageImages: skipped (no Selenium tests)
+
+--- Wave 33-36 of 52 (4 workers) --- 2026-05-14 20:21:57 UTC
+  Worker 1: extensions/PageTriage
+  Worker 2: extensions/PageViewInfo
+  Worker 3: extensions/ProofreadPage
+  Worker 4: extensions/SandboxLink
+  extensions/PageTriage: ok
+  extensions/PageViewInfo: skipped (no Selenium tests)
+  extensions/ProofreadPage: ok
+  extensions/SandboxLink: skipped (no Selenium tests)
+
+--- Wave 37-40 of 52 (4 workers) --- 2026-05-14 20:22:05 UTC
+  Worker 1: extensions/Scribunto
+  Worker 2: extensions/SiteMatrix
+  Worker 3: extensions/TemplateData
+  Worker 4: extensions/Thanks
+  extensions/Scribunto: skipped (no Selenium tests)
+  extensions/SiteMatrix: skipped (no Selenium tests)
+  extensions/TemplateData: ok
+  extensions/Thanks: skipped (no Selenium tests)
+
+--- Wave 41-44 of 52 (4 workers) --- 2026-05-14 20:22:15 UTC
+  Worker 1: extensions/TimedMediaHandler
+  Worker 2: extensions/Translate
+  Worker 3: extensions/UniversalLanguageSelector
+  Worker 4: extensions/VisualEditor
+  extensions/TimedMediaHandler: skipped (no Selenium tests)
+  extensions/Translate: skipped (no Selenium tests)
+  extensions/UniversalLanguageSelector: skipped (no Selenium tests)
+  extensions/VisualEditor: ok
+
+--- Wave 45-48 of 52 (4 workers) --- 2026-05-14 20:22:25 UTC
+  Worker 1: extensions/Wikibase
+  Worker 2: extensions/WikibaseCirrusSearch
+  Worker 3: extensions/WikibaseMediaInfo
+  Worker 4: extensions/WikiLove
+  extensions/Wikibase: skipped (no Selenium tests)
+  extensions/WikibaseCirrusSearch: skipped (no Selenium tests)
+  extensions/WikibaseMediaInfo: skipped (no Selenium tests)
+  extensions/WikiLove: skipped (no Selenium tests)
+
+--- Wave 49-52 of 52 (4 workers) --- 2026-05-14 20:22:35 UTC
+  Worker 1: extensions/WikimediaCampaignEvents
+  Worker 2: extensions/WikimediaMessages
+  Worker 3: skins/MinervaNeue
+  Worker 4: skins/Vector
+  extensions/WikimediaCampaignEvents: skipped (no Selenium tests)
+  extensions/WikimediaMessages: skipped (no Selenium tests)
+  skins/MinervaNeue: ok
+  skins/Vector: skipped (no Selenium tests)
+  (11 passed, 0 failed, 41 skipped) 2026-05-14 20:22:43 UTC
+
+SKIPPED (no Selenium tests):
+  extensions/AntiSpoof
+  extensions/Babel
+  extensions/BetaFeatures
+  extensions/CheckUser
+  extensions/CirrusSearch
+  extensions/cldr
+  extensions/ContentTranslation
+  extensions/CommunityConfigurationExample
+  extensions/Disambiguator
+  extensions/Elastica
+  extensions/EventBus
+  extensions/EventLogging
+  extensions/EventStreamConfig
+  extensions/FileImporter
+  extensions/GeoData
+  extensions/GlobalCssJs
+  extensions/GlobalPreferences
+  extensions/GrowthExperiments
+  extensions/IPInfo
+  extensions/JsonConfig
+  extensions/Kartographer
+  extensions/MediaModeration
+  extensions/MobileApp
+  extensions/MobileFrontend
+  extensions/NavigationTiming
+  extensions/PageImages
+  extensions/PageViewInfo
+  extensions/SandboxLink
+  extensions/Scribunto
+  extensions/SiteMatrix
+  extensions/Thanks
+  extensions/TimedMediaHandler
+  extensions/Translate
+  extensions/UniversalLanguageSelector
+  extensions/Wikibase
+  extensions/WikibaseCirrusSearch
+  extensions/WikibaseMediaInfo
+  extensions/WikiLove
+  extensions/WikimediaCampaignEvents
+  extensions/WikimediaMessages
+  skins/Vector
+
+========================================
+= Results
+========================================
+PASSED:
+  extensions/AbuseFilter
+  extensions/CampaignEvents
+  extensions/CommunityConfiguration
+  extensions/Echo
+  extensions/GuidedTour
+  extensions/Math
+  extensions/PageTriage
+  extensions/ProofreadPage
+  extensions/TemplateData
+  extensions/VisualEditor
+  skins/MinervaNeue
+
+All passed.
+(2m 6s)

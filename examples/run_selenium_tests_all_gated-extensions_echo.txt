@@ -12,15 +12,16 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-core fresh_install .. FAIL (0s)  2026-05-13 13:00:26 UTC
-extensions/Echo fresh_install .. FAIL (1s)  2026-05-13 13:00:27 UTC
+core fresh_install ............................................. ok (1s) save . FAIL (0s)  2026-05-14 19:06:17 UTC
+extensions/Echo restore  ok (1s) install ................................................. ok (11s) run_selenium_tests ............................................. ok (1s)  2026-05-14 19:06:31 UTC
 
 ========================================
 = Results
 ========================================
+PASSED:
+  extensions/Echo
 FAILED:
-  core (fresh_install)
-  extensions/Echo (fresh_install)
+  core (save)
 
 Logs: log/silent/
-(1s)
+(15s)

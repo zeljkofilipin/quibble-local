@@ -56,16 +56,16 @@ skipped (no Selenium tests): extensions/WikimediaMessages
 skipped (no Selenium tests): skins/Vector
 
 10 components to process.
-extensions/AbuseFilter find_dependencies_minimal_greedy ....................................................................... ok (2m 38s)  2026-05-13 11:27:21 UTC
-extensions/CampaignEvents find_dependencies_minimal_greedy ............................................................. ok (1m 39s)  2026-05-13 11:29:00 UTC
-extensions/CommunityConfiguration find_dependencies_minimal_greedy ....................... ok (18s)  2026-05-13 11:29:18 UTC
-extensions/Echo find_dependencies_minimal_greedy ......................................... ok (58s)  2026-05-13 11:30:16 UTC
-extensions/GuidedTour find_dependencies_minimal_greedy ....................... ok (19s)  2026-05-13 11:30:35 UTC
-extensions/Math find_dependencies_minimal_greedy ............................. ok (34s)  2026-05-13 11:31:09 UTC
-extensions/PageTriage find_dependencies_minimal_greedy ......................................... ok (55s)  2026-05-13 11:32:04 UTC
-extensions/ProofreadPage find_dependencies_minimal_greedy ............................................... ok (1m 15s)  2026-05-13 11:33:19 UTC
-extensions/VisualEditor find_dependencies_minimal_greedy ..................................................... ok (1m 53s)  2026-05-13 11:35:12 UTC
-skins/MinervaNeue find_dependencies_minimal_greedy ........................................................... ok (1m 49s)  2026-05-13 11:37:01 UTC
+extensions/AbuseFilter find_dependencies_minimal_greedy ....................................................................... ok (2m 28s)  2026-05-14 17:14:12 UTC
+extensions/CampaignEvents find_dependencies_minimal_greedy ............................................................. ok (1m 39s)  2026-05-14 17:15:51 UTC
+extensions/CommunityConfiguration find_dependencies_minimal_greedy ....................... ok (18s)  2026-05-14 17:16:09 UTC
+extensions/Echo find_dependencies_minimal_greedy ......................................... ok (59s)  2026-05-14 17:17:08 UTC
+extensions/GuidedTour find_dependencies_minimal_greedy ....................... ok (19s)  2026-05-14 17:17:27 UTC
+extensions/Math find_dependencies_minimal_greedy ............................. ok (34s)  2026-05-14 17:18:01 UTC
+extensions/PageTriage find_dependencies_minimal_greedy ......................................... ok (54s)  2026-05-14 17:18:55 UTC
+extensions/ProofreadPage find_dependencies_minimal_greedy ............................................... ok (1m 11s)  2026-05-14 17:20:06 UTC
+extensions/VisualEditor find_dependencies_minimal_greedy ..................................................... ok (1m 31s)  2026-05-14 17:21:37 UTC
+skins/MinervaNeue find_dependencies_minimal_greedy ........................................................... ok (1m 46s)  2026-05-14 17:23:23 UTC
 
 ========================================
 = Results
@@ -125,4 +125,4 @@ PASSED:
   skins/MinervaNeue
 
 All passed.
-(16m 1s)
+(12m 59s)
