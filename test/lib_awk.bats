@@ -240,3 +240,13 @@ JSON
   result=$(echo "no path here" | awk -v pwd="/abs/proj" -f lib/scrub_pwd.awk)
   [ "$result" = "no path here" ]
 }
+
+@test "scrub_pwd.awk: calls fflush() per line so tail -f on the destination streams in real time" {
+  # Regression guard: awk full-buffers stdout when it's a pipe or file (~8KB chunks), so
+  # without fflush() after each print, files written via `./generate_example` only update
+  # for `tail -f` watchers in big bursts (or all at script exit on a small run). The
+  # fflush() keeps line-by-line streaming working. Easier to assert as a static check than
+  # to time the streaming behavior reliably under CI.
+  run grep -E "fflush\\(\\)" lib/scrub_pwd.awk
+  [ "$status" -eq 0 ]
+}
