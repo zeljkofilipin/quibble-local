@@ -39,8 +39,18 @@ cd "$(dirname "$0")"
 # each other. Bash 3.2 has no associative arrays; use a delimited string.
 seen="|"
 
-# Iterate project-root files. Auto-discover scripts the same way ./lint and ./help do:
-# the first line must be a bash shebang or a shellcheck directive.
+# Pin certain scripts at the start and end of the iteration. Most scripts depend on a
+# prepared env (cache/, log/, src/, ref/, the Docker image), so prep scripts must run
+# first. Destructive scripts must run last, since they wipe state any later script would
+# need. Everything else stays alphabetical. See CLAUDE.md ("destructive across environments")
+# for the matching contract.
+early=(prepare prepare_gated fresh_install save) # in pinned order: prepare → fresh_install → save
+late=(remove_srcs remove remove_all)             # in pinned order: least → most destructive
+
+# Build the alphabetical "others" list: every project-root file that passes auto-discovery
+# (bash shebang or shellcheck directive in its first line) and isn't pinned to early/late.
+# Auto-discover scripts the same way ./lint and ./help do.
+others=() # alphabetical middle of the iteration
 for script in *; do
   [ -f "$script" ] || continue                                      # skip directories
   [ -x "$script" ] || continue                                      # skip non-executable files
@@ -52,6 +62,19 @@ for script in *; do
     '#!/usr/bin/env bash'|'# shellcheck'*) ;;
     *) continue ;;
   esac
+  # Skip scripts pinned to the early/late phases — they're added explicitly below in fixed order.
+  # The leading/trailing spaces around the joined list let the pattern match each whole word.
+  case " ${early[*]} ${late[*]} " in
+    *" $script "*) continue ;;
+  esac
+  others+=("$script") # else it's an alphabetical middle script
+done
+
+# Final ordered iteration: early (pinned order) → alphabetical others → late (pinned order).
+# `${others[@]+"${others[@]}"}` is the bash 3.2-safe way to expand a possibly-empty array
+# under `set -u`: if `others` is empty the expansion is empty; otherwise it's the array
+# elements quoted individually. Plain `"${others[@]}"` would error on an empty array.
+for script in "${early[@]}" ${others[@]+"${others[@]}"} "${late[@]}"; do
   # Capture every Usage line of this script.
   usage_block="$(awk -f lib/parse_usage.awk "$script")"
   if [ -z "$usage_block" ]; then
