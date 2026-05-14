@@ -203,3 +203,40 @@ JSON
   expected=$(printf './foo\nDRY_RUN=1 ./foo bar')
   [ "$result" = "$expected" ]
 }
+
+# scrub_pwd.awk — replace the project's absolute path with the placeholder "$PWD"
+
+@test "scrub_pwd.awk: replaces single occurrence with \$PWD placeholder" {
+  result=$(echo "  -v /abs/proj/cache:/cache" | awk -v pwd="/abs/proj" -f lib/scrub_pwd.awk)
+  [ "$result" = "  -v \$PWD/cache:/cache" ]
+}
+
+@test "scrub_pwd.awk: leaves unrelated paths alone" {
+  result=$(echo "  -v /other/cache:/cache" | awk -v pwd="/abs/proj" -f lib/scrub_pwd.awk)
+  [ "$result" = "  -v /other/cache:/cache" ]
+}
+
+@test "scrub_pwd.awk: leaves prefix-only matches alone (requires trailing slash)" {
+  # "/abs/project-backup" shares the prefix with "/abs/project" but is a different dir.
+  # The awk script only scrubs "<pwd>/", so the substring match must not fire here.
+  result=$(echo "/abs/project-backup/file" | awk -v pwd="/abs/project" -f lib/scrub_pwd.awk)
+  [ "$result" = "/abs/project-backup/file" ]
+}
+
+@test "scrub_pwd.awk: handles multiple occurrences on one line" {
+  result=$(echo "/abs/proj/a and /abs/proj/b" | awk -v pwd="/abs/proj" -f lib/scrub_pwd.awk)
+  [ "$result" = "\$PWD/a and \$PWD/b" ]
+}
+
+@test "scrub_pwd.awk: treats path as a literal string (no regex metachars)" {
+  # If the script used gsub with the pwd interpolated into a regex, the "." in the path
+  # would match any character — and a line containing "/abs/PRO_/file" would be wrongly
+  # scrubbed. With index()/substr() the match is byte-literal.
+  result=$(echo "/abs/PRO_/file" | awk -v pwd="/abs/pro." -f lib/scrub_pwd.awk)
+  [ "$result" = "/abs/PRO_/file" ]
+}
+
+@test "scrub_pwd.awk: passes lines through unchanged when no path appears" {
+  result=$(echo "no path here" | awk -v pwd="/abs/proj" -f lib/scrub_pwd.awk)
+  [ "$result" = "no path here" ]
+}
