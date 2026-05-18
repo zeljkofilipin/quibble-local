@@ -17,7 +17,9 @@ config_file="$config_src_dir/zuul/parameter_functions.py"
 
 # Check that the config file exists
 if [ ! -f "$config_file" ]; then
-  echo "Error: $config_file not found."
+  # Route to stderr so callers that capture stdout (e.g. lib/build_component_list) don't
+  # treat the error message as a component name.
+  echo "Error: $config_file not found." >&2
   exit 1
 fi
 

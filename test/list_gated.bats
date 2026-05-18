@@ -48,3 +48,15 @@ PYTHON
   [ "$status" -eq 1 ]
   [[ "$output" == *"not found"* ]]
 }
+
+@test "list_gated: error message goes to stderr, not stdout" {
+  # Regression: this message must not appear on stdout, otherwise callers that capture
+  # list_gated's stdout (e.g. lib/build_component_list) would treat the error text as
+  # a component name.
+  rm -rf "$TEST_DIR/src/config/zuul/parameter_functions.py"
+  cd "$TEST_DIR"
+  stdout=$("$BATS_TEST_DIRNAME"/../list_gated 2>/dev/null || true) # drop stderr to inspect stdout alone
+  stderr=$("$BATS_TEST_DIRNAME"/../list_gated 2>&1 >/dev/null || true) # drop stdout to inspect stderr alone
+  [ -z "$stdout" ]
+  [[ "$stderr" == *"not found"* ]]
+}

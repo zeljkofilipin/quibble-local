@@ -29,6 +29,20 @@ teardown() {
   [[ "$output" == *"Run ./prepare first"* ]]
 }
 
+@test "ensure_config: error message goes to stderr, not stdout" {
+  # Regression: this message used to be on stdout, which polluted callers that read
+  # list_dependencies via process substitution (lib/minimal_setup) — the error text
+  # would end up as a "dependency name" in QUIBBLE_DEPS and lib/resolve_deps would
+  # then try to clone a Gerrit repo named "Error:".
+  # Run in a subshell (bash -c) so the script's `exit 1` doesn't terminate the test runner.
+  cd "$TEST_DIR"
+  stdout=$(bash -c '. "$1"' _ "$BATS_TEST_DIRNAME"/../lib/ensure_config 2>/dev/null || true) # drop stderr to inspect stdout alone
+  stderr=$(bash -c '. "$1"' _ "$BATS_TEST_DIRNAME"/../lib/ensure_config 2>&1 >/dev/null || true) # drop stdout to inspect stderr alone
+  [ -z "$stdout" ]
+  [[ "$stderr" == *"not found"* ]]
+  [[ "$stderr" == *"Run ./prepare first"* ]]
+}
+
 @test "ensure_config: sets config_ref_dir and config_src_dir variables" {
   mkdir -p "$TEST_DIR/src/config"
   cd "$TEST_DIR"
