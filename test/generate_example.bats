@@ -66,6 +66,24 @@ setup() {
   [ "$status" -eq 0 ]
 }
 
+@test "generate_example: appends (no output) marker when captured body is empty" {
+  # Commands that exit silently on success (./lint, ./remove on a clean tree, etc.) would
+  # otherwise produce a file that's just "$ <cmd>\n\n" — indistinguishable from a broken
+  # or aborted capture. The marker makes the silent-success case explicit. `true` is the
+  # smallest command that exits 0 with no output.
+  run ./generate_example "$output_file" 'true'
+  [ "$status" -eq 0 ]
+  grep -qF '(no output)' "$output_file"
+}
+
+@test "generate_example: does NOT append (no output) when the command produces output" {
+  # Regression guard: the empty-body check must not fire for commands that produce output.
+  run ./generate_example "$output_file" 'echo hello'
+  [ "$status" -eq 0 ]
+  grep -q "^hello$" "$output_file"
+  ! grep -qF '(no output)' "$output_file"
+}
+
 @test "generate_example: scrubs project absolute path to \$PWD placeholder in captured output" {
   # generate_example pipes captured stdout+stderr through lib/scrub_pwd.awk so docker -v
   # mount lines (and any other absolute path) become "$PWD/..." in examples/*.txt. This

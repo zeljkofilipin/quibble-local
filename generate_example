@@ -54,4 +54,15 @@ printf '$ %s\n\n' "$cmd" > "$file"
 # awk edits — awk can't safely write to the same file it's reading.
 awk -v pwd="$PWD" -f lib/scrub_pwd.awk "$file" > "$file".tmp && mv "$file".tmp "$file"
 
+# If the captured body is empty (file is just the header + blank line), append an explicit
+# "(no output)" marker. Without it, the file is indistinguishable from a broken or aborted
+# capture — uninformative as documentation. Commands that exit silently on success (./lint),
+# cleanup commands with nothing to do (./remove on a clean tree), and similar legitimate
+# cases all land here. `tail -n +3` skips the header line and its trailing blank, returning
+# everything from line 3 onward; `$(...)` strips trailing newlines so a stray "\n" from the
+# eval is still treated as empty.
+if [ -z "$(tail -n +3 "$file")" ]; then
+  printf '(no output)\n' >> "$file"
+fi
+
 echo "Done!" # signal completion to the user
