@@ -1,36 +1,36 @@
 #!/usr/bin/env bats
 #
 # Tests for generate_examples script.
-# Driven via DRY_RUN=1 against the real examples/ directory so we don't run dozens of commands.
+# Driven via PREVIEW=1 against the real examples/ directory so we don't run dozens of commands.
 # _QUIBBLE_NO_INHIBIT=1 skips lib/inhibit_sleep so no background sleep helper is spawned during tests.
 
-@test "generate_examples: DRY_RUN lists what would be generated" {
-  run env DRY_RUN=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+@test "generate_examples: PREVIEW lists what would be generated" {
+  run env PREVIEW=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
   [ "$status" -eq 0 ]
   # Should print one "Would generate ..." line per project-root script with a Usage block.
   [[ "$output" == *"Would generate examples/"* ]]
 }
 
-@test "generate_examples: DRY_RUN runs every Usage line per script" {
-  run env DRY_RUN=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+@test "generate_examples: PREVIEW runs every Usage line per script" {
+  run env PREVIEW=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
   [ "$status" -eq 0 ]
   # Both first and non-first Usage lines of help should appear.
   [[ "$output" == *"Would generate examples/help.txt from: ./help"* ]]
   [[ "$output" == *"Would generate examples/help-install.txt from: ./help install"* ]]
 }
 
-@test "generate_examples: DRY_RUN skips itself and generate_example" {
-  run env DRY_RUN=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+@test "generate_examples: PREVIEW skips itself and generate_example" {
+  run env PREVIEW=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
   [ "$status" -eq 0 ]
   [[ "$output" != *"examples/generate_examples.txt"* ]]
   [[ "$output" != *"examples/generate_example.txt"* ]]
 }
 
-@test "generate_examples: DRY_RUN skips shellto (interactive, can't be captured)" {
+@test "generate_examples: PREVIEW skips shellto (interactive, can't be captured)" {
   # shellto drops the user into an interactive Docker bash shell. ./generate_example's
   # eval would block forever waiting for keyboard input, so generate_examples skips it.
   # See CLAUDE.md ("shellto is an exception").
-  run env DRY_RUN=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+  run env PREVIEW=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
   [ "$status" -eq 0 ]
   [[ "$output" != *"examples/shellto"* ]]
 }
@@ -40,12 +40,12 @@
   # runtime — without it, the trailing `(Xs)` from lib/duration_trap is visually identical
   # to the per-file `(Xs)` lines from ./generate_example and easy to lose in scrollback.
   # Goes to stderr in the script; bats' $output captures both streams, which is what we
-  # want here. DRY_RUN walks every Usage line without invoking ./generate_example, so the
+  # want here. PREVIEW walks every Usage line without invoking ./generate_example, so the
   # generated count will be non-zero.
-  run env DRY_RUN=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+  run env PREVIEW=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
   [ "$status" -eq 0 ]
   # Match: "generate_examples: generated <N>, skipped <M>, took <duration>".
-  # N must be > 0 (DRY_RUN sees every Usage variant); M can be 0 or more. Duration always
+  # N must be > 0 (PREVIEW sees every Usage variant); M can be 0 or more. Duration always
   # ends in "s" (seconds component is always present per lib/format_duration).
   [[ "$output" =~ generate_examples:\ generated\ [1-9][0-9]*,\ skipped\ [0-9]+,\ took\ [^[:space:]]+s ]]
 }
@@ -53,7 +53,7 @@
 @test "generate_examples: warns and skips filename collisions" {
   # The same command appears in run_selenium_tests_all_gated's Usage block and
   # suggest_parallel's Usage block, producing the same derived filename.
-  run env DRY_RUN=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+  run env PREVIEW=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
   [ "$status" -eq 0 ]
   [[ "$output" == *"filename collision"* ]]
 }
@@ -75,7 +75,7 @@
   # must run before everything else so cache/, log/, src/, ref/, and the Docker image exist.
   # Destructive scripts (remove_srcs, remove, remove_all) must run last so they don't wipe
   # state needed by later scripts. The rest stays alphabetical.
-  run env DRY_RUN=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+  run env PREVIEW=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
   [ "$status" -eq 0 ]
 
   # First-line index (1-based) of the first output line matching a pattern; empty if none.

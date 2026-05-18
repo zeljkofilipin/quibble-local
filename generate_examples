@@ -5,19 +5,21 @@
 # Useful for refreshing examples/ in bulk after script renames or behavior changes.
 #
 # Usage: ./generate_examples
-#        DRY_RUN=1 ./generate_examples
+#        PREVIEW=1 ./generate_examples
 #        FAST=1 ./generate_examples
 #
-# DRY_RUN and FAST do different things:
-#   DRY_RUN=1 ./generate_examples  — outer-level preview. Prints "Would generate ..." for each
+# PREVIEW and FAST do different things:
+#   PREVIEW=1 ./generate_examples  — outer-level preview. Prints "Would generate ..." for each
 #                                    Usage line. No files written, no inner scripts run.
+#                                    (Named PREVIEW to avoid overloading the inner Quibble
+#                                    DRY_RUN env var, which has a different meaning — see below.)
 #   FAST=1 ./generate_examples     — actually generate every file, but prepend DRY_RUN=1 to
 #                                    each Usage command so Quibble short-circuits. Inner scripts
 #                                    that honor DRY_RUN (install, fresh_install, run_php_unit_tests,
 #                                    run_selenium_tests, and batch scripts that propagate the env
 #                                    var to them) finish in seconds instead of minutes. Other
 #                                    scripts ignore the unused env var.
-# The two can be combined: DRY_RUN=1 FAST=1 previews the FAST-mode command list.
+# The two can be combined: PREVIEW=1 FAST=1 previews the FAST-mode command list.
 # Use FAST=1 to iterate on generate_examples itself or to validate the pipeline end-to-end.
 # Do NOT commit examples/*.txt produced under FAST=1 — they do not reflect real script behavior.
 #
@@ -45,7 +47,7 @@ seen="|"
 # `./generate_example` also prints (one per Usage variant). The labeled summary gives the
 # user a single anchor with the totals and overall runtime, while duration_trap's line still
 # prints last as the unconditional short form.
-generated=0 # number of Usage lines that produced (or would produce, in DRY_RUN) an examples/*.txt
+generated=0 # number of Usage lines that produced (or would produce, in PREVIEW mode) an examples/*.txt
 skipped=0   # number of Usage lines skipped (no Usage block, filename collision, etc.)
 
 # Pin certain scripts at the start and end of the iteration. Most scripts depend on a
@@ -121,8 +123,8 @@ for script in "${early[@]}" ${others[@]+"${others[@]}"} "${late[@]}"; do
         *) run_cmd="DRY_RUN=1 $cmd" ;;
       esac
     fi
-    if [ -n "${DRY_RUN:-}" ]; then                                  # ${VAR:-} is "" when VAR is unset (works under set -u)
-      echo "Would generate $file from: $run_cmd"                    # DRY_RUN mode: print what would happen
+    if [ -n "${PREVIEW:-}" ]; then                                  # ${VAR:-} is "" when VAR is unset (works under set -u)
+      echo "Would generate $file from: $run_cmd"                    # PREVIEW mode: print what would happen
     else
       ./generate_example "$file" "$run_cmd"                         # actually run the command and capture output
     fi
