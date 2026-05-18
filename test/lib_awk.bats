@@ -240,3 +240,39 @@ JSON
   result=$(echo "no path here" | awk -v pwd="/abs/proj" -f lib/scrub_pwd.awk)
   [ "$result" = "no path here" ]
 }
+
+# extract_found_block.awk — extract the "FOUND: minimum dependencies" block from a greedy log
+
+@test "extract_found_block.awk: extracts 'No dependencies needed' block" {
+  # A minimal log file mirroring what find_dependencies_minimal_greedy produces:
+  # progress dots, the FOUND banner from lib/print_found, then the duration line from
+  # lib/duration_trap. The extractor should keep the banner + body and drop the duration.
+  input=$(printf 'install ... ok (1m 30s)\n\n========================================\n= FOUND: minimum dependencies for extensions/Echo\n========================================\n\nNo dependencies needed.\n(27m 48s)\n')
+  result=$(echo "$input" | awk -f lib/extract_found_block.awk)
+  expected=$(printf '========================================\n= FOUND: minimum dependencies for extensions/Echo\n========================================\n\nNo dependencies needed.')
+  [ "$result" = "$expected" ]
+}
+
+@test "extract_found_block.awk: extracts block with required and optional deps" {
+  input=$(printf 'noise\n\n========================================\n= FOUND: minimum dependencies for extensions/Foo\n========================================\n\nMinimum dependencies:\n  Required (always needed):\n    Bar\n  Optional (minimum needed):\n    Baz\n(2m 10s)\n')
+  result=$(echo "$input" | awk -f lib/extract_found_block.awk)
+  expected=$(printf '========================================\n= FOUND: minimum dependencies for extensions/Foo\n========================================\n\nMinimum dependencies:\n  Required (always needed):\n    Bar\n  Optional (minimum needed):\n    Baz')
+  [ "$result" = "$expected" ]
+}
+
+@test "extract_found_block.awk: handles seconds-only duration line" {
+  # lib/duration_trap formats short runs without minutes, e.g. "(45s)". The extractor
+  # must stop at that line too, not just at the "(Nm Ns)" form.
+  input=$(printf '========================================\n= FOUND: minimum dependencies for X\n========================================\n\nNo dependencies needed.\n(45s)\n')
+  result=$(echo "$input" | awk -f lib/extract_found_block.awk)
+  expected=$(printf '========================================\n= FOUND: minimum dependencies for X\n========================================\n\nNo dependencies needed.')
+  [ "$result" = "$expected" ]
+}
+
+@test "extract_found_block.awk: returns nothing when no FOUND block is present" {
+  # If the inner script failed before reaching lib/print_found there is no FOUND block
+  # to extract; the extractor must produce no output rather than e.g. echoing the input.
+  input=$(printf 'install ... FAIL\nsome other noise\n(3m 12s)\n')
+  result=$(echo "$input" | awk -f lib/extract_found_block.awk)
+  [ -z "$result" ]
+}
