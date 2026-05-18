@@ -29,12 +29,22 @@ fi
 
 component="$1" # e.g. "extensions/Echo"
 
-# Read all dependencies (from zuul's dependencies.yaml)
+# Read all dependencies (from zuul's dependencies.yaml).
+# Capture output first and check the exit code: with `< <(cmd)` process substitution
+# a non-zero exit from `cmd` is silently swallowed, which previously turned a missing
+# ref/integration/config.git (lib/ensure_config failure) into an empty deps list and
+# a misleading "All passed.". Fail loudly instead.
+if ! all_deps_output=$("$(dirname "$0")"/list_dependencies "$component"); then
+  echo "Error: failed to list dependencies for $component" >&2
+  exit 1
+fi
 all_deps=() # indexed array of all dependency names
-while IFS= read -r dep; do
-  [ -z "$dep" ] && continue # skip empty lines
-  all_deps+=("$dep") # += appends to bash arrays
-done < <("$(dirname "$0")"/list_dependencies "$component")
+if [ -n "$all_deps_output" ]; then # `<<<` on empty input yields one empty read; skip it
+  while IFS= read -r dep; do
+    [ -z "$dep" ] && continue # skip empty lines
+    all_deps+=("$dep") # += appends to bash arrays
+  done <<< "$all_deps_output"
+fi
 
 if [ ${#all_deps[@]} -eq 0 ]; then
   echo "No dependencies found for $component."
@@ -42,18 +52,30 @@ if [ ${#all_deps[@]} -eq 0 ]; then
 fi
 
 # Read required dependencies (from extension.json/skin.json "requires" field)
+if ! required_output=$("$(dirname "$0")"/list_dependencies_required "$component"); then
+  echo "Error: failed to list required dependencies for $component" >&2
+  exit 1
+fi
 required=() # indexed array of required dependency names
-while IFS= read -r dep; do
-  [ -z "$dep" ] && continue # skip empty lines
-  required+=("$dep") # += appends to bash arrays
-done < <("$(dirname "$0")"/list_dependencies_required "$component")
+if [ -n "$required_output" ]; then
+  while IFS= read -r dep; do
+    [ -z "$dep" ] && continue # skip empty lines
+    required+=("$dep") # += appends to bash arrays
+  done <<< "$required_output"
+fi
 
 # Read optional dependencies (all deps minus required deps)
+if ! optional_output=$("$(dirname "$0")"/list_dependencies_optional "$component"); then
+  echo "Error: failed to list optional dependencies for $component" >&2
+  exit 1
+fi
 optional=() # indexed array of optional dependency names
-while IFS= read -r dep; do
-  [ -z "$dep" ] && continue # skip empty lines
-  optional+=("$dep") # += appends to bash arrays
-done < <("$(dirname "$0")"/list_dependencies_optional "$component")
+if [ -n "$optional_output" ]; then
+  while IFS= read -r dep; do
+    [ -z "$dep" ] && continue # skip empty lines
+    optional+=("$dep") # += appends to bash arrays
+  done <<< "$optional_output"
+fi
 
 n=${#optional[@]} # number of optional dependencies
 total=$((1 << n)) # 2^n total combinations of optional deps

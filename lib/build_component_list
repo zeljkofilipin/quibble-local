@@ -11,8 +11,18 @@ components=() # array of component names to process
 if [ $# -gt 0 ]; then
   components+=("$1") # single component from argument
 else
-  # Read all gated extensions/skins
-  while IFS= read -r component; do
-    components+=("$component") # += appends to bash arrays
-  done < <("$(dirname "$0")"/list_gated)
+  # Read all gated extensions/skins. Capture output and check exit code: a
+  # `< <(list_gated)` process substitution silently swallows a non-zero exit,
+  # which would leave components[] empty and let batch scripts proceed as if
+  # "no components" were a valid state (and report "All passed." at the end).
+  if ! gated_output=$("$(dirname "$0")"/list_gated); then
+    echo "Error: failed to list gated components" >&2
+    exit 1
+  fi
+  if [ -n "$gated_output" ]; then # `<<<` on empty input yields one empty read; skip it
+    while IFS= read -r component; do
+      [ -z "$component" ] && continue # skip empty lines
+      components+=("$component") # += appends to bash arrays
+    done <<< "$gated_output"
+  fi
 fi

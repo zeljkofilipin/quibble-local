@@ -37,12 +37,21 @@ for component in "${components[@]}"; do
     continue
   fi
 
-  # Skip components without optional dependencies
+  # Skip components without optional dependencies.
+  # Capture output and check exit code: `< <(cmd)` swallows non-zero exits, which
+  # would otherwise turn a real failure (e.g. missing ref/integration/config.git)
+  # into "0 optional deps → skipped" and a misleading "All passed." at the end.
+  if ! optional_output=$("$(dirname "$0")"/list_dependencies_optional "$component"); then
+    echo "Error: failed to list optional dependencies for $component" >&2
+    exit 1
+  fi
   optional_count=0 # count optional dependencies
-  while IFS= read -r dep; do
-    [ -z "$dep" ] && continue # skip empty lines
-    optional_count=$((optional_count + 1)) # count each optional dep
-  done < <("$(dirname "$0")"/list_dependencies_optional "$component")
+  if [ -n "$optional_output" ]; then # `<<<` on empty input yields one empty read; skip it
+    while IFS= read -r dep; do
+      [ -z "$dep" ] && continue # skip empty lines
+      optional_count=$((optional_count + 1)) # count each optional dep
+    done <<< "$optional_output"
+  fi
 
   if [ "$optional_count" -eq 0 ]; then
     printf "skipped (no optional dependencies): %s\n" "$component"
