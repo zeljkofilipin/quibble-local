@@ -35,6 +35,21 @@
   [[ "$output" != *"examples/shellto"* ]]
 }
 
+@test "generate_examples: prints a labeled summary line with counts and total runtime" {
+  # The summary line gives the user a single anchor at end-of-run with totals and overall
+  # runtime — without it, the trailing `(Xs)` from lib/duration_trap is visually identical
+  # to the per-file `(Xs)` lines from ./generate_example and easy to lose in scrollback.
+  # Goes to stderr in the script; bats' $output captures both streams, which is what we
+  # want here. DRY_RUN walks every Usage line without invoking ./generate_example, so the
+  # generated count will be non-zero.
+  run env DRY_RUN=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+  [ "$status" -eq 0 ]
+  # Match: "generate_examples: generated <N>, skipped <M>, took <duration>".
+  # N must be > 0 (DRY_RUN sees every Usage variant); M can be 0 or more. Duration always
+  # ends in "s" (seconds component is always present per lib/format_duration).
+  [[ "$output" =~ generate_examples:\ generated\ [1-9][0-9]*,\ skipped\ [0-9]+,\ took\ [^[:space:]]+s ]]
+}
+
 @test "generate_examples: warns and skips filename collisions" {
   # The same command appears in run_selenium_tests_all_gated's Usage block and
   # suggest_parallel's Usage block, producing the same derived filename.
