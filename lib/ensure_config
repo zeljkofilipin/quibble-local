@@ -6,7 +6,11 @@ config_ref_dir="ref/integration/config.git" # bare repo cloned by ./prepare
 config_src_dir="src/config"                 # working copy for zuul config files
 if [ ! -d "$config_src_dir" ]; then # clone working copy if it doesn't exist yet
   if [ ! -d "$config_ref_dir" ]; then # bail out if the bare repo hasn't been cloned by ./prepare
-    echo "Error: $config_ref_dir not found. Run ./prepare first." # tell the user what went wrong
+    # Route to stderr so this message can't be captured as a "dependency name" by callers that
+    # read list_dependencies' stdout in a process substitution (see lib/minimal_setup); a
+    # polluted dep stream ends up in QUIBBLE_DEPS where word-splitting turns "Error:" into the
+    # first dep and lib/resolve_deps tries to git clone a Gerrit repo called "Error:".
+    echo "Error: $config_ref_dir not found. Run ./prepare first." >&2
     exit 1 # exit with error
   fi
   git clone -q "$config_ref_dir" "$config_src_dir" # -q: suppress progress messages (errors still shown)

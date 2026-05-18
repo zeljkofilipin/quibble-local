@@ -22,6 +22,14 @@
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
 
+# We invoke find_dependencies_minimal_greedy as a child via run_step, which pipes its output
+# through `tee log/silent/<component>--find_dependencies_minimal_greedy.log`. The child script
+# sources lib/batch_setup too, and its `rm -f log/silent/*.log` would unlink the very file tee
+# is writing to — wiping the captured FOUND block before print_found_from_log can read it.
+# Telling nested batch invocations to skip that cleanup keeps the file intact for the duration
+# of the parent run. Our own batch_setup has already done the outer cleanup above.
+export _QUIBBLE_NESTED_BATCH=1
+
 parallel="${PARALLEL:-1}" # PARALLEL=N runs N components in parallel (default 1 = sequential)
 
 # --- Build list of gated components ---
@@ -37,12 +45,21 @@ for component in "${components[@]}"; do
     continue
   fi
 
-  # Skip components without optional dependencies
+  # Skip components without optional dependencies.
+  # Capture output and check exit code: `< <(cmd)` swallows non-zero exits, which
+  # would otherwise turn a real failure (e.g. missing ref/integration/config.git)
+  # into "0 optional deps → skipped" and a misleading "All passed." at the end.
+  if ! optional_output=$("$(dirname "$0")"/list_dependencies_optional "$component"); then
+    echo "Error: failed to list optional dependencies for $component" >&2
+    exit 1
+  fi
   optional_count=0 # count optional dependencies
-  while IFS= read -r dep; do
-    [ -z "$dep" ] && continue # skip empty lines
-    optional_count=$((optional_count + 1)) # count each optional dep
-  done < <("$(dirname "$0")"/list_dependencies_optional "$component")
+  if [ -n "$optional_output" ]; then # `<<<` on empty input yields one empty read; skip it
+    while IFS= read -r dep; do
+      [ -z "$dep" ] && continue # skip empty lines
+      optional_count=$((optional_count + 1)) # count each optional dep
+    done <<< "$optional_output"
+  fi
 
   if [ "$optional_count" -eq 0 ]; then
     printf "skipped (no optional dependencies): %s\n" "$component"
@@ -61,6 +78,29 @@ fi
 
 printf "\n%d components to process.\n" "${#filtered[@]}"
 
+# Accumulate per-component "FOUND" blocks (extracted from each component's log) for
+# a final summary printed before print_results. In silent mode the FOUND block is
+# captured in the log file rather than shown live, so we surface it both inline
+# (right after each component) and grouped (at the end) for easy scanning.
+found_blocks="" # newline-separated FOUND blocks, one per processed component
+
+# Print and accumulate a component's FOUND block from its log file.
+# Usage: print_found_from_log COMPONENT LOG_FILE
+print_found_from_log() {
+  local _component="$1" # component name (kept for future use; unused for now)
+  local _log_file="$2"  # path to the log file containing the FOUND block
+  [ -z "$verbose" ] || return 0 # in verbose mode the inner script already printed the block live
+  [ -f "$_log_file" ] || return 0 # no log file (e.g. component failed before reaching print_found)
+  local _block
+  _block=$(awk -f "$(dirname "$0")"/lib/extract_found_block.awk "$_log_file") # extract just the FOUND block
+  [ -n "$_block" ] || return 0 # nothing to print (greedy failed before lib/print_found ran)
+  printf "\n%s\n" "$_block" # print inline so progress feedback during the long run shows what was found
+  found_blocks="${found_blocks}
+${_block}
+" # accumulate for the final summary (leading/trailing newline separates blocks)
+  : "$_component" # silence shellcheck about unused parameter
+}
+
 if [ "$parallel" -le 1 ]; then
   # --- Sequential mode ---
   for component in "${filtered[@]}"; do
@@ -71,6 +111,9 @@ if [ "$parallel" -le 1 ]; then
       record_passed "$component"
     fi
     printf " %s\n" "$(utc_timestamp)"
+
+    # Surface the minimum-dependencies result captured in the log file (silent mode only)
+    print_found_from_log "$component" "log/silent/${component//\//-}--find_dependencies_minimal_greedy.log"
   done
 
 else
@@ -142,6 +185,8 @@ else
         printf "  %s: ok\n" "$component"
         passed="$passed
   $component" # append component on a new indented line
+        # Surface the minimum-dependencies result captured in the worker log
+        print_found_from_log "$component" "log/silent/worker-${env_num}/${component//\//-}.log"
       else
         printf "  %s: FAIL (see log/silent/worker-%d/%s.log)\n" "$component" "$env_num" "${component//\//-}"
         failed="$failed
@@ -155,6 +200,15 @@ else
 
   # Clean up temp dir
   rm -rf "$_result_dir"
+fi
+
+# Print all captured "FOUND" blocks together so the per-component results are
+# easy to find at the end of the run without scrolling through dots and headers.
+if [ -n "$found_blocks" ]; then
+  printf "\n========================================\n"
+  printf "= Minimum dependencies found\n"
+  printf "========================================\n"
+  printf "%s\n" "$found_blocks"
 fi
 
 # Print pass/fail summary and exit with error if any component failed

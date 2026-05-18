@@ -19,18 +19,35 @@ fi
 component="$1" # e.g. "extensions/Echo"
 
 # Read required dependencies into a lookup string for filtering.
+# Capture output and check exit code: `< <(cmd)` would swallow a non-zero exit (even
+# under `set -e` / `pipefail`, which don't cover process substitutions), letting
+# upstream failures pollute or silently empty our output.
+if ! required_output=$("$(dirname "$0")"/list_dependencies_required "$component"); then
+  echo "Error: failed to list required dependencies for $component" >&2
+  exit 1
+fi
 # Space-padded so " Name " substring match won't hit partial names.
 required_lookup=" " # space-padded string for substring matching
-while IFS= read -r dep; do
-  [ -z "$dep" ] && continue # skip empty lines
-  required_lookup="${required_lookup}${dep} " # e.g. " CommunityConfiguration VisualEditor "
-done < <("$(dirname "$0")"/list_dependencies_required "$component")
+if [ -n "$required_output" ]; then # `<<<` on empty input yields one empty read; skip it
+  while IFS= read -r dep; do
+    [ -z "$dep" ] && continue # skip empty lines
+    required_lookup="${required_lookup}${dep} " # e.g. " CommunityConfiguration VisualEditor "
+  done <<< "$required_output"
+fi
 
-# Read all dependencies and output only those NOT in the required list
-while IFS= read -r dep; do
-  [ -z "$dep" ] && continue # skip empty lines
-  if [[ "$required_lookup" == *" $dep "* ]]; then # check if dep is in the required lookup string
-    continue # skip required deps
-  fi
-  echo "$dep" # this dep is optional
-done < <("$(dirname "$0")"/list_dependencies "$component")
+# Read all dependencies and output only those NOT in the required list.
+# Same capture-and-check pattern so a missing ref/integration/config.git (lib/ensure_config)
+# propagates as a non-zero exit rather than as empty stdout.
+if ! all_output=$("$(dirname "$0")"/list_dependencies "$component"); then
+  echo "Error: failed to list dependencies for $component" >&2
+  exit 1
+fi
+if [ -n "$all_output" ]; then
+  while IFS= read -r dep; do
+    [ -z "$dep" ] && continue # skip empty lines
+    if [[ "$required_lookup" == *" $dep "* ]]; then # check if dep is in the required lookup string
+      continue # skip required deps
+    fi
+    echo "$dep" # this dep is optional
+  done <<< "$all_output"
+fi
