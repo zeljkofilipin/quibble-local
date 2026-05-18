@@ -115,3 +115,56 @@ teardown() {
   [[ "$output" == *"cannot create log/silent"* ]]
   [[ "$output" == *"./remove_all"* ]]
 }
+
+@test "batch_setup: deletes log/silent/*.log at outermost invocation (silent mode)" {
+  # Sandbox: a temp project root with a pre-existing log/silent/stale.log. After
+  # sourcing batch_setup the file should be gone — this is the cleanup that
+  # keeps results from prior runs out of the next run's logs.
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+  ln -s "$PWD/lib" "$tmpdir/lib"
+  mkdir -p "$tmpdir/log/silent"
+  : > "$tmpdir/log/silent/stale.log"
+
+  run bash -c "
+    cd '$tmpdir'
+    export _QUIBBLE_NO_INHIBIT=1
+    unset VERBOSE
+    unset _QUIBBLE_NESTED_BATCH
+    . lib/batch_setup
+    [ -f log/silent/stale.log ] && echo PRESENT || echo ABSENT
+  "
+
+  rm -rf "$tmpdir"
+
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"ABSENT"* ]]
+}
+
+@test "batch_setup: keeps log/silent/*.log when _QUIBBLE_NESTED_BATCH=1" {
+  # Regression: when an outer batch script (find_dependencies_minimal_gated) invokes an
+  # inner batch script (find_dependencies_minimal_greedy) via run_step, the outer's tee
+  # is writing to log/silent/<component>--find_dependencies_minimal_greedy.log when the
+  # inner's batch_setup runs. If batch_setup wiped *.log here it would unlink that file
+  # mid-write and the outer would have nothing to read for the FOUND-block extraction.
+  # _QUIBBLE_NESTED_BATCH=1 tells inner invocations to skip the cleanup.
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+  ln -s "$PWD/lib" "$tmpdir/lib"
+  mkdir -p "$tmpdir/log/silent"
+  : > "$tmpdir/log/silent/outer.log"
+
+  run bash -c "
+    cd '$tmpdir'
+    export _QUIBBLE_NO_INHIBIT=1
+    export _QUIBBLE_NESTED_BATCH=1
+    unset VERBOSE
+    . lib/batch_setup
+    [ -f log/silent/outer.log ] && echo PRESENT || echo ABSENT
+  "
+
+  rm -rf "$tmpdir"
+
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"PRESENT"* ]]
+}

@@ -22,6 +22,14 @@
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
 
+# We invoke find_dependencies_minimal_greedy as a child via run_step, which pipes its output
+# through `tee log/silent/<component>--find_dependencies_minimal_greedy.log`. The child script
+# sources lib/batch_setup too, and its `rm -f log/silent/*.log` would unlink the very file tee
+# is writing to — wiping the captured FOUND block before print_found_from_log can read it.
+# Telling nested batch invocations to skip that cleanup keeps the file intact for the duration
+# of the parent run. Our own batch_setup has already done the outer cleanup above.
+export _QUIBBLE_NESTED_BATCH=1
+
 parallel="${PARALLEL:-1}" # PARALLEL=N runs N components in parallel (default 1 = sequential)
 
 # --- Build list of gated components ---
