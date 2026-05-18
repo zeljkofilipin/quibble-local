@@ -23,6 +23,7 @@
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/duration_trap # print elapsed time on exit
+. "$(dirname "$0")"/lib/format_duration # provides _quibble_format_duration for the summary line below (also pulled in transitively by duration_trap; sourced explicitly so the dependency is obvious)
 . "$(dirname "$0")"/lib/cmd_to_filename # provides cmd_to_filename function
 . "$(dirname "$0")"/lib/inhibit_sleep # prevent the machine from suspending during the long run
 
@@ -38,6 +39,14 @@ cd "$(dirname "$0")"
 # Track filenames already generated so two distinct Usage lines don't silently overwrite
 # each other. Bash 3.2 has no associative arrays; use a delimited string.
 seen="|"
+
+# Counters for the labeled summary line printed at the end. The script can run for hours,
+# and `lib/duration_trap`'s bare `(Xs)` line at exit gets lost in the per-file `(Xs)` lines
+# `./generate_example` also prints (one per Usage variant). The labeled summary gives the
+# user a single anchor with the totals and overall runtime, while duration_trap's line still
+# prints last as the unconditional short form.
+generated=0 # number of Usage lines that produced (or would produce, in DRY_RUN) an examples/*.txt
+skipped=0   # number of Usage lines skipped (no Usage block, filename collision, etc.)
 
 # Pin certain scripts at the start and end of the iteration. Most scripts depend on a
 # prepared env (cache/, log/, src/, ref/, the Docker image), so prep scripts must run
@@ -82,6 +91,7 @@ for script in "${early[@]}" ${others[@]+"${others[@]}"} "${late[@]}"; do
   usage_block="$(awk -f lib/parse_usage.awk "$script")"
   if [ -z "$usage_block" ]; then
     echo "Skipping $script: no # Usage: block" >&2 # >&2 prints to stderr
+    skipped=$((skipped + 1))                       # count toward the summary line below
     continue
   fi
   # Iterate each Usage line. The herestring goes to FD 3, NOT stdin, so child processes
@@ -96,6 +106,7 @@ for script in "${early[@]}" ${others[@]+"${others[@]}"} "${late[@]}"; do
     case "$seen" in
       *"|$file|"*)                                                  # already generated this filename earlier
         echo "Skipping $cmd: $file already generated (filename collision)" >&2
+        skipped=$((skipped + 1))                                    # count toward the summary line below
         continue
         ;;
     esac
@@ -115,5 +126,12 @@ for script in "${early[@]}" ${others[@]+"${others[@]}"} "${late[@]}"; do
     else
       ./generate_example "$file" "$run_cmd"                         # actually run the command and capture output
     fi
+    generated=$((generated + 1))                                    # count toward the summary line below
   done 3<<< "$usage_block"                                            # herestring on FD 3 — see note above
 done
+
+# Labeled summary on stderr so it survives the per-file output flood. $SECONDS is bash's
+# built-in elapsed-seconds counter (set by the shell, not us — starts at process launch).
+# duration_trap's `(Xs)` line still prints last on EXIT; this is the human-readable anchor.
+printf "generate_examples: generated %d, skipped %d, took %s\n" \
+  "$generated" "$skipped" "$(_quibble_format_duration "$SECONDS")" >&2
