@@ -1,4 +1,4 @@
-$ DRY_RUN=1 ./save
+$ ./save
 
 use VERBOSE=1 for full output
 logs: log/save.log

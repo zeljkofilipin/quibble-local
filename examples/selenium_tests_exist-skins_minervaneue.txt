@@ -1,2 +1,2 @@
-$ DRY_RUN=1 ./selenium_tests_exist skins/MinervaNeue
+$ ./selenium_tests_exist skins/MinervaNeue
 

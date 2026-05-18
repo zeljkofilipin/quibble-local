@@ -1,4 +1,4 @@
-$ DRY_RUN=1 ./test_unit test/lib_awk.bats
+$ ./test_unit test/lib_awk.bats
 
 use VERBOSE=1 for full output
 

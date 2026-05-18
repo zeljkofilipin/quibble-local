@@ -1,4 +1,4 @@
-$ DRY_RUN=1 ./ci
+$ ./ci
 
 use VERBOSE=1 for full output
 
@@ -16,9 +16,15 @@ shellcheck passed
 
 Running bats...
 1..226
-ok 1 find_dependencies_minimal_bottom_up: shows usage with no arguments
-ok 2 find_dependencies_minimal_greedy: shows usage with no arguments
-ok 3 find_dependencies_minimal_thorough: shows usage with no arguments
+not ok 1 find_dependencies_minimal_bottom_up: shows usage with no arguments
+# (in test file test/find_dependencies_minimal_bottom_up.bats, line 8)
+#   `[[ "$output" == *"Usage:"* ]]' failed
+not ok 2 find_dependencies_minimal_greedy: shows usage with no arguments
+# (in test file test/find_dependencies_minimal_greedy.bats, line 8)
+#   `[[ "$output" == *"Usage:"* ]]' failed
+not ok 3 find_dependencies_minimal_thorough: shows usage with no arguments
+# (in test file test/find_dependencies_minimal_thorough.bats, line 8)
+#   `[[ "$output" == *"Usage:"* ]]' failed
 ok 4 generate_example: writes command header and output to file
 ok 5 generate_example: captures command output in file
 ok 6 generate_example: captures stderr in file
@@ -242,5 +248,4 @@ ok 223 selenium_tests_exist: reads extension from ref and finds selenium-test
 ok 224 selenium_tests_exist: reads skin from ref and finds selenium-test
 ok 225 suggest_parallel: outputs a number
 ok 226 suggest_parallel: output is at least 1
-bats passed
 (35s)

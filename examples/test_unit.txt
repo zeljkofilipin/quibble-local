@@ -1,4 +1,4 @@
-$ DRY_RUN=1 ./test_unit
+$ ./test_unit
 
 use VERBOSE=1 for full output
 
@@ -25,9 +25,7 @@ ok 10 generate_example: exits 1 with three arguments
 ok 11 generate_example: captures output directly to file, not through a streaming pipe
 ok 12 generate_example: scrubs project absolute path to $PWD placeholder in captured output
 ok 13 generate_examples: DRY_RUN lists what would be generated
-not ok 14 generate_examples: DRY_RUN runs every Usage line per script
-# (in test file test/generate_examples.bats, line 18)
-#   `[[ "$output" == *"Would generate examples/help.txt from: ./help"* ]]' failed
+ok 14 generate_examples: DRY_RUN runs every Usage line per script
 ok 15 generate_examples: DRY_RUN skips itself and generate_example
 ok 16 generate_examples: DRY_RUN skips shellto (interactive, can't be captured)
 ok 17 generate_examples: warns and skips filename collisions

@@ -1,4 +1,4 @@
-$ DRY_RUN=1 ./list_dependencies_optional extensions/Echo
+$ ./list_dependencies_optional extensions/Echo
 
 AntiSpoof
 CentralAuth

@@ -1,2 +1,2 @@
-$ DRY_RUN=1 ./list_dependencies_required skins/MinervaNeue
+$ ./list_dependencies_required skins/MinervaNeue
 

@@ -1,4 +1,4 @@
-$ DRY_RUN=1 VERBOSE=1 ./restore
+$ VERBOSE=1 ./restore
 
 OS: Linux 6.14.0-37-generic
 CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
@@ -39,7 +39,71 @@ docker RAM: 15.6 GB
 = restore is running: ls -A src_save
 
 ========================================
-= restore is running: '[' -z config ']'
+= restore is running: '[' -z 'api.php
+autoload.php
+bundlesize.config.json
+cache
+CODE_OF_CONDUCT.md
+composer.json
+composer.local.json-sample
+config
+COPYING
+CREDITS
+DEVELOPERS.md
+docker-compose.yml
+.dockerignore
+docs
+.editorconfig
+.eslintignore
+.eslintrc.json
+extensions
+FAQ
+.fresnel.yml
+.git
+.gitattributes
+.git-blame-ignore-revs
+.gitignore
+.gitmessage
+.gitreview
+Gruntfile.js
+HISTORY
+images
+img_auth.php
+includes
+index.php
+INSTALL
+jsdoc.json
+languages
+load.php
+LocalSettings-installer.php
+LocalSettings.php
+.mailmap
+maintenance
+.minus-x.json
+mw-config
+node_modules
+opensearch_desc.php
+package.json
+package-lock.json
+.phan
+.phpcs.xml
+phpunit.xml.template
+README.md
+RELEASE-NOTES-1.46
+RELEASE-NOTES-1.47
+resources
+rest.php
+SECURITY
+skins
+sql
+.stylelintrc.json
+.svgo.config.js
+tests
+thumb_handler.php
+thumb.php
+UPGRADE
+vendor
+.vsls.json' ']'
 
 ========================================
 = restore is running: mkdir -p src
@@ -61,4 +125,4 @@ docker RAM: 15.6 GB
 
 ========================================
 = restore is running: local exit_code=0
-(1s)
+(1m 26s)
