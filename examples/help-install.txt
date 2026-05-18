@@ -1,4 +1,4 @@
-$ DRY_RUN=1 ./help install
+$ ./help install
 
 use VERBOSE=1 for full output
 

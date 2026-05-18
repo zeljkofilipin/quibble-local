@@ -1,4 +1,4 @@
-$ DRY_RUN=1 VERBOSE=1 ./fetch
+$ VERBOSE=1 ./fetch
 
 OS: Linux 6.14.0-37-generic
 CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
@@ -42,21 +42,951 @@ docker RAM: 15.6 GB
 
 ========================================
 = fetch is running: find ref -name '*.git' -type d
-find: ‘ref’: No such file or directory
 
 ========================================
-= fetch is running: '[' 0 -eq 0 ']'
+= fetch is running: repos+=("$repo")
 
 ========================================
-= fetch is running: echo 'No repos to fetch.'
-No repos to fetch.
+= fetch is running: IFS=
 
 ========================================
-= fetch is running: exit 0
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: '[' 55 -eq 0 ']'
+
+========================================
+= fetch is running: '[' 1 -le 1 ']'
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/integration/config.git fetch
+From https://gerrit.wikimedia.org/r/integration/config
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/vendor.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/vendor
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/core.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/core
+ * branch                    HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/skins/MinervaNeue.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/skins/MinervaNeue
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/skins/Vector.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/CommunityConfigurationExample.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfigurationExample
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/SandboxLink.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/SandboxLink
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/CirrusSearch.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CirrusSearch
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/CommunityConfiguration.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfiguration
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/JsonConfig.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/JsonConfig
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/CheckUser.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CheckUser
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/PageTriage.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageTriage
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/WikiLove.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikiLove
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/WikibaseMediaInfo.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseMediaInfo
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/WikimediaMessages.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaMessages
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/PageViewInfo.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageViewInfo
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/IPInfo.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/IPInfo
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Translate.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Translate
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/MediaModeration.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/MediaModeration
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/PageImages.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageImages
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/FileImporter.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/FileImporter
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/ProofreadPage.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/ProofreadPage
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/TimedMediaHandler.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/TimedMediaHandler
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Babel.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Babel
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/ContentTranslation.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/ContentTranslation
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Scribunto.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Scribunto
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/MobileApp.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileApp
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/WikimediaCampaignEvents.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaCampaignEvents
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Echo.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Echo
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/GuidedTour.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GuidedTour
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/VisualEditor.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/cldr.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/cldr
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/CampaignEvents.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CampaignEvents
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/GrowthExperiments.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GrowthExperiments
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Thanks.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Thanks
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/TemplateData.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/TemplateData
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/SiteMatrix.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/SiteMatrix
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/MobileFrontend.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/NavigationTiming.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/NavigationTiming
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Disambiguator.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Disambiguator
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/EventLogging.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventLogging
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Elastica.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Elastica
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/BetaFeatures.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/BetaFeatures
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/GeoData.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GeoData
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Kartographer.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Kartographer
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/AntiSpoof.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/AntiSpoof
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Math.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Math
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/EventStreamConfig.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventStreamConfig
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/AbuseFilter.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/AbuseFilter
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/GlobalCssJs.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalCssJs
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/EventBus.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventBus
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Wikibase.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Wikibase
+ * branch                  HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/WikibaseCirrusSearch.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseCirrusSearch
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/UniversalLanguageSelector.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/UniversalLanguageSelector
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/GlobalPreferences.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalPreferences
+ * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: _quibble_duration_exit
 
 ========================================
 = fetch is running: local exit_code=0
-(0s)
+(1m 27s)

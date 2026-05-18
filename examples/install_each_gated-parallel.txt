@@ -1,4 +1,4 @@
-$ DRY_RUN=1 PARALLEL=$(./suggest_parallel) ./install_each_gated
+$ PARALLEL=$(./suggest_parallel) ./install_each_gated
 
 use VERBOSE=1 for full output
 logs: log/silent/
@@ -15,157 +15,157 @@ docker RAM: 15.6 GB
 
 Parallel mode: 2 workers
 
---- Wave 1-2 of 52 (2 workers) --- 2026-05-13 12:44:44 UTC
+--- Wave 1-2 of 52 (2 workers) --- 2026-05-15 22:34:58 UTC
   Worker 1: extensions/AbuseFilter
   Worker 2: extensions/AntiSpoof
   extensions/AbuseFilter: ok
   extensions/AntiSpoof: ok
 
---- Wave 3-4 of 52 (2 workers) --- 2026-05-13 12:45:04 UTC
+--- Wave 3-4 of 52 (2 workers) --- 2026-05-15 22:41:06 UTC
   Worker 1: extensions/Babel
   Worker 2: extensions/BetaFeatures
   extensions/Babel: ok
   extensions/BetaFeatures: ok
 
---- Wave 5-6 of 52 (2 workers) --- 2026-05-13 12:45:11 UTC
+--- Wave 5-6 of 52 (2 workers) --- 2026-05-15 22:46:40 UTC
   Worker 1: extensions/CampaignEvents
   Worker 2: extensions/CheckUser
   extensions/CampaignEvents: ok
   extensions/CheckUser: ok
 
---- Wave 7-8 of 52 (2 workers) --- 2026-05-13 12:45:40 UTC
+--- Wave 7-8 of 52 (2 workers) --- 2026-05-15 22:53:44 UTC
   Worker 1: extensions/CirrusSearch
   Worker 2: extensions/cldr
   extensions/CirrusSearch: ok
   extensions/cldr: ok
 
---- Wave 9-10 of 52 (2 workers) --- 2026-05-13 12:45:58 UTC
+--- Wave 9-10 of 52 (2 workers) --- 2026-05-15 22:59:36 UTC
   Worker 1: extensions/ContentTranslation
   Worker 2: extensions/CommunityConfiguration
   extensions/ContentTranslation: ok
   extensions/CommunityConfiguration: ok
 
---- Wave 11-12 of 52 (2 workers) --- 2026-05-13 12:46:16 UTC
+--- Wave 11-12 of 52 (2 workers) --- 2026-05-15 23:05:45 UTC
   Worker 1: extensions/CommunityConfigurationExample
   Worker 2: extensions/Disambiguator
   extensions/CommunityConfigurationExample: ok
   extensions/Disambiguator: ok
 
---- Wave 13-14 of 52 (2 workers) --- 2026-05-13 12:46:22 UTC
+--- Wave 13-14 of 52 (2 workers) --- 2026-05-15 23:11:24 UTC
   Worker 1: extensions/Echo
   Worker 2: extensions/Elastica
   extensions/Echo: ok
   extensions/Elastica: ok
 
---- Wave 15-16 of 52 (2 workers) --- 2026-05-13 12:46:34 UTC
+--- Wave 15-16 of 52 (2 workers) --- 2026-05-15 23:17:07 UTC
   Worker 1: extensions/EventBus
   Worker 2: extensions/EventLogging
   extensions/EventBus: ok
   extensions/EventLogging: ok
 
---- Wave 17-18 of 52 (2 workers) --- 2026-05-13 12:46:41 UTC
+--- Wave 17-18 of 52 (2 workers) --- 2026-05-15 23:22:44 UTC
   Worker 1: extensions/EventStreamConfig
   Worker 2: extensions/FileImporter
   extensions/EventStreamConfig: ok
   extensions/FileImporter: ok
 
---- Wave 19-20 of 52 (2 workers) --- 2026-05-13 12:46:51 UTC
+--- Wave 19-20 of 52 (2 workers) --- 2026-05-15 23:28:25 UTC
   Worker 1: extensions/GeoData
   Worker 2: extensions/GlobalCssJs
   extensions/GeoData: ok
   extensions/GlobalCssJs: ok
 
---- Wave 21-22 of 52 (2 workers) --- 2026-05-13 12:46:59 UTC
+--- Wave 21-22 of 52 (2 workers) --- 2026-05-15 23:33:57 UTC
   Worker 1: extensions/GlobalPreferences
   Worker 2: extensions/GrowthExperiments
   extensions/GlobalPreferences: ok
   extensions/GrowthExperiments: ok
 
---- Wave 23-24 of 52 (2 workers) --- 2026-05-13 12:47:32 UTC
+--- Wave 23-24 of 52 (2 workers) --- 2026-05-15 23:40:28 UTC
   Worker 1: extensions/GuidedTour
   Worker 2: extensions/IPInfo
   extensions/GuidedTour: ok
   extensions/IPInfo: ok
 
---- Wave 25-26 of 52 (2 workers) --- 2026-05-13 12:47:46 UTC
+--- Wave 25-26 of 52 (2 workers) --- 2026-05-15 23:46:13 UTC
   Worker 1: extensions/JsonConfig
   Worker 2: extensions/Kartographer
   extensions/JsonConfig: ok
   extensions/Kartographer: ok
 
---- Wave 27-28 of 52 (2 workers) --- 2026-05-13 12:48:00 UTC
+--- Wave 27-28 of 52 (2 workers) --- 2026-05-15 23:52:23 UTC
   Worker 1: extensions/Math
   Worker 2: extensions/MediaModeration
   extensions/Math: ok
   extensions/MediaModeration: ok
 
---- Wave 29-30 of 52 (2 workers) --- 2026-05-13 12:48:09 UTC
+--- Wave 29-30 of 52 (2 workers) --- 2026-05-15 23:58:29 UTC
   Worker 1: extensions/MobileApp
   Worker 2: extensions/MobileFrontend
   extensions/MobileApp: ok
   extensions/MobileFrontend: ok
 
---- Wave 31-32 of 52 (2 workers) --- 2026-05-13 12:48:21 UTC
+--- Wave 31-32 of 52 (2 workers) --- 2026-05-16 00:04:41 UTC
   Worker 1: extensions/NavigationTiming
   Worker 2: extensions/PageImages
   extensions/NavigationTiming: ok
   extensions/PageImages: ok
 
---- Wave 33-34 of 52 (2 workers) --- 2026-05-13 12:48:27 UTC
+--- Wave 33-34 of 52 (2 workers) --- 2026-05-16 00:10:12 UTC
   Worker 1: extensions/PageTriage
   Worker 2: extensions/PageViewInfo
   extensions/PageTriage: ok
   extensions/PageViewInfo: ok
 
---- Wave 35-36 of 52 (2 workers) --- 2026-05-13 12:48:38 UTC
+--- Wave 35-36 of 52 (2 workers) --- 2026-05-16 00:15:48 UTC
   Worker 1: extensions/ProofreadPage
   Worker 2: extensions/SandboxLink
   extensions/ProofreadPage: ok
   extensions/SandboxLink: ok
 
---- Wave 37-38 of 52 (2 workers) --- 2026-05-13 12:48:51 UTC
+--- Wave 37-38 of 52 (2 workers) --- 2026-05-16 00:21:49 UTC
   Worker 1: extensions/Scribunto
   Worker 2: extensions/SiteMatrix
   extensions/Scribunto: ok
   extensions/SiteMatrix: ok
 
---- Wave 39-40 of 52 (2 workers) --- 2026-05-13 12:48:56 UTC
+--- Wave 39-40 of 52 (2 workers) --- 2026-05-16 00:27:23 UTC
   Worker 1: extensions/TemplateData
   Worker 2: extensions/Thanks
   extensions/TemplateData: ok
   extensions/Thanks: ok
 
---- Wave 41-42 of 52 (2 workers) --- 2026-05-13 12:49:10 UTC
+--- Wave 41-42 of 52 (2 workers) --- 2026-05-16 00:33:31 UTC
   Worker 1: extensions/TimedMediaHandler
   Worker 2: extensions/Translate
   extensions/TimedMediaHandler: ok
   extensions/Translate: ok
 
---- Wave 43-44 of 52 (2 workers) --- 2026-05-13 12:49:23 UTC
+--- Wave 43-44 of 52 (2 workers) --- 2026-05-16 00:39:36 UTC
   Worker 1: extensions/UniversalLanguageSelector
   Worker 2: extensions/VisualEditor
   extensions/UniversalLanguageSelector: ok
   extensions/VisualEditor: ok
 
---- Wave 45-46 of 52 (2 workers) --- 2026-05-13 12:49:38 UTC
+--- Wave 45-46 of 52 (2 workers) --- 2026-05-16 00:45:34 UTC
   Worker 1: extensions/Wikibase
   Worker 2: extensions/WikibaseCirrusSearch
   extensions/Wikibase: ok
   extensions/WikibaseCirrusSearch: ok
 
---- Wave 47-48 of 52 (2 workers) --- 2026-05-13 12:50:09 UTC
+--- Wave 47-48 of 52 (2 workers) --- 2026-05-16 00:52:14 UTC
   Worker 1: extensions/WikibaseMediaInfo
   Worker 2: extensions/WikiLove
   extensions/WikibaseMediaInfo: ok
   extensions/WikiLove: ok
 
---- Wave 49-50 of 52 (2 workers) --- 2026-05-13 12:50:24 UTC
+--- Wave 49-50 of 52 (2 workers) --- 2026-05-16 00:58:15 UTC
   Worker 1: extensions/WikimediaCampaignEvents
   Worker 2: extensions/WikimediaMessages
   extensions/WikimediaCampaignEvents: ok
   extensions/WikimediaMessages: ok
 
---- Wave 51-52 of 52 (2 workers) --- 2026-05-13 12:50:32 UTC
+--- Wave 51-52 of 52 (2 workers) --- 2026-05-16 01:03:53 UTC
   Worker 1: skins/MinervaNeue
   Worker 2: skins/Vector
   skins/MinervaNeue: ok
@@ -229,4 +229,4 @@ PASSED:
   skins/Vector
 
 All passed.
-(6m 4s)
+(2h 34m 38s)

@@ -1,4 +1,4 @@
-$ DRY_RUN=1 ENVIRONMENT=0 ./remove
+$ ENVIRONMENT=0 ./remove
 
 use VERBOSE=1 for full output
 logs: log/remove.log
@@ -12,4 +12,4 @@ docker: Docker version 29.4.3, build 055a478
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-remove  ok (0s)
+remove  ok (1s)

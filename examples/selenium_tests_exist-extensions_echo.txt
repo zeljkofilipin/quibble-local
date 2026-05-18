@@ -1,3 +1,2 @@
-$ DRY_RUN=1 ./selenium_tests_exist extensions/Echo
+$ ./selenium_tests_exist extensions/Echo
 
-mkdir: cannot create directory ‘ref/mediawiki’: Permission denied

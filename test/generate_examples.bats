@@ -26,6 +26,15 @@
   [[ "$output" != *"examples/generate_example.txt"* ]]
 }
 
+@test "generate_examples: DRY_RUN skips shellto (interactive, can't be captured)" {
+  # shellto drops the user into an interactive Docker bash shell. ./generate_example's
+  # eval would block forever waiting for keyboard input, so generate_examples skips it.
+  # See CLAUDE.md ("shellto is an exception").
+  run env DRY_RUN=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+  [ "$status" -eq 0 ]
+  [[ "$output" != *"examples/shellto"* ]]
+}
+
 @test "generate_examples: warns and skips filename collisions" {
   # The same command appears in run_selenium_tests_all_gated's Usage block and
   # suggest_parallel's Usage block, producing the same derived filename.

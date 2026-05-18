@@ -1,4 +1,4 @@
-$ DRY_RUN=1 ./find_dependencies_minimal_gated extensions/Echo
+$ ./find_dependencies_minimal_gated extensions/Echo
 
 use VERBOSE=1 for full output
 logs: log/silent/
@@ -14,7 +14,7 @@ docker RAM: 15.6 GB
 
 
 1 components to process.
-extensions/Echo find_dependencies_minimal_greedy ......................................... ok (1m 3s)  2026-05-13 11:38:06 UTC
+extensions/Echo find_dependencies_minimal_greedy ......................................... ok (20m 33s)  2026-05-15 01:50:59 UTC
 
 ========================================
 = Results
@@ -23,4 +23,4 @@ PASSED:
   extensions/Echo
 
 All passed.
-(1m 5s)
+(20m 35s)

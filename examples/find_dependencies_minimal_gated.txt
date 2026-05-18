@@ -1,4 +1,4 @@
-$ DRY_RUN=1 ./find_dependencies_minimal_gated
+$ ./find_dependencies_minimal_gated
 
 use VERBOSE=1 for full output
 logs: log/silent/
@@ -56,16 +56,16 @@ skipped (no Selenium tests): extensions/WikimediaMessages
 skipped (no Selenium tests): skins/Vector
 
 10 components to process.
-extensions/AbuseFilter find_dependencies_minimal_greedy ....................................................................... ok (2m 38s)  2026-05-13 11:27:21 UTC
-extensions/CampaignEvents find_dependencies_minimal_greedy ............................................................. ok (1m 39s)  2026-05-13 11:29:00 UTC
-extensions/CommunityConfiguration find_dependencies_minimal_greedy ....................... ok (18s)  2026-05-13 11:29:18 UTC
-extensions/Echo find_dependencies_minimal_greedy ......................................... ok (58s)  2026-05-13 11:30:16 UTC
-extensions/GuidedTour find_dependencies_minimal_greedy ....................... ok (19s)  2026-05-13 11:30:35 UTC
-extensions/Math find_dependencies_minimal_greedy ............................. ok (34s)  2026-05-13 11:31:09 UTC
-extensions/PageTriage find_dependencies_minimal_greedy ......................................... ok (55s)  2026-05-13 11:32:04 UTC
-extensions/ProofreadPage find_dependencies_minimal_greedy ............................................... ok (1m 15s)  2026-05-13 11:33:19 UTC
-extensions/VisualEditor find_dependencies_minimal_greedy ..................................................... ok (1m 53s)  2026-05-13 11:35:12 UTC
-skins/MinervaNeue find_dependencies_minimal_greedy ........................................................... ok (1m 49s)  2026-05-13 11:37:01 UTC
+extensions/AbuseFilter find_dependencies_minimal_greedy ....................................................................... ok (31m 40s)  2026-05-14 22:31:48 UTC
+extensions/CampaignEvents find_dependencies_minimal_greedy ............................................................. ok (25m 48s)  2026-05-14 22:57:36 UTC
+extensions/CommunityConfiguration find_dependencies_minimal_greedy ....................... ok (8m 17s)  2026-05-14 23:05:53 UTC
+extensions/Echo find_dependencies_minimal_greedy ......................................... ok (16m 55s)  2026-05-14 23:22:48 UTC
+extensions/GuidedTour find_dependencies_minimal_greedy ....................... ok (9m 12s)  2026-05-14 23:32:00 UTC
+extensions/Math find_dependencies_minimal_greedy ............................. ok (12m 37s)  2026-05-14 23:44:37 UTC
+extensions/PageTriage find_dependencies_minimal_greedy ......................................... ok (20m 4s)  2026-05-15 00:04:41 UTC
+extensions/ProofreadPage find_dependencies_minimal_greedy ............................................... ok (23m 51s)  2026-05-15 00:28:32 UTC
+extensions/VisualEditor find_dependencies_minimal_greedy ..................................................... ok (28m 31s)  2026-05-15 00:57:03 UTC
+skins/MinervaNeue find_dependencies_minimal_greedy ................................................................ ok (33m 21s)  2026-05-15 01:30:24 UTC
 
 ========================================
 = Results
@@ -125,4 +125,4 @@ PASSED:
   skins/MinervaNeue
 
 All passed.
-(16m 1s)
+(3h 31m 33s)

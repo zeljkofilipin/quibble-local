@@ -1,4 +1,4 @@
-$ DRY_RUN=1 VERBOSE=1 ./prepare_gated
+$ VERBOSE=1 ./prepare_gated
 
 OS: Linux 6.14.0-37-generic
 CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
@@ -1611,4 +1611,4 @@ docker RAM: 15.6 GB
 
 ========================================
 = prepare_gated is running: local exit_code=0
-(1m 19s)
+(1m 20s)

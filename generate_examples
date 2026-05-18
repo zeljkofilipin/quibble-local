@@ -55,7 +55,10 @@ for script in *; do
   [ -f "$script" ] || continue                                      # skip directories
   [ -x "$script" ] || continue                                      # skip non-executable files
   # Avoid recursion: don't try to regenerate examples for ourselves or our single-file helper.
-  case "$script" in generate_examples|generate_example) continue ;; esac
+  # Also skip `shellto`: it is interactive by design (drops into a Docker bash shell), so
+  # its capture would block forever on stdin inside `./generate_example`'s eval. See
+  # CLAUDE.md ("shellto is an exception").
+  case "$script" in generate_examples|generate_example|shellto) continue ;; esac
   read -r first_line < "$script" || continue                        # read first line; skip on read failure
   # Match scripts the same way auto-discovery does elsewhere in this repo.
   case "$first_line" in

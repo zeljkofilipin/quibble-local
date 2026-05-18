@@ -1,4 +1,4 @@
-$ DRY_RUN=1 ./list_dependencies skins/MinervaNeue
+$ ./list_dependencies skins/MinervaNeue
 
 Cite
 Echo
