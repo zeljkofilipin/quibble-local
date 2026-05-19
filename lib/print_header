@@ -1,6 +1,6 @@
 # shellcheck shell=bash
 # Print a section header for a component in batch scripts.
-# In verbose mode: prints a separator box with the label and UTC timestamp.
+# In verbose mode: prints a separator box with the label (and a UTC timestamp when TIME_UTC=1).
 # In silent mode: prints the label followed by a space (dots will follow).
 # Must be sourced, not run directly.
 # Expects $verbose to be set by the caller (from lib/batch_setup).
