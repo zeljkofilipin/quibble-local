@@ -3,7 +3,22 @@
 # Tests for lib/format_duration.
 
 setup() {
+  export TIME_ELAPSED=1 # enable formatter for tests that exercise its formatting logic
   . lib/format_duration # source the formatting function
+}
+
+teardown() {
+  unset TIME_ELAPSED
+}
+
+@test "format_duration: outputs nothing by default (TIME_ELAPSED unset)" {
+  run bash -c '
+    unset TIME_ELAPSED
+    . lib/format_duration
+    _quibble_format_duration 61
+  '
+  [ "$status" -eq 0 ]
+  [ -z "$output" ]
 }
 
 @test "format_duration: 0 seconds" {
