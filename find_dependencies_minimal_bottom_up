@@ -94,4 +94,6 @@ fi
 
 # If we get here, no combination passed (shouldn't happen if the extension's tests work at all)
 printf "\nNo working combination found.\n"
+printf "If this previously passed, zuul/dependencies.yaml may rely on Quibble's --resolve-requires\n"
+printf "to install a transitive requirement. Rerun with RESOLVE_REQUIRES=1 to confirm and identify it.\n"
 exit 1
