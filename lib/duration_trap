@@ -4,6 +4,9 @@
 # Only activates when stdout is a terminal (prevents corrupting piped output),
 # or when _QUIBBLE_FORCE_TERMINAL=1 is set (used by generate_example to capture
 # the terminal-style duration line into examples/*.txt).
+# The duration string itself is gated on TIME_ELAPSED (see lib/format_duration):
+# off by default the trap still fires but prints empty parens; set TIME_ELAPSED=1
+# to see the actual duration.
 # lib/silent_output overrides this trap with its own handler that also includes duration.
 # Must be sourced, not run directly.
 
@@ -19,7 +22,10 @@ if [ -t 1 ] || [ -n "${_QUIBBLE_FORCE_TERMINAL:-}" ]; then
   _quibble_duration_exit() {
     local exit_code=$?                # capture exit code before any command changes it
     { set +x; } 2>/dev/null          # disable trace output silently (may be active in verbose mode)
-    printf "(%s)\n" "$(_quibble_format_duration "$SECONDS")" # print total elapsed time
+    # Print total elapsed time, but only when TIME_ELAPSED=1 — otherwise we'd emit a bare
+    # "()" line at the end of every script run because the parens are baked into the format
+    # string and _quibble_format_duration returns empty when the gate is off.
+    [ -n "${TIME_ELAPSED:-}" ] && printf "(%s)\n" "$(_quibble_format_duration "$SECONDS")"
     return "$exit_code"               # preserve the original exit code
   }
   trap _quibble_duration_exit EXIT    # run handler when script exits

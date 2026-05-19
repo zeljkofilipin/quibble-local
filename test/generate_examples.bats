@@ -42,7 +42,9 @@
   # Goes to stderr in the script; bats' $output captures both streams, which is what we
   # want here. PREVIEW walks every Usage line without invoking ./generate_example, so the
   # generated count will be non-zero.
-  run env PREVIEW=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+  # TIME_ELAPSED=1 enables the duration in the summary line (_quibble_format_duration is
+  # gated off by default; this test specifically asserts the duration appears, so opt in).
+  run env PREVIEW=1 _QUIBBLE_NO_INHIBIT=1 TIME_ELAPSED=1 ./generate_examples
   [ "$status" -eq 0 ]
   # Match: "generate_examples: generated <N>, skipped <M>, took <duration>".
   # N must be > 0 (PREVIEW sees every Usage variant); M can be 0 or more. Duration always

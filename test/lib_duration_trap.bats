@@ -2,13 +2,24 @@
 #
 # Tests for lib/duration_trap.
 
-@test "duration_trap: provides format_duration function" {
+@test "duration_trap: provides format_duration function (TIME_ELAPSED=1)" {
   run bash -c '
+    TIME_ELAPSED=1
     . lib/duration_trap
     _quibble_format_duration 61
   '
   [ "$status" -eq 0 ]
   [ "$output" = "1m 1s" ]
+}
+
+@test "duration_trap: format_duration outputs nothing when TIME_ELAPSED unset" {
+  run bash -c '
+    unset TIME_ELAPSED
+    . lib/duration_trap
+    _quibble_format_duration 61
+  '
+  [ "$status" -eq 0 ]
+  [ -z "$output" ]
 }
 
 @test "duration_trap: does not set trap when stdout is not a terminal" {
