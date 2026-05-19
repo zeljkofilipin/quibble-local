@@ -34,6 +34,17 @@ UTC timestamps in batch script output (verbose-mode separators, per-step ok/FAIL
 
 Useful for long-running batch scripts (`find_dependencies_minimal_*`, `run_selenium_tests_*_gated`, `install_each_gated`, `test_integration*`) where knowing when each step finished is helpful.
 
+### `TIME_ELAPSED`
+
+Elapsed-time durations (per-step / per-test `(Xs)` strings, silent-mode `ok (Xs)` / `FAIL (Xs)` lines, the EXIT-trap total `(Xs)` line, and `generate_examples`' `took (Xs)` summary) are **off by default**. Set `TIME_ELAPSED=1` to enable them.
+
+    ./test_integration                # no durations (default)
+    TIME_ELAPSED=1 ./test_integration # show durations
+
+Combinable with `TIME_UTC=1` for full timing output:
+
+    TIME_ELAPSED=1 TIME_UTC=1 ./test_integration
+
 ### `QUIBBLE_IMAGE`
 
 Override the Docker image used by all commands. Useful when developing or testing changes to Quibble itself.
@@ -482,11 +493,11 @@ Outputs debug information (OS, CPU, RAM, bash, git, docker version, docker CPUs 
 
 ### `lib/format_duration`
 
-Provides `_quibble_format_duration` function that formats elapsed seconds as a human-readable duration string (e.g. "1h 5m 30s"). Omits zero-value days, hours, and minutes; always shows seconds. Sourced by `lib/duration_trap` and `lib/batch_setup`.
+Provides `_quibble_format_duration` function that formats elapsed seconds as a human-readable duration string (e.g. "1h 5m 30s"). Omits zero-value days, hours, and minutes; always shows seconds. Gated on the `TIME_ELAPSED` environment variable: off by default (returns empty), set `TIME_ELAPSED=1` to enable. Sourced by `lib/duration_trap` and `lib/batch_setup`.
 
 ### `lib/duration_trap`
 
-Sets an EXIT trap to print total script duration when the script exits. Only activates when stdout is a terminal. Sources `lib/format_duration`. Sourced by `lib/debug_info`, `lib/batch_setup`, and `lint`. `lib/silent_output` overrides this trap with its own handler that also includes duration.
+Sets an EXIT trap to print total script duration when the script exits. Only activates when stdout is a terminal. Output is empty unless `TIME_ELAPSED=1`. Sources `lib/format_duration`. Sourced by `lib/debug_info`, `lib/batch_setup`, and `lint`. `lib/silent_output` overrides this trap with its own handler that also includes duration.
 
 ### `lib/setup`
 
@@ -494,7 +505,7 @@ Shared setup sourced by scripts that run Docker commands. Sources `lib/debug_inf
 
 ### `lib/silent_output`
 
-Output redirection for silent mode. Saves all output to a log file (e.g. `log/fresh_install.log`) and prints a dot per line to the terminal. On exit, prints "ok" or "FAIL" with elapsed time and the log file path. Sourced by `lib/setup`.
+Output redirection for silent mode. Saves all output to a log file (e.g. `log/fresh_install.log`) and prints a dot per line to the terminal. On exit, prints "ok" or "FAIL" with the log file path; the elapsed-time portion appears only when `TIME_ELAPSED=1`. Sourced by `lib/setup`.
 
 ### `lib/docker_chmod`
 

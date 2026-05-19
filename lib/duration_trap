@@ -4,6 +4,9 @@
 # Only activates when stdout is a terminal (prevents corrupting piped output),
 # or when _QUIBBLE_FORCE_TERMINAL=1 is set (used by generate_example to capture
 # the terminal-style duration line into examples/*.txt).
+# The duration string itself is gated on TIME_ELAPSED (see lib/format_duration):
+# off by default the trap still fires but prints empty parens; set TIME_ELAPSED=1
+# to see the actual duration.
 # lib/silent_output overrides this trap with its own handler that also includes duration.
 # Must be sourced, not run directly.
 

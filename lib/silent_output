@@ -1,7 +1,8 @@
 # shellcheck shell=bash
 # Output redirection for silent mode.
 # Saves all output to a log file and prints a dot per line to the terminal.
-# On exit, prints "ok" or "FAIL" with elapsed time and the log file path.
+# On exit, prints "ok" or "FAIL" with the log file path; the elapsed-time
+# portion appears only when TIME_ELAPSED=1 (see lib/format_duration).
 # Must be sourced, not run directly. Only activates when:
 #   - Not in verbose mode (VERBOSE is unset or empty)
 #   - Not already managed (_QUIBBLE_OUTPUT_MANAGED is unset)
