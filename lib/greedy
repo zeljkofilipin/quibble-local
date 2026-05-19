@@ -46,12 +46,16 @@ export QUIBBLE_DEPS="$full_combo"
 if ! run_step "$component" ./install "$component"; then
   unset QUIBBLE_DEPS
   printf "\nBaseline install failed with all dependencies.\n"
+  printf "If this previously passed, zuul/dependencies.yaml may rely on Quibble's --resolve-requires\n"
+  printf "to install a transitive requirement. Rerun with RESOLVE_REQUIRES=1 to confirm and identify it.\n"
   exit 1
 fi
 unset QUIBBLE_DEPS
 
 if ! run_step "$component" ./run_selenium_tests "$component"; then
   printf "\nBaseline tests failed with all dependencies. Cannot determine minimum.\n"
+  printf "If this previously passed, zuul/dependencies.yaml may rely on Quibble's --resolve-requires\n"
+  printf "to install a transitive requirement. Rerun with RESOLVE_REQUIRES=1 to confirm and identify it.\n"
   exit 1
 fi
 
