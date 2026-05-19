@@ -85,6 +85,14 @@ Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directorie
     DRY_RUN=1 ./run_selenium_tests extensions/Echo
     DRY_RUN=1 ./run_php_unit_tests extensions/Echo
 
+### `RESOLVE_REQUIRES`
+
+`RESOLVE_REQUIRES` controls whether `--resolve-requires` is passed to Quibble. Default `1` (on): Quibble reads each repo's `extension.json`/`skin.json` `requires` field and installs transitive dependencies automatically. Set to `0` to install exactly the deps listed in `QUIBBLE_DEPS` (or `zuul/dependencies.yaml`) with no auto-resolution.
+
+    RESOLVE_REQUIRES=0 ./install extensions/Echo
+
+`./find_dependencies_minimal_greedy`, `./find_dependencies_minimal_bottom_up`, `./find_dependencies_minimal_thorough`, and `./find_dependencies_minimal_gated` set `RESOLVE_REQUIRES=0` automatically — otherwise Quibble silently re-installs an optional dependency the algorithm just removed (via some kept dep's transitive `requires`), and the reported minimum is artificially small.
+
 ## Commands (same as mediawiki-quickstart)
 
 ### `./fresh_install`
@@ -107,10 +115,12 @@ Install an extension or skin. Assumes `./fresh_install` has been run first. Run 
     QUIBBLE_DEPS="" ./install extensions/Echo                    # no dependencies
     QUIBBLE_DEPS="EventLogging" ./install extensions/Echo        # only specific dependencies
     DRY_RUN=1 ./install extensions/Echo                          # pass --dry-run to Quibble (no real install)
+    RESOLVE_REQUIRES=0 ./install extensions/Echo                 # install only QUIBBLE_DEPS; do not auto-resolve transitive requires
 
 Environment variables:
 
 - `QUIBBLE_DEPS`: Override which dependencies to install (space-separated). When set, replaces the dependencies from `zuul/dependencies.yaml`. Set to empty string for no dependencies.
+- `RESOLVE_REQUIRES`: Default `1`. Set to `0` to install exactly the deps listed in `QUIBBLE_DEPS` without Quibble auto-resolving transitive `requires`. See [`RESOLVE_REQUIRES`](#resolve_requires).
 
 See: [Install MediaWiki Core and an Extension](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension)
 
