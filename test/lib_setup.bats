@@ -155,6 +155,39 @@
   [[ "$output" == "--dry-run" ]]
 }
 
+@test "setup: QUIBBLE_RESOLVE_REQUIRES is --resolve-requires by default" {
+  run bash -c '
+    export _QUIBBLE_NO_DOCKER_CHECK=1
+    unset RESOLVE_REQUIRES
+    . lib/setup 2>/dev/null
+    echo "${QUIBBLE_RESOLVE_REQUIRES[@]}"
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == "--resolve-requires" ]]
+}
+
+@test "setup: QUIBBLE_RESOLVE_REQUIRES is --resolve-requires when RESOLVE_REQUIRES=1" {
+  run bash -c '
+    export _QUIBBLE_NO_DOCKER_CHECK=1
+    export RESOLVE_REQUIRES=1
+    . lib/setup 2>/dev/null
+    echo "${QUIBBLE_RESOLVE_REQUIRES[@]}"
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == "--resolve-requires" ]]
+}
+
+@test "setup: QUIBBLE_RESOLVE_REQUIRES is empty when RESOLVE_REQUIRES=0" {
+  run bash -c '
+    export _QUIBBLE_NO_DOCKER_CHECK=1
+    export RESOLVE_REQUIRES=0
+    . lib/setup 2>/dev/null
+    echo "resolve:${QUIBBLE_RESOLVE_REQUIRES[*]:-}:end"
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"resolve::end"* ]]
+}
+
 @test "setup: QUIBBLE_DOCKER_FLAGS empty in background mode" {
   run bash -c '
     export _QUIBBLE_NO_DOCKER_CHECK=1
