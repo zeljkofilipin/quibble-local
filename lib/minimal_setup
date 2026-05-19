@@ -21,6 +21,12 @@
 fast=1 # always use save/restore for speed
 _first_run=1 # force fresh_install on first call (don't trust stale src_save/ from previous runs)
 
+# Force Quibble to install exactly QUIBBLE_DEPS — no auto-resolution of transitive requires.
+# Otherwise removing an optional dep B can be silently masked by Quibble pulling B back
+# in via some kept dep's "requires.extensions", giving a bogus minimum. Exported so child
+# processes (./install, ./run_selenium_tests) see it. See README "RESOLVE_REQUIRES".
+export RESOLVE_REQUIRES=0
+
 # Show usage if no argument provided
 if [ $# -eq 0 ]; then # $# is the number of arguments
   echo "Usage: ./${0##*/} extensions/EXTENSION or ./${0##*/} skins/SKIN"
