@@ -1,9 +1,13 @@
 # shellcheck shell=bash
 # Provides utc_timestamp function that prints the current UTC time.
-# Format: YYYY-MM-DD HH:MM:SS UTC
+# Gated on the TIME_UTC environment variable: off by default (no output);
+# set TIME_UTC=1 to enable. This matches the project's VERBOSE=1 opt-in convention.
+# Format when enabled: YYYY-MM-DD HH:MM:SS UTC
 # Must be sourced, not run directly.
 # Usage: printf "%s\n" "$(utc_timestamp)"
+#        TIME_UTC=1 ./test_integration  # enable timestamps for the whole run
 
 utc_timestamp() {
+  [ -n "${TIME_UTC:-}" ] || return 0 # default off; opt in with TIME_UTC=1 (any non-empty value)
   date -u '+%Y-%m-%d %H:%M:%S UTC' # e.g. "2026-03-30 12:34:56 UTC"
 }

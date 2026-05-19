@@ -25,13 +25,26 @@
   [[ "$output" == "core " ]]
 }
 
-@test "print_header: includes UTC timestamp in verbose mode" {
+@test "print_header: includes UTC timestamp in verbose mode when TIME_UTC=1" {
   run bash -c '
     verbose=1
+    TIME_UTC=1
     . lib/utc_timestamp
     . lib/print_header
     print_header "extensions/Echo"
   '
   [ "$status" -eq 0 ]
   [[ "$output" == *"UTC"* ]]
+}
+
+@test "print_header: omits UTC timestamp in verbose mode when TIME_UTC unset" {
+  run bash -c '
+    verbose=1
+    unset TIME_UTC
+    . lib/utc_timestamp
+    . lib/print_header
+    print_header "extensions/Echo"
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" != *"UTC"* ]]
 }
