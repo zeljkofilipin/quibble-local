@@ -21,6 +21,21 @@ teardown() {
   [ -z "$output" ]
 }
 
+@test "format_duration_padded: outputs nothing by default (TIME_ELAPSED unset)" {
+  run bash -c '
+    unset TIME_ELAPSED
+    . lib/format_duration
+    _quibble_format_duration_padded 61
+  '
+  [ "$status" -eq 0 ]
+  [ -z "$output" ]
+}
+
+@test "format_duration_padded: returns ' (DURATION)' with leading space when TIME_ELAPSED=1" {
+  result=$(_quibble_format_duration_padded 61)
+  [ "$result" = " (1m 1s)" ]
+}
+
 @test "format_duration: 0 seconds" {
   result=$(_quibble_format_duration 0)
   [ "$result" = "0s" ]

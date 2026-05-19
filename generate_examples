@@ -134,6 +134,13 @@ done
 
 # Labeled summary on stderr so it survives the per-file output flood. $SECONDS is bash's
 # built-in elapsed-seconds counter (set by the shell, not us — starts at process launch).
-# duration_trap's `(Xs)` line still prints last on EXIT; this is the human-readable anchor.
-printf "generate_examples: generated %d, skipped %d, took %s\n" \
-  "$generated" "$skipped" "$(_quibble_format_duration "$SECONDS")" >&2
+# duration_trap's `(Xs)` line still prints last on EXIT when TIME_ELAPSED=1.
+# Drop the trailing ", took ..." entirely when TIME_ELAPSED is unset — otherwise the
+# format string `took %s` would emit "took \n" with a trailing space and no duration.
+if [ -n "${TIME_ELAPSED:-}" ]; then
+  printf "generate_examples: generated %d, skipped %d, took %s\n" \
+    "$generated" "$skipped" "$(_quibble_format_duration "$SECONDS")" >&2
+else
+  printf "generate_examples: generated %d, skipped %d\n" \
+    "$generated" "$skipped" >&2
+fi

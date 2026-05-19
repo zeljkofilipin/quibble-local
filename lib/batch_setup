@@ -65,10 +65,11 @@ run_step() {
     printf "= %s: %s %s\n" "$component" "$*" "$(utc_timestamp)" # $* joins all args into a single string
     printf "========================================\n"
     if "$@"; then # run the command (all remaining arguments)
-      printf "(%s)\n" "$(_quibble_format_duration "$((SECONDS - step_start))")" # print step duration
+      # Print standalone duration line only when TIME_ELAPSED=1; otherwise the bare "()" line would clutter every verbose step.
+      [ -n "${TIME_ELAPSED:-}" ] && printf "(%s)\n" "$(_quibble_format_duration "$((SECONDS - step_start))")"
       return 0 # step passed
     else
-      printf "(%s)\n" "$(_quibble_format_duration "$((SECONDS - step_start))")" # print step duration
+      [ -n "${TIME_ELAPSED:-}" ] && printf "(%s)\n" "$(_quibble_format_duration "$((SECONDS - step_start))")"
       failed="$failed
   $component ($step)" # append component and failed step on a new indented line
       return 1 # step failed, caller can skip remaining steps
@@ -78,10 +79,11 @@ run_step() {
     local log_file="log/silent/${component//\//-}--${step}.log" # e.g. log/silent/extensions-Echo--install.log
     printf "%s " "$step" # print step name before dots (e.g. "fresh_install ")
     if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
-      printf " ok (%s) " "$(_quibble_format_duration "$((SECONDS - step_start))")" # success with duration
+      # _quibble_format_duration_padded returns " (Ns)" when TIME_ELAPSED=1, empty otherwise — keeps the line clean in both modes.
+      printf " ok%s " "$(_quibble_format_duration_padded "$((SECONDS - step_start))")"
       return 0
     else
-      printf " FAIL (%s) " "$(_quibble_format_duration "$((SECONDS - step_start))")" # failure with duration
+      printf " FAIL%s " "$(_quibble_format_duration_padded "$((SECONDS - step_start))")"
       failed="$failed
   $component ($step)" # append component and failed step on a new indented line
       return 1

@@ -22,11 +22,12 @@ run_test() {
     printf "= Running: %s %s\n" "$*" "$(utc_timestamp)" # $* joins all args into a single string
     printf "========================================\n"
     if "$@"; then # run the command (all arguments passed to this function)
-      printf "(%s)\n" "$(_quibble_format_duration "$((SECONDS - test_start))")" # print test duration
+      # Print standalone duration line only when TIME_ELAPSED=1; otherwise the bare "()" line would clutter every verbose test.
+      [ -n "${TIME_ELAPSED:-}" ] && printf "(%s)\n" "$(_quibble_format_duration "$((SECONDS - test_start))")"
       passed="$passed
   $*" # append full command on a new indented line
     else
-      printf "(%s)\n" "$(_quibble_format_duration "$((SECONDS - test_start))")" # print test duration
+      [ -n "${TIME_ELAPSED:-}" ] && printf "(%s)\n" "$(_quibble_format_duration "$((SECONDS - test_start))")"
       failed="$failed
   $*" # append full command on a new indented line
     fi
@@ -37,11 +38,12 @@ run_test() {
     log_file=$(printf "log/silent/%02d-%s.log" "$test_counter" "${1##*/}") # e.g. log/silent/03-prepare.log
     printf "%s " "$*" # print full command without newline
     if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
-      printf " ok (%s) %s\n" "$(_quibble_format_duration "$((SECONDS - test_start))")" "$(utc_timestamp)" # success with duration and UTC timestamp
+      # _quibble_format_duration_padded returns " (Ns)" when TIME_ELAPSED=1, empty otherwise — keeps the line clean in both modes.
+      printf " ok%s %s\n" "$(_quibble_format_duration_padded "$((SECONDS - test_start))")" "$(utc_timestamp)"
       passed="$passed
   $*" # append full command on a new indented line
     else
-      printf " FAIL (%s) %s\n" "$(_quibble_format_duration "$((SECONDS - test_start))")" "$(utc_timestamp)" # failure with duration and UTC timestamp
+      printf " FAIL%s %s\n" "$(_quibble_format_duration_padded "$((SECONDS - test_start))")" "$(utc_timestamp)"
       failed="$failed
   $*" # append full command on a new indented line
     fi

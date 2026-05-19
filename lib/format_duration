@@ -1,6 +1,6 @@
 # shellcheck shell=bash
 # Format elapsed seconds as human-readable duration string.
-# Provides _quibble_format_duration function.
+# Provides _quibble_format_duration and _quibble_format_duration_padded functions.
 # Gated on the TIME_ELAPSED environment variable: off by default (no output);
 # set TIME_ELAPSED=1 to enable. This matches the project's VERBOSE=1 / TIME_UTC=1 opt-in convention.
 # Sourced by lib/duration_trap and lib/batch_setup.
@@ -29,4 +29,22 @@ _quibble_format_duration() {
   fi
   result="${result}${seconds}s"              # always include seconds
   printf "%s" "$result"                      # print without trailing newline
+}
+
+# Return the duration wrapped in parens with a leading space, for embedding mid-line.
+# Returns " (DURATION)" when TIME_ELAPSED=1, empty otherwise (delegates the gate to
+# _quibble_format_duration, so callers don't need their own [ -n "$TIME_ELAPSED" ] check).
+# Designed to let callers use a single printf format string that produces clean output
+# in both modes, e.g.  printf " ok%s\n" "$(_quibble_format_duration_padded "$dur")"
+#   TIME_ELAPSED=1  →  " ok (1m 30s)\n"
+#   TIME_ELAPSED=   →  " ok\n"
+# Usage: _quibble_format_duration_padded SECONDS
+_quibble_format_duration_padded() {
+  local d
+  d="$(_quibble_format_duration "$1")"       # returns "" when TIME_ELAPSED is unset
+  if [ -n "$d" ]; then                       # only emit the wrapper when there's content
+    printf " (%s)" "$d"
+  fi
+  # Don't use `[ -n "$d" ] && printf ...` here — that would make this function exit
+  # non-zero when $d is empty (the [ test fails), surprising callers that check $?.
 }

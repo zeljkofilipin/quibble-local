@@ -22,7 +22,10 @@ if [ -t 1 ] || [ -n "${_QUIBBLE_FORCE_TERMINAL:-}" ]; then
   _quibble_duration_exit() {
     local exit_code=$?                # capture exit code before any command changes it
     { set +x; } 2>/dev/null          # disable trace output silently (may be active in verbose mode)
-    printf "(%s)\n" "$(_quibble_format_duration "$SECONDS")" # print total elapsed time
+    # Print total elapsed time, but only when TIME_ELAPSED=1 — otherwise we'd emit a bare
+    # "()" line at the end of every script run because the parens are baked into the format
+    # string and _quibble_format_duration returns empty when the gate is off.
+    [ -n "${TIME_ELAPSED:-}" ] && printf "(%s)\n" "$(_quibble_format_duration "$SECONDS")"
     return "$exit_code"               # preserve the original exit code
   }
   trap _quibble_duration_exit EXIT    # run handler when script exits
