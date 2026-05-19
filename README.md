@@ -25,6 +25,15 @@ All commands run in **silent mode** by default (no trace output, no debug info).
 
 When commands are called from `test_integration`, `test_integration_slow`, or `run_selenium_tests_all_gated`, the mode is inherited via the `VERBOSE` environment variable.
 
+### `TIME_UTC`
+
+UTC timestamps in batch script output (verbose-mode separators, per-step ok/FAIL lines, wave/combination headers) are **off by default**. Set `TIME_UTC=1` to append a `YYYY-MM-DD HH:MM:SS UTC` timestamp to those lines.
+
+    ./test_integration            # no timestamps (default)
+    TIME_UTC=1 ./test_integration # append UTC timestamps
+
+Useful for long-running batch scripts (`find_dependencies_minimal_*`, `run_selenium_tests_*_gated`, `install_each_gated`, `test_integration*`) where knowing when each step finished is helpful.
+
 ### `QUIBBLE_IMAGE`
 
 Override the Docker image used by all commands. Useful when developing or testing changes to Quibble itself.
@@ -529,11 +538,11 @@ Sourced by scripts that track test/step results (`install_each_gated`, `run_sele
 
 ### `lib/utc_timestamp`
 
-Provides `utc_timestamp` function that prints the current UTC time in `YYYY-MM-DD HH:MM:SS UTC` format. Sourced by `lib/batch_setup`.
+Provides `utc_timestamp` function that prints the current UTC time in `YYYY-MM-DD HH:MM:SS UTC` format. Gated on the `TIME_UTC` environment variable: off by default, set `TIME_UTC=1` to enable. Sourced by `lib/batch_setup`.
 
 ### `lib/print_header`
 
-Provides `print_header` function that prints a section header for a component in batch scripts. In verbose mode: separator box with label and UTC timestamp. In silent mode: label followed by a space. Sourced by `lib/batch_setup`.
+Provides `print_header` function that prints a section header for a component in batch scripts. In verbose mode: separator box with label (and a UTC timestamp when `TIME_UTC=1`). In silent mode: label followed by a space. Sourced by `lib/batch_setup`.
 
 ### `lib/record_passed`
 
