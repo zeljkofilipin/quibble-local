@@ -72,7 +72,7 @@ Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directorie
 
 ### `FAST`
 
-`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component. Used by `install_each_gated`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated`. (`find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, and `find_dependencies_minimal_thorough` always use save/restore automatically.)
+`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component (or, for `find_dependencies_minimal_*`, each combination). Used by `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_required_gated`, `find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_thorough`, and `find_dependencies_minimal_gated` (propagates to its `find_dependencies_minimal_greedy` children).
 
     FAST=1 ./run_selenium_tests_all_gated
 
@@ -314,9 +314,14 @@ Find the minimum dependencies using a greedy algorithm: starts with all optional
 
     ./find_dependencies_minimal_greedy extensions/Echo
     VERBOSE=1 ./find_dependencies_minimal_greedy extensions/Echo
+    FAST=1 ./find_dependencies_minimal_greedy extensions/Echo
 
 - **Fast for extensions/GrowthExperiments** (17 deps, ~8 needed): ~17 tests regardless of how many are needed.
 - **Slower for extensions/Echo** (4 deps, 0 needed): tests all 4 before concluding none are needed, while `find_dependencies_minimal_bottom_up` finds the answer in 1 test.
+
+Environment variables:
+
+- `FAST=1`: Runs `./fresh_install` once, saves state, then restores instead of re-running `./fresh_install` for each combination.
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
 
@@ -328,13 +333,16 @@ Find the minimum dependencies by testing combinations from smallest (0 deps) to 
 
     ./find_dependencies_minimal_bottom_up extensions/Echo
     VERBOSE=1 ./find_dependencies_minimal_bottom_up extensions/Echo
+    FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo
     PARALLEL=1 ./find_dependencies_minimal_bottom_up extensions/Echo
+    PARALLEL=1 FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo
 
 - **Fast for extensions/Echo** (4 deps, 0 needed): tests empty set first, passes in 1 test.
 - **Extremely slow for extensions/GrowthExperiments** (17 deps, ~8 needed): tests up to 2^17 = 131,072 combinations (~10 min each).
 
 Environment variables:
 
+- `FAST=1`: Runs `./fresh_install` once, saves state, then restores instead of re-running `./fresh_install` for each combination.
 - `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggest_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
@@ -347,13 +355,16 @@ Find and verify the minimum dependencies. Phase 1: greedy for a fast estimate. P
 
     ./find_dependencies_minimal_thorough extensions/Echo
     VERBOSE=1 ./find_dependencies_minimal_thorough extensions/Echo
+    FAST=1 ./find_dependencies_minimal_thorough extensions/Echo
     PARALLEL=1 ./find_dependencies_minimal_thorough extensions/Echo
+    PARALLEL=1 FAST=1 ./find_dependencies_minimal_thorough extensions/Echo
 
 - **Fast for extensions/Echo** (4 deps, 0 needed): greedy finds 0 in ~4 tests, verification confirms immediately.
 - **Moderate for extensions/GrowthExperiments** (17 deps, ~8 needed): greedy finds ~8 in ~17 tests, then verifies by testing combinations of size 0–7 only (not all 131,072).
 
 Environment variables:
 
+- `FAST=1`: Runs `./fresh_install` once, saves state, then restores instead of re-running `./fresh_install` for each combination.
 - `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggest_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
@@ -433,10 +444,13 @@ Find minimum dependencies for all gated repositories (or a single component). Fo
     ./find_dependencies_minimal_gated
     ./find_dependencies_minimal_gated extensions/Echo
     VERBOSE=1 ./find_dependencies_minimal_gated
+    FAST=1 ./find_dependencies_minimal_gated
     PARALLEL=1 ./find_dependencies_minimal_gated
+    PARALLEL=1 FAST=1 ./find_dependencies_minimal_gated
 
 Environment variables:
 
+- `FAST=1`: Propagated to each `./find_dependencies_minimal_greedy` child. The child runs `./fresh_install` once, saves state, then restores instead of re-running `./fresh_install` for each combination.
 - `PARALLEL=N`: Run N components simultaneously, each in an isolated `ENVIRONMENT=N`. Use `./suggest_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 See also: `./find_dependencies_minimal_greedy` for single-component usage.

@@ -26,10 +26,15 @@ run_test ./run_php_unit_tests --filter testValidSpecialPageAliases  # 1m: test f
 
 # --- Finding minimum dependencies (slow: exhaustive algorithms) ---
 run_test ./find_dependencies_minimal_bottom_up extensions/Echo  # 4m: test bottom-up exhaustive (fast for Echo: 0 deps needed)
+run_test env FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo  # 4m: test bottom-up with fast mode
 run_test env PARALLEL=2 ./find_dependencies_minimal_bottom_up extensions/Echo  # 7m: test bottom-up with parallel mode
+run_test env PARALLEL=2 FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo  # 7m: test bottom-up with parallel + fast mode
 run_test ./find_dependencies_minimal_greedy extensions/CommunityConfiguration  # 8m: test finding minimum dependencies (greedy algorithm)
+run_test env FAST=1 ./find_dependencies_minimal_greedy extensions/CommunityConfiguration  # 8m: test greedy with fast mode
 run_test ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test greedy + exhaustive verification
+run_test env FAST=1 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with fast mode
 run_test env PARALLEL=2 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with parallel mode
+run_test env PARALLEL=2 FAST=1 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with parallel + fast mode
 run_test ./find_dependencies_minimal_gated extensions/Echo  # 20m: test finding minimum dependencies for gated (single component)
 run_test env PARALLEL=2 ./find_dependencies_minimal_gated extensions/Echo  # 22m: test find_dependencies_minimal_gated with parallel mode
 

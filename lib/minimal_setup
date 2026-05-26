@@ -12,14 +12,14 @@
 #   n               — number of optional dependencies
 #   total           — total number of combinations (2^n)
 #   required_str    — space-separated list of required dependency names
-#   fast            — always "1" (save/restore is always used)
-#   _first_run      — "1" (force fresh_install on first call)
+#   fast            — FAST=1 flag (empty string or "1")
+#   _first_run      — "1" (force fresh_install on first call when fast is set; no-op otherwise)
 #   fresh_or_restore — function to set up core MediaWiki
 # shellcheck disable=SC2154 # verbose and run_with_dots are set by lib/batch_setup
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
-fast=1 # always use save/restore for speed
-_first_run=1 # force fresh_install on first call (don't trust stale src_save/ from previous runs)
+fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-running
+_first_run=1 # force fresh_install on first call (don't trust stale src_save/ from previous runs); only consulted when fast is set
 
 # Force Quibble to install exactly QUIBBLE_DEPS — no auto-resolution of transitive requires.
 # Otherwise removing an optional dep B can be silently masked by Quibble pulling B back

@@ -16,6 +16,8 @@
 #
 # Usage: ./find_dependencies_minimal_greedy extensions/Echo
 #        VERBOSE=1 ./find_dependencies_minimal_greedy extensions/Echo
+#        FAST=1 ./find_dependencies_minimal_greedy extensions/Echo
+# FAST=1: Runs fresh_install once, saves state, then restores instead of re-running fresh_install.
 #
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
