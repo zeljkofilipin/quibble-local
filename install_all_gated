@@ -2,23 +2,41 @@
 #
 # Install all gated extensions and skins into a single MediaWiki.
 # Runs fresh_install for core, then installs each gated component on top.
-# Unlike run_selenium_tests_all_gated (which does fresh_install per component), this stacks everything together.
+# Unlike install_each_gated (which gives each component its own MediaWiki), this stacks
+# everything into one MediaWiki. Reports per-step and total duration.
 # Run ./shellto afterwards to open a shell with MediaWiki running.
-# WARNING: This will take a long time to run (50+ components).
+# WARNING: This will take a very long time to run (50+ components).
+# WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
 # Usage: ./install_all_gated
 #        VERBOSE=1 ./install_all_gated
 #
-set -euo pipefail # exit on error, undefined vars, or pipe failures
-. "$(dirname "$0")"/lib/debug_info # print debug info, check prerequisites, show verbose hint
+
+# No set -euo pipefail: we want to continue after failures to collect all results
+
+. "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking, duration
 
 # --- Core ---
-"$(dirname "$0")"/fresh_install
+# Run fresh_install once. All gated components stack on top of this single MediaWiki.
+print_header "core"
+core_ok=false; run_step "core" ./fresh_install && core_ok=true
+record_passed "core"
+printf " %s\n" "$(utc_timestamp)" # print UTC timestamp after core step
 
 # --- Install all gated repositories ---
-# IFS= preserves whitespace in component names; -r prevents backslash interpretation.
-# <&3 reads from file descriptor 3 instead of stdin, because docker's -it flag needs stdin.
-# 3< <(...) is process substitution: runs ./list_gated and connects its output to fd 3.
-while IFS= read -r component <&3; do
-  "$(dirname "$0")"/install "$component"
-done 3< <("$(dirname "$0")"/list_gated)
+# Skip the loop if core failed: every install would fail with no MediaWiki to stack into,
+# and the summary would just be N+1 failures with no extra signal.
+if [ "$core_ok" = true ]; then
+  # IFS= preserves whitespace in component names; -r prevents backslash interpretation.
+  # <&3 reads from file descriptor 3 instead of stdin, because docker's -i flag needs stdin.
+  # 3< <(...) is process substitution: connects list_gated's output to fd 3.
+  while IFS= read -r component <&3; do
+    print_header "$component"
+    run_step "$component" ./install "$component" # install extension/skin onto the stacked MediaWiki
+    record_passed "$component"
+    printf " %s\n" "$(utc_timestamp)" # print UTC timestamp after component
+  done 3< <(./list_gated)
+fi
+
+# Print pass/fail summary and exit with error if any component failed
+print_results

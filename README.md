@@ -32,7 +32,7 @@ UTC timestamps in batch script output (verbose-mode separators, per-step ok/FAIL
     ./test_integration            # no timestamps (default)
     TIME_UTC=1 ./test_integration # append UTC timestamps
 
-Useful for long-running batch scripts (`find_dependencies_minimal_*`, `run_selenium_tests_*_gated`, `install_each_gated`, `test_integration*`) where knowing when each step finished is helpful.
+Useful for long-running batch scripts (`find_dependencies_minimal_*`, `run_selenium_tests_*_gated`, `install_all_gated`, `install_each_gated`, `test_integration*`) where knowing when each step finished is helpful.
 
 ### `TIME_ELAPSED`
 
@@ -371,10 +371,12 @@ Clone or fetch bare repos for all gated repositories. Extends `./prepare` by clo
 
 ### `./install_all_gated`
 
-Install all gated extensions and skins into a single MediaWiki. Runs `./fresh_install` for core, then installs each gated component on top. Run `./shellto` afterwards to open a shell with MediaWiki running.
+Install all gated extensions and skins into a single MediaWiki. Runs `./fresh_install` for core, then installs each gated component on top. Reports per-step and total duration. Unlike `./install_each_gated` (which gives each component its own MediaWiki), this stacks everything into one MediaWiki. Run `./shellto` afterwards to open a shell with MediaWiki running.
 
     ./install_all_gated
     VERBOSE=1 ./install_all_gated
+
+**Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
 ### `./install_each_gated`
 
@@ -491,11 +493,11 @@ These are sourced by other scripts and are not intended to be run directly.
 
 ### `lib/batch_setup`
 
-Shared setup for batch scripts (`test_integration`, `test_integration_slow`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_gated`, `find_dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
+Shared setup for batch scripts (`test_integration`, `test_integration_slow`, `install_all_gated`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_gated`, `find_dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
 
 ### `lib/heartbeat`
 
-Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `test_integration_slow`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_gated`, and `find_dependencies_minimal_thorough` for silent mode progress feedback. Provides `run_with_dots` function.
+Run a command, save output to a log file, and print a dot for each line of output. Sourced by `test_integration`, `test_integration_slow`, `install_all_gated`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_gated`, and `find_dependencies_minimal_thorough` for silent mode progress feedback. Provides `run_with_dots` function.
 
 ### `lib/debug_info`
 
@@ -555,11 +557,11 @@ Sourced by scripts that need zuul config (`list_dependencies`, `list_gated`, `in
 
 ### `lib/inhibit_sleep`
 
-Sourced by long-running scripts (`find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_gated`, `find_dependencies_minimal_thorough`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `test_integration`, `test_integration_slow`, `generate_examples`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+Sourced by long-running scripts (`find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_gated`, `find_dependencies_minimal_thorough`, `install_all_gated`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `test_integration`, `test_integration_slow`, `generate_examples`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
 
 ### `lib/print_results`
 
-Sourced by scripts that track test/step results (`install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `find_dependencies_minimal_gated`, `test_integration`, `test_integration_slow`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
+Sourced by scripts that track test/step results (`install_all_gated`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `find_dependencies_minimal_gated`, `test_integration`, `test_integration_slow`). Provides `print_results` function that prints pass/fail summary and exits with error if any failures.
 
 ### `lib/utc_timestamp`
 
