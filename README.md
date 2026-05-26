@@ -479,13 +479,16 @@ Regenerate example output files in `examples/` in bulk by iterating each project
     ./generate_examples
     PREVIEW=1 ./generate_examples
     FAST=1 ./generate_examples
+    PARALLEL=N ./generate_examples
+    PARALLEL=N FAST=1 ./generate_examples
 
-`PREVIEW` and `FAST` do different things:
+`PREVIEW`, `FAST`, and `PARALLEL` do different things:
 
 - `PREVIEW=1 ./generate_examples` — outer-level preview. Prints `Would generate ...` for each Usage line. No files are written, no inner scripts run. Named `PREVIEW` to avoid overloading the inner Quibble [`DRY_RUN`](#dry_run) env var, which has a different meaning.
 - `FAST=1 ./generate_examples` — actually generate every file, but prepend `DRY_RUN=1` to each Usage command so Quibble short-circuits. Inner scripts that honor `DRY_RUN` (`install`, `fresh_install`, `run_php_unit_tests`, `run_selenium_tests`, and batch scripts that propagate the env var to them) finish in seconds instead of minutes. Other scripts ignore the unused env var.
+- `PARALLEL=N ./generate_examples` — run middle-phase scripts concurrently across N workers, each in an isolated `ENVIRONMENT=N` (`src_N/`, `src_save_N/`). Early scripts (`prepare`, `prepare_gated`, `fresh_install`, `save`) and late scripts (`remove_srcs`, `remove`, `remove_all`) stay serial — they prepare/destroy state every middle worker depends on. Per-worker output goes to `log/silent/worker-N/<script>.log`. `PREVIEW=1` forces serial regardless of `PARALLEL` because parallel worker output would interleave unhelpfully when previewing the work plan.
 
-The two can be combined: `PREVIEW=1 FAST=1 ./generate_examples` previews the FAST-mode command list. Use `FAST=1` to iterate on `generate_examples` itself or to validate the pipeline end-to-end. **Do not commit `examples/*.txt` produced under `FAST=1` — they do not reflect real script behavior.**
+Combinations: `PREVIEW=1 FAST=1 ./generate_examples` previews the FAST-mode command list. `PARALLEL=N FAST=1 ./generate_examples` runs the parallel path while short-circuiting Quibble — used by the integration test. Use `FAST=1` to iterate on `generate_examples` itself or to validate the pipeline end-to-end. **Do not commit `examples/*.txt` produced under `FAST=1` — they do not reflect real script behavior.**
 
 ## Internal scripts (`lib/`)
 
