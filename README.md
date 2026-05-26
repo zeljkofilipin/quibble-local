@@ -78,7 +78,9 @@ Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directorie
 
 ### `DRY_RUN`
 
-`DRY_RUN=1` passes [`--dry-run`](https://doc.wikimedia.org/quibble/) to Quibble so it prints what it would do without actually running tests or installing anything. Useful for testing wrapper-script output (especially long-running commands) without paying the cost of a real run. Applies to `./fresh_install`, `./install`, `./run_selenium_tests`, and `./run_php_unit_tests`, and is inherited via the env by wrapper scripts that call them (`./generate_examples`, `./find_dependencies_minimal_greedy`, `./find_dependencies_minimal_bottom_up`, `./find_dependencies_minimal_thorough`, `./find_dependencies_minimal_gated`, `./install_each_gated`, `./install_all_gated`, `./run_selenium_tests_all_gated`, and `./run_selenium_tests_required_gated`) so their inner Quibble-running calls short-circuit too.
+`DRY_RUN=1` passes [`--dry-run`](https://doc.wikimedia.org/quibble/) to Quibble so it prints what it would do without actually running tests or installing anything. Useful for testing wrapper-script output (especially long-running commands) without paying the cost of a real run.
+
+Applied directly by `./fresh_install`, `./install`, `./run_selenium_tests`, and `./run_php_unit_tests`. Inherited via the env by wrapper scripts that call them: `./generate_examples`, `./find_dependencies_minimal_*`, `./install_each_gated`, `./install_all_gated`, `./run_selenium_tests_all_gated`, and `./run_selenium_tests_required_gated`. Their inner Quibble-running calls short-circuit too.
 
     DRY_RUN=1 ./fresh_install
     DRY_RUN=1 ./install extensions/Echo
