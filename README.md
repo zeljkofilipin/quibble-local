@@ -219,7 +219,7 @@ Fetch the latest changes for bare git repos in `ref/` from Gerrit. With no argum
     ./fetch
     ./fetch ref/mediawiki/core.git
     ./fetch ref/mediawiki/extensions/Echo.git ref/mediawiki/skins/Vector.git
-    PARALLEL=4 ./fetch
+    PARALLEL=1 ./fetch
     VERBOSE=1 ./fetch
 
 ### `./remove`
@@ -328,7 +328,7 @@ Find the minimum dependencies by testing combinations from smallest (0 deps) to 
 
     ./find_dependencies_minimal_bottom_up extensions/Echo
     VERBOSE=1 ./find_dependencies_minimal_bottom_up extensions/Echo
-    PARALLEL=$(./suggest_parallel) ./find_dependencies_minimal_bottom_up extensions/Echo
+    PARALLEL=1 ./find_dependencies_minimal_bottom_up extensions/Echo
 
 - **Fast for extensions/Echo** (4 deps, 0 needed): tests empty set first, passes in 1 test.
 - **Extremely slow for extensions/GrowthExperiments** (17 deps, ~8 needed): tests up to 2^17 = 131,072 combinations (~10 min each).
@@ -347,7 +347,7 @@ Find and verify the minimum dependencies. Phase 1: greedy for a fast estimate. P
 
     ./find_dependencies_minimal_thorough extensions/Echo
     VERBOSE=1 ./find_dependencies_minimal_thorough extensions/Echo
-    PARALLEL=$(./suggest_parallel) ./find_dependencies_minimal_thorough extensions/Echo
+    PARALLEL=1 ./find_dependencies_minimal_thorough extensions/Echo
 
 - **Fast for extensions/Echo** (4 deps, 0 needed): greedy finds 0 in ~4 tests, verification confirms immediately.
 - **Moderate for extensions/GrowthExperiments** (17 deps, ~8 needed): greedy finds ~8 in ~17 tests, then verifies by testing combinations of size 0–7 only (not all 131,072).
@@ -386,8 +386,8 @@ Install each gated extension or skin into its own fresh MediaWiki, one at a time
     ./install_each_gated extensions/Echo
     VERBOSE=1 ./install_each_gated
     FAST=1 ./install_each_gated
-    PARALLEL=$(./suggest_parallel) ./install_each_gated
-    PARALLEL=4 FAST=1 ./install_each_gated
+    PARALLEL=1 ./install_each_gated
+    PARALLEL=1 FAST=1 ./install_each_gated
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
@@ -399,8 +399,8 @@ Run Selenium tests for core and all gated repositories. For each component: `./f
     ./run_selenium_tests_all_gated extensions/Echo
     VERBOSE=1 ./run_selenium_tests_all_gated
     FAST=1 ./run_selenium_tests_all_gated
-    PARALLEL=$(./suggest_parallel) ./run_selenium_tests_all_gated
-    PARALLEL=4 FAST=1 ./run_selenium_tests_all_gated
+    PARALLEL=1 ./run_selenium_tests_all_gated
+    PARALLEL=1 FAST=1 ./run_selenium_tests_all_gated
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
@@ -421,8 +421,8 @@ Run Selenium tests for all gated repositories using only required dependencies (
     ./run_selenium_tests_required_gated extensions/Echo
     VERBOSE=1 ./run_selenium_tests_required_gated
     FAST=1 ./run_selenium_tests_required_gated
-    PARALLEL=$(./suggest_parallel) ./run_selenium_tests_required_gated
-    PARALLEL=4 FAST=1 ./run_selenium_tests_required_gated
+    PARALLEL=1 ./run_selenium_tests_required_gated
+    PARALLEL=1 FAST=1 ./run_selenium_tests_required_gated
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
@@ -433,7 +433,7 @@ Find minimum dependencies for all gated repositories (or a single component). Fo
     ./find_dependencies_minimal_gated
     ./find_dependencies_minimal_gated extensions/Echo
     VERBOSE=1 ./find_dependencies_minimal_gated
-    PARALLEL=$(./suggest_parallel) ./find_dependencies_minimal_gated
+    PARALLEL=1 ./find_dependencies_minimal_gated
 
 Environment variables:
 
@@ -479,13 +479,16 @@ Regenerate example output files in `examples/` in bulk by iterating each project
     ./generate_examples
     PREVIEW=1 ./generate_examples
     FAST=1 ./generate_examples
+    PARALLEL=N ./generate_examples
+    PARALLEL=N FAST=1 ./generate_examples
 
-`PREVIEW` and `FAST` do different things:
+`PREVIEW`, `FAST`, and `PARALLEL` do different things:
 
 - `PREVIEW=1 ./generate_examples` — outer-level preview. Prints `Would generate ...` for each Usage line. No files are written, no inner scripts run. Named `PREVIEW` to avoid overloading the inner Quibble [`DRY_RUN`](#dry_run) env var, which has a different meaning.
 - `FAST=1 ./generate_examples` — actually generate every file, but prepend `DRY_RUN=1` to each Usage command so Quibble short-circuits. Inner scripts that honor `DRY_RUN` (`install`, `fresh_install`, `run_php_unit_tests`, `run_selenium_tests`, and batch scripts that propagate the env var to them) finish in seconds instead of minutes. Other scripts ignore the unused env var.
+- `PARALLEL=N ./generate_examples` — run middle-phase scripts concurrently across N workers, each in an isolated `ENVIRONMENT=N` (`src_N/`, `src_save_N/`). Early scripts (`prepare`, `prepare_gated`, `fresh_install`, `save`) and late scripts (`remove_srcs`, `remove`, `remove_all`) stay serial — they prepare/destroy state every middle worker depends on. Per-worker output goes to `log/silent/worker-N/<script>.log`. `PREVIEW=1` forces serial regardless of `PARALLEL` because parallel worker output would interleave unhelpfully when previewing the work plan.
 
-The two can be combined: `PREVIEW=1 FAST=1 ./generate_examples` previews the FAST-mode command list. Use `FAST=1` to iterate on `generate_examples` itself or to validate the pipeline end-to-end. **Do not commit `examples/*.txt` produced under `FAST=1` — they do not reflect real script behavior.**
+Combinations: `PREVIEW=1 FAST=1 ./generate_examples` previews the FAST-mode command list. `PARALLEL=N FAST=1 ./generate_examples` runs the parallel path while short-circuiting Quibble — used by the integration test. Use `FAST=1` to iterate on `generate_examples` itself or to validate the pipeline end-to-end. **Do not commit `examples/*.txt` produced under `FAST=1` — they do not reflect real script behavior.**
 
 ## Internal scripts (`lib/`)
 

@@ -7,8 +7,10 @@
 # Usage: ./generate_examples
 #        PREVIEW=1 ./generate_examples
 #        FAST=1 ./generate_examples
+#        PARALLEL=N ./generate_examples
+#        PARALLEL=N FAST=1 ./generate_examples
 #
-# PREVIEW and FAST do different things:
+# PREVIEW, FAST, and PARALLEL each do different things and can be combined:
 #   PREVIEW=1 ./generate_examples  — outer-level preview. Prints "Would generate ..." for each
 #                                    Usage line. No files written, no inner scripts run.
 #                                    (Named PREVIEW to avoid overloading the inner Quibble
@@ -19,7 +21,17 @@
 #                                    run_selenium_tests, and batch scripts that propagate the env
 #                                    var to them) finish in seconds instead of minutes. Other
 #                                    scripts ignore the unused env var.
-# The two can be combined: PREVIEW=1 FAST=1 previews the FAST-mode command list.
+#   PARALLEL=N ./generate_examples — run middle-phase scripts concurrently across N workers,
+#                                    each in an isolated ENVIRONMENT=N (src_N/, src_save_N/).
+#                                    Early scripts (prepare, prepare_gated, fresh_install, save)
+#                                    and late scripts (remove_srcs, remove, remove_all) stay
+#                                    serial — they prepare/destroy state every middle worker
+#                                    depends on. Per-worker output goes to log/silent/worker-N/.
+#                                    PREVIEW=1 forces serial regardless of PARALLEL because
+#                                    parallel worker output would interleave unhelpfully when
+#                                    previewing the work plan.
+# Combinations: PREVIEW=1 FAST=1 previews the FAST-mode command list. PARALLEL=N FAST=1 runs
+# the parallel path while short-circuiting Quibble — used by the integration test.
 # Use FAST=1 to iterate on generate_examples itself or to validate the pipeline end-to-end.
 # Do NOT commit examples/*.txt produced under FAST=1 — they do not reflect real script behavior.
 #
@@ -33,6 +45,10 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 if [ -n "${FAST:-}" ]; then
   echo "generate_examples: FAST mode enabled — do not commit the resulting examples/" >&2
 fi
+
+# PARALLEL=N runs middle-phase scripts in N concurrent workers (default 1 = serial).
+# See the header comment for behavior; PREVIEW=1 forces serial regardless.
+parallel="${PARALLEL:-1}"
 
 # Switch to the script's directory (project root) so relative paths and ./scripts work
 # regardless of where this is invoked from. $0 may be relative or absolute; dirname handles both.
@@ -84,17 +100,22 @@ for script in *; do
   others+=("$script") # else it's an alphabetical middle script
 done
 
-# Final ordered iteration: early (pinned order) → alphabetical others → late (pinned order).
-# `${others[@]+"${others[@]}"}` is the bash 3.2-safe way to expand a possibly-empty array
-# under `set -u`: if `others` is empty the expansion is empty; otherwise it's the array
-# elements quoted individually. Plain `"${others[@]}"` would error on an empty array.
-for script in "${early[@]}" ${others[@]+"${others[@]}"} "${late[@]}"; do
+# Process all Usage lines for one script: parse its Usage block, iterate each line,
+# skip filename collisions, apply FAST mode, then either preview or invoke generate_example.
+# Reads env vars: FAST, PREVIEW.
+# Mutates globals: seen (collision tracker), generated/skipped (counters).
+# Extracted into a function so both the serial loop and (future) parallel workers
+# can share the same per-script processing logic without duplication.
+_process_script() {
+  local script="$1"        # script name (e.g. install_each_gated)
+  local usage_block        # captured Usage block from parse_usage.awk
+  local cmd file run_cmd   # working vars inside the inner loop
   # Capture every Usage line of this script.
   usage_block="$(awk -f lib/parse_usage.awk "$script")"
   if [ -z "$usage_block" ]; then
     echo "Skipping $script: no # Usage: block" >&2 # >&2 prints to stderr
     skipped=$((skipped + 1))                       # count toward the summary line below
-    continue
+    return                                          # nothing more to do for this script
   fi
   # Iterate each Usage line. The herestring goes to FD 3, NOT stdin, so child processes
   # (e.g. `docker run -i ...` invoked by ./install, ./fresh_install, ./run_selenium_tests,
@@ -130,7 +151,158 @@ for script in "${early[@]}" ${others[@]+"${others[@]}"} "${late[@]}"; do
     fi
     generated=$((generated + 1))                                    # count toward the summary line below
   done 3<<< "$usage_block"                                            # herestring on FD 3 — see note above
-done
+}
+
+# Pre-walk one script: same dedup + FAST logic as _process_script, but writes the surviving
+# (file, run_cmd) tuples to a per-script work file instead of dispatching them. Used by the
+# parallel path to centralize the `seen` collision tracker in the main process before
+# workers spawn — workers then process pre-filtered tuples and don't need their own tracking.
+# Reads env vars: FAST. Mutates globals: seen, generated, skipped, work_dir.
+_prewalk_script() {
+  local script="$1"                            # script name (e.g. install_each_gated)
+  local work_file="$work_dir/$script.work"     # per-script work file path
+  local usage_block cmd file run_cmd           # working vars
+  usage_block="$(awk -f lib/parse_usage.awk "$script")"
+  if [ -z "$usage_block" ]; then
+    echo "Skipping $script: no # Usage: block" >&2 # >&2 prints to stderr
+    skipped=$((skipped + 1))                       # count toward the summary line below
+    return                                          # nothing more to do for this script
+  fi
+  # Same herestring-on-FD-3 pattern as _process_script — see the comment there for why.
+  while IFS= read -r cmd <&3; do
+    [ -n "$cmd" ] || continue                                       # skip blank lines (defensive)
+    file="$(cmd_to_filename "$cmd")"                                # derive examples/*.txt filename
+    case "$seen" in
+      *"|$file|"*)                                                  # already claimed this filename
+        echo "Skipping $cmd: $file already generated (filename collision)" >&2
+        skipped=$((skipped + 1))
+        continue
+        ;;
+    esac
+    seen="${seen}${file}|"                                          # claim this filename
+    run_cmd="$cmd"
+    if [ -n "${FAST:-}" ]; then
+      case "$cmd" in
+        *DRY_RUN=*) ;;                                              # already explicit; leave alone
+        *) run_cmd="DRY_RUN=1 $cmd" ;;
+      esac
+    fi
+    # Tab-separated tuple: <file>\t<run_cmd>. Neither field contains tabs in practice
+    # (filenames are sanitized by cmd_to_filename; Usage commands don't use tabs).
+    printf '%s\t%s\n' "$file" "$run_cmd" >> "$work_file"
+    generated=$((generated + 1))
+  done 3<<< "$usage_block"
+}
+
+# Read tab-separated <file>\t<run_cmd> tuples from a work file and invoke ./generate_example
+# for each. Used by both serial early/late processing and parallel middle workers.
+# Empty/missing work files (script had no Usage block) are a silent no-op.
+_execute_work_file() {
+  local work_file="$1"                                              # path to per-script work file
+  local file run_cmd                                                # split fields from each line
+  [ -f "$work_file" ] || return 0                                   # no work — nothing to do
+  while IFS=$'\t' read -r file run_cmd; do                          # IFS=$'\t' splits exactly on tab
+    ./generate_example "$file" "$run_cmd"
+  done < "$work_file"
+}
+
+# Dispatch: PREVIEW and parallel<=1 take the serial path (today's behavior). parallel>=2
+# takes the parallel path. PREVIEW forces serial regardless of PARALLEL because parallel
+# worker output would interleave unhelpfully when previewing the work plan.
+if [ -n "${PREVIEW:-}" ] || [ "$parallel" -le 1 ]; then
+  # --- Serial path ---
+  # Final ordered iteration: early (pinned order) → alphabetical others → late (pinned order).
+  # `${others[@]+"${others[@]}"}` is the bash 3.2-safe way to expand a possibly-empty array
+  # under `set -u`: if `others` is empty the expansion is empty; otherwise it's the array
+  # elements quoted individually. Plain `"${others[@]}"` would error on an empty array.
+  for script in "${early[@]}" ${others[@]+"${others[@]}"} "${late[@]}"; do
+    _process_script "$script" # collision check, FAST/PREVIEW, dispatch
+  done
+else
+  # --- Parallel path ---
+  # Per-script work files keep the (file, run_cmd) plan that workers will execute.
+  # Removed at the end on success; on error before cleanup, /tmp's normal cleanup handles it.
+  work_dir="$(mktemp -d)"
+
+  # Pre-walk all scripts in iteration order to centralize collision tracking and FAST
+  # application. Mutates `seen`/`generated`/`skipped` so the summary at the end is correct.
+  for script in "${early[@]}" ${others[@]+"${others[@]}"} "${late[@]}"; do
+    _prewalk_script "$script"
+  done
+
+  # Early phase: serial in main process. Builds the shared state (src/, src_save/, ref/,
+  # cache/) every middle worker depends on. _execute_work_file is a no-op for any script
+  # without a Usage block, so a missing work file is fine.
+  for script in "${early[@]}"; do
+    _execute_work_file "$work_dir/$script.work"
+  done
+
+  # Middle phase: wave loop, one worker per script. Each worker isolates state via
+  # ENVIRONMENT=N (lib/setup derives QUIBBLE_SRC=src_N), seeds src_N from the shared
+  # src_save once via ./restore, then executes its work file. Worker stdout/stderr is
+  # redirected to log/silent/worker-N/<script>.log so concurrent workers don't scramble
+  # the terminal.
+  printf "\nParallel mode: %d workers\n" "$parallel" >&2
+  total="${#others[@]}"
+  wave_start=0
+  while [ "$wave_start" -lt "$total" ]; do
+    wave_end=$((wave_start + parallel)) # exclusive end of this wave
+    if [ "$wave_end" -gt "$total" ]; then
+      wave_end="$total" # last wave may be smaller than $parallel
+    fi
+    wave_size=$((wave_end - wave_start))
+    printf "\n--- Wave %d-%d of %d (%d workers) ---\n" \
+      "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" >&2
+
+    pids=() # background worker PIDs for this wave
+    worker=0
+    while [ "$worker" -lt "$wave_size" ]; do
+      item_idx=$((wave_start + worker))
+      item_script="${others[$item_idx]}"
+      worker_num=$((worker + 1)) # 1-based to match install_each_gated / lib/run_waves convention
+      worker_log_dir="log/silent/worker-$worker_num"
+      worker_log_file="$worker_log_dir/$item_script.log"
+      mkdir -p "$worker_log_dir" "src_$worker_num" # docker volume mount needs src_N to exist
+      printf "  Worker %d: %s\n" "$worker_num" "$item_script" >&2
+
+      (
+        # Worker subshell: isolate env, seed src_N from shared src_save, execute work file.
+        export ENVIRONMENT="$worker_num"   # lib/setup derives QUIBBLE_SRC=src_$worker_num
+        export QUIBBLE_BACKGROUND=1        # lib/setup drops Docker -i/-t flags for background runs
+        exec > "$worker_log_file" 2>&1     # redirect this subshell's stdout/stderr to the worker log
+        # Seed src_N from shared src_save (populated by the early-phase ./save). Concurrent
+        # reads from src_save by parallel workers are safe (it's a regular dir). Under FAST=1,
+        # the early ./save short-circuits and src_save may not exist — skip the seed step in
+        # that case; DRY_RUN=1 commands won't actually need a populated src_N.
+        if [ -d src_save ]; then
+          QUIBBLE_SAVE=src_save ./restore || true # best-effort; don't abort the worker on failure
+        fi
+        _execute_work_file "$work_dir/$item_script.work"
+      ) &
+      pids+=($!) # $! is the most recent background PID
+
+      worker=$((worker + 1))
+    done
+
+    # Wait for all workers in this wave. `|| true` so a worker's non-zero exit doesn't
+    # abort the parent under `set -e`; per-worker failures are visible in their log files.
+    for pid in ${pids[@]+"${pids[@]}"}; do
+      wait "$pid" 2>/dev/null || true
+    done
+
+    wave_start="$wave_end" # advance to next wave
+  done
+
+  # Late phase: serial in main process. Destructive scripts (remove_srcs/remove/remove_all)
+  # must run only after all middle work is done, otherwise they'd wipe state mid-flight.
+  for script in "${late[@]}"; do
+    _execute_work_file "$work_dir/$script.work"
+  done
+
+  # Clean up work files on success. On error before this line, the temp dir leaks to /tmp
+  # (the OS cleans it up eventually); leaving it on error is deliberate and aids postmortem.
+  rm -rf "$work_dir"
+fi
 
 # Labeled summary on stderr so it survives the per-file output flood. $SECONDS is bash's
 # built-in elapsed-seconds counter (set by the shell, not us — starts at process launch).

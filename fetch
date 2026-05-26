@@ -7,7 +7,7 @@
 # Usage: ./fetch
 #        ./fetch ref/mediawiki/core.git
 #        ./fetch ref/mediawiki/extensions/Echo.git ref/mediawiki/skins/Vector.git
-#        PARALLEL=4 ./fetch
+#        PARALLEL=1 ./fetch
 #        VERBOSE=1 ./fetch
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
