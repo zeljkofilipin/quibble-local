@@ -99,7 +99,7 @@ Applied directly by `./fresh_install`, `./install`, `./run_selenium_tests`, and 
 
     RESOLVE_REQUIRES=0 ./install extensions/Echo
 
-`./find_dependencies_minimal_greedy`, `./find_dependencies_minimal_bottom_up`, `./find_dependencies_minimal_thorough`, and `./find_dependencies_minimal_gated` set `RESOLVE_REQUIRES=0` automatically — otherwise Quibble silently re-installs an optional dependency the algorithm just removed (via some kept dep's transitive `requires`), and the reported minimum is artificially small.
+`./find_dependencies_minimal_*` sets `RESOLVE_REQUIRES=0` automatically (via the shared `lib/minimal_setup`) — otherwise Quibble silently re-installs an optional dependency the algorithm just removed (via some kept dep's transitive `requires`), and the reported minimum is artificially small.
 
 ## Commands (same as mediawiki-quickstart)
 
