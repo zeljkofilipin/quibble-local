@@ -499,7 +499,7 @@ Run a command, save output to a log file, and print a dot for each line of outpu
 
 ### `lib/debug_info`
 
-Outputs debug information (OS, CPU, RAM, bash, git, docker version, docker CPUs and RAM), checks basic prerequisites (git), shows a "use VERBOSE=1 for full output" hint in silent mode, and sets up duration tracking via `lib/duration_trap`. Sourced by all scripts.
+Outputs debug information (OS, CPU, RAM, bash, git, docker version, docker CPUs and RAM), checks basic prerequisites (git), shows a "use VERBOSE=1 for full output" hint in silent mode, and sets up duration tracking via `lib/duration_trap`. Sourced by most scripts, except the data scripts (`list_dependencies`, `list_dependencies_combinations`, `list_gated`, `list_dependencies_optional`, `list_dependencies_required`, `selenium_tests_exist`) whose stdout is consumed by other scripts and would be corrupted by debug output.
 
 ### `lib/format_duration`
 
