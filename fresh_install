@@ -2,7 +2,7 @@
 #
 # Installs MediaWiki core (without running tests).
 # Run ./shellto afterwards to open a shell with MediaWiki running.
-# Runs ./prepare first if needed.
+# Runs ./prepare first if needed, then ./remove to ensure a fresh src/.
 # WARNING: This will delete and recreate src/.
 #
 # Usage: ./fresh_install

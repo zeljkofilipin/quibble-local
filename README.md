@@ -499,7 +499,7 @@ Run a command, save output to a log file, and print a dot for each line of outpu
 
 ### `lib/debug_info`
 
-Outputs debug information (OS, CPU, RAM, bash, git, docker version, docker CPUs and RAM), checks basic prerequisites (git), shows a "use VERBOSE=1 for full output" hint in silent mode, and sets up duration tracking via `lib/duration_trap`. Sourced by all scripts.
+Outputs debug information (OS, CPU, RAM, bash, git, docker version, docker CPUs and RAM), checks basic prerequisites (git), shows a "use VERBOSE=1 for full output" hint in silent mode, and sets up duration tracking via `lib/duration_trap`. Sourced by most scripts, except the data scripts (`list_dependencies`, `list_dependencies_combinations`, `list_gated`, `list_dependencies_optional`, `list_dependencies_required`, `selenium_tests_exist`) whose stdout is consumed by other scripts and would be corrupted by debug output.
 
 ### `lib/format_duration`
 
@@ -520,6 +520,10 @@ Output redirection for silent mode. Saves all output to a log file (e.g. `log/fr
 ### `lib/docker_chmod`
 
 Provides `docker_chmod` function that sets directories to world-writable (`chmod 777`), falling back to Docker-as-root when directories are owned by root from previous container runs. Sourced by `fresh_install`, `save`, and `restore`.
+
+### `lib/print_quibble_command`
+
+Provides `print_quibble_command` function that pretty-prints a docker command with one logical option per line, framed by a `#` banner so it stands out in busy logs. Flag-and-value pairs stay on the same line and continuation backslashes make the output a valid copy-pasteable shell command. Sourced by `fresh_install`, `install`, `shellto`, and `lib/run_quibble_test`.
 
 ### `lib/parse_component_args`
 
@@ -613,6 +617,10 @@ Awk script that extracts the `# Usage:` block from a script header. Used by `gen
 
 Provides `cmd_to_filename`, a Bash function that converts a Usage command string (e.g. `./install extensions/Echo`) to an `examples/*.txt` filename (e.g. `examples/install-extensions_echo.txt`). Sourced by `generate_examples`.
 
+### `lib/scrub_pwd.awk`
+
+Awk script that replaces literal occurrences of the project's absolute path (`$PWD`) with the placeholder `$PWD`, keeping captured output in `examples/*.txt` machine-independent so the files don't churn when regenerated on different machines. Used by `generate_example`.
+
 ### `lib/minimal_setup`
 
 Shared setup for `find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, and `find_dependencies_minimal_thorough`. Reads dependencies, classifies them into required/optional, pre-clones bare repos. Sets up `fresh_or_restore` function and all shared variables.
@@ -640,6 +648,10 @@ Parallel exhaustive search: tests combinations in waves of N workers, each in an
 ### `lib/print_found`
 
 Prints the "minimum dependencies found" results (header, required deps, optional deps). Sourced by `find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, and `find_dependencies_minimal_thorough`.
+
+### `lib/extract_found_block.awk`
+
+Awk script that extracts the "FOUND: minimum dependencies" block (produced by `lib/print_found`) from a `find_dependencies_minimal_*` log file, stopping before the trailing duration line added by `lib/duration_trap`. Used by `find_dependencies_minimal_gated`.
 
 ## Further reading
 
