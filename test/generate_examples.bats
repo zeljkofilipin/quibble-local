@@ -124,6 +124,61 @@
   [ "$last_middle" -lt "$first_late" ]
 }
 
+@test "generate_examples: PARALLEL+PREVIEW forces serial (output identical to PREVIEW alone)" {
+  # PREVIEW must take the serial path regardless of PARALLEL — parallel worker output would
+  # interleave unhelpfully when previewing the work plan. The strongest assertion: the output
+  # is byte-identical whether PARALLEL is unset, =1, =2, or =4.
+  run env PREVIEW=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+  [ "$status" -eq 0 ]
+  serial_output="$output"
+  run env PREVIEW=1 PARALLEL=4 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+  [ "$status" -eq 0 ]
+  [ "$serial_output" = "$output" ]
+}
+
+@test "generate_examples: PARALLEL=1 is equivalent to PARALLEL unset (default serial)" {
+  # parallel<=1 takes the serial path (today's behavior). Setting PARALLEL=1 explicitly
+  # should produce the same output as not setting PARALLEL at all.
+  run env PREVIEW=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+  [ "$status" -eq 0 ]
+  unset_output="$output"
+  run env PREVIEW=1 PARALLEL=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
+  [ "$status" -eq 0 ]
+  [ "$unset_output" = "$output" ]
+}
+
+@test "generate_examples: parallel path centralises ENVIRONMENT and QUIBBLE_BACKGROUND" {
+  # Regression guard: the per-worker subshell must export ENVIRONMENT=N (so lib/setup
+  # derives QUIBBLE_SRC=src_N) and QUIBBLE_BACKGROUND=1 (so lib/setup drops Docker -i/-t
+  # flags). Without these, workers would race on the canonical src/ and Docker would
+  # block waiting for stdin from a non-existent terminal.
+  run grep -E 'export ENVIRONMENT=' generate_examples
+  [ "$status" -eq 0 ]
+  run grep -E 'export QUIBBLE_BACKGROUND=1' generate_examples
+  [ "$status" -eq 0 ]
+}
+
+@test "generate_examples: parallel path seeds src_N from shared src_save via ./restore" {
+  # Regression guard: each worker must seed its isolated src_N once before running its
+  # Usage lines. The cheapest correct path is `QUIBBLE_SAVE=src_save ./restore` (concurrent
+  # reads from the shared src_save are safe; restore writes to src_N derived from
+  # ENVIRONMENT=N). Without seeding, scripts that read from src/ would find an empty tree.
+  run grep -E 'QUIBBLE_SAVE=src_save ./restore' generate_examples
+  [ "$status" -eq 0 ]
+}
+
+@test "generate_examples: parallel path pre-walks centrally to avoid worker collision races" {
+  # Regression guard: the `seen` filename-collision tracker is a string mutated in the
+  # main process. If workers tracked collisions independently, two scripts producing the
+  # same examples/*.txt filename would both succeed and one would overwrite the other.
+  # The fix is a centralised pre-walk (`_prewalk_script`) that populates `seen` and
+  # writes pre-filtered per-script work files before any worker spawns.
+  run grep -E '^_prewalk_script\(\)' generate_examples
+  [ "$status" -eq 0 ]
+  run grep -E '^_execute_work_file\(\)' generate_examples
+  [ "$status" -eq 0 ]
+}
+
 @test "generate_examples: FD 3 loop pattern survives a child draining stdin" {
   # Demonstrate the underlying fix in isolation: a loop reading from FD 3 keeps
   # iterating even when the body spawns a child that drains stdin (cat > /dev/null
