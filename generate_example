@@ -54,6 +54,12 @@ printf '$ %s\n\n' "$cmd" > "$file"
 # awk edits — awk can't safely write to the same file it's reading.
 awk -v pwd="$PWD" -f lib/scrub_pwd.awk "$file" > "$file".tmp && mv "$file".tmp "$file"
 
+# Strip ANSI CSI escape sequences (color codes, cursor moves) emitted by tools inside
+# the Quibble image (colorlog, composer, npm). They appear in the captured file as
+# literal "[33m..." etc., which is noise when reading examples/*.txt or diffing them
+# (see lib/scrub_ansi.awk for the rationale). Same in-place awk pattern as above.
+awk -f lib/scrub_ansi.awk "$file" > "$file".tmp && mv "$file".tmp "$file"
+
 # If the captured body is empty (file is just the header + blank line), append an explicit
 # "(no output)" marker. Without it, the file is indistinguishable from a broken or aborted
 # capture — uninformative as documentation. Commands that exit silently on success (./lint),

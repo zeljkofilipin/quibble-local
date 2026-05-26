@@ -621,6 +621,10 @@ Provides `cmd_to_filename`, a Bash function that converts a Usage command string
 
 Awk script that replaces literal occurrences of the project's absolute path (`$PWD`) with the placeholder `$PWD`, keeping captured output in `examples/*.txt` machine-independent so the files don't churn when regenerated on different machines. Used by `generate_example`.
 
+### `lib/scrub_ansi.awk`
+
+Awk script that strips ANSI CSI escape sequences (color codes like `[33m`, cursor moves like `[2K`) from captured output. Tools running inside the Quibble image (colorlog, composer, npm) emit these when they think their stdout is a terminal; without scrubbing they land in `examples/*.txt` as literal escape sequences and make the files noisy to read and to diff. Used by `generate_example`.
+
 ### `lib/minimal_setup`
 
 Shared setup for `find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, and `find_dependencies_minimal_thorough`. Reads dependencies, classifies them into required/optional, pre-clones bare repos. Sets up `fresh_or_restore` function and all shared variables.

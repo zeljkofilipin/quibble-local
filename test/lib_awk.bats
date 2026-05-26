@@ -241,6 +241,63 @@ JSON
   [ "$result" = "no path here" ]
 }
 
+# scrub_ansi.awk — strip ANSI CSI escape sequences (color codes, cursor moves)
+
+@test "scrub_ansi.awk: strips a single SGR color code" {
+  # Yellow "WARNING" surrounded by [33m ... [0m is the most common case from quibble.cmd.
+  esc=$(printf '\033')
+  input="${esc}[33mWARNING${esc}[0m:quibble.cmd:ZUUL_PROJECT not set"
+  result=$(printf '%s\n' "$input" | awk -f lib/scrub_ansi.awk)
+  [ "$result" = "WARNING:quibble.cmd:ZUUL_PROJECT not set" ]
+}
+
+@test "scrub_ansi.awk: strips multi-parameter SGR codes" {
+  # Composer emits combined fg+bg codes like [30;43m for highlighted warnings.
+  esc=$(printf '\033')
+  input="${esc}[30;43mhighlighted${esc}[39;49m"
+  result=$(printf '%s\n' "$input" | awk -f lib/scrub_ansi.awk)
+  [ "$result" = "highlighted" ]
+}
+
+@test "scrub_ansi.awk: strips private-mode toggles (cursor show/hide)" {
+  # npm-style progress output uses [?25l / [?25h to hide/show the cursor.
+  esc=$(printf '\033')
+  input="${esc}[?25lloading${esc}[?25h"
+  result=$(printf '%s\n' "$input" | awk -f lib/scrub_ansi.awk)
+  [ "$result" = "loading" ]
+}
+
+@test "scrub_ansi.awk: strips cursor-control sequences" {
+  # [2K clears the line, [G moves to column 1 — both appear in progress-bar output.
+  esc=$(printf '\033')
+  input="${esc}[2K${esc}[Gprogress"
+  result=$(printf '%s\n' "$input" | awk -f lib/scrub_ansi.awk)
+  [ "$result" = "progress" ]
+}
+
+@test "scrub_ansi.awk: handles multiple codes on one line" {
+  esc=$(printf '\033')
+  input="${esc}[32mA${esc}[0m and ${esc}[31mB${esc}[0m"
+  result=$(printf '%s\n' "$input" | awk -f lib/scrub_ansi.awk)
+  [ "$result" = "A and B" ]
+}
+
+@test "scrub_ansi.awk: passes plain text through unchanged" {
+  result=$(echo "no codes here" | awk -f lib/scrub_ansi.awk)
+  [ "$result" = "no codes here" ]
+}
+
+@test "scrub_ansi.awk: leaves a bare ESC byte alone (not a CSI sequence)" {
+  # A lone ESC without "[" is not a CSI sequence; the scrubber is intentionally narrow
+  # and only matches CSI (ESC [ ...) so it doesn't corrupt unrelated bytes that happen
+  # to start with ESC. These are rare in captured output and harmless when they appear.
+  esc=$(printf '\033')
+  input="before${esc}after"
+  expected="before${esc}after"
+  result=$(printf '%s\n' "$input" | awk -f lib/scrub_ansi.awk)
+  [ "$result" = "$expected" ]
+}
+
 # extract_found_block.awk — extract the "FOUND: minimum dependencies" block from a greedy log
 
 @test "extract_found_block.awk: extracts 'No dependencies needed' block" {
