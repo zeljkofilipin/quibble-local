@@ -219,7 +219,7 @@ Fetch the latest changes for bare git repos in `ref/` from Gerrit. With no argum
     ./fetch
     ./fetch ref/mediawiki/core.git
     ./fetch ref/mediawiki/extensions/Echo.git ref/mediawiki/skins/Vector.git
-    PARALLEL=4 ./fetch
+    PARALLEL=1 ./fetch
     VERBOSE=1 ./fetch
 
 ### `./remove`
@@ -328,7 +328,7 @@ Find the minimum dependencies by testing combinations from smallest (0 deps) to 
 
     ./find_dependencies_minimal_bottom_up extensions/Echo
     VERBOSE=1 ./find_dependencies_minimal_bottom_up extensions/Echo
-    PARALLEL=$(./suggest_parallel) ./find_dependencies_minimal_bottom_up extensions/Echo
+    PARALLEL=1 ./find_dependencies_minimal_bottom_up extensions/Echo
 
 - **Fast for extensions/Echo** (4 deps, 0 needed): tests empty set first, passes in 1 test.
 - **Extremely slow for extensions/GrowthExperiments** (17 deps, ~8 needed): tests up to 2^17 = 131,072 combinations (~10 min each).
@@ -347,7 +347,7 @@ Find and verify the minimum dependencies. Phase 1: greedy for a fast estimate. P
 
     ./find_dependencies_minimal_thorough extensions/Echo
     VERBOSE=1 ./find_dependencies_minimal_thorough extensions/Echo
-    PARALLEL=$(./suggest_parallel) ./find_dependencies_minimal_thorough extensions/Echo
+    PARALLEL=1 ./find_dependencies_minimal_thorough extensions/Echo
 
 - **Fast for extensions/Echo** (4 deps, 0 needed): greedy finds 0 in ~4 tests, verification confirms immediately.
 - **Moderate for extensions/GrowthExperiments** (17 deps, ~8 needed): greedy finds ~8 in ~17 tests, then verifies by testing combinations of size 0–7 only (not all 131,072).
@@ -386,8 +386,8 @@ Install each gated extension or skin into its own fresh MediaWiki, one at a time
     ./install_each_gated extensions/Echo
     VERBOSE=1 ./install_each_gated
     FAST=1 ./install_each_gated
-    PARALLEL=$(./suggest_parallel) ./install_each_gated
-    PARALLEL=4 FAST=1 ./install_each_gated
+    PARALLEL=1 ./install_each_gated
+    PARALLEL=1 FAST=1 ./install_each_gated
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
@@ -399,8 +399,8 @@ Run Selenium tests for core and all gated repositories. For each component: `./f
     ./run_selenium_tests_all_gated extensions/Echo
     VERBOSE=1 ./run_selenium_tests_all_gated
     FAST=1 ./run_selenium_tests_all_gated
-    PARALLEL=$(./suggest_parallel) ./run_selenium_tests_all_gated
-    PARALLEL=4 FAST=1 ./run_selenium_tests_all_gated
+    PARALLEL=1 ./run_selenium_tests_all_gated
+    PARALLEL=1 FAST=1 ./run_selenium_tests_all_gated
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
@@ -421,8 +421,8 @@ Run Selenium tests for all gated repositories using only required dependencies (
     ./run_selenium_tests_required_gated extensions/Echo
     VERBOSE=1 ./run_selenium_tests_required_gated
     FAST=1 ./run_selenium_tests_required_gated
-    PARALLEL=$(./suggest_parallel) ./run_selenium_tests_required_gated
-    PARALLEL=4 FAST=1 ./run_selenium_tests_required_gated
+    PARALLEL=1 ./run_selenium_tests_required_gated
+    PARALLEL=1 FAST=1 ./run_selenium_tests_required_gated
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
@@ -433,7 +433,7 @@ Find minimum dependencies for all gated repositories (or a single component). Fo
     ./find_dependencies_minimal_gated
     ./find_dependencies_minimal_gated extensions/Echo
     VERBOSE=1 ./find_dependencies_minimal_gated
-    PARALLEL=$(./suggest_parallel) ./find_dependencies_minimal_gated
+    PARALLEL=1 ./find_dependencies_minimal_gated
 
 Environment variables:
 

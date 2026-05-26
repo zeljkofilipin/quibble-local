@@ -18,7 +18,7 @@
 #
 # Usage: ./find_dependencies_minimal_thorough extensions/Echo
 #        VERBOSE=1 ./find_dependencies_minimal_thorough extensions/Echo
-#        PARALLEL=$(./suggest_parallel) ./find_dependencies_minimal_thorough extensions/Echo
+#        PARALLEL=1 ./find_dependencies_minimal_thorough extensions/Echo
 #
 # PARALLEL=N: Run N combinations in parallel (each in isolated src_worker_$i/ directory).
 #             Use ./suggest_parallel to determine N for your machine.
