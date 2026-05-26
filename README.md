@@ -72,9 +72,13 @@ Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directorie
 
 ### `FAST`
 
-`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component (or, for `find_dependencies_minimal_*`, each combination). Used by `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_required_gated`, `find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_thorough`, and `find_dependencies_minimal_gated` (propagates to its `find_dependencies_minimal_greedy` children).
+`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component (or, for `find_dependencies_minimal_*`, each combination).
 
+Used by `./install_each_gated`, `./run_selenium_tests_all_gated`, `./run_selenium_tests_required_gated`, and `./find_dependencies_minimal_*` (`find_dependencies_minimal_gated` propagates `FAST` to its `find_dependencies_minimal_greedy` children).
+
+    FAST=1 ./install_each_gated
     FAST=1 ./run_selenium_tests_all_gated
+    FAST=1 ./find_dependencies_minimal_greedy extensions/Echo
 
 ### `DRY_RUN`
 
