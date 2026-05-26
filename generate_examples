@@ -84,17 +84,22 @@ for script in *; do
   others+=("$script") # else it's an alphabetical middle script
 done
 
-# Final ordered iteration: early (pinned order) → alphabetical others → late (pinned order).
-# `${others[@]+"${others[@]}"}` is the bash 3.2-safe way to expand a possibly-empty array
-# under `set -u`: if `others` is empty the expansion is empty; otherwise it's the array
-# elements quoted individually. Plain `"${others[@]}"` would error on an empty array.
-for script in "${early[@]}" ${others[@]+"${others[@]}"} "${late[@]}"; do
+# Process all Usage lines for one script: parse its Usage block, iterate each line,
+# skip filename collisions, apply FAST mode, then either preview or invoke generate_example.
+# Reads env vars: FAST, PREVIEW.
+# Mutates globals: seen (collision tracker), generated/skipped (counters).
+# Extracted into a function so both the serial loop and (future) parallel workers
+# can share the same per-script processing logic without duplication.
+_process_script() {
+  local script="$1"        # script name (e.g. install_each_gated)
+  local usage_block        # captured Usage block from parse_usage.awk
+  local cmd file run_cmd   # working vars inside the inner loop
   # Capture every Usage line of this script.
   usage_block="$(awk -f lib/parse_usage.awk "$script")"
   if [ -z "$usage_block" ]; then
     echo "Skipping $script: no # Usage: block" >&2 # >&2 prints to stderr
     skipped=$((skipped + 1))                       # count toward the summary line below
-    continue
+    return                                          # nothing more to do for this script
   fi
   # Iterate each Usage line. The herestring goes to FD 3, NOT stdin, so child processes
   # (e.g. `docker run -i ...` invoked by ./install, ./fresh_install, ./run_selenium_tests,
@@ -130,6 +135,14 @@ for script in "${early[@]}" ${others[@]+"${others[@]}"} "${late[@]}"; do
     fi
     generated=$((generated + 1))                                    # count toward the summary line below
   done 3<<< "$usage_block"                                            # herestring on FD 3 — see note above
+}
+
+# Final ordered iteration: early (pinned order) → alphabetical others → late (pinned order).
+# `${others[@]+"${others[@]}"}` is the bash 3.2-safe way to expand a possibly-empty array
+# under `set -u`: if `others` is empty the expansion is empty; otherwise it's the array
+# elements quoted individually. Plain `"${others[@]}"` would error on an empty array.
+for script in "${early[@]}" ${others[@]+"${others[@]}"} "${late[@]}"; do
+  _process_script "$script" # process this script's Usage lines (collision check, FAST/PREVIEW, dispatch)
 done
 
 # Labeled summary on stderr so it survives the per-file output flood. $SECONDS is bash's
