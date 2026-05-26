@@ -9,8 +9,12 @@
 # Usage: ./find_dependencies_minimal_gated
 #        ./find_dependencies_minimal_gated extensions/Echo
 #        VERBOSE=1 ./find_dependencies_minimal_gated
+#        FAST=1 ./find_dependencies_minimal_gated
 #        PARALLEL=1 ./find_dependencies_minimal_gated
+#        PARALLEL=1 FAST=1 ./find_dependencies_minimal_gated
 #
+# FAST=1: Propagated to each find_dependencies_minimal_greedy child. The child runs fresh_install
+#         once, saves state, then restores instead of re-running fresh_install for each combination.
 # PARALLEL=N: Run N components in parallel (each in isolated ENVIRONMENT=N).
 #             Use ./suggest_parallel to determine N for your machine.
 #             Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
