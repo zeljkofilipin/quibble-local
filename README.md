@@ -72,18 +72,26 @@ Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directorie
 
 ### `FAST`
 
-`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component (or, for `find_dependencies_minimal_*`, each combination). Used by `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_required_gated`, `find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_thorough`, and `find_dependencies_minimal_gated` (propagates to its `find_dependencies_minimal_greedy` children).
+`FAST=1` runs `./fresh_install` once, saves the state with `./save`, then uses `./restore` instead of re-running `./fresh_install` for each subsequent component (or, for `find_dependencies_minimal_*`, each combination).
 
+Used by `./install_each_gated`, `./run_selenium_tests_all_gated`, `./run_selenium_tests_required_gated`, and `./find_dependencies_minimal_*` (`find_dependencies_minimal_gated` propagates `FAST` to its `find_dependencies_minimal_greedy` children).
+
+    FAST=1 ./install_each_gated
     FAST=1 ./run_selenium_tests_all_gated
+    FAST=1 ./find_dependencies_minimal_greedy extensions/Echo
 
 ### `DRY_RUN`
 
-`DRY_RUN=1` passes [`--dry-run`](https://doc.wikimedia.org/quibble/) to Quibble so it prints what it would do without actually running tests or installing anything. Useful for testing wrapper-script output (especially long-running commands) without paying the cost of a real run. Applies to `./fresh_install`, `./install`, `./run_selenium_tests`, and `./run_php_unit_tests`.
+`DRY_RUN=1` passes [`--dry-run`](https://doc.wikimedia.org/quibble/) to Quibble so it prints what it would do without actually running tests or installing anything. Useful for testing wrapper-script output (especially long-running commands) without paying the cost of a real run.
+
+Applied directly by `./fresh_install`, `./install`, `./run_selenium_tests`, and `./run_php_unit_tests`. Inherited via the env by wrapper scripts that call them: `./generate_examples`, `./find_dependencies_minimal_*`, `./install_each_gated`, `./install_all_gated`, `./run_selenium_tests_all_gated`, and `./run_selenium_tests_required_gated`. Their inner Quibble-running calls short-circuit too.
 
     DRY_RUN=1 ./fresh_install
     DRY_RUN=1 ./install extensions/Echo
     DRY_RUN=1 ./run_selenium_tests extensions/Echo
     DRY_RUN=1 ./run_php_unit_tests extensions/Echo
+    DRY_RUN=1 ./generate_examples
+    DRY_RUN=1 ./find_dependencies_minimal_greedy extensions/Echo
 
 ### `RESOLVE_REQUIRES`
 
@@ -91,7 +99,7 @@ Sets `QUIBBLE_SRC=src_N` and `QUIBBLE_SAVE=src_save_N`. Cache and ref directorie
 
     RESOLVE_REQUIRES=0 ./install extensions/Echo
 
-`./find_dependencies_minimal_greedy`, `./find_dependencies_minimal_bottom_up`, `./find_dependencies_minimal_thorough`, and `./find_dependencies_minimal_gated` set `RESOLVE_REQUIRES=0` automatically — otherwise Quibble silently re-installs an optional dependency the algorithm just removed (via some kept dep's transitive `requires`), and the reported minimum is artificially small.
+`./find_dependencies_minimal_*` sets `RESOLVE_REQUIRES=0` automatically (via the shared `lib/minimal_setup`) — otherwise Quibble silently re-installs an optional dependency the algorithm just removed (via some kept dep's transitive `requires`), and the reported minimum is artificially small.
 
 ## Commands (same as mediawiki-quickstart)
 
@@ -492,17 +500,17 @@ Regenerate example output files in `examples/` in bulk by iterating each project
 
     ./generate_examples
     PREVIEW=1 ./generate_examples
-    FAST=1 ./generate_examples
+    DRY_RUN=1 ./generate_examples
     PARALLEL=N ./generate_examples
-    PARALLEL=N FAST=1 ./generate_examples
+    PARALLEL=N DRY_RUN=1 ./generate_examples
 
-`PREVIEW`, `FAST`, and `PARALLEL` do different things:
+`PREVIEW`, `DRY_RUN`, and `PARALLEL` do different things:
 
-- `PREVIEW=1 ./generate_examples` — outer-level preview. Prints `Would generate ...` for each Usage line. No files are written, no inner scripts run. Named `PREVIEW` to avoid overloading the inner Quibble [`DRY_RUN`](#dry_run) env var, which has a different meaning.
-- `FAST=1 ./generate_examples` — actually generate every file, but prepend `DRY_RUN=1` to each Usage command so Quibble short-circuits. Inner scripts that honor `DRY_RUN` (`install`, `fresh_install`, `run_php_unit_tests`, `run_selenium_tests`, and batch scripts that propagate the env var to them) finish in seconds instead of minutes. Other scripts ignore the unused env var.
+- `PREVIEW=1 ./generate_examples` — outer-level preview. Prints `Would generate ...` for each Usage line. No files are written, no inner scripts run. Named `PREVIEW`, not `DRY_RUN`, because `PREVIEW` skips execution entirely; [`DRY_RUN`](#dry_run) still runs the wrapper scripts (see below).
+- `DRY_RUN=1 ./generate_examples` — actually generate every file, but `DRY_RUN=1` is inherited by every inner Usage command via the env so Quibble short-circuits. Inner scripts that honor `DRY_RUN` (`install`, `fresh_install`, `run_php_unit_tests`, `run_selenium_tests`, and batch scripts that propagate the env var to them via `lib/setup`) finish in seconds instead of minutes. Other scripts ignore the unused env var. This matches how `DRY_RUN` already propagates in `find_dependencies_minimal_*` and other batch scripts.
 - `PARALLEL=N ./generate_examples` — run middle-phase scripts concurrently across N workers, each in an isolated `ENVIRONMENT=N` (`src_N/`, `src_save_N/`). Early scripts (`prepare`, `prepare_gated`, `fresh_install`, `save`) and late scripts (`remove_srcs`, `remove`, `remove_all`) stay serial — they prepare/destroy state every middle worker depends on. Per-worker output goes to `log/silent/worker-N/<script>.log`. `PREVIEW=1` forces serial regardless of `PARALLEL` because parallel worker output would interleave unhelpfully when previewing the work plan.
 
-Combinations: `PREVIEW=1 FAST=1 ./generate_examples` previews the FAST-mode command list. `PARALLEL=N FAST=1 ./generate_examples` runs the parallel path while short-circuiting Quibble — used by the integration test. Use `FAST=1` to iterate on `generate_examples` itself or to validate the pipeline end-to-end. **Do not commit `examples/*.txt` produced under `FAST=1` — they do not reflect real script behavior.**
+Combinations: `PREVIEW=1 DRY_RUN=1 ./generate_examples` previews the `DRY_RUN` command list (PREVIEW wins — nothing runs). `PARALLEL=N DRY_RUN=1 ./generate_examples` runs the parallel path while short-circuiting Quibble — used by the integration test. Use `DRY_RUN=1` to iterate on `generate_examples` itself or to validate the pipeline end-to-end. **Do not commit `examples/*.txt` produced under `DRY_RUN=1` — they do not reflect real script behavior.**
 
 ## Internal scripts (`lib/`)
 
