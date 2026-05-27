@@ -27,7 +27,7 @@ When commands are called from `test_integration`, `test_integration_slow`, or `r
 
 ### `TIME_UTC`
 
-UTC timestamps in batch script output (verbose-mode separators, per-step ok/FAIL lines, wave/combination headers) are **off by default**. Set `TIME_UTC=1` to append a `YYYY-MM-DD HH:MM:SS UTC` timestamp to those lines.
+UTC timestamps in batch script output (verbose-mode separators, per-step ok/FAIL lines, wave/combination headers, and the EXIT-trap total UTC line) are **off by default**. Set `TIME_UTC=1` to append a `YYYY-MM-DD HH:MM:SS UTC` timestamp to those lines.
 
     ./test_integration            # no timestamps (default)
     TIME_UTC=1 ./test_integration # append UTC timestamps

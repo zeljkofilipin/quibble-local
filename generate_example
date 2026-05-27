@@ -40,7 +40,8 @@ printf '$ %s\n\n' "$cmd" > "$file"
 # second pass once the capture completes, below.
 # eval is needed because $cmd is a single string with arguments and quoting baked in.
 # || true lets the script continue when the captured command exits non-zero (common
-# for usage-on-failure outputs); without it, set -e would abort before "Done!".
+# for usage-on-failure outputs); without it, set -e would abort the post-capture
+# scrubbing pass and the (no output) marker check below.
 # Subshell with exported _QUIBBLE_FORCE_TERMINAL=1 makes the captured script act as if
 # its stdout were a terminal (see lib/silent_output, lib/duration_trap, lib/debug_info)
 # so examples/*.txt contains the silent-mode UX a user would see, not the piped-stdout
@@ -70,5 +71,3 @@ awk -f lib/scrub_ansi.awk "$file" > "$file".tmp && mv "$file".tmp "$file"
 if [ -z "$(tail -n +3 "$file")" ]; then
   printf '(no output)\n' >> "$file"
 fi
-
-echo "Done!" # signal completion to the user
