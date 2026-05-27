@@ -1,13 +1,13 @@
 $ VERBOSE=1 ./install extensions/Echo
 
-OS: Linux 6.14.0-37-generic
-CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
-RAM: 15.6 GB
-bash: 5.2.21(1)-release
-git: git version 2.43.0
-docker: Docker version 29.5.2, build 79eb04c
+OS: Linux 7.0.0-15-generic
+CPU: Intel(R) Core(TM) i5-4260U CPU @ 1.40GHz (4 cores)
+RAM: 3.3 GB
+bash: 5.3.9(1)-release
+git: git version 2.53.0
+docker: Docker version 29.4.0, build 9d7ad9f
 docker CPUs: 4
-docker RAM: 15.6 GB
+docker RAM: 3.3 GB
 
 
 
@@ -114,7 +114,7 @@ docker RAM: 15.6 GB
 = install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} ${QUIBBLE_RESOLVE_REQUIRES[@]+"${QUIBBLE_RESOLVE_REQUIRES[@]}"} --command true ${deps[@]+"${deps[@]}"})
 
 ========================================
-= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 
 ========================================
 = install is running: local _xtrace_was_on=
@@ -138,548 +138,52 @@ docker run \
   -v $PWD/src:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
   docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
   --resolve-requires \
   --command true \
   mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 ########################################
 
 ========================================
-= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 + /usr/bin/supervisord
-2026-05-24 00:16:29,443 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-24 00:16:29,446 INFO RPC interface 'supervisor' initialized
-2026-05-24 00:16:29,446 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-24 00:16:29,447 INFO daemonizing the supervisord process
-+ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-24 00:16:29,448 CRIT could not write pidfile /var/run/supervisord.pid
-[36mDEBUG[0m:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
-[32mINFO[0m:quibble.cmd:Adding mediawiki/vendor
-[32mINFO[0m:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
-[32mINFO[0m:zuul.CloneMapper:Workspace path set to: ./
-[32mINFO[0m:zuul.CloneMapper:Mapping projects to workspace...
-[32mINFO[0m:zuul.CloneMapper:  mediawiki/extensions/Echo -> extensions/Echo
-[32mINFO[0m:zuul.CloneMapper:Expansion completed.
-[36mDEBUG[0m:quibble.cmd:Running stages: 
-[36mDEBUG[0m:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
-[36mDEBUG[0m:quibble.cmd:Project dir: /workspace/src/extensions/Echo
-[36mDEBUG[0m:quibble.cmd:Reporting URL: not specified
-[36mDEBUG[0m:quibble.cmd:Execution plan:
-[36mDEBUG[0m:quibble.cmd:Report durations
-[36mDEBUG[0m:quibble.cmd:Versions
-[36mDEBUG[0m:quibble.cmd:Ensure dir: '/workspace/log'
-[36mDEBUG[0m:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/Echo", "mediawiki/extensions/EventLogging", "mediawiki/extensions/MobileFrontend", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}
-[36mDEBUG[0m:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
-[36mDEBUG[0m:quibble.cmd:Submodule update: /workspace/src
-[36mDEBUG[0m:quibble.cmd:Install composer dev-requires for vendor.git
-[36mDEBUG[0m:quibble.cmd:Start backends: <MySQL (no socket)>
-[36mDEBUG[0m:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+2026-05-27 12:44:18,020 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-27 12:44:18,023 INFO RPC interface 'supervisor' initialized
+2026-05-27 12:44:18,023 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-27 12:44:18,025 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+2026-05-27 12:44:18,026 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/Echo -> extensions/Echo
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/Echo
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/Echo", "mediawiki/extensions/EventLogging", "mediawiki/extensions/MobileFrontend", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
 * Install MediaWiki, db=<MySQL (no socket)>
 * npm install in /workspace/src
-[36mDEBUG[0m:quibble.cmd:Start backends: <Memcached on port 11211>
-[36mDEBUG[0m:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
-[36mDEBUG[0m:quibble.cmd:User commands: true
-[32mINFO[0m:quibble.commands:>>> Start: Report durations
-[32mINFO[0m:quibble.commands:<<< Finish: Report durations, in 0.000 s
-[32mINFO[0m:quibble.commands:>>> Start: Versions
-[32mINFO[0m:quibble.commands:Python version: 3.9.2 (default, May 14 2026, 03:00:00) 
-[GCC 10.2.1 20210110]
-[32mINFO[0m:quibble.commands:chromedriver --version: ChromeDriver 120.0.6099.224 (3587067cafd6f5b1e567380acb485d96e623ef39-refs/branch-heads/6099@{#1761})
-[32mINFO[0m:quibble.commands:chromium --version: Chromium 120.0.6099.224 built on Debian 11.8, running on Debian 11.11
-[32mINFO[0m:quibble.commands:composer --version: Composer version 2.9.7 2026-04-14 13:31:52
-[32mINFO[0m:quibble.commands:PHP version 8.3.30 (/usr/bin/php8.3)
-[32mINFO[0m:quibble.commands:Run the "diagnose" command to get more detailed diagnostics output.
-[32mINFO[0m:quibble.commands:memcached --version: memcached 1.6.9
-[32mINFO[0m:quibble.commands:mysql --version: mysql  Ver 15.1 Distrib 10.5.29-MariaDB, for debian-linux-gnu (x86_64) using  EditLine wrapper
-[32mINFO[0m:quibble.commands:node --version: v24.14.1
-[32mINFO[0m:quibble.commands:npm --version: 11.11.0
-[32mINFO[0m:quibble.commands:php --version: PHP 8.3.30 (cli) (built: Jan 20 2026 19:35:57) (NTS)
-[32mINFO[0m:quibble.commands:Copyright (c) The PHP Group
-[32mINFO[0m:quibble.commands:Zend Engine v4.3.30, Copyright (c) Zend Technologies
-[32mINFO[0m:quibble.commands:    with Zend OPcache v8.3.30, Copyright (c), by Zend Technologies
-[32mINFO[0m:quibble.commands:psql --version: psql (PostgreSQL) 13.23 (Debian 13.23-0+deb11u3)
-[32mINFO[0m:quibble.commands:<<< Finish: Versions, in 0.164 s
-[32mINFO[0m:quibble.commands:>>> Start: Ensure dir: '/workspace/log'
-[32mINFO[0m:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.000 s
-[32mINFO[0m:quibble.commands:>>> Start: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/Echo", "mediawiki/extensions/EventLogging", "mediawiki/extensions/MobileFrontend", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}
-[32mINFO[0m:zuul.CloneMapper:Workspace path set to: /workspace/src
-[32mINFO[0m:zuul.CloneMapper:Mapping projects to workspace...
-[32mINFO[0m:zuul.CloneMapper:  mediawiki/core -> /workspace/src
-[32mINFO[0m:zuul.CloneMapper:  mediawiki/extensions/AntiSpoof -> /workspace/src/extensions/AntiSpoof
-[32mINFO[0m:zuul.CloneMapper:  mediawiki/extensions/CentralAuth -> /workspace/src/extensions/CentralAuth
-[32mINFO[0m:zuul.CloneMapper:  mediawiki/extensions/Echo -> /workspace/src/extensions/Echo
-[32mINFO[0m:zuul.CloneMapper:  mediawiki/extensions/EventLogging -> /workspace/src/extensions/EventLogging
-[32mINFO[0m:zuul.CloneMapper:  mediawiki/extensions/MobileFrontend -> /workspace/src/extensions/MobileFrontend
-[32mINFO[0m:zuul.CloneMapper:  mediawiki/skins/Vector -> /workspace/src/skins/Vector
-[32mINFO[0m:zuul.CloneMapper:  mediawiki/vendor -> /workspace/src/vendor
-[32mINFO[0m:zuul.CloneMapper:Expansion completed.
-[32mINFO[0m:quibble.zuul.clone:Preparing 8 repositories with 4 workers
-[32mINFO[0m:zuul.Cloner.mediawiki/core:Creating repo mediawiki/core from upstream https://gerrit.wikimedia.org/r/mediawiki/core
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/AntiSpoof:Creating repo mediawiki/extensions/AntiSpoof from upstream https://gerrit.wikimedia.org/r/mediawiki/extensions/AntiSpoof
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/CentralAuth:Creating repo mediawiki/extensions/CentralAuth from upstream https://gerrit.wikimedia.org/r/mediawiki/extensions/CentralAuth
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/Echo:Creating repo mediawiki/extensions/Echo from upstream https://gerrit.wikimedia.org/r/mediawiki/extensions/Echo
-2026-05-24 00:16:30,452 INFO spawned: 'apache' with pid 79
-2026-05-24 00:16:30,454 INFO spawned: 'memcached' with pid 80
-2026-05-24 00:16:30,456 INFO spawned: 'php-fpm' with pid 81
-2026-05-24 00:16:30,475 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
-2026-05-24 00:16:31,517 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2026-05-24 00:16:31,517 INFO success: memcached entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/AntiSpoof:Falling back to branch master
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/AntiSpoof:Prepared mediawiki/extensions/AntiSpoof repo with branch master at commit 3495ad245cae74956d9e88e35cf03bf105b67740
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/EventLogging:Creating repo mediawiki/extensions/EventLogging from upstream https://gerrit.wikimedia.org/r/mediawiki/extensions/EventLogging
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/CentralAuth:Falling back to branch master
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/Echo:Falling back to branch master
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/CentralAuth:Prepared mediawiki/extensions/CentralAuth repo with branch master at commit 27f60874dc09a05533b781009d90e170bfd9351a
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/MobileFrontend:Creating repo mediawiki/extensions/MobileFrontend from upstream https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/Echo:Prepared mediawiki/extensions/Echo repo with branch master at commit 939790c17ac66faf535cdde82247bc6544d0f9c4
-[32mINFO[0m:zuul.Cloner.mediawiki/skins/Vector:Creating repo mediawiki/skins/Vector from upstream https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/EventLogging:Falling back to branch master
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/EventLogging:Prepared mediawiki/extensions/EventLogging repo with branch master at commit 587366d30cbae8c76f7b1fcdade39a5f6d57171d
-[32mINFO[0m:zuul.Cloner.mediawiki/vendor:Creating repo mediawiki/vendor from upstream https://gerrit.wikimedia.org/r/mediawiki/vendor
-[32mINFO[0m:zuul.Cloner.mediawiki/skins/Vector:Falling back to branch master
-[32mINFO[0m:zuul.Cloner.mediawiki/skins/Vector:Prepared mediawiki/skins/Vector repo with branch master at commit aaa1577f28ee97b7d209958775b6e1291eac33e3
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/MobileFrontend:Falling back to branch master
-[32mINFO[0m:zuul.Cloner.mediawiki/extensions/MobileFrontend:Prepared mediawiki/extensions/MobileFrontend repo with branch master at commit 4492afdfa620eb64b2d8d0e4603d8e2a40c11d6e
-[32mINFO[0m:zuul.Cloner.mediawiki/core:Falling back to branch master
-[32mINFO[0m:zuul.Cloner.mediawiki/core:Prepared mediawiki/core repo with branch master at commit 9fee67a2adb872a4638890dff76cda7de5634cd0
-[32mINFO[0m:zuul.Cloner.mediawiki/vendor:Falling back to branch master
-[32mINFO[0m:zuul.Cloner.mediawiki/vendor:Prepared mediawiki/vendor repo with branch master at commit 7258f4a1a6175cd7de9786f39aa5087a19bbb453
-[32mINFO[0m:quibble.zuul.clone:Prepared all repositories
-[32mINFO[0m:quibble.commands:<<< Finish: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/Echo", "mediawiki/extensions/EventLogging", "mediawiki/extensions/MobileFrontend", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}, in 7.877 s
-[32mINFO[0m:quibble.commands:>>> Start: Recursively process registration dependencies. Fails on extra requires: False
-[32mINFO[0m:quibble.commands:Looking for requirements of mediawiki/extensions/AntiSpoof
-[32mINFO[0m:quibble.commands:Looking for requirements of mediawiki/extensions/CentralAuth
-[32mINFO[0m:quibble.commands:Looking for requirements of mediawiki/extensions/Echo
-[32mINFO[0m:quibble.commands:Looking for requirements of mediawiki/extensions/EventLogging
-[32mINFO[0m:quibble.commands:Looking for requirements of mediawiki/extensions/MobileFrontend
-[32mINFO[0m:quibble.commands:Looking for requirements of mediawiki/skins/Vector
-[32mINFO[0m:quibble.commands:Found requirement(s): mediawiki/extensions/AntiSpoof
-[32mINFO[0m:quibble.commands:Looking for requirements of mediawiki/extensions/AntiSpoof
-[36mDEBUG[0m:quibble.commands:No additional requirements from mediawiki/extensions/AntiSpoof
-[33mWARNING[0m:quibble.commands:Found extra requirements: 
-[32mINFO[0m:quibble.commands:<<< Finish: Recursively process registration dependencies. Fails on extra requires: False, in 0.013 s
-[32mINFO[0m:quibble.commands:>>> Start: Submodule update: /workspace/src
-[32mINFO[0m:quibble.commands:Updating git submodules of extensions and skins
-[32mINFO[0m:quibble.commands:<<< Finish: Submodule update: /workspace/src, in 0.001 s
-[32mINFO[0m:quibble.commands:>>> Start: Install composer dev-requires for vendor.git
-[32mINFO[0m:quibble.commands:mediawiki/vendor is used, add require-dev dependencies
-[36mDEBUG[0m:quibble.commands:composer require --dev composer/spdx-licenses=1.6.0 doctrine/dbal=3.10.5 doctrine/sql-formatter=1.5.4 ergebnis/phpunit-slow-test-detector=2.24.0 ext-simplexml=* giorgiosironi/eris=^0.14.0 hamcrest/hamcrest-php=^2.0 mediawiki/mediawiki-codesniffer=51.0.0 mediawiki/mediawiki-phan-config=0.20.0 mediawiki/minus-x=2.0.1 nikic/php-parser=^5.5.0 php-parallel-lint/php-console-highlighter=1.0.0 php-parallel-lint/php-parallel-lint=1.4.0 phpunit/phpunit=9.6.34 psy/psysh=^0.12.19 seld/jsonlint=1.11.0 wikimedia/alea=1.0.1 wikimedia/langconv=^0.5.0 wikimedia/testing-access-wrapper=4.0.0 wmde/hamcrest-html-matchers=^1.0.0
-> init: Wikimedia\Composer\Merge\V2\MergePlugin->onInit
-[30;43mnikic/php-parser is currently present in the require key and you ran the command with the --dev flag, which will move it to the require-dev key.[39;49m
-[30;43mpsy/psysh is currently present in the require key and you ran the command with the --dev flag, which will move it to the require-dev key.[39;49m
-[30;43mwikimedia/langconv is currently present in the require key and you ran the command with the --dev flag, which will move it to the require-dev key.[39;49m
-[30;43mwikimedia/testing-access-wrapper is currently present in the require key and you ran the command with the --dev flag, which will move it to the require-dev key.[39;49m
-[32m./composer.json has been updated[39m
-> init: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onInit
-[32mRunning composer update composer/spdx-licenses doctrine/dbal doctrine/sql-formatter ergebnis/phpunit-slow-test-detector ext-simplexml giorgiosironi/eris hamcrest/hamcrest-php mediawiki/mediawiki-codesniffer mediawiki/mediawiki-phan-config mediawiki/minus-x nikic/php-parser php-parallel-lint/php-console-highlighter php-parallel-lint/php-parallel-lint phpunit/phpunit psy/psysh seld/jsonlint wikimedia/alea wikimedia/langconv wikimedia/testing-access-wrapper wmde/hamcrest-html-matchers[39m
-> pre-update-cmd: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onInstallUpdateOrDump
-[32mLoading composer repositories with package information[39m
-[30;43mPattern "ext-simplexml" listed for update matches platform packages, but these cannot be updated by Composer.[39;49m
-[32mUpdating dependencies[39m
-Dependency resolution completed in 0.002 seconds
-Analyzed 356 packages to resolve dependencies
-Analyzed 921 rules to resolve dependencies
-Dependency resolution completed in 0.000 seconds
-[32mLock file operations: 57 installs, 1 update, 0 removals[39m
-Installs: squizlabs/php_codesniffer:3.13.5, dealerdirect/phpcodesniffer-composer-installer:v1.2.1, composer/pcre:3.3.2, psr/cache:3.0.0, doctrine/event-manager:2.1.1, doctrine/deprecations:1.1.6, doctrine/dbal:3.10.5, doctrine/sql-formatter:1.5.4, sebastian/version:3.0.2, sebastian/type:3.2.1, sebastian/resource-operations:3.0.4, sebastian/recursion-context:4.0.6, sebastian/object-reflector:2.0.4, sebastian/object-enumerator:4.0.4, sebastian/global-state:5.0.8, sebastian/exporter:4.0.8, sebastian/environment:5.1.5, sebastian/diff:4.0.6, sebastian/comparator:4.0.10, sebastian/code-unit:1.0.8, sebastian/cli-parser:1.0.2, phpunit/php-timer:5.0.3, phpunit/php-text-template:2.0.4, phpunit/php-invoker:3.1.1, phpunit/php-file-iterator:3.0.6, theseer/tokenizer:1.3.1, sebastian/lines-of-code:1.0.4, sebastian/complexity:2.0.3, sebastian/code-unit-reverse-lookup:2.0.3, phpunit/php-code-coverage:9.2.32, phar-io/version:3.2.1, phar-io/manifest:2.0.4, myclabs/deep-copy:1.13.4, doctrine/instantiator:2.0.0, phpunit/phpunit:9.6.34, ergebnis/phpunit-slow-test-detector:2.24.0, giorgiosironi/eris:0.14.1, phpcsstandards/phpcsutils:1.2.2, phpcsstandards/phpcsextra:1.5.0, composer/spdx-licenses:1.6.0, mediawiki/mediawiki-codesniffer:v51.0.0, sabre/event:6.1.0, phan/var_representation_polyfill:0.1.4, phan/tolerant-php-parser:v0.2.0, netresearch/jsonmapper:v5.0.1, danog/advanced-json-rpc:v3.2.3, composer/xdebug-handler:3.0.5, phan/phan:6.0.2, mediawiki/phan-taint-check-plugin:9.1.0, mediawiki/mediawiki-phan-config:0.20.0, mediawiki/minus-x:2.0.1, php-parallel-lint/php-console-color:v1.0.1, php-parallel-lint/php-console-highlighter:v1.0.0, seld/jsonlint:1.11.0, wikimedia/alea:1.0.1, hamcrest/hamcrest-php:v2.1.1, wmde/hamcrest-html-matchers:v1.1.0
-Updates: psy/psysh:v0.12.23
-  - Locking [32mcomposer/pcre[39m ([33m3.3.2[39m)
-  - Locking [32mcomposer/spdx-licenses[39m ([33m1.6.0[39m)
-  - Locking [32mcomposer/xdebug-handler[39m ([33m3.0.5[39m)
-  - Locking [32mdanog/advanced-json-rpc[39m ([33mv3.2.3[39m)
-  - Locking [32mdealerdirect/phpcodesniffer-composer-installer[39m ([33mv1.2.1[39m)
-  - Locking [32mdoctrine/dbal[39m ([33m3.10.5[39m)
-  - Locking [32mdoctrine/deprecations[39m ([33m1.1.6[39m)
-  - Locking [32mdoctrine/event-manager[39m ([33m2.1.1[39m)
-  - Locking [32mdoctrine/instantiator[39m ([33m2.0.0[39m)
-  - Locking [32mdoctrine/sql-formatter[39m ([33m1.5.4[39m)
-  - Locking [32mergebnis/phpunit-slow-test-detector[39m ([33m2.24.0[39m)
-  - Locking [32mgiorgiosironi/eris[39m ([33m0.14.1[39m)
-  - Locking [32mhamcrest/hamcrest-php[39m ([33mv2.1.1[39m)
-  - Locking [32mmediawiki/mediawiki-codesniffer[39m ([33mv51.0.0[39m)
-  - Locking [32mmediawiki/mediawiki-phan-config[39m ([33m0.20.0[39m)
-  - Locking [32mmediawiki/minus-x[39m ([33m2.0.1[39m)
-  - Locking [32mmediawiki/phan-taint-check-plugin[39m ([33m9.1.0[39m)
-  - Locking [32mmyclabs/deep-copy[39m ([33m1.13.4[39m)
-  - Locking [32mnetresearch/jsonmapper[39m ([33mv5.0.1[39m)
-  - Locking [32mphan/phan[39m ([33m6.0.2[39m)
-  - Locking [32mphan/tolerant-php-parser[39m ([33mv0.2.0[39m)
-  - Locking [32mphan/var_representation_polyfill[39m ([33m0.1.4[39m)
-  - Locking [32mphar-io/manifest[39m ([33m2.0.4[39m)
-  - Locking [32mphar-io/version[39m ([33m3.2.1[39m)
-  - Locking [32mphp-parallel-lint/php-console-color[39m ([33mv1.0.1[39m)
-  - Locking [32mphp-parallel-lint/php-console-highlighter[39m ([33mv1.0.0[39m)
-  - Locking [32mphpcsstandards/phpcsextra[39m ([33m1.5.0[39m)
-  - Locking [32mphpcsstandards/phpcsutils[39m ([33m1.2.2[39m)
-  - Locking [32mphpunit/php-code-coverage[39m ([33m9.2.32[39m)
-  - Locking [32mphpunit/php-file-iterator[39m ([33m3.0.6[39m)
-  - Locking [32mphpunit/php-invoker[39m ([33m3.1.1[39m)
-  - Locking [32mphpunit/php-text-template[39m ([33m2.0.4[39m)
-  - Locking [32mphpunit/php-timer[39m ([33m5.0.3[39m)
-  - Locking [32mphpunit/phpunit[39m ([33m9.6.34[39m)
-  - Locking [32mpsr/cache[39m ([33m3.0.0[39m)
-  - Upgrading [32mpsy/psysh[39m ([33mv0.12.20[39m => [33mv0.12.23[39m)
-  - Locking [32msabre/event[39m ([33m6.1.0[39m)
-  - Locking [32msebastian/cli-parser[39m ([33m1.0.2[39m)
-  - Locking [32msebastian/code-unit[39m ([33m1.0.8[39m)
-  - Locking [32msebastian/code-unit-reverse-lookup[39m ([33m2.0.3[39m)
-  - Locking [32msebastian/comparator[39m ([33m4.0.10[39m)
-  - Locking [32msebastian/complexity[39m ([33m2.0.3[39m)
-  - Locking [32msebastian/diff[39m ([33m4.0.6[39m)
-  - Locking [32msebastian/environment[39m ([33m5.1.5[39m)
-  - Locking [32msebastian/exporter[39m ([33m4.0.8[39m)
-  - Locking [32msebastian/global-state[39m ([33m5.0.8[39m)
-  - Locking [32msebastian/lines-of-code[39m ([33m1.0.4[39m)
-  - Locking [32msebastian/object-enumerator[39m ([33m4.0.4[39m)
-  - Locking [32msebastian/object-reflector[39m ([33m2.0.4[39m)
-  - Locking [32msebastian/recursion-context[39m ([33m4.0.6[39m)
-  - Locking [32msebastian/resource-operations[39m ([33m3.0.4[39m)
-  - Locking [32msebastian/type[39m ([33m3.2.1[39m)
-  - Locking [32msebastian/version[39m ([33m3.0.2[39m)
-  - Locking [32mseld/jsonlint[39m ([33m1.11.0[39m)
-  - Locking [32msquizlabs/php_codesniffer[39m ([33m3.13.5[39m)
-  - Locking [32mtheseer/tokenizer[39m ([33m1.3.1[39m)
-  - Locking [32mwikimedia/alea[39m ([33m1.0.1[39m)
-  - Locking [32mwmde/hamcrest-html-matchers[39m ([33mv1.1.0[39m)
-[32mWriting lock file[39m
-[32mInstalling dependencies from lock file (including require-dev)[39m
-[32mPackage operations: 58 installs, 1 update, 0 removals[39m
-Installs: squizlabs/php_codesniffer:3.13.5, dealerdirect/phpcodesniffer-composer-installer:v1.2.1, composer/pcre:3.3.2, psr/cache:3.0.0, doctrine/event-manager:2.1.1, doctrine/deprecations:1.1.6, doctrine/dbal:3.10.5, doctrine/sql-formatter:1.5.4, sebastian/version:3.0.2, sebastian/type:3.2.1, sebastian/resource-operations:3.0.4, sebastian/recursion-context:4.0.6, sebastian/object-reflector:2.0.4, sebastian/object-enumerator:4.0.4, sebastian/global-state:5.0.8, sebastian/exporter:4.0.8, sebastian/environment:5.1.5, sebastian/diff:4.0.6, sebastian/comparator:4.0.10, sebastian/code-unit:1.0.8, sebastian/cli-parser:1.0.2, phpunit/php-timer:5.0.3, phpunit/php-text-template:2.0.4, phpunit/php-invoker:3.1.1, phpunit/php-file-iterator:3.0.6, theseer/tokenizer:1.3.1, sebastian/lines-of-code:1.0.4, sebastian/complexity:2.0.3, sebastian/code-unit-reverse-lookup:2.0.3, phpunit/php-code-coverage:9.2.32, phar-io/version:3.2.1, phar-io/manifest:2.0.4, myclabs/deep-copy:1.13.4, doctrine/instantiator:2.0.0, phpunit/phpunit:9.6.34, ergebnis/phpunit-slow-test-detector:2.24.0, giorgiosironi/eris:0.14.1, phpcsstandards/phpcsutils:1.2.2, phpcsstandards/phpcsextra:1.5.0, composer/spdx-licenses:1.6.0, mediawiki/mediawiki-codesniffer:v51.0.0, sabre/event:6.1.0, phan/var_representation_polyfill:0.1.4, phan/tolerant-php-parser:v0.2.0, netresearch/jsonmapper:v5.0.1, danog/advanced-json-rpc:v3.2.3, composer/xdebug-handler:3.0.5, phan/phan:6.0.2, mediawiki/phan-taint-check-plugin:9.1.0, mediawiki/mediawiki-phan-config:0.20.0, mediawiki/minus-x:2.0.1, php-parallel-lint/php-console-color:v1.0.1, php-parallel-lint/php-console-highlighter:v1.0.0, php-parallel-lint/php-parallel-lint:v1.4.0, seld/jsonlint:1.11.0, wikimedia/alea:1.0.1, hamcrest/hamcrest-php:v2.1.1, wmde/hamcrest-html-matchers:v1.1.0
-Updates: psy/psysh:v0.12.23
-  - Installing [32msquizlabs/php_codesniffer[39m ([33m3.13.5[39m): Extracting archive
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-  - Installing [32mdealerdirect/phpcodesniffer-composer-installer[39m ([33mv1.2.1[39m): Extracting archive
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-  - Installing [32mcomposer/pcre[39m ([33m3.3.2[39m): Extracting archive
-  - Installing [32mpsr/cache[39m ([33m3.0.0[39m): Extracting archive
-  - Installing [32mdoctrine/event-manager[39m ([33m2.1.1[39m): Extracting archive
-  - Installing [32mdoctrine/deprecations[39m ([33m1.1.6[39m): Extracting archive
-  - Installing [32mdoctrine/dbal[39m ([33m3.10.5[39m): Extracting archive
-  - Installing [32mdoctrine/sql-formatter[39m ([33m1.5.4[39m): Extracting archive
-  - Installing [32msebastian/version[39m ([33m3.0.2[39m): Extracting archive
-  - Installing [32msebastian/type[39m ([33m3.2.1[39m): Extracting archive
-  - Installing [32msebastian/resource-operations[39m ([33m3.0.4[39m): Extracting archive
-  - Installing [32msebastian/recursion-context[39m ([33m4.0.6[39m): Extracting archive
-  - Installing [32msebastian/object-reflector[39m ([33m2.0.4[39m): Extracting archive
-  - Installing [32msebastian/object-enumerator[39m ([33m4.0.4[39m): Extracting archive
-  - Installing [32msebastian/global-state[39m ([33m5.0.8[39m): Extracting archive
-  - Installing [32msebastian/exporter[39m ([33m4.0.8[39m): Extracting archive
-  - Installing [32msebastian/environment[39m ([33m5.1.5[39m): Extracting archive
-  - Installing [32msebastian/diff[39m ([33m4.0.6[39m): Extracting archive
-  - Installing [32msebastian/comparator[39m ([33m4.0.10[39m): Extracting archive
-  - Installing [32msebastian/code-unit[39m ([33m1.0.8[39m): Extracting archive
-  - Installing [32msebastian/cli-parser[39m ([33m1.0.2[39m): Extracting archive
-  - Installing [32mphpunit/php-timer[39m ([33m5.0.3[39m): Extracting archive
-  - Installing [32mphpunit/php-text-template[39m ([33m2.0.4[39m): Extracting archive
-  - Installing [32mphpunit/php-invoker[39m ([33m3.1.1[39m): Extracting archive
-  - Installing [32mphpunit/php-file-iterator[39m ([33m3.0.6[39m): Extracting archive
-  - Installing [32mtheseer/tokenizer[39m ([33m1.3.1[39m): Extracting archive
-  - Installing [32msebastian/lines-of-code[39m ([33m1.0.4[39m): Extracting archive
-  - Installing [32msebastian/complexity[39m ([33m2.0.3[39m): Extracting archive
-  - Installing [32msebastian/code-unit-reverse-lookup[39m ([33m2.0.3[39m): Extracting archive
-  - Installing [32mphpunit/php-code-coverage[39m ([33m9.2.32[39m): Extracting archive
-  - Installing [32mphar-io/version[39m ([33m3.2.1[39m): Extracting archive
-  - Installing [32mphar-io/manifest[39m ([33m2.0.4[39m): Extracting archive
-  - Installing [32mmyclabs/deep-copy[39m ([33m1.13.4[39m): Extracting archive
-  - Installing [32mdoctrine/instantiator[39m ([33m2.0.0[39m): Extracting archive
-  - Installing [32mphpunit/phpunit[39m ([33m9.6.34[39m): Extracting archive
-  - Installing [32mergebnis/phpunit-slow-test-detector[39m ([33m2.24.0[39m): Extracting archive
-  - Installing [32mgiorgiosironi/eris[39m ([33m0.14.1[39m): Extracting archive
-  - Installing [32mphpcsstandards/phpcsutils[39m ([33m1.2.2[39m): Extracting archive
-  - Installing [32mphpcsstandards/phpcsextra[39m ([33m1.5.0[39m): Extracting archive
-  - Installing [32mcomposer/spdx-licenses[39m ([33m1.6.0[39m): Extracting archive
-  - Installing [32mmediawiki/mediawiki-codesniffer[39m ([33mv51.0.0[39m): Extracting archive
-  - Installing [32msabre/event[39m ([33m6.1.0[39m): Extracting archive
-  - Installing [32mphan/var_representation_polyfill[39m ([33m0.1.4[39m): Extracting archive
-  - Installing [32mphan/tolerant-php-parser[39m ([33mv0.2.0[39m): Extracting archive
-  - Installing [32mnetresearch/jsonmapper[39m ([33mv5.0.1[39m): Extracting archive
-  - Installing [32mdanog/advanced-json-rpc[39m ([33mv3.2.3[39m): Extracting archive
-  - Installing [32mcomposer/xdebug-handler[39m ([33m3.0.5[39m): Extracting archive
-  - Installing [32mphan/phan[39m ([33m6.0.2[39m): Extracting archive
-  - Installing [32mmediawiki/phan-taint-check-plugin[39m ([33m9.1.0[39m): Extracting archive
-  - Installing [32mmediawiki/mediawiki-phan-config[39m ([33m0.20.0[39m): Extracting archive
-  - Installing [32mmediawiki/minus-x[39m ([33m2.0.1[39m): Extracting archive
-  - Installing [32mphp-parallel-lint/php-console-color[39m ([33mv1.0.1[39m): Extracting archive
-  - Installing [32mphp-parallel-lint/php-console-highlighter[39m ([33mv1.0.0[39m): Extracting archive
-  - Installing [32mphp-parallel-lint/php-parallel-lint[39m ([33mv1.4.0[39m): Extracting archive
-  - Upgrading [32mpsy/psysh[39m ([33mv0.12.20[39m => [33mv0.12.23[39m): Extracting archive
-  - Installing [32mseld/jsonlint[39m ([33m1.11.0[39m): Extracting archive
-  - Installing [32mwikimedia/alea[39m ([33m1.0.1[39m): Extracting archive
-  - Installing [32mhamcrest/hamcrest-php[39m ([33mv2.1.1[39m): Extracting archive
-  - Installing [32mwmde/hamcrest-html-matchers[39m ([33mv1.1.0[39m): Extracting archive
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-[32m7 package suggestions were added by new dependencies, use `composer suggest` to see details.[39m
-[30;43mPackage pear/net_socket is abandoned, you should avoid using it. No replacement was suggested.[39;49m
-[32mGenerating optimized autoload files[39m
-> pre-autoload-dump: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onInstallUpdateOrDump
-[32m78 packages you are using are looking for funding.[39m
-[32mUse the `composer fund` command to find out more![39m
-> post-update-cmd: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostInstallOrUpdate
-> post-update-cmd: PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Plugin->onDependenciesChangedEvent
-[32mRunning PHPCodeSniffer Composer Installer[39m
-PHP CodeSniffer Config [32minstalled_paths[39m [33mset to[39m [32m../../mediawiki/mediawiki-codesniffer,../../phpcsstandards/phpcsextra,../../phpcsstandards/phpcsutils[39m
-[32mUsing config file: /workspace/src/vendor/squizlabs/php_codesniffer/CodeSniffer.conf
-
-Config value "installed_paths" added successfully
-[39m
-[32mNo security vulnerability advisories found.[39m
-[32mGenerating optimized autoload files (authoritative)[39m
-[32mGenerated optimized autoload files (authoritative) containing 7959 classes[39m
-[32mINFO[0m:quibble.util:Copying /workspace/src/composer.json to /workspace/log/composer.core.json.txt
-[32mINFO[0m:quibble.util:Copying /workspace/src/vendor/composer.json to /workspace/log/composer.vendor.json.txt
-[32mINFO[0m:quibble.util:Copying /workspace/src/vendor/composer/autoload_files.php to /workspace/log/composer.autoload_files.php.txt
-[32mINFO[0m:quibble.commands:<<< Finish: Install composer dev-requires for vendor.git, in 10.499 s
-[32mINFO[0m:quibble.commands:>>> Start: Start backends: <MySQL (no socket)>
-[32mINFO[0m:backend.MySQL:Starting MySQL
-[32mINFO[0m:backend.MySQL:Initializing MySQL data directory
-[32mINFO[0m:backend.MySQL:Waiting for MySQL socket
-[32mINFO[0m:backend.MySQL:Creating the wiki database and grant
-[32mINFO[0m:backend.MySQL:MySQL is ready
-[32mINFO[0m:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 2.929 s
-[32mINFO[0m:quibble.commands:>>> Start: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-1ka2xslj/socket>
-* npm install in /workspace/src
-[32mINFO[0m:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-1ka2xslj/socket>
-php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-1ka2xslj/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
-PHP 8.3.30 is installed.
-ICU 67.1 is installed (supports Unicode 13.0.0).
-Found ImageMagick: /usr/bin/convert. Image thumbnailing will be enabled if you enable uploads.
-Found the Git version control software: /usr/bin/git.
-Using server name "http://localhost".
-Using server URL "http://127.0.0.1:9413".
-Warning: Your default directory for uploads (/workspace/src/images/) is not checked for vulnerability to arbitrary script execution during the CLI install.
-Warning: Requests for images in your uploads directory should answer with the HTTP header X-Content-Type-Options: nosniff to protect browsers from potentially unsafe files. It is highly recommended to configure appropriate response headers on your webserver before enabling uploads.
-The environment has been checked. You can install MediaWiki.
-Including extensions... done
-Setting up database... done
-Creating tables... done
-Initializing statistics... done
-Populating default interwiki table... done
-Prevent running unneeded updates... done
-Restoring MediaWiki services... done
-Creating tables for enabled extensions... Creating spoofuser table...done.
-Modifying table spoofuser with patch /workspace/src/extensions/AntiSpoof/includes/../sql/mysql/patch-change-spoofuser-binary.sql...done.
-Creating echo_event table...done.
-Creating echo_unread_wikis table...done.
-Creating globaluser table...done.
-Running MediaWiki\Extension\CentralAuth\Maintenance\MigrateGuSalt...
-The gu_salt column does not seem to exist.
-done.
-done
-Installing Echo tables... done
-Creating main page with default content... done
-Creating administrator user account... done
-[CentralAuth] Globalizing initial user... done
-Database was successfully set up
-MediaWiki has been successfully installed. You can now visit <http://127.0.0.1:9413> to view your wiki. If you have questions, check out our frequently asked questions list: <https://www.mediawiki.org/wiki/Special:MyLanguage/Manual:FAQ> or use one of the support forums linked on that page.
-Copying /workspace/src/LocalSettings.php to /workspace/log/LocalSettings.php
-Copying /workspace/src/LocalSettings-installer.php to /workspace/log/LocalSettings-installer.php
-No syntax errors detected in /workspace/src/LocalSettings.php
-No syntax errors detected in /workspace/src/LocalSettings-installer.php
-php maintenance/addSite.php wikidb CI --filepath=http://127.0.0.1:9413/$1 --pagepath=http://127.0.0.1:9413/index.php?title=$1
-Done. Reload the web server and other long-running PHP processes to refresh the local-server cache of the sites table.
-php maintenance/update.php --quick
-MediaWiki 1.47.0-alpha Updater
-
-Your composer.lock file is up to date with current dependencies!
-Going to run database updates for wikidb
-Depending on the size of your database this may take a while!
-Running MigrateRevisionCommentTemp...
-revision_comment_temp does not exist, so nothing to do.
-done.
-Running MigrateExternallinks...
-Old fields don't exist. There is no need to run this script
-done.
-Running FixInconsistentRedirects...
-Fixing inconsistent redirects ...
-Estimated redirect page count: 1
-0/0
-Done, updated 0 of 0 rows.
-done.
-Modifying img_size field of table image...done.
-Modifying fa_size field of table filearchive...done.
-Modifying oi_size field of table oldimage...done.
-Modifying us_size field of table uploadstash...done.
-Running PopulateUserIsTemp...
-done.
-Running migrateLinksTable.php on pagelinks...
-Old fields don't exist. There is no need to run this script
-done.
-Modifying rev_id field of table revision...done.
-Modifying rc_id field of table recentchanges...done.
-Modifying ct_rc_id field of table change_tag...done.
-Running MigrateBlocks...
-No ipblocks table, skipping migration to block_target.
-done.
-Modifying page_links_updated field of table page...done.
-Changing table options of 'searchindex'.
-Running FixWrongPasswordPrefixes...
-Wrongly prefixed user password hashes, if present, have been fixed.
-done.
-Running migrateLinksTable.php on categorylinks...
-Old fields don't exist. There is no need to run this script
-done.
-Running updateCollation.php --only-migrate-normalization...
-The cl_collation column appears to already be normalized. Skipping.
-done.
-Running migrateLinksTable.php on imagelinks...
-Old fields don't exist. There is no need to run this script
-done.
-Running cleanupWatchlistLabelMember.php on watchlist_label_member...
-Nothing to fix.
-done.
-Updating category collations...
-Selecting next 100 pages from cl_from = 0... processing... 0 done.
-0 rows processed
-...done.
-Checking existence of old default messages...done.
-Adding empty categories with description pages...
-Removing empty categories without description pages...
-Category cleanup complete.
-Fixing log entries with log_title starting with 'User:#'
-done.
-Skipped 52 updates that were already applied.
-Purging caches...
-Done in 0.4 s.
-php maintenance/rebuildLocalisationCache.php --lang en
-Rebuilding en...
-1 languages rebuilt out of 1
-<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-1ka2xslj/socket>, in 7.119 s
-
-[36mDEBUG[0m:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 10s elapsed, 1/2 completed
-[36mDEBUG[0m:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 20s elapsed, 1/2 completed
-[32mINFO[0m:quibble.commands:>>> Start: npm install in /workspace/src
-
-added 1714 packages, and audited 1716 packages in 20s
-
-240 packages are looking for funding
-  run `npm fund` for details
-
-28 vulnerabilities (1 low, 10 moderate, 17 high)
-
-To address issues that do not require attention, run:
-  npm audit fix
-
-To address all issues (including breaking changes), run:
-  npm audit fix --force
-
-Run `npm audit` for details.
-<<< Finish: npm install in /workspace/src, in 20.638 s
-
-[32mINFO[0m:quibble.commands:<<< Finish: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-1ka2xslj/socket>
-* npm install in /workspace/src, in 20.658 s
-[32mINFO[0m:quibble.commands:>>> Start: Start backends: <Memcached on port 11211>
-[32mINFO[0m:backend.Memcached:Starting Memcached on port 11211
-[32mINFO[0m:backend.Memcached:Waiting for Memcached on port 11211
-[32mINFO[0m:quibble.commands:<<< Finish: Start backends: <Memcached on port 11211>, in 0.003 s
-[32mINFO[0m:quibble.commands:>>> Start: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
-[32mINFO[0m:backend.ExternalWebserver:Not starting a webserver.
-[32mINFO[0m:backend.Xvfb:Starting Xvfb on display :94
-failed to listen on TCP port 11211: Address already in use
-[32mINFO[0m:backend.ChromeWebDriver:Starting Chromedriver
-[32mINFO[0m:quibble.use_headless:Display: :94
-[36mDEBUG[0m:quibble.chromium_flags:Flags: ['--autoplay-policy=no-user-gesture-required', '--disable-pushstate-throttle', '--no-sandbox']
-[32mINFO[0m:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.005 s
-[32mINFO[0m:quibble.commands:>>> Start: User commands: true
-[32mINFO[0m:quibble.commands:User commands, working directory: /workspace/src
-[32mINFO[0m:quibble.commands:<<< Finish: User commands: true, in 0.002 s
-[32mINFO[0m:quibble.commands:Shutting down backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
-[32mINFO[0m:backend.ChromeWebDriver:Terminating ChromeWebDriver
-[32mINFO[0m:backend.Xvfb:Terminating Xvfb
-[32mINFO[0m:quibble.commands:Shutting down backends: <Memcached on port 11211>
-[32mINFO[0m:backend.Memcached:Terminating Memcached
-[32mINFO[0m:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-1ka2xslj/socket>
-[32mINFO[0m:backend.MySQL:Terminating MySQL
-[32mINFO[0m:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
-
-                   [ REPORT FOR COMMAND DURATIONS ]
-
-╒═════════╤══════════════════════════════════════════════════════════╕
-│  0.000s │ Report durations                                         │
-│  0.164s │ Versions                                                 │
-│  0.000s │ Ensure dir: '/workspace/log'                             │
-│  7.877s │ Zuul clone {"cache_dir": "/srv/git", "projects":         │
-│         │ ["mediawiki/core", "mediawiki/extensions/AntiSpoof",     │
-│         │ "mediawiki/extensions/CentralAuth",                      │
-│         │ "mediawiki/extensions/Echo",                             │
-│         │ "mediawiki/extensions/EventLogging",                     │
-│         │ "mediawiki/extensions/MobileFrontend",                   │
-│         │ "mediawiki/skins/Vector", "mediawiki/vendor"],           │
-│         │ "workers": 4, "workspace": "/workspace/src",             │
-│         │ "zuul_project": "mediawiki/extensions/Echo"}             │
-│  0.013s │ Recursively process registration dependencies. Fails on  │
-│         │ extra requires: False                                    │
-│  0.001s │ Submodule update: /workspace/src                         │
-│ 10.499s │ Install composer dev-requires for vendor.git             │
-│  2.929s │ Start backends: <MySQL (no socket)>                      │
-│ 20.658s │ Run Post-dependency install, pre-database dependent      │
-│         │ steps in parallel (concurrency=2): * Install MediaWiki,  │
-│         │ db=<MySQL /tmp/quibble-mysql-1ka2xslj/socket> * npm      │
-│         │ install in /workspace/src                                │
-│  0.003s │ Start backends: <Memcached on port 11211>                │
-│  0.005s │ Start backends: <ExternalWebserver http://127.0.0.1:9413 │
-│         │ /workspace/src> <Xvfb :94> <ChromeWebDriver :94>         │
-│  0.002s │ User commands: true                                      │
-╘═════════╧══════════════════════════════════════════════════════════╛
+DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
 
 ========================================
 = install is running: _quibble_duration_exit
 
 ========================================
 = install is running: local exit_code=0
-(56s)
+(7s) 2026-05-27 12:44:18 UTC
