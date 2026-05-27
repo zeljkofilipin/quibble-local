@@ -8,14 +8,14 @@ CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
 RAM: 15.6 GB
 bash: 5.2.21(1)-release
 git: git version 2.43.0
-docker: Docker version 29.4.3, build 055a478
+docker: Docker version 29.5.2, build 79eb04c
 docker CPUs: 4
 docker RAM: 15.6 GB
 
 
 Parallel mode: 4 workers
 
---- Wave 1-4 of 52 (4 workers) --- 2026-05-16 01:09:36 UTC
+--- Wave 1-4 of 52 (4 workers) --- 2026-05-24 12:28:06 UTC
   Worker 1: extensions/AbuseFilter
   Worker 2: extensions/AntiSpoof
   Worker 3: extensions/Babel
@@ -25,7 +25,7 @@ Parallel mode: 4 workers
   extensions/Babel: ok
   extensions/BetaFeatures: ok
 
---- Wave 5-8 of 52 (4 workers) --- 2026-05-16 01:20:26 UTC
+--- Wave 5-8 of 52 (4 workers) --- 2026-05-24 12:39:30 UTC
   Worker 1: extensions/CampaignEvents
   Worker 2: extensions/CheckUser
   Worker 3: extensions/CirrusSearch
@@ -35,7 +35,7 @@ Parallel mode: 4 workers
   extensions/CirrusSearch: ok
   extensions/cldr: ok
 
---- Wave 9-12 of 52 (4 workers) --- 2026-05-16 01:32:17 UTC
+--- Wave 9-12 of 52 (4 workers) --- 2026-05-24 12:51:45 UTC
   Worker 1: extensions/ContentTranslation
   Worker 2: extensions/CommunityConfiguration
   Worker 3: extensions/CommunityConfigurationExample
@@ -45,7 +45,7 @@ Parallel mode: 4 workers
   extensions/CommunityConfigurationExample: ok
   extensions/Disambiguator: ok
 
---- Wave 13-16 of 52 (4 workers) --- 2026-05-16 01:43:14 UTC
+--- Wave 13-16 of 52 (4 workers) --- 2026-05-24 13:04:02 UTC
   Worker 1: extensions/Echo
   Worker 2: extensions/Elastica
   Worker 3: extensions/EventBus
@@ -55,17 +55,17 @@ Parallel mode: 4 workers
   extensions/EventBus: ok
   extensions/EventLogging: ok
 
---- Wave 17-20 of 52 (4 workers) --- 2026-05-16 01:54:24 UTC
+--- Wave 17-20 of 52 (4 workers) --- 2026-05-24 13:15:06 UTC
   Worker 1: extensions/EventStreamConfig
   Worker 2: extensions/FileImporter
   Worker 3: extensions/GeoData
   Worker 4: extensions/GlobalCssJs
   extensions/EventStreamConfig: ok
-  extensions/FileImporter: FAIL (see log/silent/worker-2/extensions-FileImporter.log)
+  extensions/FileImporter: ok
   extensions/GeoData: ok
   extensions/GlobalCssJs: ok
 
---- Wave 21-24 of 52 (4 workers) --- 2026-05-16 02:04:58 UTC
+--- Wave 21-24 of 52 (4 workers) --- 2026-05-24 13:25:36 UTC
   Worker 1: extensions/GlobalPreferences
   Worker 2: extensions/GrowthExperiments
   Worker 3: extensions/GuidedTour
@@ -75,7 +75,7 @@ Parallel mode: 4 workers
   extensions/GuidedTour: ok
   extensions/IPInfo: ok
 
---- Wave 25-28 of 52 (4 workers) --- 2026-05-16 02:16:43 UTC
+--- Wave 25-28 of 52 (4 workers) --- 2026-05-24 13:37:28 UTC
   Worker 1: extensions/JsonConfig
   Worker 2: extensions/Kartographer
   Worker 3: extensions/Math
@@ -85,7 +85,7 @@ Parallel mode: 4 workers
   extensions/Math: ok
   extensions/MediaModeration: ok
 
---- Wave 29-32 of 52 (4 workers) --- 2026-05-16 02:28:17 UTC
+--- Wave 29-32 of 52 (4 workers) --- 2026-05-24 13:49:09 UTC
   Worker 1: extensions/MobileApp
   Worker 2: extensions/MobileFrontend
   Worker 3: extensions/NavigationTiming
@@ -95,7 +95,7 @@ Parallel mode: 4 workers
   extensions/NavigationTiming: ok
   extensions/PageImages: ok
 
---- Wave 33-36 of 52 (4 workers) --- 2026-05-16 02:39:32 UTC
+--- Wave 33-36 of 52 (4 workers) --- 2026-05-24 14:00:35 UTC
   Worker 1: extensions/PageTriage
   Worker 2: extensions/PageViewInfo
   Worker 3: extensions/ProofreadPage
@@ -105,7 +105,7 @@ Parallel mode: 4 workers
   extensions/ProofreadPage: ok
   extensions/SandboxLink: ok
 
---- Wave 37-40 of 52 (4 workers) --- 2026-05-16 02:50:09 UTC
+--- Wave 37-40 of 52 (4 workers) --- 2026-05-24 14:11:49 UTC
   Worker 1: extensions/Scribunto
   Worker 2: extensions/SiteMatrix
   Worker 3: extensions/TemplateData
@@ -115,7 +115,7 @@ Parallel mode: 4 workers
   extensions/TemplateData: ok
   extensions/Thanks: ok
 
---- Wave 41-44 of 52 (4 workers) --- 2026-05-16 03:00:49 UTC
+--- Wave 41-44 of 52 (4 workers) --- 2026-05-24 14:23:28 UTC
   Worker 1: extensions/TimedMediaHandler
   Worker 2: extensions/Translate
   Worker 3: extensions/UniversalLanguageSelector
@@ -125,7 +125,7 @@ Parallel mode: 4 workers
   extensions/UniversalLanguageSelector: ok
   extensions/VisualEditor: ok
 
---- Wave 45-48 of 52 (4 workers) --- 2026-05-16 03:12:15 UTC
+--- Wave 45-48 of 52 (4 workers) --- 2026-05-24 14:35:13 UTC
   Worker 1: extensions/Wikibase
   Worker 2: extensions/WikibaseCirrusSearch
   Worker 3: extensions/WikibaseMediaInfo
@@ -135,7 +135,7 @@ Parallel mode: 4 workers
   extensions/WikibaseMediaInfo: ok
   extensions/WikiLove: ok
 
---- Wave 49-52 of 52 (4 workers) --- 2026-05-16 03:24:07 UTC
+--- Wave 49-52 of 52 (4 workers) --- 2026-05-24 14:47:30 UTC
   Worker 1: extensions/WikimediaCampaignEvents
   Worker 2: extensions/WikimediaMessages
   Worker 3: skins/MinervaNeue
@@ -166,6 +166,7 @@ PASSED:
   extensions/EventBus
   extensions/EventLogging
   extensions/EventStreamConfig
+  extensions/FileImporter
   extensions/GeoData
   extensions/GlobalCssJs
   extensions/GlobalPreferences
@@ -200,8 +201,6 @@ PASSED:
   extensions/WikimediaMessages
   skins/MinervaNeue
   skins/Vector
-FAILED:
-  extensions/FileImporter
 
-Logs: log/silent/
-(2h 25m 56s)
+All passed.
+(2h 31m 10s)

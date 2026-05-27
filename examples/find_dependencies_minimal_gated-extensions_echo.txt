@@ -8,13 +8,13 @@ CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
 RAM: 15.6 GB
 bash: 5.2.21(1)-release
 git: git version 2.43.0
-docker: Docker version 29.5.0, build 98f1464
+docker: Docker version 29.5.2, build 79eb04c
 docker CPUs: 4
 docker RAM: 15.6 GB
 
 
 1 components to process.
-extensions/Echo find_dependencies_minimal_greedy ......................................... ok (15m 0s)  2026-05-18 13:02:09 UTC
+extensions/Echo find_dependencies_minimal_greedy .............................................. ok (24m 47s)  2026-05-23 12:08:01 UTC
 
 ========================================
 = FOUND: minimum dependencies for extensions/Echo
@@ -40,4 +40,4 @@ PASSED:
   extensions/Echo
 
 All passed.
-(15m 0s)
+(24m 49s)

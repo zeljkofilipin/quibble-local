@@ -5,7 +5,7 @@ CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
 RAM: 15.6 GB
 bash: 5.2.21(1)-release
 git: git version 2.43.0
-docker: Docker version 29.4.3, build 055a478
+docker: Docker version 29.5.2, build 79eb04c
 docker CPUs: 4
 docker RAM: 15.6 GB
 
@@ -822,7 +822,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/GrowthExperiments
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/Thanks.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Thanks
- * branch            HEAD       -> FETCH_HEAD
+ * branch              HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -989,4 +989,4 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalPreferences
 
 ========================================
 = fetch is running: local exit_code=0
-(1m 27s)
+(1m 28s)

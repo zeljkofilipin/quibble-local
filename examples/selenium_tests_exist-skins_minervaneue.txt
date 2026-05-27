@@ -1,2 +1,3 @@
 $ ./selenium_tests_exist skins/MinervaNeue
 
+(no output)

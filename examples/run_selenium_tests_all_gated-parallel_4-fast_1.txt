@@ -8,15 +8,15 @@ CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
 RAM: 15.6 GB
 bash: 5.2.21(1)-release
 git: git version 2.43.0
-docker: Docker version 29.4.3, build 055a478
+docker: Docker version 29.5.2, build 79eb04c
 docker CPUs: 4
 docker RAM: 15.6 GB
 
-core fresh_install .......................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................... ok (2m 11s) save  ok (1m 21s) run_selenium_tests ................................................................................................................................................................................................................................................................................................................................................................................................................. ok (1m 25s)  2026-05-16 15:55:48 UTC
+core fresh_install .................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................. ok (2m 9s) save  ok (1m 28s) run_selenium_tests ........................................................................................................................................................................................................................................................................................................................................................................................................................... ok (1m 29s)  2026-05-25 03:21:04 UTC
 
 Parallel mode: 4 workers
 
---- Wave 1-4 of 52 (4 workers) --- 2026-05-16 15:55:48 UTC
+--- Wave 1-4 of 52 (4 workers) --- 2026-05-25 03:21:04 UTC
   Worker 1: extensions/AbuseFilter
   Worker 2: extensions/AntiSpoof
   Worker 3: extensions/Babel
@@ -26,7 +26,7 @@ Parallel mode: 4 workers
   extensions/Babel: ok
   extensions/BetaFeatures: ok
 
---- Wave 5-8 of 52 (4 workers) --- 2026-05-16 16:08:10 UTC
+--- Wave 5-8 of 52 (4 workers) --- 2026-05-25 03:33:17 UTC
   Worker 1: extensions/CampaignEvents
   Worker 2: extensions/CheckUser
   Worker 3: extensions/CirrusSearch
@@ -36,7 +36,7 @@ Parallel mode: 4 workers
   extensions/CirrusSearch: ok
   extensions/cldr: ok
 
---- Wave 9-12 of 52 (4 workers) --- 2026-05-16 16:21:25 UTC
+--- Wave 9-12 of 52 (4 workers) --- 2026-05-25 03:46:56 UTC
   Worker 1: extensions/ContentTranslation
   Worker 2: extensions/CommunityConfiguration
   Worker 3: extensions/CommunityConfigurationExample
@@ -46,7 +46,7 @@ Parallel mode: 4 workers
   extensions/CommunityConfigurationExample: ok
   extensions/Disambiguator: ok
 
---- Wave 13-16 of 52 (4 workers) --- 2026-05-16 16:34:41 UTC
+--- Wave 13-16 of 52 (4 workers) --- 2026-05-25 04:00:36 UTC
   Worker 1: extensions/Echo
   Worker 2: extensions/Elastica
   Worker 3: extensions/EventBus
@@ -56,7 +56,7 @@ Parallel mode: 4 workers
   extensions/EventBus: ok
   extensions/EventLogging: ok
 
---- Wave 17-20 of 52 (4 workers) --- 2026-05-16 16:46:33 UTC
+--- Wave 17-20 of 52 (4 workers) --- 2026-05-25 04:13:18 UTC
   Worker 1: extensions/EventStreamConfig
   Worker 2: extensions/FileImporter
   Worker 3: extensions/GeoData
@@ -66,17 +66,17 @@ Parallel mode: 4 workers
   extensions/GeoData: ok
   extensions/GlobalCssJs: ok
 
---- Wave 21-24 of 52 (4 workers) --- 2026-05-16 16:56:15 UTC
+--- Wave 21-24 of 52 (4 workers) --- 2026-05-25 04:24:28 UTC
   Worker 1: extensions/GlobalPreferences
   Worker 2: extensions/GrowthExperiments
   Worker 3: extensions/GuidedTour
   Worker 4: extensions/IPInfo
   extensions/GlobalPreferences: ok
-  extensions/GrowthExperiments: ok
+  extensions/GrowthExperiments: FAIL (see log/silent/worker-2/extensions-GrowthExperiments.log)
   extensions/GuidedTour: ok
   extensions/IPInfo: ok
 
---- Wave 25-28 of 52 (4 workers) --- 2026-05-16 17:09:36 UTC
+--- Wave 25-28 of 52 (4 workers) --- 2026-05-25 04:37:41 UTC
   Worker 1: extensions/JsonConfig
   Worker 2: extensions/Kartographer
   Worker 3: extensions/Math
@@ -86,7 +86,7 @@ Parallel mode: 4 workers
   extensions/Math: ok
   extensions/MediaModeration: ok
 
---- Wave 29-32 of 52 (4 workers) --- 2026-05-16 17:21:56 UTC
+--- Wave 29-32 of 52 (4 workers) --- 2026-05-25 04:50:32 UTC
   Worker 1: extensions/MobileApp
   Worker 2: extensions/MobileFrontend
   Worker 3: extensions/NavigationTiming
@@ -96,7 +96,7 @@ Parallel mode: 4 workers
   extensions/NavigationTiming: ok
   extensions/PageImages: ok
 
---- Wave 33-36 of 52 (4 workers) --- 2026-05-16 17:31:56 UTC
+--- Wave 33-36 of 52 (4 workers) --- 2026-05-25 05:02:13 UTC
   Worker 1: extensions/PageTriage
   Worker 2: extensions/PageViewInfo
   Worker 3: extensions/ProofreadPage
@@ -106,7 +106,7 @@ Parallel mode: 4 workers
   extensions/ProofreadPage: ok
   extensions/SandboxLink: ok
 
---- Wave 37-40 of 52 (4 workers) --- 2026-05-16 17:45:16 UTC
+--- Wave 37-40 of 52 (4 workers) --- 2026-05-25 05:16:18 UTC
   Worker 1: extensions/Scribunto
   Worker 2: extensions/SiteMatrix
   Worker 3: extensions/TemplateData
@@ -116,7 +116,7 @@ Parallel mode: 4 workers
   extensions/TemplateData: ok
   extensions/Thanks: ok
 
---- Wave 41-44 of 52 (4 workers) --- 2026-05-16 17:57:44 UTC
+--- Wave 41-44 of 52 (4 workers) --- 2026-05-25 05:29:11 UTC
   Worker 1: extensions/TimedMediaHandler
   Worker 2: extensions/Translate
   Worker 3: extensions/UniversalLanguageSelector
@@ -126,7 +126,7 @@ Parallel mode: 4 workers
   extensions/UniversalLanguageSelector: ok
   extensions/VisualEditor: ok
 
---- Wave 45-48 of 52 (4 workers) --- 2026-05-16 18:10:39 UTC
+--- Wave 45-48 of 52 (4 workers) --- 2026-05-25 05:42:41 UTC
   Worker 1: extensions/Wikibase
   Worker 2: extensions/WikibaseCirrusSearch
   Worker 3: extensions/WikibaseMediaInfo
@@ -136,7 +136,7 @@ Parallel mode: 4 workers
   extensions/WikibaseMediaInfo: ok
   extensions/WikiLove: ok
 
---- Wave 49-52 of 52 (4 workers) --- 2026-05-16 18:21:37 UTC
+--- Wave 49-52 of 52 (4 workers) --- 2026-05-25 05:54:40 UTC
   Worker 1: extensions/WikimediaCampaignEvents
   Worker 2: extensions/WikimediaMessages
   Worker 3: skins/MinervaNeue
@@ -172,7 +172,6 @@ PASSED:
   extensions/GeoData
   extensions/GlobalCssJs
   extensions/GlobalPreferences
-  extensions/GrowthExperiments
   extensions/GuidedTour
   extensions/IPInfo
   extensions/JsonConfig
@@ -203,6 +202,8 @@ PASSED:
   extensions/WikimediaMessages
   skins/MinervaNeue
   skins/Vector
+FAILED:
+  extensions/GrowthExperiments
 
-All passed.
-(2h 44m 9s)
+Logs: log/silent/
+(2h 52m 44s)

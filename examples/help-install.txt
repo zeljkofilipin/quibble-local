@@ -7,7 +7,7 @@ CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
 RAM: 15.6 GB
 bash: 5.2.21(1)-release
 git: git version 2.43.0
-docker: Docker version 29.4.3, build 055a478
+docker: Docker version 29.5.2, build 79eb04c
 docker CPUs: 4
 docker RAM: 15.6 GB
 
@@ -25,10 +25,16 @@ docker RAM: 15.6 GB
          QUIBBLE_DEPS="" ./install extensions/Echo                    # no dependencies
          QUIBBLE_DEPS="EventLogging" ./install extensions/Echo        # only specific dependencies
          DRY_RUN=1 ./install extensions/Echo                          # pass --dry-run to Quibble (no real install)
+         RESOLVE_REQUIRES=0 ./install extensions/Echo                 # install only QUIBBLE_DEPS; do not auto-resolve transitive requires
   
   QUIBBLE_DEPS: Override which dependencies to install (space-separated). When set, replaces
                 the dependencies from zuul/dependencies.yaml. Set to empty string for no
                 dependencies.
+  
+  RESOLVE_REQUIRES: Default 1. When 1, passes --resolve-requires to Quibble so it resolves
+                    and installs transitive dependencies from each repo's extension.json/skin.json
+                    "requires" field. Set to 0 to install exactly the deps listed in QUIBBLE_DEPS
+                    (used by find_dependencies_minimal_* scripts for honest minimization).
   
   See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension
   
