@@ -1,0 +1,119 @@
+z@air:~/Documents/gitlab/zfilipin/quibble-local$ TIME_ELAPSED=1 TIME_UTC=1 PREVIEW=1 ./generate_examples
+Would generate examples/prepare.txt from: ./prepare
+Would generate examples/prepare-verbose_1.txt from: VERBOSE=1 ./prepare
+Would generate examples/prepare_gated.txt from: ./prepare_gated
+Would generate examples/prepare_gated-verbose_1.txt from: VERBOSE=1 ./prepare_gated
+Would generate examples/fresh_install.txt from: ./fresh_install
+Would generate examples/fresh_install-environment_0.txt from: ENVIRONMENT=0 ./fresh_install
+Would generate examples/fresh_install-verbose_1.txt from: VERBOSE=1 ./fresh_install
+Would generate examples/fresh_install-dry_run_1.txt from: DRY_RUN=1 ./fresh_install
+Would generate examples/save.txt from: ./save
+Would generate examples/save-environment_0.txt from: ENVIRONMENT=0 ./save
+Would generate examples/save-verbose_1.txt from: VERBOSE=1 ./save
+Would generate examples/ci.txt from: ./ci
+Would generate examples/fetch.txt from: ./fetch
+Would generate examples/fetch-ref_mediawiki_core_git.txt from: ./fetch ref/mediawiki/core.git
+Would generate examples/fetch-ref_mediawiki_extensions_echo_git-ref_mediawiki_skins_vector_git.txt from: ./fetch ref/mediawiki/extensions/Echo.git ref/mediawiki/skins/Vector.git
+Would generate examples/fetch-parallel_1.txt from: PARALLEL=1 ./fetch
+Would generate examples/fetch-verbose_1.txt from: VERBOSE=1 ./fetch
+Would generate examples/find_dependencies_minimal_bottom_up-extensions_echo.txt from: ./find_dependencies_minimal_bottom_up extensions/Echo
+Would generate examples/find_dependencies_minimal_bottom_up-extensions_echo-verbose_1.txt from: VERBOSE=1 ./find_dependencies_minimal_bottom_up extensions/Echo
+Would generate examples/find_dependencies_minimal_bottom_up-extensions_echo-fast_1.txt from: FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo
+Would generate examples/find_dependencies_minimal_bottom_up-extensions_echo-parallel_1.txt from: PARALLEL=1 ./find_dependencies_minimal_bottom_up extensions/Echo
+Would generate examples/find_dependencies_minimal_bottom_up-extensions_echo-parallel_1-fast_1.txt from: PARALLEL=1 FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo
+Would generate examples/find_dependencies_minimal_gated.txt from: ./find_dependencies_minimal_gated
+Would generate examples/find_dependencies_minimal_gated-extensions_echo.txt from: ./find_dependencies_minimal_gated extensions/Echo
+Would generate examples/find_dependencies_minimal_gated-verbose_1.txt from: VERBOSE=1 ./find_dependencies_minimal_gated
+Would generate examples/find_dependencies_minimal_gated-fast_1.txt from: FAST=1 ./find_dependencies_minimal_gated
+Would generate examples/find_dependencies_minimal_gated-parallel_1.txt from: PARALLEL=1 ./find_dependencies_minimal_gated
+Would generate examples/find_dependencies_minimal_gated-parallel_1-fast_1.txt from: PARALLEL=1 FAST=1 ./find_dependencies_minimal_gated
+Would generate examples/find_dependencies_minimal_greedy-extensions_echo.txt from: ./find_dependencies_minimal_greedy extensions/Echo
+Would generate examples/find_dependencies_minimal_greedy-extensions_echo-verbose_1.txt from: VERBOSE=1 ./find_dependencies_minimal_greedy extensions/Echo
+Would generate examples/find_dependencies_minimal_greedy-extensions_echo-fast_1.txt from: FAST=1 ./find_dependencies_minimal_greedy extensions/Echo
+Would generate examples/find_dependencies_minimal_thorough-extensions_echo.txt from: ./find_dependencies_minimal_thorough extensions/Echo
+Would generate examples/find_dependencies_minimal_thorough-extensions_echo-verbose_1.txt from: VERBOSE=1 ./find_dependencies_minimal_thorough extensions/Echo
+Would generate examples/find_dependencies_minimal_thorough-extensions_echo-fast_1.txt from: FAST=1 ./find_dependencies_minimal_thorough extensions/Echo
+Would generate examples/find_dependencies_minimal_thorough-extensions_echo-parallel_1.txt from: PARALLEL=1 ./find_dependencies_minimal_thorough extensions/Echo
+Would generate examples/find_dependencies_minimal_thorough-extensions_echo-parallel_1-fast_1.txt from: PARALLEL=1 FAST=1 ./find_dependencies_minimal_thorough extensions/Echo
+Would generate examples/help.txt from: ./help
+Would generate examples/help-install.txt from: ./help install
+Would generate examples/help-__install.txt from: ./help ./install
+Would generate examples/install-extensions_echo.txt from: ./install extensions/Echo
+Would generate examples/install-skins_minervaneue.txt from: ./install skins/MinervaNeue
+Would generate examples/install-extensions_echo-environment_0.txt from: ENVIRONMENT=0 ./install extensions/Echo
+Would generate examples/install-extensions_echo-verbose_1.txt from: VERBOSE=1 ./install extensions/Echo
+Would generate examples/install-extensions_echo-quibble_deps.txt from: QUIBBLE_DEPS="" ./install extensions/Echo
+Would generate examples/install-extensions_echo-quibble_deps_eventlogging.txt from: QUIBBLE_DEPS="EventLogging" ./install extensions/Echo
+Would generate examples/install-extensions_echo-dry_run_1.txt from: DRY_RUN=1 ./install extensions/Echo
+Would generate examples/install-extensions_echo-resolve_requires_0.txt from: RESOLVE_REQUIRES=0 ./install extensions/Echo
+Would generate examples/install_all_gated.txt from: ./install_all_gated
+Would generate examples/install_all_gated-verbose_1.txt from: VERBOSE=1 ./install_all_gated
+Would generate examples/install_each_gated.txt from: ./install_each_gated
+Would generate examples/install_each_gated-extensions_echo.txt from: ./install_each_gated extensions/Echo
+Would generate examples/install_each_gated-verbose_1.txt from: VERBOSE=1 ./install_each_gated
+Would generate examples/install_each_gated-fast_1.txt from: FAST=1 ./install_each_gated
+Would generate examples/install_each_gated-parallel_1.txt from: PARALLEL=1 ./install_each_gated
+Would generate examples/install_each_gated-parallel_1-fast_1.txt from: PARALLEL=1 FAST=1 ./install_each_gated
+Would generate examples/lint.txt from: ./lint
+Would generate examples/list_dependencies-extensions_echo.txt from: ./list_dependencies extensions/Echo
+Would generate examples/list_dependencies-skins_minervaneue.txt from: ./list_dependencies skins/MinervaNeue
+Would generate examples/list_dependencies_combinations-extensions_echo.txt from: ./list_dependencies_combinations extensions/Echo
+Would generate examples/list_dependencies_combinations-skins_minervaneue.txt from: ./list_dependencies_combinations skins/MinervaNeue
+Would generate examples/list_dependencies_optional-extensions_echo.txt from: ./list_dependencies_optional extensions/Echo
+Would generate examples/list_dependencies_optional-skins_minervaneue.txt from: ./list_dependencies_optional skins/MinervaNeue
+Would generate examples/list_dependencies_required-extensions_echo.txt from: ./list_dependencies_required extensions/Echo
+Would generate examples/list_dependencies_required-extensions_growthexperiments.txt from: ./list_dependencies_required extensions/GrowthExperiments
+Would generate examples/list_dependencies_required-skins_minervaneue.txt from: ./list_dependencies_required skins/MinervaNeue
+Would generate examples/list_gated.txt from: ./list_gated
+Would generate examples/restore.txt from: ./restore
+Would generate examples/restore-environment_0.txt from: ENVIRONMENT=0 ./restore
+Would generate examples/restore-verbose_1.txt from: VERBOSE=1 ./restore
+Would generate examples/run_php_unit_tests.txt from: ./run_php_unit_tests
+Would generate examples/run_php_unit_tests-filter.txt from: ./run_php_unit_tests --filter testValidSpecialPageAliases
+Would generate examples/run_php_unit_tests-extensions_echo.txt from: ./run_php_unit_tests extensions/Echo
+Would generate examples/run_php_unit_tests-extensions_echo-environment_0.txt from: ENVIRONMENT=0 ./run_php_unit_tests extensions/Echo
+Would generate examples/run_php_unit_tests-extensions_echo-filter.txt from: ./run_php_unit_tests extensions/Echo --filter testNotificationCount
+Would generate examples/run_php_unit_tests-extensions_echo-dry_run_1.txt from: DRY_RUN=1 ./run_php_unit_tests extensions/Echo
+Would generate examples/run_selenium_tests.txt from: ./run_selenium_tests
+Would generate examples/run_selenium_tests-extensions_echo.txt from: ./run_selenium_tests extensions/Echo
+Would generate examples/run_selenium_tests-extensions_echo-environment_0.txt from: ENVIRONMENT=0 ./run_selenium_tests extensions/Echo
+Would generate examples/run_selenium_tests-spec.txt from: ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js
+Skipping ./run_selenium_tests --spec tests/selenium/specs/page.js: examples/run_selenium_tests-spec.txt already generated (filename collision)
+Would generate examples/run_selenium_tests-extensions_echo-spec.txt from: ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js
+Would generate examples/run_selenium_tests-spec-mochaopts_grep.txt from: ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"
+Would generate examples/run_selenium_tests-extensions_echo-spec-mochaopts_grep.txt from: ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"
+Would generate examples/run_selenium_tests-extensions_echo-dry_run_1.txt from: DRY_RUN=1 ./run_selenium_tests extensions/Echo
+Would generate examples/run_selenium_tests_all_gated.txt from: ./run_selenium_tests_all_gated
+Would generate examples/run_selenium_tests_all_gated-extensions_echo.txt from: ./run_selenium_tests_all_gated extensions/Echo
+Would generate examples/run_selenium_tests_all_gated-verbose_1.txt from: VERBOSE=1 ./run_selenium_tests_all_gated
+Would generate examples/run_selenium_tests_all_gated-fast_1.txt from: FAST=1 ./run_selenium_tests_all_gated
+Would generate examples/run_selenium_tests_all_gated-parallel_1.txt from: PARALLEL=1 ./run_selenium_tests_all_gated
+Would generate examples/run_selenium_tests_all_gated-parallel_1-fast_1.txt from: PARALLEL=1 FAST=1 ./run_selenium_tests_all_gated
+Would generate examples/run_selenium_tests_gated.txt from: ./run_selenium_tests_gated
+Would generate examples/run_selenium_tests_gated-verbose_1.txt from: VERBOSE=1 ./run_selenium_tests_gated
+Would generate examples/run_selenium_tests_required_gated.txt from: ./run_selenium_tests_required_gated
+Would generate examples/run_selenium_tests_required_gated-extensions_echo.txt from: ./run_selenium_tests_required_gated extensions/Echo
+Would generate examples/run_selenium_tests_required_gated-verbose_1.txt from: VERBOSE=1 ./run_selenium_tests_required_gated
+Would generate examples/run_selenium_tests_required_gated-fast_1.txt from: FAST=1 ./run_selenium_tests_required_gated
+Would generate examples/run_selenium_tests_required_gated-parallel_1.txt from: PARALLEL=1 ./run_selenium_tests_required_gated
+Would generate examples/run_selenium_tests_required_gated-parallel_1-fast_1.txt from: PARALLEL=1 FAST=1 ./run_selenium_tests_required_gated
+Would generate examples/selenium_tests_exist.txt from: ./selenium_tests_exist
+Would generate examples/selenium_tests_exist-extensions_echo.txt from: ./selenium_tests_exist extensions/Echo
+Would generate examples/selenium_tests_exist-skins_minervaneue.txt from: ./selenium_tests_exist skins/MinervaNeue
+Would generate examples/selenium_tests_exist-skins_vector.txt from: ./selenium_tests_exist skins/Vector
+Would generate examples/suggest_parallel.txt from: ./suggest_parallel
+Would generate examples/run_selenium_tests_all_gated-parallel.txt from: PARALLEL=$(./suggest_parallel) ./run_selenium_tests_all_gated
+Would generate examples/test_integration.txt from: ./test_integration
+Would generate examples/test_integration-verbose_1.txt from: VERBOSE=1 ./test_integration
+Would generate examples/test_integration_slow.txt from: ./test_integration_slow
+Would generate examples/test_integration_slow-verbose_1.txt from: VERBOSE=1 ./test_integration_slow
+Would generate examples/test_unit.txt from: ./test_unit
+Would generate examples/test_unit-test_lib_awk_bats.txt from: ./test_unit test/lib_awk.bats
+Would generate examples/remove_srcs.txt from: ./remove_srcs
+Would generate examples/remove_srcs-verbose_1.txt from: VERBOSE=1 ./remove_srcs
+Would generate examples/remove.txt from: ./remove
+Would generate examples/remove-environment_0.txt from: ENVIRONMENT=0 ./remove
+Would generate examples/remove-verbose_1.txt from: VERBOSE=1 ./remove
+Would generate examples/remove_all.txt from: ./remove_all
+Would generate examples/remove_all-verbose_1.txt from: VERBOSE=1 ./remove_all
+generate_examples: generated 116, skipped 1, took 3s
