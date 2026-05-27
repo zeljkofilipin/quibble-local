@@ -1,2 +1,3 @@
 $ ./list_dependencies_required skins/MinervaNeue
 
+(no output)

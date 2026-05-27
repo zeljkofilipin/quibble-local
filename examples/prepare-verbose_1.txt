@@ -5,7 +5,7 @@ CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
 RAM: 15.6 GB
 bash: 5.2.21(1)-release
 git: git version 2.43.0
-docker: Docker version 29.4.3, build 055a478
+docker: Docker version 29.5.2, build 79eb04c
 docker CPUs: 4
 docker RAM: 15.6 GB
 
@@ -67,13 +67,13 @@ docker RAM: 15.6 GB
 = prepare is running: ref_dir=ref/mediawiki/vendor.git
 
 ========================================
-= prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/vendor
 
 ========================================
+= prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/vendor
+= prepare is running: git clone --bare https://gerrit.wikimedia.org/r/mediawiki/core ref/mediawiki/core.git
 
 ========================================
 = prepare is running: '[' -d ref/mediawiki/vendor.git ']'
-= prepare is running: git clone --bare https://gerrit.wikimedia.org/r/mediawiki/core ref/mediawiki/core.git
 
 ========================================
 = prepare is running: pids+=($!)
@@ -85,13 +85,13 @@ docker RAM: 15.6 GB
 = prepare is running: for ref_repo in "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"
 
 ========================================
-= prepare is running: ref_dir=ref/mediawiki/skins/Vector.git
 
 ========================================
+= prepare is running: ref_dir=ref/mediawiki/skins/Vector.git
+= prepare is running: git -C ref/mediawiki/vendor.git fetch
 
 ========================================
 = prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
-= prepare is running: git -C ref/mediawiki/vendor.git fetch
 
 ========================================
 = prepare is running: '[' -d ref/mediawiki/skins/Vector.git ']'
@@ -127,16 +127,16 @@ docker RAM: 15.6 GB
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 1532079
+= prepare is running: wait 255834
+Cloning into bare repository 'ref/mediawiki/core.git'...
 
 ========================================
 = prepare is running: git -C ref/mediawiki/skins/Vector.git fetch
-Cloning into bare repository 'ref/mediawiki/core.git'...
 
 ========================================
 = prepare is running: git -C ref/integration/config.git fetch
 latest: Pulling from releng/quibble-bullseye-php83
-Digest: sha256:ee977240ad32f4c3bf202e0ad11f7427fea93838f9060f7567c5884e0e746146
+Digest: sha256:0ff60d1beb4bb71469e47d1368ae213584bb8352bc0d761ae0891f7e9ec648d0
 Status: Image is up to date for docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
 docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
 
@@ -144,7 +144,7 @@ docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 1532080
+= prepare is running: wait 255835
 From https://gerrit.wikimedia.org/r/mediawiki/vendor
  * branch                HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
@@ -156,19 +156,19 @@ From https://gerrit.wikimedia.org/r/integration/config
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 1532081
+= prepare is running: wait 255836
 
 ========================================
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 1532082
+= prepare is running: wait 255837
 
 ========================================
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 1532083
+= prepare is running: wait 255838
 
 ========================================
 = prepare is running: '[' 0 -gt 0 ']'
@@ -184,4 +184,4 @@ From https://gerrit.wikimedia.org/r/integration/config
 
 ========================================
 = prepare is running: local exit_code=0
-(3m 42s)
+(3m 48s)

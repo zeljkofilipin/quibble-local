@@ -1,2 +1,3 @@
 $ ./selenium_tests_exist extensions/Echo
 
+(no output)

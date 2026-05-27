@@ -8,14 +8,14 @@ CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
 RAM: 15.6 GB
 bash: 5.2.21(1)-release
 git: git version 2.43.0
-docker: Docker version 29.4.3, build 055a478
+docker: Docker version 29.5.2, build 79eb04c
 docker CPUs: 4
 docker RAM: 15.6 GB
 
 
 Parallel mode: 4 workers
 
---- Wave 1-4 of 52 (4 workers) --- 2026-05-17 07:31:09 UTC
+--- Wave 1-4 of 52 (4 workers) --- 2026-05-26 15:46:48 UTC
   Worker 1: extensions/AbuseFilter
   Worker 2: extensions/AntiSpoof
   Worker 3: extensions/Babel
@@ -25,7 +25,7 @@ Parallel mode: 4 workers
   extensions/Babel: skipped (no Selenium tests)
   extensions/BetaFeatures: skipped (no Selenium tests)
 
---- Wave 5-8 of 52 (4 workers) --- 2026-05-17 07:43:03 UTC
+--- Wave 5-8 of 52 (4 workers) --- 2026-05-26 15:58:46 UTC
   Worker 1: extensions/CampaignEvents
   Worker 2: extensions/CheckUser
   Worker 3: extensions/CirrusSearch
@@ -35,7 +35,7 @@ Parallel mode: 4 workers
   extensions/CirrusSearch: skipped (no Selenium tests)
   extensions/cldr: skipped (no Selenium tests)
 
---- Wave 9-12 of 52 (4 workers) --- 2026-05-17 07:55:38 UTC
+--- Wave 9-12 of 52 (4 workers) --- 2026-05-26 16:11:18 UTC
   Worker 1: extensions/ContentTranslation
   Worker 2: extensions/CommunityConfiguration
   Worker 3: extensions/CommunityConfigurationExample
@@ -45,7 +45,7 @@ Parallel mode: 4 workers
   extensions/CommunityConfigurationExample: skipped (no Selenium tests)
   extensions/Disambiguator: skipped (no Selenium tests)
 
---- Wave 13-16 of 52 (4 workers) --- 2026-05-17 08:08:49 UTC
+--- Wave 13-16 of 52 (4 workers) --- 2026-05-26 16:24:08 UTC
   Worker 1: extensions/Echo
   Worker 2: extensions/Elastica
   Worker 3: extensions/EventBus
@@ -55,17 +55,17 @@ Parallel mode: 4 workers
   extensions/EventBus: skipped (no Selenium tests)
   extensions/EventLogging: skipped (no Selenium tests)
 
---- Wave 17-20 of 52 (4 workers) --- 2026-05-17 08:20:22 UTC
+--- Wave 17-20 of 52 (4 workers) --- 2026-05-26 16:36:14 UTC
   Worker 1: extensions/EventStreamConfig
   Worker 2: extensions/FileImporter
   Worker 3: extensions/GeoData
   Worker 4: extensions/GlobalCssJs
-  extensions/EventStreamConfig: skipped (no Selenium tests)
+  extensions/EventStreamConfig: FAIL (see log/silent/worker-1/extensions-EventStreamConfig.log)
   extensions/FileImporter: skipped (no Selenium tests)
   extensions/GeoData: skipped (no Selenium tests)
   extensions/GlobalCssJs: skipped (no Selenium tests)
 
---- Wave 21-24 of 52 (4 workers) --- 2026-05-17 08:30:12 UTC
+--- Wave 21-24 of 52 (4 workers) --- 2026-05-26 16:46:18 UTC
   Worker 1: extensions/GlobalPreferences
   Worker 2: extensions/GrowthExperiments
   Worker 3: extensions/GuidedTour
@@ -75,7 +75,7 @@ Parallel mode: 4 workers
   extensions/GuidedTour: ok
   extensions/IPInfo: skipped (no Selenium tests)
 
---- Wave 25-28 of 52 (4 workers) --- 2026-05-17 08:43:29 UTC
+--- Wave 25-28 of 52 (4 workers) --- 2026-05-26 16:59:31 UTC
   Worker 1: extensions/JsonConfig
   Worker 2: extensions/Kartographer
   Worker 3: extensions/Math
@@ -85,7 +85,7 @@ Parallel mode: 4 workers
   extensions/Math: ok
   extensions/MediaModeration: skipped (no Selenium tests)
 
---- Wave 29-32 of 52 (4 workers) --- 2026-05-17 08:55:11 UTC
+--- Wave 29-32 of 52 (4 workers) --- 2026-05-26 17:11:19 UTC
   Worker 1: extensions/MobileApp
   Worker 2: extensions/MobileFrontend
   Worker 3: extensions/NavigationTiming
@@ -95,7 +95,7 @@ Parallel mode: 4 workers
   extensions/NavigationTiming: skipped (no Selenium tests)
   extensions/PageImages: skipped (no Selenium tests)
 
---- Wave 33-36 of 52 (4 workers) --- 2026-05-17 09:04:59 UTC
+--- Wave 33-36 of 52 (4 workers) --- 2026-05-26 17:21:06 UTC
   Worker 1: extensions/PageTriage
   Worker 2: extensions/PageViewInfo
   Worker 3: extensions/ProofreadPage
@@ -105,7 +105,7 @@ Parallel mode: 4 workers
   extensions/ProofreadPage: ok
   extensions/SandboxLink: skipped (no Selenium tests)
 
---- Wave 37-40 of 52 (4 workers) --- 2026-05-17 09:18:06 UTC
+--- Wave 37-40 of 52 (4 workers) --- 2026-05-26 17:34:44 UTC
   Worker 1: extensions/Scribunto
   Worker 2: extensions/SiteMatrix
   Worker 3: extensions/TemplateData
@@ -115,7 +115,7 @@ Parallel mode: 4 workers
   extensions/TemplateData: ok
   extensions/Thanks: skipped (no Selenium tests)
 
---- Wave 41-44 of 52 (4 workers) --- 2026-05-17 09:30:03 UTC
+--- Wave 41-44 of 52 (4 workers) --- 2026-05-26 17:47:05 UTC
   Worker 1: extensions/TimedMediaHandler
   Worker 2: extensions/Translate
   Worker 3: extensions/UniversalLanguageSelector
@@ -125,7 +125,7 @@ Parallel mode: 4 workers
   extensions/UniversalLanguageSelector: skipped (no Selenium tests)
   extensions/VisualEditor: ok
 
---- Wave 45-48 of 52 (4 workers) --- 2026-05-17 09:42:15 UTC
+--- Wave 45-48 of 52 (4 workers) --- 2026-05-26 17:59:21 UTC
   Worker 1: extensions/Wikibase
   Worker 2: extensions/WikibaseCirrusSearch
   Worker 3: extensions/WikibaseMediaInfo
@@ -135,7 +135,7 @@ Parallel mode: 4 workers
   extensions/WikibaseMediaInfo: FAIL (see log/silent/worker-3/extensions-WikibaseMediaInfo.log)
   extensions/WikiLove: skipped (no Selenium tests)
 
---- Wave 49-52 of 52 (4 workers) --- 2026-05-17 09:52:15 UTC
+--- Wave 49-52 of 52 (4 workers) --- 2026-05-26 18:09:11 UTC
   Worker 1: extensions/WikimediaCampaignEvents
   Worker 2: extensions/WikimediaMessages
   Worker 3: skins/MinervaNeue
@@ -144,7 +144,7 @@ Parallel mode: 4 workers
   extensions/WikimediaMessages: skipped (no Selenium tests)
   skins/MinervaNeue: FAIL (see log/silent/worker-3/skins-MinervaNeue.log)
   skins/Vector: skipped (no Selenium tests)
-  (10 passed, 2 failed, 40 skipped) 2026-05-17 10:03:59 UTC
+  (10 passed, 3 failed, 39 skipped) 2026-05-26 18:21:41 UTC
 
 SKIPPED (no Selenium tests):
   extensions/AntiSpoof
@@ -159,7 +159,6 @@ SKIPPED (no Selenium tests):
   extensions/Elastica
   extensions/EventBus
   extensions/EventLogging
-  extensions/EventStreamConfig
   extensions/FileImporter
   extensions/GeoData
   extensions/GlobalCssJs
@@ -203,8 +202,9 @@ PASSED:
   extensions/TemplateData
   extensions/VisualEditor
 FAILED:
+  extensions/EventStreamConfig
   extensions/WikibaseMediaInfo
   skins/MinervaNeue
 
 Logs: log/silent/
-(2h 32m 50s)
+(2h 34m 53s)
