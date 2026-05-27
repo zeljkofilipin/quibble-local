@@ -2,48 +2,14 @@ $ ./test_unit test/lib_awk.bats
 
 use VERBOSE=1 for full output
 
-OS: Linux 6.14.0-37-generic
-CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
-RAM: 15.6 GB
-bash: 5.2.21(1)-release
-git: git version 2.43.0
-docker: Docker version 29.5.2, build 79eb04c
+OS: Linux 7.0.0-15-generic
+CPU: Intel(R) Core(TM) i5-4260U CPU @ 1.40GHz (4 cores)
+RAM: 3.3 GB
+bash: 5.3.9(1)-release
+git: git version 2.53.0
+docker: Docker version 29.4.0, build 9d7ad9f
 docker CPUs: 4
-docker RAM: 15.6 GB
+docker RAM: 3.3 GB
 
-1..34
-ok 1 combinations.awk: single item
-ok 2 combinations.awk: two items
-ok 3 combinations.awk: three items ordered by size
-ok 4 combinations.awk: empty input produces no output
-ok 5 combinations_with_empty.awk: single item includes empty line
-ok 6 combinations_with_empty.awk: two items includes empty line
-ok 7 combinations_with_empty.awk: empty input produces one empty line
-ok 8 parse_yaml_list.awk: extracts list under matching key
-ok 9 parse_yaml_list.awk: returns nothing for missing key
-ok 10 parse_yaml_list.awk: stops at next top-level key
-ok 11 parse_python_list.awk: extracts list entries
-ok 12 parse_python_list.awk: returns nothing for missing list
-ok 13 parse_python_list.awk: handles multiple lists
-ok 14 parse_requires.awk: extracts required extensions
-ok 15 parse_requires.awk: extracts required skins with prefix
-ok 16 parse_requires.awk: extracts both extensions and skins
-ok 17 parse_requires.awk: returns nothing when no requires
-ok 18 parse_usage.awk: single-line Usage
-ok 19 parse_usage.awk: multi-line Usage with continuations
-ok 20 parse_usage.awk: stops at blank comment line
-ok 21 parse_usage.awk: stops at non-comment line
-ok 22 parse_usage.awk: stops at single-space comment line
-ok 23 parse_usage.awk: returns nothing when no Usage block
-ok 24 parse_usage.awk: strips trailing inline # comment
-ok 25 scrub_pwd.awk: replaces single occurrence with $PWD placeholder
-ok 26 scrub_pwd.awk: leaves unrelated paths alone
-ok 27 scrub_pwd.awk: leaves prefix-only matches alone (requires trailing slash)
-ok 28 scrub_pwd.awk: handles multiple occurrences on one line
-ok 29 scrub_pwd.awk: treats path as a literal string (no regex metachars)
-ok 30 scrub_pwd.awk: passes lines through unchanged when no path appears
-ok 31 extract_found_block.awk: extracts 'No dependencies needed' block
-ok 32 extract_found_block.awk: extracts block with required and optional deps
-ok 33 extract_found_block.awk: handles seconds-only duration line
-ok 34 extract_found_block.awk: returns nothing when no FOUND block is present
-(1s)
+Error: bats is not installed. See https://github.com/bats-core/bats-core
+(0s) 2026-05-27 15:36:52 UTC

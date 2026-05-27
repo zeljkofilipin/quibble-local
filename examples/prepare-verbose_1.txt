@@ -1,13 +1,13 @@
 $ VERBOSE=1 ./prepare
 
-OS: Linux 6.14.0-37-generic
-CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
-RAM: 15.6 GB
-bash: 5.2.21(1)-release
-git: git version 2.43.0
-docker: Docker version 29.5.2, build 79eb04c
+OS: Linux 7.0.0-15-generic
+CPU: Intel(R) Core(TM) i5-4260U CPU @ 1.40GHz (4 cores)
+RAM: 3.3 GB
+bash: 5.3.9(1)-release
+git: git version 2.53.0
+docker: Docker version 29.4.0, build 9d7ad9f
 docker CPUs: 4
-docker RAM: 15.6 GB
+docker RAM: 3.3 GB
 
 
 
@@ -61,16 +61,16 @@ docker RAM: 15.6 GB
 = prepare is running: pid_names+=("$ref_dir")
 
 ========================================
+
+========================================
 = prepare is running: for ref_repo in "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"
+= prepare is running: git -C ref/mediawiki/core.git fetch
 
 ========================================
 = prepare is running: ref_dir=ref/mediawiki/vendor.git
 
 ========================================
-
-========================================
 = prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/vendor
-= prepare is running: git clone --bare https://gerrit.wikimedia.org/r/mediawiki/core ref/mediawiki/core.git
 
 ========================================
 = prepare is running: '[' -d ref/mediawiki/vendor.git ']'
@@ -85,9 +85,9 @@ docker RAM: 15.6 GB
 = prepare is running: for ref_repo in "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"
 
 ========================================
+= prepare is running: ref_dir=ref/mediawiki/skins/Vector.git
 
 ========================================
-= prepare is running: ref_dir=ref/mediawiki/skins/Vector.git
 = prepare is running: git -C ref/mediawiki/vendor.git fetch
 
 ========================================
@@ -115,6 +115,12 @@ docker RAM: 15.6 GB
 = prepare is running: '[' -d ref/integration/config.git ']'
 
 ========================================
+= prepare is running: git -C ref/mediawiki/skins/Vector.git fetch
+
+========================================
+= prepare is running: git -C ref/integration/config.git fetch
+
+========================================
 = prepare is running: pids+=($!)
 
 ========================================
@@ -127,16 +133,9 @@ docker RAM: 15.6 GB
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 255834
-Cloning into bare repository 'ref/mediawiki/core.git'...
-
-========================================
-= prepare is running: git -C ref/mediawiki/skins/Vector.git fetch
-
-========================================
-= prepare is running: git -C ref/integration/config.git fetch
+= prepare is running: wait 29377
 latest: Pulling from releng/quibble-bullseye-php83
-Digest: sha256:0ff60d1beb4bb71469e47d1368ae213584bb8352bc0d761ae0891f7e9ec648d0
+Digest: sha256:0632872d96c96f44179f29947b77f350584c90673775198f46f6ae1c5e144db9
 Status: Image is up to date for docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
 docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
 
@@ -144,31 +143,33 @@ docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 255835
-From https://gerrit.wikimedia.org/r/mediawiki/vendor
+= prepare is running: wait 29378
+From https://gerrit.wikimedia.org/r/integration/config
  * branch                HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
  * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/integration/config
+From https://gerrit.wikimedia.org/r/mediawiki/vendor
  * branch                HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/core
+ * branch                    HEAD       -> FETCH_HEAD
 
 ========================================
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 255836
+= prepare is running: wait 29379
 
 ========================================
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 255837
+= prepare is running: wait 29380
 
 ========================================
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 255838
+= prepare is running: wait 29381
 
 ========================================
 = prepare is running: '[' 0 -gt 0 ']'
@@ -184,4 +185,4 @@ From https://gerrit.wikimedia.org/r/integration/config
 
 ========================================
 = prepare is running: local exit_code=0
-(3m 48s)
+(2s) 2026-05-27 11:40:34 UTC

@@ -1,13 +1,13 @@
 $ VERBOSE=1 ./fetch
 
-OS: Linux 6.14.0-37-generic
-CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
-RAM: 15.6 GB
-bash: 5.2.21(1)-release
-git: git version 2.43.0
-docker: Docker version 29.5.2, build 79eb04c
+OS: Linux 7.0.0-15-generic
+CPU: Intel(R) Core(TM) i5-4260U CPU @ 1.40GHz (4 cores)
+RAM: 3.3 GB
+bash: 5.3.9(1)-release
+git: git version 2.53.0
+docker: Docker version 29.4.0, build 9d7ad9f
 docker CPUs: 4
-docker RAM: 15.6 GB
+docker RAM: 3.3 GB
 
 
 
@@ -539,7 +539,34 @@ docker RAM: 15.6 GB
 = fetch is running: read -r repo
 
 ========================================
-= fetch is running: '[' 55 -eq 0 ']'
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: '[' 58 -eq 0 ']'
 
 ========================================
 = fetch is running: '[' 1 -le 1 ']'
@@ -556,17 +583,9 @@ From https://gerrit.wikimedia.org/r/integration/config
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/vendor.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/vendor
- * branch                HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/core.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/core
- * branch                    HEAD       -> FETCH_HEAD
+= fetch is running: git -C ref/mediawiki/skins/Vector.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
+ * branch              HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -580,57 +599,49 @@ From https://gerrit.wikimedia.org/r/mediawiki/skins/MinervaNeue
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/skins/Vector.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
- * branch              HEAD       -> FETCH_HEAD
+= fetch is running: git -C ref/mediawiki/core.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/core
+ * branch                    HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/CommunityConfigurationExample.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfigurationExample
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/SandboxLink.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/SandboxLink
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/CirrusSearch.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CirrusSearch
+= fetch is running: git -C ref/mediawiki/vendor.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/vendor
  * branch                HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/CommunityConfiguration.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfiguration
+= fetch is running: git -C ref/mediawiki/extensions/MobileApp.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileApp
  * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/JsonConfig.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/JsonConfig
+= fetch is running: git -C ref/mediawiki/extensions/Wikibase.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Wikibase
+ * branch                  HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Thanks.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Thanks
  * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/CheckUser.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CheckUser
- * branch              HEAD       -> FETCH_HEAD
+= fetch is running: git -C ref/mediawiki/extensions/BetaFeatures.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/BetaFeatures
+ * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -644,8 +655,128 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageTriage
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/WikiLove.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikiLove
+= fetch is running: git -C ref/mediawiki/extensions/Kartographer.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Kartographer
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/PageImages.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageImages
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Echo.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Echo
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/CirrusSearch.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CirrusSearch
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/UniversalLanguageSelector.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/UniversalLanguageSelector
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/EventStreamConfig.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventStreamConfig
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Scribunto.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Scribunto
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Cite.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Cite
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Math.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Math
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/NavigationTiming.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/NavigationTiming
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/ContentTranslation.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/ContentTranslation
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/cldr.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/cldr
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/CentralAuth.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CentralAuth
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/WikimediaCampaignEvents.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaCampaignEvents
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Elastica.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Elastica
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/EventBus.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventBus
  * branch            HEAD       -> FETCH_HEAD
 
 ========================================
@@ -660,9 +791,41 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseMediaInfo
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/WikimediaMessages.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaMessages
- * branch                HEAD       -> FETCH_HEAD
+= fetch is running: git -C ref/mediawiki/extensions/GlobalCssJs.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalCssJs
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/JsonConfig.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/JsonConfig
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/AbuseFilter.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/AbuseFilter
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/FileImporter.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/FileImporter
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/AntiSpoof.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/AntiSpoof
+ * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -676,41 +839,73 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageViewInfo
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/IPInfo.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/IPInfo
+= fetch is running: git -C ref/mediawiki/extensions/CommunityConfiguration.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfiguration
  * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/Translate.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Translate
+= fetch is running: git -C ref/mediawiki/extensions/WikiLove.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikiLove
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/EventLogging.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventLogging
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/SiteMatrix.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/SiteMatrix
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/WikimediaMessages.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaMessages
  * branch                HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/MediaModeration.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/MediaModeration
+= fetch is running: git -C ref/mediawiki/extensions/GeoData.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GeoData
  * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/PageImages.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageImages
- * branch            HEAD       -> FETCH_HEAD
+= fetch is running: git -C ref/mediawiki/extensions/MobileFrontend.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
+ * branch                HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/FileImporter.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/FileImporter
+= fetch is running: git -C ref/mediawiki/extensions/TemplateData.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/TemplateData
  * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/GuidedTour.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GuidedTour
+ * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -732,6 +927,22 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/TimedMediaHandler
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
+= fetch is running: git -C ref/mediawiki/extensions/SandboxLink.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/SandboxLink
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/TestKitchen.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/TestKitchen
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
 = fetch is running: git -C ref/mediawiki/extensions/Babel.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Babel
  * branch            HEAD       -> FETCH_HEAD
@@ -740,48 +951,32 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Babel
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/ContentTranslation.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/ContentTranslation
+= fetch is running: git -C ref/mediawiki/extensions/Translate.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Translate
  * branch                HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/Scribunto.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Scribunto
+= fetch is running: git -C ref/mediawiki/extensions/GlobalPreferences.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalPreferences
  * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/MobileApp.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileApp
- * branch            HEAD       -> FETCH_HEAD
+= fetch is running: git -C ref/mediawiki/extensions/GrowthExperiments.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GrowthExperiments
+ * branch                HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/WikimediaCampaignEvents.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaCampaignEvents
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/Echo.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Echo
- * branch              HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/GuidedTour.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GuidedTour
+= fetch is running: git -C ref/mediawiki/extensions/WikibaseCirrusSearch.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseCirrusSearch
  * branch            HEAD       -> FETCH_HEAD
 
 ========================================
@@ -796,9 +991,17 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/cldr.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/cldr
+= fetch is running: git -C ref/mediawiki/extensions/Disambiguator.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Disambiguator
  * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/CheckUser.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CheckUser
+ * branch              HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -812,176 +1015,24 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/CampaignEvents
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/GrowthExperiments.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GrowthExperiments
- * branch                HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/Thanks.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Thanks
- * branch              HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/TemplateData.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/TemplateData
- * branch              HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/SiteMatrix.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/SiteMatrix
+= fetch is running: git -C ref/mediawiki/extensions/IPInfo.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/IPInfo
  * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/MobileFrontend.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
- * branch                HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/NavigationTiming.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/NavigationTiming
+= fetch is running: git -C ref/mediawiki/extensions/MediaModeration.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/MediaModeration
  * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/Disambiguator.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Disambiguator
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/EventLogging.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventLogging
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/Elastica.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Elastica
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/BetaFeatures.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/BetaFeatures
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/GeoData.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GeoData
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/Kartographer.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Kartographer
- * branch              HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/AntiSpoof.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/AntiSpoof
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/Math.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Math
- * branch              HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/EventStreamConfig.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventStreamConfig
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/AbuseFilter.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/AbuseFilter
- * branch              HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/GlobalCssJs.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalCssJs
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/EventBus.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventBus
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/Wikibase.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Wikibase
- * branch                  HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/WikibaseCirrusSearch.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseCirrusSearch
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/UniversalLanguageSelector.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/UniversalLanguageSelector
- * branch              HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/GlobalPreferences.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalPreferences
+= fetch is running: git -C ref/mediawiki/extensions/CommunityConfigurationExample.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfigurationExample
  * branch            HEAD       -> FETCH_HEAD
 
 ========================================
@@ -989,4 +1040,4 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalPreferences
 
 ========================================
 = fetch is running: local exit_code=0
-(1m 28s)
+(55s) 2026-05-27 11:47:00 UTC

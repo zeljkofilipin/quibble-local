@@ -3,174 +3,68 @@ $ PARALLEL=$(./suggest_parallel) ./run_selenium_tests_all_gated
 use VERBOSE=1 for full output
 logs: log/silent/
 
-OS: Linux 6.14.0-37-generic
-CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
-RAM: 15.6 GB
-bash: 5.2.21(1)-release
-git: git version 2.43.0
-docker: Docker version 29.5.2, build 79eb04c
+OS: Linux 7.0.0-15-generic
+CPU: Intel(R) Core(TM) i5-4260U CPU @ 1.40GHz (4 cores)
+RAM: 3.3 GB
+bash: 5.3.9(1)-release
+git: git version 2.53.0
+docker: Docker version 29.4.0, build 9d7ad9f
 docker CPUs: 4
-docker RAM: 15.6 GB
+docker RAM: 3.3 GB
 
-core fresh_install .................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................. ok (1m 53s) run_selenium_tests ........................................................................................................................................................................................................................................................................................................................................................................................................................... ok (1m 21s)  2026-05-25 00:21:09 UTC
-
-Parallel mode: 2 workers
-
---- Wave 1-2 of 52 (2 workers) --- 2026-05-25 00:21:09 UTC
-  Worker 1: extensions/AbuseFilter
-  Worker 2: extensions/AntiSpoof
-  extensions/AbuseFilter: ok
-  extensions/AntiSpoof: ok
-
---- Wave 3-4 of 52 (2 workers) --- 2026-05-25 00:29:12 UTC
-  Worker 1: extensions/Babel
-  Worker 2: extensions/BetaFeatures
-  extensions/Babel: ok
-  extensions/BetaFeatures: ok
-
---- Wave 5-6 of 52 (2 workers) --- 2026-05-25 00:34:06 UTC
-  Worker 1: extensions/CampaignEvents
-  Worker 2: extensions/CheckUser
-  extensions/CampaignEvents: ok
-  extensions/CheckUser: ok
-
---- Wave 7-8 of 52 (2 workers) --- 2026-05-25 00:42:43 UTC
-  Worker 1: extensions/CirrusSearch
-  Worker 2: extensions/cldr
-  extensions/CirrusSearch: ok
-  extensions/cldr: ok
-
---- Wave 9-10 of 52 (2 workers) --- 2026-05-25 00:48:35 UTC
-  Worker 1: extensions/ContentTranslation
-  Worker 2: extensions/CommunityConfiguration
-  extensions/ContentTranslation: ok
-  extensions/CommunityConfiguration: ok
-
---- Wave 11-12 of 52 (2 workers) --- 2026-05-25 00:56:52 UTC
-  Worker 1: extensions/CommunityConfigurationExample
-  Worker 2: extensions/Disambiguator
-  extensions/CommunityConfigurationExample: ok
-  extensions/Disambiguator: ok
-
---- Wave 13-14 of 52 (2 workers) --- 2026-05-25 01:02:19 UTC
-  Worker 1: extensions/Echo
-  Worker 2: extensions/Elastica
-  extensions/Echo: ok
-  extensions/Elastica: ok
-
---- Wave 15-16 of 52 (2 workers) --- 2026-05-25 01:09:41 UTC
-  Worker 1: extensions/EventBus
-  Worker 2: extensions/EventLogging
-  extensions/EventBus: ok
-  extensions/EventLogging: ok
-
---- Wave 17-18 of 52 (2 workers) --- 2026-05-25 01:15:18 UTC
-  Worker 1: extensions/EventStreamConfig
-  Worker 2: extensions/FileImporter
-  extensions/EventStreamConfig: ok
-  extensions/FileImporter: ok
-
---- Wave 19-20 of 52 (2 workers) --- 2026-05-25 01:21:13 UTC
-  Worker 1: extensions/GeoData
-  Worker 2: extensions/GlobalCssJs
-  extensions/GeoData: ok
-  extensions/GlobalCssJs: ok
-
---- Wave 21-22 of 52 (2 workers) --- 2026-05-25 01:26:58 UTC
-  Worker 1: extensions/GlobalPreferences
-  Worker 2: extensions/GrowthExperiments
-  extensions/GlobalPreferences: ok
-  extensions/GrowthExperiments: ok
-
---- Wave 23-24 of 52 (2 workers) --- 2026-05-25 01:33:19 UTC
-  Worker 1: extensions/GuidedTour
-  Worker 2: extensions/IPInfo
-  extensions/GuidedTour: ok
-  extensions/IPInfo: ok
-
---- Wave 25-26 of 52 (2 workers) --- 2026-05-25 01:41:53 UTC
-  Worker 1: extensions/JsonConfig
-  Worker 2: extensions/Kartographer
-  extensions/JsonConfig: ok
-  extensions/Kartographer: ok
-
---- Wave 27-28 of 52 (2 workers) --- 2026-05-25 01:47:57 UTC
-  Worker 1: extensions/Math
-  Worker 2: extensions/MediaModeration
-  extensions/Math: ok
-  extensions/MediaModeration: ok
-
---- Wave 29-30 of 52 (2 workers) --- 2026-05-25 01:55:29 UTC
-  Worker 1: extensions/MobileApp
-  Worker 2: extensions/MobileFrontend
-  extensions/MobileApp: ok
-  extensions/MobileFrontend: ok
-
---- Wave 31-32 of 52 (2 workers) --- 2026-05-25 02:01:48 UTC
-  Worker 1: extensions/NavigationTiming
-  Worker 2: extensions/PageImages
-  extensions/NavigationTiming: ok
-  extensions/PageImages: ok
-
---- Wave 33-34 of 52 (2 workers) --- 2026-05-25 02:07:27 UTC
-  Worker 1: extensions/PageTriage
-  Worker 2: extensions/PageViewInfo
-  extensions/PageTriage: ok
-  extensions/PageViewInfo: ok
-
---- Wave 35-36 of 52 (2 workers) --- 2026-05-25 02:14:51 UTC
-  Worker 1: extensions/ProofreadPage
-  Worker 2: extensions/SandboxLink
-  extensions/ProofreadPage: ok
-  extensions/SandboxLink: ok
-
---- Wave 37-38 of 52 (2 workers) --- 2026-05-25 02:22:47 UTC
-  Worker 1: extensions/Scribunto
-  Worker 2: extensions/SiteMatrix
-  extensions/Scribunto: ok
-  extensions/SiteMatrix: ok
-
---- Wave 39-40 of 52 (2 workers) --- 2026-05-25 02:28:25 UTC
-  Worker 1: extensions/TemplateData
-  Worker 2: extensions/Thanks
-  extensions/TemplateData: ok
-  extensions/Thanks: ok
-
---- Wave 41-42 of 52 (2 workers) --- 2026-05-25 02:36:00 UTC
-  Worker 1: extensions/TimedMediaHandler
-  Worker 2: extensions/Translate
-  extensions/TimedMediaHandler: ok
-  extensions/Translate: ok
-
---- Wave 43-44 of 52 (2 workers) --- 2026-05-25 02:41:55 UTC
-  Worker 1: extensions/UniversalLanguageSelector
-  Worker 2: extensions/VisualEditor
-  extensions/UniversalLanguageSelector: ok
-  extensions/VisualEditor: ok
-
---- Wave 45-46 of 52 (2 workers) --- 2026-05-25 02:50:00 UTC
-  Worker 1: extensions/Wikibase
-  Worker 2: extensions/WikibaseCirrusSearch
-  extensions/Wikibase: ok
-  extensions/WikibaseCirrusSearch: ok
-
---- Wave 47-48 of 52 (2 workers) --- 2026-05-25 02:56:34 UTC
-  Worker 1: extensions/WikibaseMediaInfo
-  Worker 2: extensions/WikiLove
-  extensions/WikibaseMediaInfo: ok
-  extensions/WikiLove: ok
-
---- Wave 49-50 of 52 (2 workers) --- 2026-05-25 03:02:24 UTC
-  Worker 1: extensions/WikimediaCampaignEvents
-  Worker 2: extensions/WikimediaMessages
-  extensions/WikimediaCampaignEvents: ok
-  extensions/WikimediaMessages: ok
-
---- Wave 51-52 of 52 (2 workers) --- 2026-05-25 03:07:52 UTC
-  Worker 1: skins/MinervaNeue
-  Worker 2: skins/Vector
-  skins/MinervaNeue: ok
-  skins/Vector: ok
+core fresh_install .............................................. ok (2s)  2026-05-27 14:48:41 UTC
+extensions/AbuseFilter fresh_install .............................................. ok (1s) install .................................................. ok (12s) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:48:57 UTC
+extensions/AntiSpoof fresh_install .............................................. ok (2s) install ................................................. ok (3s)  2026-05-27 14:49:03 UTC
+extensions/Babel fresh_install .............................................. ok (1s) install .................................................. ok (4s)  2026-05-27 14:49:09 UTC
+extensions/BetaFeatures fresh_install .............................................. ok (2s) install ................................................. ok (3s)  2026-05-27 14:49:15 UTC
+extensions/CampaignEvents fresh_install .............................................. ok (2s) install .................................................. ok (10s) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:49:29 UTC
+extensions/CheckUser fresh_install .............................................. ok (2s) install .................................................. ok (17s)  2026-05-27 14:49:49 UTC
+extensions/CirrusSearch fresh_install .............................................. ok (2s) install .................................................. ok (12s)  2026-05-27 14:50:04 UTC
+extensions/cldr fresh_install .............................................. ok (1s) install ................................................. ok (3s)  2026-05-27 14:50:09 UTC
+extensions/ContentTranslation fresh_install .............................................. ok (2s) install .................................................. ok (10s)  2026-05-27 14:50:22 UTC
+extensions/CommunityConfiguration fresh_install .............................................. ok (2s) install .................................................. ok (4s) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:50:30 UTC
+extensions/CommunityConfigurationExample fresh_install .............................................. ok (1s) install .................................................. ok (4s)  2026-05-27 14:50:36 UTC
+extensions/Disambiguator fresh_install .............................................. ok (2s) install .................................................. ok (4s)  2026-05-27 14:50:43 UTC
+extensions/Echo fresh_install .............................................. ok (2s) install .................................................. ok (6s) run_selenium_tests .............................................. ok (2s)  2026-05-27 14:50:54 UTC
+extensions/Elastica fresh_install .............................................. ok (1s) install ................................................. ok (3s)  2026-05-27 14:50:59 UTC
+extensions/EventBus fresh_install .............................................. ok (2s) install .................................................. ok (4s)  2026-05-27 14:51:06 UTC
+extensions/EventLogging fresh_install .............................................. ok (2s) install .................................................. ok (5s)  2026-05-27 14:51:14 UTC
+extensions/EventStreamConfig fresh_install .............................................. ok (2s) install ................................................. ok (3s)  2026-05-27 14:51:20 UTC
+extensions/FileImporter fresh_install .............................................. ok (2s) install .................................................. ok (6s)  2026-05-27 14:51:29 UTC
+extensions/GeoData fresh_install .............................................. ok (2s) install .................................................. ok (5s)  2026-05-27 14:51:36 UTC
+extensions/GlobalCssJs fresh_install .............................................. ok (2s) install ................................................. ok (3s)  2026-05-27 14:51:42 UTC
+extensions/GlobalPreferences fresh_install .............................................. ok (2s) install ................................................. ok (3s)  2026-05-27 14:51:48 UTC
+extensions/GrowthExperiments fresh_install .............................................. ok (1s) install .................................................. ok (20s)  2026-05-27 14:52:10 UTC
+extensions/GuidedTour fresh_install .............................................. ok (2s) install .................................................. ok (4s) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:52:18 UTC
+extensions/IPInfo fresh_install .............................................. ok (2s) install .................................................. ok (8s)  2026-05-27 14:52:29 UTC
+extensions/JsonConfig fresh_install .............................................. ok (1s) install .................................................. ok (7s)  2026-05-27 14:52:38 UTC
+extensions/Kartographer fresh_install .............................................. ok (2s) install .................................................. ok (8s)  2026-05-27 14:52:49 UTC
+extensions/Math fresh_install .............................................. ok (2s) install .................................................. ok (5s) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:52:58 UTC
+extensions/MediaModeration fresh_install .............................................. ok (2s) install ................................................. ok (3s)  2026-05-27 14:53:04 UTC
+extensions/MobileApp fresh_install .............................................. ok (2s) install .................................................. ok (7s)  2026-05-27 14:53:14 UTC
+extensions/MobileFrontend fresh_install .............................................. ok (1s) install .................................................. ok (7s)  2026-05-27 14:53:23 UTC
+extensions/NavigationTiming fresh_install .............................................. ok (2s) install .................................................. ok (4s)  2026-05-27 14:53:30 UTC
+extensions/PageImages fresh_install .............................................. ok (2s) install ................................................. ok (3s)  2026-05-27 14:53:36 UTC
+extensions/PageTriage fresh_install .............................................. ok (2s) install .................................................. ok (7s) run_selenium_tests .............................................. ok (2s)  2026-05-27 14:53:47 UTC
+extensions/PageViewInfo fresh_install .............................................. ok (1s) install ................................................. ok (3s)  2026-05-27 14:53:52 UTC
+extensions/ProofreadPage fresh_install .............................................. ok (2s) install .................................................. ok (8s) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:54:04 UTC
+extensions/SandboxLink fresh_install .............................................. ok (1s) install ................................................. ok (4s)  2026-05-27 14:54:10 UTC
+extensions/Scribunto fresh_install .............................................. ok (1s) install ................................................. ok (3s)  2026-05-27 14:54:15 UTC
+extensions/SiteMatrix fresh_install .............................................. ok (2s) install ................................................. ok (3s)  2026-05-27 14:54:21 UTC
+extensions/TemplateData fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:54:28 UTC
+extensions/Thanks fresh_install .............................................. ok (2s) install .................................................. ok (8s)  2026-05-27 14:54:39 UTC
+extensions/TimedMediaHandler fresh_install .............................................. ok (1s) install ................................................. ok (3s)  2026-05-27 14:54:44 UTC
+extensions/Translate fresh_install .............................................. ok (2s) install .................................................. ok (8s)  2026-05-27 14:54:55 UTC
+extensions/UniversalLanguageSelector fresh_install .............................................. ok (1s) install .................................................. ok (4s)  2026-05-27 14:55:01 UTC
+extensions/VisualEditor fresh_install .............................................. ok (2s) install .................................................. ok (9s) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:55:14 UTC
+extensions/Wikibase fresh_install .............................................. ok (2s) install .................................................. ok (19s)  2026-05-27 14:55:37 UTC
+extensions/WikibaseCirrusSearch fresh_install .............................................. ok (1s) install .................................................. ok (8s)  2026-05-27 14:55:47 UTC
+extensions/WikibaseMediaInfo fresh_install .............................................. ok (1s) install .................................................. ok (9s)  2026-05-27 14:55:58 UTC
+extensions/WikiLove fresh_install .............................................. ok (2s) install ................................................. ok (4s)  2026-05-27 14:56:05 UTC
+extensions/WikimediaCampaignEvents fresh_install .............................................. ok (1s) install .................................................. ok (6s)  2026-05-27 14:56:13 UTC
+extensions/WikimediaMessages fresh_install .............................................. ok (2s) install .................................................. ok (4s)  2026-05-27 14:56:20 UTC
+skins/MinervaNeue fresh_install .............................................. ok (2s) install .................................................. ok (10s) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:56:34 UTC
+skins/Vector fresh_install .............................................. ok (2s) install ................................................. ok (3s)  2026-05-27 14:56:40 UTC
 
 ========================================
 = Results
@@ -231,4 +125,4 @@ PASSED:
   skins/Vector
 
 All passed.
-(2h 58m 3s)
+(8m 1s) 2026-05-27 14:56:40 UTC
