@@ -84,6 +84,16 @@ setup() {
   ! grep -qF '(no output)' "$output_file"
 }
 
+@test "generate_example: does NOT print 'Done!' on completion" {
+  # Regression guard: an earlier version printed "Done!" after each capture. The line added
+  # no information — the next "Generating ..." line from generate_examples is the natural
+  # separator, and (Xs) from lib/duration_trap signals completion when TIME_ELAPSED=1.
+  # The check covers both stdout and stderr (bats' $output captures both).
+  run ./generate_example "$output_file" 'true'
+  [ "$status" -eq 0 ]
+  ! [[ "$output" == *"Done!"* ]]
+}
+
 @test "generate_example: scrubs project absolute path to \$PWD placeholder in captured output" {
   # generate_example pipes captured stdout+stderr through lib/scrub_pwd.awk so docker -v
   # mount lines (and any other absolute path) become "$PWD/..." in examples/*.txt. This
