@@ -30,10 +30,10 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
 
 Greedy mode: starting with all 4 optional deps, removing one at a time.
 
-=== Baseline: all dependencies === 2026-05-27 12:40:18 UTC
+=== Baseline: all dependencies === 2026-05-28 10:33:51 UTC
 
 ========================================
-= extensions/Echo: ./fresh_install 2026-05-27 12:40:18 UTC
+= extensions/Echo: ./fresh_install 2026-05-28 10:33:51 UTC
 ========================================
 
 
@@ -140,12 +140,12 @@ docker run \
 ========================================
 = fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
 + /usr/bin/supervisord
-2026-05-27 12:40:19,910 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:40:19,914 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:40:19,914 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:40:19,916 INFO daemonizing the supervisord process
+2026-05-28 10:33:52,173 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:33:52,176 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:33:52,176 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:33:52,178 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
-2026-05-27 12:40:19,916 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:33:52,179 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -172,10 +172,10 @@ DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(2s)
+(1s)
 
 ========================================
-= extensions/Echo: ./install extensions/Echo 2026-05-27 12:40:20 UTC
+= extensions/Echo: ./install extensions/Echo 2026-05-28 10:33:52 UTC
 ========================================
 
 
@@ -322,12 +322,12 @@ docker run \
 ========================================
 = install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 + /usr/bin/supervisord
-2026-05-27 12:40:26,699 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:40:26,703 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:40:26,703 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:40:26,705 INFO daemonizing the supervisord process
+2026-05-28 10:33:58,642 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:33:58,645 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:33:58,645 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:33:58,647 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-27 12:40:26,705 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:33:58,648 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -357,7 +357,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (7s)
 
 ========================================
-= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-27 12:40:27 UTC
+= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-28 10:33:59 UTC
 ========================================
 
 
@@ -434,12 +434,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-27 12:40:27,853 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:40:27,857 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:40:27,857 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:40:27,859 INFO daemonizing the supervisord process
+2026-05-28 10:33:59,771 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:33:59,774 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:33:59,774 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:33:59,776 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-27 12:40:27,859 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:33:59,777 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -464,10 +464,10 @@ DEBUG:quibble.cmd:Run all browser tests
 WARNING:quibble.cmd:Exiting without execution: --dry-run
 (1s)
 
-=== Try removing AntiSpoof (1/4, pass 1) === 2026-05-27 12:40:28 UTC
+=== Try removing AntiSpoof (1/4, pass 1) === 2026-05-28 10:34:00 UTC
 
 ========================================
-= extensions/Echo: ./fresh_install 2026-05-27 12:40:28 UTC
+= extensions/Echo: ./fresh_install 2026-05-28 10:34:00 UTC
 ========================================
 
 
@@ -574,12 +574,12 @@ docker run \
 ========================================
 = fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
 + /usr/bin/supervisord
-2026-05-27 12:40:29,679 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:40:29,683 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:40:29,683 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:40:29,685 INFO daemonizing the supervisord process
+2026-05-28 10:34:01,664 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:34:01,668 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:34:01,668 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:34:01,671 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
-2026-05-27 12:40:29,686 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:34:01,672 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -609,7 +609,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (2s)
 
 ========================================
-= extensions/Echo: ./install extensions/Echo 2026-05-27 12:40:30 UTC
+= extensions/Echo: ./install extensions/Echo 2026-05-28 10:34:02 UTC
 ========================================
 
 
@@ -756,12 +756,12 @@ docker run \
 ========================================
 = install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 + /usr/bin/supervisord
-2026-05-27 12:40:35,636 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:40:35,640 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:40:35,640 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:40:35,642 INFO daemonizing the supervisord process
+2026-05-28 10:34:07,435 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:34:07,440 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:34:07,440 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:34:07,442 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-27 12:40:35,643 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:34:07,443 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -788,10 +788,10 @@ DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(6s)
+(5s)
 
 ========================================
-= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-27 12:40:36 UTC
+= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-28 10:34:07 UTC
 ========================================
 
 
@@ -868,12 +868,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-27 12:40:36,737 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:40:36,741 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:40:36,741 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:40:36,743 INFO daemonizing the supervisord process
+2026-05-28 10:34:08,589 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:34:08,592 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:34:08,593 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:34:08,595 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-27 12:40:36,744 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:34:08,596 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -896,13 +896,13 @@ DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:Run all browser tests
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(1s)
+(2s)
 Tests passed without AntiSpoof, removing it
 
-=== Try removing CentralAuth (2/4, pass 1) === 2026-05-27 12:40:37 UTC
+=== Try removing CentralAuth (2/4, pass 1) === 2026-05-28 10:34:09 UTC
 
 ========================================
-= extensions/Echo: ./fresh_install 2026-05-27 12:40:37 UTC
+= extensions/Echo: ./fresh_install 2026-05-28 10:34:09 UTC
 ========================================
 
 
@@ -1009,12 +1009,12 @@ docker run \
 ========================================
 = fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
 + /usr/bin/supervisord
-2026-05-27 12:40:38,359 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:40:38,363 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:40:38,363 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:40:38,365 INFO daemonizing the supervisord process
+2026-05-28 10:34:10,509 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:34:10,513 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:34:10,513 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:34:10,516 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
-2026-05-27 12:40:38,365 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:34:10,516 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -1041,10 +1041,10 @@ DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(1s)
+(2s)
 
 ========================================
-= extensions/Echo: ./install extensions/Echo 2026-05-27 12:40:38 UTC
+= extensions/Echo: ./install extensions/Echo 2026-05-28 10:34:11 UTC
 ========================================
 
 
@@ -1191,12 +1191,12 @@ docker run \
 ========================================
 = install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 + /usr/bin/supervisord
-2026-05-27 12:40:43,250 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:40:43,254 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:40:43,254 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:40:43,256 INFO daemonizing the supervisord process
+2026-05-28 10:34:15,268 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:34:15,273 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:34:15,273 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:34:15,275 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-27 12:40:43,258 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:34:15,276 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -1223,10 +1223,10 @@ DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(5s)
+(4s)
 
 ========================================
-= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-27 12:40:43 UTC
+= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-28 10:34:15 UTC
 ========================================
 
 
@@ -1303,12 +1303,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-27 12:40:44,307 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:40:44,310 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:40:44,311 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:40:44,312 INFO daemonizing the supervisord process
+2026-05-28 10:34:16,293 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:34:16,297 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:34:16,297 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:34:16,299 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-27 12:40:44,313 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:34:16,300 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -1334,10 +1334,10 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (1s)
 Tests passed without CentralAuth, removing it
 
-=== Try removing EventLogging (3/4, pass 1) === 2026-05-27 12:40:44 UTC
+=== Try removing EventLogging (3/4, pass 1) === 2026-05-28 10:34:16 UTC
 
 ========================================
-= extensions/Echo: ./fresh_install 2026-05-27 12:40:44 UTC
+= extensions/Echo: ./fresh_install 2026-05-28 10:34:16 UTC
 ========================================
 
 
@@ -1444,12 +1444,12 @@ docker run \
 ========================================
 = fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
 + /usr/bin/supervisord
-2026-05-27 12:40:46,011 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:40:46,014 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:40:46,015 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:40:46,016 INFO daemonizing the supervisord process
+2026-05-28 10:34:17,842 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:34:17,846 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:34:17,846 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:34:17,848 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
-2026-05-27 12:40:46,017 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:34:17,849 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -1479,7 +1479,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (2s)
 
 ========================================
-= extensions/Echo: ./install extensions/Echo 2026-05-27 12:40:46 UTC
+= extensions/Echo: ./install extensions/Echo 2026-05-28 10:34:18 UTC
 ========================================
 
 
@@ -1626,12 +1626,12 @@ docker run \
 ========================================
 = install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true mediawiki/extensions/MobileFrontend
 + /usr/bin/supervisord
-2026-05-27 12:40:53,117 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:40:53,120 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:40:53,121 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:40:53,122 INFO daemonizing the supervisord process
+2026-05-28 10:34:21,786 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:34:21,790 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:34:21,790 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:34:21,792 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true mediawiki/extensions/MobileFrontend
-2026-05-27 12:40:53,123 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:34:21,793 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -1658,10 +1658,10 @@ DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(7s)
+(4s)
 
 ========================================
-= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-27 12:40:53 UTC
+= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-28 10:34:22 UTC
 ========================================
 
 
@@ -1738,12 +1738,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-27 12:40:54,230 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:40:54,234 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:40:54,234 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:40:54,236 INFO daemonizing the supervisord process
+2026-05-28 10:34:23,040 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:34:23,044 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:34:23,044 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:34:23,046 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-27 12:40:54,237 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:34:23,047 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -1769,10 +1769,10 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (1s)
 Tests passed without EventLogging, removing it
 
-=== Try removing MobileFrontend (4/4, pass 1) === 2026-05-27 12:40:54 UTC
+=== Try removing MobileFrontend (4/4, pass 1) === 2026-05-28 10:34:23 UTC
 
 ========================================
-= extensions/Echo: ./fresh_install 2026-05-27 12:40:54 UTC
+= extensions/Echo: ./fresh_install 2026-05-28 10:34:23 UTC
 ========================================
 
 
@@ -1879,12 +1879,12 @@ docker run \
 ========================================
 = fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
 + /usr/bin/supervisord
-2026-05-27 12:40:56,090 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:40:56,093 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:40:56,094 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:40:56,095 INFO daemonizing the supervisord process
+2026-05-28 10:34:24,816 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:34:24,820 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:34:24,821 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:34:24,823 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
-2026-05-27 12:40:56,096 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:34:24,824 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -1914,7 +1914,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (2s)
 
 ========================================
-= extensions/Echo: ./install extensions/Echo 2026-05-27 12:40:56 UTC
+= extensions/Echo: ./install extensions/Echo 2026-05-28 10:34:25 UTC
 ========================================
 
 
@@ -2060,12 +2060,12 @@ docker run \
 ========================================
 = install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
 + /usr/bin/supervisord
-2026-05-27 12:41:03,607 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:41:03,611 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:41:03,611 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:41:03,613 INFO daemonizing the supervisord process
+2026-05-28 10:34:27,728 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:34:27,732 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:34:27,732 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:34:27,734 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
-2026-05-27 12:41:03,614 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:34:27,735 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -2092,10 +2092,10 @@ DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(8s)
+(3s)
 
 ========================================
-= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-27 12:41:04 UTC
+= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-05-28 10:34:28 UTC
 ========================================
 
 
@@ -2172,12 +2172,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-27 12:41:04,840 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:41:04,844 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:41:04,844 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:41:04,846 INFO daemonizing the supervisord process
+2026-05-28 10:34:28,821 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:34:28,825 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:34:28,826 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:34:28,828 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-27 12:41:04,847 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:34:28,829 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -2212,4 +2212,4 @@ Tests passed without MobileFrontend, removing it
 No dependencies needed.
 
 No optional dependencies needed (confirmed).
-(50s) 2026-05-27 12:41:05 UTC
+(42s) 2026-05-28 10:34:29 UTC

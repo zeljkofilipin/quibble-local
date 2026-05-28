@@ -34,19 +34,19 @@ fetch(MobileFrontend) ..
 
 Greedy mode: starting with all 4 optional deps, removing one at a time.
 
-=== Baseline: all dependencies === 2026-05-27 12:39:36 UTC
-fresh_install .............................................. ok (1s) install ................................................ ok (7s) run_selenium_tests .............................................. ok (1s) 
-=== Try removing AntiSpoof (1/4, pass 1) === 2026-05-27 12:39:45 UTC
+=== Baseline: all dependencies === 2026-05-28 10:33:07 UTC
+fresh_install .............................................. ok (2s) install ................................................ ok (7s) run_selenium_tests .............................................. ok (1s) 
+=== Try removing AntiSpoof (1/4, pass 1) === 2026-05-28 10:33:17 UTC
 fresh_install .............................................. ok (2s) install ................................................ ok (6s) run_selenium_tests .............................................. ok (1s) Tests passed without AntiSpoof, removing it
 
-=== Try removing CentralAuth (2/4, pass 1) === 2026-05-27 12:39:54 UTC
+=== Try removing CentralAuth (2/4, pass 1) === 2026-05-28 10:33:26 UTC
 fresh_install .............................................. ok (2s) install ................................................ ok (5s) run_selenium_tests .............................................. ok (1s) Tests passed without CentralAuth, removing it
 
-=== Try removing EventLogging (3/4, pass 1) === 2026-05-27 12:40:02 UTC
-fresh_install .............................................. ok (1s) install ................................................ ok (4s) run_selenium_tests .............................................. ok (2s) Tests passed without EventLogging, removing it
+=== Try removing EventLogging (3/4, pass 1) === 2026-05-28 10:33:34 UTC
+fresh_install .............................................. ok (2s) install ................................................ ok (4s) run_selenium_tests .............................................. ok (1s) Tests passed without EventLogging, removing it
 
-=== Try removing MobileFrontend (4/4, pass 1) === 2026-05-27 12:40:09 UTC
-fresh_install .............................................. ok (1s) install ............................................... ok (3s) run_selenium_tests .............................................. ok (1s) Tests passed without MobileFrontend, removing it
+=== Try removing MobileFrontend (4/4, pass 1) === 2026-05-28 10:33:41 UTC
+fresh_install .............................................. ok (2s) install ............................................... ok (3s) run_selenium_tests .............................................. ok (1s) Tests passed without MobileFrontend, removing it
 
 --- Verification pass 2 (re-checking 0 remaining deps) ---
 
@@ -57,4 +57,4 @@ fresh_install .............................................. ok (1s) install ...
 No dependencies needed.
 
 No optional dependencies needed (confirmed).
-(42s) 2026-05-27 12:40:14 UTC
+(44s) 2026-05-28 10:33:47 UTC

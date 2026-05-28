@@ -30,11 +30,11 @@ fetch(CentralAuth) ..
 fetch(EventLogging) ..
 fetch(MobileFrontend) ..
 
-=== Combination 1/16: (none) === 2026-05-27 11:47:38 UTC
-fresh_install .............................................. ok (2s) install ............................................... ok (3s) run_selenium_tests .............................................. ok (2s) 
+=== Combination 1/16: (none) === 2026-05-28 09:42:11 UTC
+fresh_install .............................................. ok (1s) install ............................................... ok (3s) run_selenium_tests .............................................. ok (1s) 
 ========================================
 = FOUND: minimum dependencies for extensions/Echo
 ========================================
 
 No dependencies needed.
-(11s) 2026-05-27 11:47:45 UTC
+(9s) 2026-05-28 09:42:16 UTC

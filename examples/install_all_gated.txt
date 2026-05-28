@@ -12,59 +12,59 @@ docker: Docker version 29.4.0, build 9d7ad9f
 docker CPUs: 4
 docker RAM: 3.3 GB
 
-core fresh_install .............................................. ok (2s)  2026-05-27 12:44:42 UTC
-extensions/AbuseFilter install .................................................. ok (11s)  2026-05-27 12:44:53 UTC
-extensions/AntiSpoof install ................................................. ok (3s)  2026-05-27 12:44:56 UTC
-extensions/Babel install .................................................. ok (4s)  2026-05-27 12:45:00 UTC
-extensions/BetaFeatures install ................................................. ok (3s)  2026-05-27 12:45:03 UTC
-extensions/CampaignEvents install .................................................. ok (10s)  2026-05-27 12:45:13 UTC
-extensions/CheckUser install ...................................................... ok (24s)  2026-05-27 12:45:37 UTC
-extensions/CirrusSearch install .................................................... ok (13s)  2026-05-27 12:45:50 UTC
-extensions/cldr install ................................................. ok (3s)  2026-05-27 12:45:53 UTC
-extensions/ContentTranslation install .................................................. ok (10s)  2026-05-27 12:46:03 UTC
-extensions/CommunityConfiguration install .................................................. ok (4s)  2026-05-27 12:46:07 UTC
-extensions/CommunityConfigurationExample install .................................................. ok (4s)  2026-05-27 12:46:11 UTC
-extensions/Disambiguator install .................................................. ok (4s)  2026-05-27 12:46:15 UTC
-extensions/Echo install .................................................. ok (7s)  2026-05-27 12:46:22 UTC
-extensions/Elastica install ................................................. ok (3s)  2026-05-27 12:46:25 UTC
-extensions/EventBus install .................................................. ok (4s)  2026-05-27 12:46:29 UTC
-extensions/EventLogging install .................................................. ok (5s)  2026-05-27 12:46:34 UTC
-extensions/EventStreamConfig install ................................................. ok (3s)  2026-05-27 12:46:37 UTC
-extensions/FileImporter install .................................................. ok (6s)  2026-05-27 12:46:43 UTC
-extensions/GeoData install .................................................. ok (5s)  2026-05-27 12:46:48 UTC
-extensions/GlobalCssJs install ................................................. ok (3s)  2026-05-27 12:46:51 UTC
-extensions/GlobalPreferences install ................................................. ok (2s)  2026-05-27 12:46:53 UTC
-extensions/GrowthExperiments install .................................................... ok (25s)  2026-05-27 12:47:18 UTC
-extensions/GuidedTour install .................................................. ok (4s)  2026-05-27 12:47:22 UTC
-extensions/IPInfo install .................................................... ok (9s)  2026-05-27 12:47:31 UTC
-extensions/JsonConfig install .................................................. ok (7s)  2026-05-27 12:47:38 UTC
-extensions/Kartographer install .................................................. ok (8s)  2026-05-27 12:47:46 UTC
-extensions/Math install .................................................. ok (6s)  2026-05-27 12:47:52 UTC
-extensions/MediaModeration install ................................................. ok (3s)  2026-05-27 12:47:55 UTC
-extensions/MobileApp install .................................................. ok (7s)  2026-05-27 12:48:02 UTC
-extensions/MobileFrontend install .................................................. ok (6s)  2026-05-27 12:48:08 UTC
-extensions/NavigationTiming install .................................................. ok (4s)  2026-05-27 12:48:12 UTC
-extensions/PageImages install ................................................. ok (3s)  2026-05-27 12:48:15 UTC
-extensions/PageTriage install .................................................. ok (7s)  2026-05-27 12:48:22 UTC
-extensions/PageViewInfo install ................................................. ok (3s)  2026-05-27 12:48:25 UTC
-extensions/ProofreadPage install .................................................. ok (8s)  2026-05-27 12:48:33 UTC
-extensions/SandboxLink install ................................................. ok (3s)  2026-05-27 12:48:36 UTC
-extensions/Scribunto install ................................................. ok (3s)  2026-05-27 12:48:39 UTC
-extensions/SiteMatrix install ................................................. ok (3s)  2026-05-27 12:48:42 UTC
-extensions/TemplateData install ................................................. ok (3s)  2026-05-27 12:48:45 UTC
-extensions/Thanks install .................................................. ok (7s)  2026-05-27 12:48:52 UTC
-extensions/TimedMediaHandler install ................................................. ok (4s)  2026-05-27 12:48:56 UTC
-extensions/Translate install .................................................. ok (7s)  2026-05-27 12:49:03 UTC
-extensions/UniversalLanguageSelector install .................................................. ok (4s)  2026-05-27 12:49:07 UTC
-extensions/VisualEditor install .................................................. ok (9s)  2026-05-27 12:49:16 UTC
-extensions/Wikibase install .............................................................. ok (32s)  2026-05-27 12:49:48 UTC
-extensions/WikibaseCirrusSearch install .................................................. ok (7s)  2026-05-27 12:49:55 UTC
-extensions/WikibaseMediaInfo install .................................................. ok (9s)  2026-05-27 12:50:04 UTC
-extensions/WikiLove install ................................................. ok (3s)  2026-05-27 12:50:07 UTC
-extensions/WikimediaCampaignEvents install .................................................. ok (6s)  2026-05-27 12:50:13 UTC
-extensions/WikimediaMessages install .................................................. ok (3s)  2026-05-27 12:50:16 UTC
-skins/MinervaNeue install .................................................. ok (10s)  2026-05-27 12:50:26 UTC
-skins/Vector install ................................................. ok (3s)  2026-05-27 12:50:29 UTC
+core fresh_install .............................................. ok (2s)  2026-05-28 10:37:29 UTC
+extensions/AbuseFilter install .................................................. ok (11s)  2026-05-28 10:37:40 UTC
+extensions/AntiSpoof install ................................................. ok (3s)  2026-05-28 10:37:43 UTC
+extensions/Babel install .................................................. ok (4s)  2026-05-28 10:37:47 UTC
+extensions/BetaFeatures install ................................................. ok (3s)  2026-05-28 10:37:50 UTC
+extensions/CampaignEvents install .................................................. ok (9s)  2026-05-28 10:37:59 UTC
+extensions/CheckUser install .................................................... ok (18s)  2026-05-28 10:38:17 UTC
+extensions/CirrusSearch install .................................................... ok (12s)  2026-05-28 10:38:29 UTC
+extensions/cldr install ................................................. ok (3s)  2026-05-28 10:38:32 UTC
+extensions/ContentTranslation install .................................................. ok (9s)  2026-05-28 10:38:41 UTC
+extensions/CommunityConfiguration install .................................................. ok (3s)  2026-05-28 10:38:44 UTC
+extensions/CommunityConfigurationExample install .................................................. ok (4s)  2026-05-28 10:38:48 UTC
+extensions/Disambiguator install .................................................. ok (4s)  2026-05-28 10:38:52 UTC
+extensions/Echo install .................................................. ok (6s)  2026-05-28 10:38:58 UTC
+extensions/Elastica install ................................................. ok (3s)  2026-05-28 10:39:01 UTC
+extensions/EventBus install .................................................. ok (4s)  2026-05-28 10:39:05 UTC
+extensions/EventLogging install .................................................. ok (5s)  2026-05-28 10:39:10 UTC
+extensions/EventStreamConfig install ................................................. ok (3s)  2026-05-28 10:39:13 UTC
+extensions/FileImporter install .................................................. ok (5s)  2026-05-28 10:39:18 UTC
+extensions/GeoData install .................................................. ok (5s)  2026-05-28 10:39:23 UTC
+extensions/GlobalCssJs install ................................................. ok (3s)  2026-05-28 10:39:26 UTC
+extensions/GlobalPreferences install ................................................. ok (2s)  2026-05-28 10:39:28 UTC
+extensions/GrowthExperiments install ...................................................... ok (30s)  2026-05-28 10:39:58 UTC
+extensions/GuidedTour install .................................................. ok (4s)  2026-05-28 10:40:02 UTC
+extensions/IPInfo install .................................................... ok (9s)  2026-05-28 10:40:11 UTC
+extensions/JsonConfig install .................................................. ok (7s)  2026-05-28 10:40:18 UTC
+extensions/Kartographer install .................................................. ok (7s)  2026-05-28 10:40:25 UTC
+extensions/Math install .................................................. ok (5s)  2026-05-28 10:40:30 UTC
+extensions/MediaModeration install ................................................. ok (3s)  2026-05-28 10:40:33 UTC
+extensions/MobileApp install .................................................. ok (6s)  2026-05-28 10:40:39 UTC
+extensions/MobileFrontend install .................................................. ok (7s)  2026-05-28 10:40:46 UTC
+extensions/NavigationTiming install .................................................. ok (3s)  2026-05-28 10:40:49 UTC
+extensions/PageImages install ................................................. ok (3s)  2026-05-28 10:40:52 UTC
+extensions/PageTriage install .................................................. ok (7s)  2026-05-28 10:40:59 UTC
+extensions/PageViewInfo install ................................................. ok (3s)  2026-05-28 10:41:02 UTC
+extensions/ProofreadPage install .................................................. ok (7s)  2026-05-28 10:41:09 UTC
+extensions/SandboxLink install ................................................. ok (3s)  2026-05-28 10:41:12 UTC
+extensions/Scribunto install ................................................. ok (3s)  2026-05-28 10:41:15 UTC
+extensions/SiteMatrix install ................................................. ok (3s)  2026-05-28 10:41:18 UTC
+extensions/TemplateData install ................................................. ok (3s)  2026-05-28 10:41:21 UTC
+extensions/Thanks install .................................................. ok (7s)  2026-05-28 10:41:28 UTC
+extensions/TimedMediaHandler install ................................................. ok (3s)  2026-05-28 10:41:31 UTC
+extensions/Translate install .................................................. ok (7s)  2026-05-28 10:41:38 UTC
+extensions/UniversalLanguageSelector install .................................................. ok (4s)  2026-05-28 10:41:42 UTC
+extensions/VisualEditor install .................................................. ok (9s)  2026-05-28 10:41:51 UTC
+extensions/Wikibase install .............................................................. ok (29s)  2026-05-28 10:42:20 UTC
+extensions/WikibaseCirrusSearch install .................................................. ok (6s)  2026-05-28 10:42:26 UTC
+extensions/WikibaseMediaInfo install .................................................. ok (8s)  2026-05-28 10:42:34 UTC
+extensions/WikiLove install ................................................. ok (3s)  2026-05-28 10:42:37 UTC
+extensions/WikimediaCampaignEvents install .................................................. ok (5s)  2026-05-28 10:42:42 UTC
+extensions/WikimediaMessages install .................................................. ok (4s)  2026-05-28 10:42:46 UTC
+skins/MinervaNeue install .................................................. ok (9s)  2026-05-28 10:42:55 UTC
+skins/Vector install ................................................. ok (3s)  2026-05-28 10:42:58 UTC
 
 ========================================
 = Results
@@ -125,4 +125,4 @@ PASSED:
   skins/Vector
 
 All passed.
-(5m 49s) 2026-05-27 12:50:29 UTC
+(5m 31s) 2026-05-28 10:42:58 UTC

@@ -12,4 +12,4 @@ docker: Docker version 29.4.0, build 9d7ad9f
 docker CPUs: 4
 docker RAM: 3.3 GB
 
-run_php_unit_tests .............................................. ok (2s)
+run_php_unit_tests .............................................. ok (1s)

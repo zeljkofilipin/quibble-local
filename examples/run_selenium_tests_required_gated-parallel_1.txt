@@ -12,110 +12,110 @@ docker: Docker version 29.4.0, build 9d7ad9f
 docker CPUs: 4
 docker RAM: 3.3 GB
 
-extensions/AbuseFilter fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s) 
-  (1 passed, 0 failed, 0 skipped) 2026-05-27 14:38:21 UTC
+extensions/AbuseFilter fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s) 
+  (1 passed, 0 failed, 0 skipped) 2026-05-28 12:24:20 UTC
 extensions/AntiSpoof fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (1 passed, 0 failed, 1 skipped) 2026-05-27 14:38:27 UTC
+  (1 passed, 0 failed, 1 skipped) 2026-05-28 12:24:26 UTC
 extensions/Babel fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (1 passed, 0 failed, 2 skipped) 2026-05-27 14:38:33 UTC
+  (1 passed, 0 failed, 2 skipped) 2026-05-28 12:24:32 UTC
 extensions/BetaFeatures fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (1 passed, 0 failed, 3 skipped) 2026-05-27 14:38:38 UTC
+  (1 passed, 0 failed, 3 skipped) 2026-05-28 12:24:37 UTC
 extensions/CampaignEvents fresh_install .............................................. ok (2s) install .................................................. ok (4s) run_selenium_tests .............................................. ok (1s) 
-  (2 passed, 0 failed, 3 skipped) 2026-05-27 14:38:46 UTC
+  (2 passed, 0 failed, 3 skipped) 2026-05-28 12:24:45 UTC
 extensions/CheckUser fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (2 passed, 0 failed, 4 skipped) 2026-05-27 14:38:52 UTC
+  (2 passed, 0 failed, 4 skipped) 2026-05-28 12:24:51 UTC
 extensions/CirrusSearch fresh_install .............................................. ok (2s) install .................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
-  (2 passed, 0 failed, 5 skipped) 2026-05-27 14:38:59 UTC
+  (2 passed, 0 failed, 5 skipped) 2026-05-28 12:24:57 UTC
 extensions/cldr fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (2 passed, 0 failed, 6 skipped) 2026-05-27 14:39:05 UTC
+  (2 passed, 0 failed, 6 skipped) 2026-05-28 12:25:03 UTC
 extensions/ContentTranslation fresh_install .............................................. ok (1s) install .................................................. ok (7s) run_selenium_tests skipped (no Selenium tests) 
-  (2 passed, 0 failed, 7 skipped) 2026-05-27 14:39:14 UTC
+  (2 passed, 0 failed, 7 skipped) 2026-05-28 12:25:12 UTC
 extensions/CommunityConfiguration fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s) 
-  (3 passed, 0 failed, 7 skipped) 2026-05-27 14:39:21 UTC
-extensions/CommunityConfigurationExample fresh_install .............................................. ok (2s) install .................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
-  (3 passed, 0 failed, 8 skipped) 2026-05-27 14:39:28 UTC
-extensions/Disambiguator fresh_install .............................................. ok (1s) install ................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
-  (3 passed, 0 failed, 9 skipped) 2026-05-27 14:39:33 UTC
-extensions/Echo fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s) 
-  (4 passed, 0 failed, 9 skipped) 2026-05-27 14:39:40 UTC
-extensions/Elastica fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (4 passed, 0 failed, 10 skipped) 2026-05-27 14:39:46 UTC
-extensions/EventBus fresh_install .............................................. ok (1s) install ................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
-  (4 passed, 0 failed, 11 skipped) 2026-05-27 14:39:52 UTC
+  (3 passed, 0 failed, 7 skipped) 2026-05-28 12:25:19 UTC
+extensions/CommunityConfigurationExample fresh_install .............................................. ok (1s) install .................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
+  (3 passed, 0 failed, 8 skipped) 2026-05-28 12:25:25 UTC
+extensions/Disambiguator fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (3 passed, 0 failed, 9 skipped) 2026-05-28 12:25:31 UTC
+extensions/Echo fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s) 
+  (4 passed, 0 failed, 9 skipped) 2026-05-28 12:25:38 UTC
+extensions/Elastica fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (4 passed, 0 failed, 10 skipped) 2026-05-28 12:25:43 UTC
+extensions/EventBus fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (4 passed, 0 failed, 11 skipped) 2026-05-28 12:25:49 UTC
 extensions/EventLogging fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (4 passed, 0 failed, 12 skipped) 2026-05-27 14:39:58 UTC
-extensions/EventStreamConfig fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (4 passed, 0 failed, 13 skipped) 2026-05-27 14:40:04 UTC
-extensions/FileImporter fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (4 passed, 0 failed, 14 skipped) 2026-05-27 14:40:10 UTC
-extensions/GeoData fresh_install .............................................. ok (1s) install ................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
-  (4 passed, 0 failed, 15 skipped) 2026-05-27 14:40:15 UTC
-extensions/GlobalCssJs fresh_install .............................................. ok (1s) install ................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
-  (4 passed, 0 failed, 16 skipped) 2026-05-27 14:40:22 UTC
+  (4 passed, 0 failed, 12 skipped) 2026-05-28 12:25:55 UTC
+extensions/EventStreamConfig fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (4 passed, 0 failed, 13 skipped) 2026-05-28 12:26:00 UTC
+extensions/FileImporter fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (4 passed, 0 failed, 14 skipped) 2026-05-28 12:26:06 UTC
+extensions/GeoData fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (4 passed, 0 failed, 15 skipped) 2026-05-28 12:26:11 UTC
+extensions/GlobalCssJs fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (4 passed, 0 failed, 16 skipped) 2026-05-28 12:26:17 UTC
 extensions/GlobalPreferences fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (4 passed, 0 failed, 17 skipped) 2026-05-27 14:40:27 UTC
+  (4 passed, 0 failed, 17 skipped) 2026-05-28 12:26:22 UTC
 extensions/GrowthExperiments fresh_install .............................................. ok (2s) install .................................................. ok (5s) run_selenium_tests skipped (no Selenium tests) 
-  (4 passed, 0 failed, 18 skipped) 2026-05-27 14:40:35 UTC
-extensions/GuidedTour fresh_install .............................................. ok (1s) install ................................................. ok (4s) run_selenium_tests .............................................. ok (1s) 
-  (5 passed, 0 failed, 18 skipped) 2026-05-27 14:40:42 UTC
-extensions/IPInfo fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (5 passed, 0 failed, 19 skipped) 2026-05-27 14:40:47 UTC
+  (4 passed, 0 failed, 18 skipped) 2026-05-28 12:26:30 UTC
+extensions/GuidedTour fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s) 
+  (5 passed, 0 failed, 18 skipped) 2026-05-28 12:26:36 UTC
+extensions/IPInfo fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (5 passed, 0 failed, 19 skipped) 2026-05-28 12:26:42 UTC
 extensions/JsonConfig fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (5 passed, 0 failed, 20 skipped) 2026-05-27 14:40:53 UTC
-extensions/Kartographer fresh_install .............................................. ok (2s) install .................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
-  (5 passed, 0 failed, 21 skipped) 2026-05-27 14:41:00 UTC
+  (5 passed, 0 failed, 20 skipped) 2026-05-28 12:26:48 UTC
+extensions/Kartographer fresh_install .............................................. ok (1s) install .................................................. ok (5s) run_selenium_tests skipped (no Selenium tests) 
+  (5 passed, 0 failed, 21 skipped) 2026-05-28 12:26:54 UTC
 extensions/Math fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s) 
-  (6 passed, 0 failed, 21 skipped) 2026-05-27 14:41:07 UTC
-extensions/MediaModeration fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (6 passed, 0 failed, 22 skipped) 2026-05-27 14:41:12 UTC
+  (6 passed, 0 failed, 21 skipped) 2026-05-28 12:27:01 UTC
+extensions/MediaModeration fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (6 passed, 0 failed, 22 skipped) 2026-05-28 12:27:06 UTC
 extensions/MobileApp fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (6 passed, 0 failed, 23 skipped) 2026-05-27 14:41:18 UTC
-extensions/MobileFrontend fresh_install .............................................. ok (2s) install ................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
-  (6 passed, 0 failed, 24 skipped) 2026-05-27 14:41:25 UTC
-extensions/NavigationTiming fresh_install .............................................. ok (2s) install .................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
-  (6 passed, 0 failed, 25 skipped) 2026-05-27 14:41:32 UTC
+  (6 passed, 0 failed, 23 skipped) 2026-05-28 12:27:12 UTC
+extensions/MobileFrontend fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (6 passed, 0 failed, 24 skipped) 2026-05-28 12:27:18 UTC
+extensions/NavigationTiming fresh_install .............................................. ok (1s) install .................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
+  (6 passed, 0 failed, 25 skipped) 2026-05-28 12:27:24 UTC
 extensions/PageImages fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (6 passed, 0 failed, 26 skipped) 2026-05-27 14:41:38 UTC
+  (6 passed, 0 failed, 26 skipped) 2026-05-28 12:27:30 UTC
 extensions/PageTriage fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s) 
-  (7 passed, 0 failed, 26 skipped) 2026-05-27 14:41:44 UTC
+  (7 passed, 0 failed, 26 skipped) 2026-05-28 12:27:36 UTC
 extensions/PageViewInfo fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (7 passed, 0 failed, 27 skipped) 2026-05-27 14:41:50 UTC
-extensions/ProofreadPage fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s) 
-  (8 passed, 0 failed, 27 skipped) 2026-05-27 14:41:57 UTC
+  (7 passed, 0 failed, 27 skipped) 2026-05-28 12:27:42 UTC
+extensions/ProofreadPage fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s) 
+  (8 passed, 0 failed, 27 skipped) 2026-05-28 12:27:48 UTC
 extensions/SandboxLink fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (8 passed, 0 failed, 28 skipped) 2026-05-27 14:42:03 UTC
-extensions/Scribunto fresh_install .............................................. ok (2s) install ................................................. ok (2s) run_selenium_tests skipped (no Selenium tests) 
-  (8 passed, 0 failed, 29 skipped) 2026-05-27 14:42:08 UTC
+  (8 passed, 0 failed, 28 skipped) 2026-05-28 12:27:54 UTC
+extensions/Scribunto fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (8 passed, 0 failed, 29 skipped) 2026-05-28 12:27:59 UTC
 extensions/SiteMatrix fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (8 passed, 0 failed, 30 skipped) 2026-05-27 14:42:15 UTC
-extensions/TemplateData fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (2s) 
-  (9 passed, 0 failed, 30 skipped) 2026-05-27 14:42:22 UTC
+  (8 passed, 0 failed, 30 skipped) 2026-05-28 12:28:05 UTC
+extensions/TemplateData fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s) 
+  (9 passed, 0 failed, 30 skipped) 2026-05-28 12:28:11 UTC
 extensions/Thanks fresh_install .............................................. ok (2s) install .................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
-  (9 passed, 0 failed, 31 skipped) 2026-05-27 14:42:29 UTC
-extensions/TimedMediaHandler fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (9 passed, 0 failed, 32 skipped) 2026-05-27 14:42:34 UTC
+  (9 passed, 0 failed, 31 skipped) 2026-05-28 12:28:18 UTC
+extensions/TimedMediaHandler fresh_install .............................................. ok (2s) install ................................................. ok (2s) run_selenium_tests skipped (no Selenium tests) 
+  (9 passed, 0 failed, 32 skipped) 2026-05-28 12:28:23 UTC
 extensions/Translate fresh_install .............................................. ok (2s) install .................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
-  (9 passed, 0 failed, 33 skipped) 2026-05-27 14:42:41 UTC
-extensions/UniversalLanguageSelector fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (9 passed, 0 failed, 34 skipped) 2026-05-27 14:42:47 UTC
-extensions/VisualEditor fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (2s) 
-  (10 passed, 0 failed, 34 skipped) 2026-05-27 14:42:54 UTC
-extensions/Wikibase fresh_install .............................................. ok (1s) install ................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
-  (10 passed, 0 failed, 35 skipped) 2026-05-27 14:43:00 UTC
+  (9 passed, 0 failed, 33 skipped) 2026-05-28 12:28:30 UTC
+extensions/UniversalLanguageSelector fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (9 passed, 0 failed, 34 skipped) 2026-05-28 12:28:35 UTC
+extensions/VisualEditor fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s) 
+  (10 passed, 0 failed, 34 skipped) 2026-05-28 12:28:42 UTC
+extensions/Wikibase fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (10 passed, 0 failed, 35 skipped) 2026-05-28 12:28:48 UTC
 extensions/WikibaseCirrusSearch fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (10 passed, 0 failed, 36 skipped) 2026-05-27 14:43:07 UTC
-extensions/WikibaseMediaInfo fresh_install .............................................. ok (2s) install .................................................. ok (5s) run_selenium_tests skipped (no Selenium tests) 
-  (10 passed, 0 failed, 37 skipped) 2026-05-27 14:43:15 UTC
+  (10 passed, 0 failed, 36 skipped) 2026-05-28 12:28:54 UTC
+extensions/WikibaseMediaInfo fresh_install .............................................. ok (2s) install .................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
+  (10 passed, 0 failed, 37 skipped) 2026-05-28 12:29:01 UTC
 extensions/WikiLove fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (10 passed, 0 failed, 38 skipped) 2026-05-27 14:43:21 UTC
-extensions/WikimediaCampaignEvents fresh_install .............................................. ok (1s) install .................................................. ok (4s) run_selenium_tests skipped (no Selenium tests) 
-  (10 passed, 0 failed, 39 skipped) 2026-05-27 14:43:27 UTC
+  (10 passed, 0 failed, 38 skipped) 2026-05-28 12:29:07 UTC
+extensions/WikimediaCampaignEvents fresh_install .............................................. ok (2s) install .................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (10 passed, 0 failed, 39 skipped) 2026-05-28 12:29:13 UTC
 extensions/WikimediaMessages fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (10 passed, 0 failed, 40 skipped) 2026-05-27 14:43:33 UTC
-skins/MinervaNeue fresh_install .............................................. ok (2s) install ................................................. ok (4s) run_selenium_tests .............................................. ok (1s) 
-  (11 passed, 0 failed, 40 skipped) 2026-05-27 14:43:41 UTC
-skins/Vector fresh_install .............................................. ok (1s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
-  (11 passed, 0 failed, 41 skipped) 2026-05-27 14:43:46 UTC
+  (10 passed, 0 failed, 40 skipped) 2026-05-28 12:29:19 UTC
+skins/MinervaNeue fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s) 
+  (11 passed, 0 failed, 40 skipped) 2026-05-28 12:29:25 UTC
+skins/Vector fresh_install .............................................. ok (2s) install ................................................. ok (3s) run_selenium_tests skipped (no Selenium tests) 
+  (11 passed, 0 failed, 41 skipped) 2026-05-28 12:29:31 UTC
 
 SKIPPED (no Selenium tests):
   extensions/AntiSpoof
@@ -177,4 +177,4 @@ PASSED:
   skins/MinervaNeue
 
 All passed.
-(5m 32s) 2026-05-27 14:43:46 UTC
+(5m 18s) 2026-05-28 12:29:31 UTC
