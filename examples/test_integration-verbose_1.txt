@@ -2,7 +2,7 @@ $ VERBOSE=1 ./test_integration
 
 
 ========================================
-= Running: ./help 2026-05-27 15:01:40 UTC
+= Running: ./help 2026-05-28 12:45:41 UTC
 ========================================
 ./ci
   Run the same checks that GitLab CI runs, using Docker.
@@ -155,7 +155,7 @@ $ VERBOSE=1 ./test_integration
 (0s)
 
 ========================================
-= Running: ./help install 2026-05-27 15:01:40 UTC
+= Running: ./help install 2026-05-28 12:45:41 UTC
 ========================================
 ./install
 
@@ -187,12 +187,12 @@ $ VERBOSE=1 ./test_integration
 (0s)
 
 ========================================
-= Running: ./lint 2026-05-27 15:01:40 UTC
+= Running: ./lint 2026-05-28 12:45:41 UTC
 ========================================
 (19s)
 
 ========================================
-= Running: ./ci 2026-05-27 15:01:59 UTC
+= Running: ./ci 2026-05-28 12:46:00 UTC
 ========================================
 Running shellcheck...
 shellcheck passed
@@ -466,16 +466,16 @@ ok 264 selenium_tests_exist: reads skin from ref and finds selenium-test
 ok 265 suggest_parallel: outputs a number
 ok 266 suggest_parallel: output is at least 1
 bats passed
-(50s)
+(52s)
 
 ========================================
-= Running: ./generate_example log/generate_example_test.txt ./help 2026-05-27 15:02:49 UTC
+= Running: ./generate_example log/generate_example_test.txt ./help 2026-05-28 12:46:52 UTC
 ========================================
 Generating log/generate_example_test.txt...
 (0s)
 
 ========================================
-= Running: env PREVIEW=1 ./generate_examples 2026-05-27 15:02:49 UTC
+= Running: env PREVIEW=1 ./generate_examples 2026-05-28 12:46:52 UTC
 ========================================
 generate_examples: DRY_RUN mode enabled — do not commit the resulting examples/
 Would generate examples/prepare.txt from: ./prepare
@@ -595,11 +595,11 @@ Would generate examples/remove-environment_0.txt from: ENVIRONMENT=0 ./remove
 Would generate examples/remove-verbose_1.txt from: VERBOSE=1 ./remove
 Would generate examples/remove_all.txt from: ./remove_all
 Would generate examples/remove_all-verbose_1.txt from: VERBOSE=1 ./remove_all
-generate_examples: generated 116, skipped 1, took 3s
-(3s)
+generate_examples: generated 116, skipped 1, took 2s
+(2s)
 
 ========================================
-= Running: ./prepare 2026-05-27 15:02:52 UTC
+= Running: ./prepare 2026-05-28 12:46:54 UTC
 ========================================
 
 
@@ -680,13 +680,16 @@ generate_examples: generated 116, skipped 1, took 3s
 = prepare is running: ref_dir=ref/mediawiki/skins/Vector.git
 
 ========================================
-
-========================================
 = prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
-= prepare is running: git -C ref/mediawiki/vendor.git fetch
 
 ========================================
 = prepare is running: '[' -d ref/mediawiki/skins/Vector.git ']'
+
+========================================
+= prepare is running: git -C ref/mediawiki/skins/Vector.git fetch
+
+========================================
+= prepare is running: git -C ref/mediawiki/vendor.git fetch
 
 ========================================
 = prepare is running: pids+=($!)
@@ -707,12 +710,6 @@ generate_examples: generated 116, skipped 1, took 3s
 = prepare is running: '[' -d ref/integration/config.git ']'
 
 ========================================
-= prepare is running: git -C ref/mediawiki/skins/Vector.git fetch
-
-========================================
-= prepare is running: git -C ref/integration/config.git fetch
-
-========================================
 = prepare is running: pids+=($!)
 
 ========================================
@@ -725,7 +722,10 @@ generate_examples: generated 116, skipped 1, took 3s
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 709186
+= prepare is running: wait 745711
+
+========================================
+= prepare is running: git -C ref/integration/config.git fetch
 latest: Pulling from releng/quibble-bullseye-php83
 Digest: sha256:0632872d96c96f44179f29947b77f350584c90673775198f46f6ae1c5e144db9
 Status: Image is up to date for docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
@@ -735,7 +735,7 @@ docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 709187
+= prepare is running: wait 745712
 From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
  * branch              HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/integration/config
@@ -749,19 +749,19 @@ From https://gerrit.wikimedia.org/r/mediawiki/core
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 709188
+= prepare is running: wait 745713
 
 ========================================
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 709189
+= prepare is running: wait 745714
 
 ========================================
 = prepare is running: for i in "${!pids[@]}"
 
 ========================================
-= prepare is running: wait 709190
+= prepare is running: wait 745716
 
 ========================================
 = prepare is running: '[' 0 -gt 0 ']'
@@ -771,10 +771,10 @@ From https://gerrit.wikimedia.org/r/mediawiki/core
 
 ========================================
 = prepare is running: chmod 777 cache log ref src
-(1s)
+(2s)
 
 ========================================
-= Running: ./fetch 2026-05-27 15:02:53 UTC
+= Running: ./fetch 2026-05-28 12:46:56 UTC
 ========================================
 
 
@@ -1522,7 +1522,16 @@ From https://gerrit.wikimedia.org/r/mediawiki/core
 = fetch is running: read -r repo
 
 ========================================
-= fetch is running: '[' 79 -eq 0 ']'
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: '[' 80 -eq 0 ']'
 
 ========================================
 = fetch is running: '[' 1 -le 1 ']'
@@ -1605,7 +1614,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/PdfHandler
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/Thanks.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Thanks
- * branch            HEAD       -> FETCH_HEAD
+ * branch              HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -1717,6 +1726,14 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Scribunto
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/Cite.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Cite
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/CentralNotice.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CentralNotice
  * branch              HEAD       -> FETCH_HEAD
 
 ========================================
@@ -2158,10 +2175,10 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/MediaModeration
 = fetch is running: git -C ref/mediawiki/extensions/CommunityConfigurationExample.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfigurationExample
  * branch            HEAD       -> FETCH_HEAD
-(1m 15s)
+(1m 11s)
 
 ========================================
-= Running: ./fetch ref/mediawiki/core.git 2026-05-27 15:04:08 UTC
+= Running: ./fetch ref/mediawiki/core.git 2026-05-28 12:48:07 UTC
 ========================================
 
 
@@ -2212,7 +2229,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/core
 (2s)
 
 ========================================
-= Running: env PARALLEL=2 ./fetch 2026-05-27 15:04:10 UTC
+= Running: env PARALLEL=2 ./fetch 2026-05-28 12:48:09 UTC
 ========================================
 
 
@@ -2960,7 +2977,16 @@ From https://gerrit.wikimedia.org/r/mediawiki/core
 = fetch is running: read -r repo
 
 ========================================
-= fetch is running: '[' 79 -eq 0 ']'
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: '[' 80 -eq 0 ']'
 
 ========================================
 = fetch is running: '[' 2 -le 1 ']'
@@ -2984,10 +3010,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/core
 = fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
-
-========================================
 = fetch is running: for repo in "${repos[@]}"
-= fetch is running: git -C ref/integration/config.git fetch
 
 ========================================
 = fetch is running: pids+=($!)
@@ -3005,7 +3028,12 @@ From https://gerrit.wikimedia.org/r/mediawiki/core
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710031
+= fetch is running: wait 746549
+
+========================================
+= fetch is running: git -C ref/integration/config.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
+ * branch              HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/integration/config
  * branch                HEAD       -> FETCH_HEAD
 
@@ -3013,9 +3041,7 @@ From https://gerrit.wikimedia.org/r/integration/config
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710032
-From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
- * branch              HEAD       -> FETCH_HEAD
+= fetch is running: wait 746550
 
 ========================================
 = fetch is running: pids=()
@@ -3036,9 +3062,6 @@ From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
 = fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
-
-========================================
-= fetch is running: git -C ref/mediawiki/skins/MinervaNeue.git fetch
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
@@ -3048,16 +3071,19 @@ From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+= fetch is running: '[' 2 -ge 2 ']'
 
 ========================================
-= fetch is running: '[' 2 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/core.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
+= fetch is running: git -C ref/mediawiki/core.git fetch
 
 ========================================
-= fetch is running: wait 710045
+= fetch is running: wait 746566
+
+========================================
+= fetch is running: git -C ref/mediawiki/skins/MinervaNeue.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/skins/MinervaNeue
  * branch              HEAD       -> FETCH_HEAD
 
@@ -3065,7 +3091,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/skins/MinervaNeue
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710046
+= fetch is running: wait 746567
 From https://gerrit.wikimedia.org/r/mediawiki/core
  * branch                    HEAD       -> FETCH_HEAD
 
@@ -3109,7 +3135,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/core
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710062
+= fetch is running: wait 746583
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikiEditor
  * branch              HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/vendor
@@ -3119,7 +3145,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/vendor
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710063
+= fetch is running: wait 746584
 
 ========================================
 = fetch is running: pids=()
@@ -3137,13 +3163,13 @@ From https://gerrit.wikimedia.org/r/mediawiki/vendor
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+
+========================================
 = fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/MobileApp.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/MobileApp.git fetch
 
 ========================================
 = fetch is running: pids+=($!)
@@ -3154,14 +3180,14 @@ From https://gerrit.wikimedia.org/r/mediawiki/vendor
 ========================================
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/Wikibase.git fetch
 = fetch is running: '[' 2 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/Wikibase.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710076
+= fetch is running: wait 746597
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileApp
  * branch            HEAD       -> FETCH_HEAD
 
@@ -3169,7 +3195,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileApp
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710077
+= fetch is running: wait 746598
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Wikibase
  * branch                  HEAD       -> FETCH_HEAD
 
@@ -3206,24 +3232,24 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Wikibase
 ========================================
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/Thanks.git fetch
 = fetch is running: '[' 2 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/Thanks.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710093
+= fetch is running: wait 746611
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Thanks
+ * branch              HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/PdfHandler
  * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Thanks
- * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710094
+= fetch is running: wait 746612
 
 ========================================
 = fetch is running: pids=()
@@ -3241,9 +3267,9 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Thanks
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/BetaFeatures.git fetch
 
 ========================================
+= fetch is running: git -C ref/mediawiki/extensions/BetaFeatures.git fetch
 = fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
@@ -3265,7 +3291,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Thanks
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710107
+= fetch is running: wait 746628
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/ORES
  * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/BetaFeatures
@@ -3275,7 +3301,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/BetaFeatures
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710108
+= fetch is running: wait 746629
 
 ========================================
 = fetch is running: pids=()
@@ -3293,12 +3319,12 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/BetaFeatures
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-
-========================================
 = fetch is running: '[' 1 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/WikibaseQualityConstraints.git fetch
 
 ========================================
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/WikibaseQualityConstraints.git fetch
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
@@ -3308,16 +3334,16 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/BetaFeatures
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-
-========================================
 = fetch is running: '[' 2 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/FlaggedRevs.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710124
+= fetch is running: wait 746642
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/FlaggedRevs.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseQualityConstraints
  * branch              HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/FlaggedRevs
@@ -3327,7 +3353,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/FlaggedRevs
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710125
+= fetch is running: wait 746643
 
 ========================================
 = fetch is running: pids=()
@@ -3345,13 +3371,13 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/FlaggedRevs
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
+= fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/DiscussionTools.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
-= fetch is running: git -C ref/mediawiki/extensions/DiscussionTools.git fetch
 
 ========================================
 = fetch is running: pids+=($!)
@@ -3360,16 +3386,16 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/FlaggedRevs
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-
-========================================
 = fetch is running: '[' 2 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/PageTriage.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710138
+= fetch is running: wait 746659
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/PageTriage.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/DiscussionTools
  * branch              HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageTriage
@@ -3379,7 +3405,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageTriage
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710139
+= fetch is running: wait 746660
 
 ========================================
 = fetch is running: pids=()
@@ -3397,10 +3423,10 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageTriage
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+= fetch is running: git -C ref/mediawiki/extensions/Kartographer.git fetch
 
 ========================================
 = fetch is running: '[' 1 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/Kartographer.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -3410,28 +3436,28 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageTriage
 
 ========================================
 = fetch is running: pid_repos+=("$repo")
-
-========================================
-= fetch is running: '[' 2 -ge 2 ']'
 
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/PageImages.git fetch
 
 ========================================
+= fetch is running: '[' 2 -ge 2 ']'
+
+========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710155
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageImages
- * branch            HEAD       -> FETCH_HEAD
+= fetch is running: wait 746673
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Kartographer
  * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageImages
+ * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710156
+= fetch is running: wait 746674
 
 ========================================
 = fetch is running: pids=()
@@ -3446,9 +3472,9 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Kartographer
 = fetch is running: pids+=($!)
 
 ========================================
+= fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: pid_repos+=("$repo")
 = fetch is running: git -C ref/mediawiki/extensions/Echo.git fetch
 
 ========================================
@@ -3464,26 +3490,26 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Kartographer
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/CirrusSearch.git fetch
-
-========================================
 = fetch is running: '[' 2 -ge 2 ']'
 
 ========================================
-= fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710169
+= fetch is running: for i in "${!pids[@]}"
+= fetch is running: git -C ref/mediawiki/extensions/CirrusSearch.git fetch
+
+========================================
+= fetch is running: wait 746690
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Echo
  * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CirrusSearch
- * branch                HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710170
+= fetch is running: wait 746691
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CirrusSearch
+ * branch                HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: pids=()
@@ -3501,12 +3527,12 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/CirrusSearch
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+
+========================================
 = fetch is running: '[' 1 -ge 2 ']'
-
-========================================
-
-========================================
 = fetch is running: git -C ref/mediawiki/extensions/UniversalLanguageSelector.git fetch
+
+========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
@@ -3518,14 +3544,14 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/CirrusSearch
 ========================================
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/EventStreamConfig.git fetch
 = fetch is running: '[' 2 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/EventStreamConfig.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710186
+= fetch is running: wait 746704
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventStreamConfig
  * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/UniversalLanguageSelector
@@ -3535,7 +3561,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/UniversalLanguageSelect
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710187
+= fetch is running: wait 746705
 
 ========================================
 = fetch is running: pids=()
@@ -3553,13 +3579,13 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/UniversalLanguageSelect
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Scribunto.git fetch
 = fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/Scribunto.git fetch
 
 ========================================
 = fetch is running: pids+=($!)
@@ -3568,16 +3594,16 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/UniversalLanguageSelect
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/Cite.git fetch
 
 ========================================
 = fetch is running: '[' 2 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/Cite.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710200
+= fetch is running: wait 746718
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Scribunto
  * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Cite
@@ -3587,7 +3613,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Cite
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710201
+= fetch is running: wait 746719
 
 ========================================
 = fetch is running: pids=()
@@ -3607,8 +3633,8 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Cite
 ========================================
 
 ========================================
+= fetch is running: git -C ref/mediawiki/extensions/CentralNotice.git fetch
 = fetch is running: '[' 1 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/Math.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -3620,18 +3646,18 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Cite
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+= fetch is running: git -C ref/mediawiki/extensions/Math.git fetch
 
 ========================================
 = fetch is running: '[' 2 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/NavigationTiming.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710217
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/NavigationTiming
- * branch            HEAD       -> FETCH_HEAD
+= fetch is running: wait 746735
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CentralNotice
+ * branch              HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Math
  * branch              HEAD       -> FETCH_HEAD
 
@@ -3639,7 +3665,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Math
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710218
+= fetch is running: wait 746736
 
 ========================================
 = fetch is running: pids=()
@@ -3660,38 +3686,38 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Math
 
 ========================================
 = fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/NavigationTiming.git fetch
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: pids+=($!)
+
+========================================
+= fetch is running: pid_repos+=("$repo")
+
+========================================
+
+========================================
+= fetch is running: '[' 2 -ge 2 ']'
 = fetch is running: git -C ref/mediawiki/extensions/IPReputation.git fetch
 
 ========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: pids+=($!)
-
-========================================
-= fetch is running: pid_repos+=("$repo")
-
-========================================
-
-========================================
-= fetch is running: '[' 2 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/ContentTranslation.git fetch
-
-========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710231
+= fetch is running: wait 746749
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/IPReputation
  * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/ContentTranslation
- * branch                HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/NavigationTiming
+ * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710232
+= fetch is running: wait 746750
 
 ========================================
 = fetch is running: pids=()
@@ -3709,10 +3735,10 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/ContentTranslation
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/cldr.git fetch
+= fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/ContentTranslation.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -3726,15 +3752,67 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/ContentTranslation
 ========================================
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/CentralAuth.git fetch
+= fetch is running: git -C ref/mediawiki/extensions/cldr.git fetch
 = fetch is running: '[' 2 -ge 2 ']'
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710248
+= fetch is running: wait 746766
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/ContentTranslation
+ * branch                HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/cldr
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 746767
+
+========================================
+= fetch is running: pids=()
+
+========================================
+= fetch is running: pid_repos=()
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: pids+=($!)
+
+========================================
+= fetch is running: pid_repos+=("$repo")
+
+========================================
+
+========================================
+= fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/CentralAuth.git fetch
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: pids+=($!)
+
+========================================
+= fetch is running: pid_repos+=("$repo")
+
+========================================
+
+========================================
+= fetch is running: '[' 2 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/ArticlePlaceholder.git fetch
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 746780
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/ArticlePlaceholder
  * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/CentralAuth
  * branch              HEAD       -> FETCH_HEAD
@@ -3743,7 +3821,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/CentralAuth
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710249
+= fetch is running: wait 746781
 
 ========================================
 = fetch is running: pids=()
@@ -3761,49 +3839,12 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/CentralAuth
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+
+========================================
 = fetch is running: '[' 1 -ge 2 ']'
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/ArticlePlaceholder.git fetch
-
-========================================
-= fetch is running: pids+=($!)
-
-========================================
-= fetch is running: pid_repos+=("$repo")
-
-========================================
 = fetch is running: git -C ref/mediawiki/extensions/WikimediaCampaignEvents.git fetch
 
 ========================================
-= fetch is running: '[' 2 -ge 2 ']'
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710262
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/ArticlePlaceholder
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaCampaignEvents
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710263
-
-========================================
-= fetch is running: pids=()
-
-========================================
-= fetch is running: pid_repos=()
-
-========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
@@ -3813,32 +3854,17 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaCampaignEvents
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
+= fetch is running: '[' 2 -ge 2 ']'
 = fetch is running: git -C ref/mediawiki/extensions/Elastica.git fetch
 
 ========================================
-= fetch is running: pids+=($!)
-
-========================================
-= fetch is running: pid_repos+=("$repo")
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/TorBlock.git fetch
-
-========================================
-= fetch is running: '[' 2 -ge 2 ']'
-
-========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710279
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/TorBlock
+= fetch is running: wait 746797
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaCampaignEvents
  * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Elastica
  * branch            HEAD       -> FETCH_HEAD
@@ -3847,7 +3873,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Elastica
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710280
+= fetch is running: wait 746798
 
 ========================================
 = fetch is running: pids=()
@@ -3865,13 +3891,50 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Elastica
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+
+========================================
 = fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/TorBlock.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
+= fetch is running: pids+=($!)
+
+========================================
+= fetch is running: pid_repos+=("$repo")
+
+========================================
+
+========================================
+= fetch is running: '[' 2 -ge 2 ']'
 = fetch is running: git -C ref/mediawiki/extensions/EventBus.git fetch
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 746811
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/TorBlock
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventBus
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 746812
+
+========================================
+= fetch is running: pids=()
+
+========================================
+= fetch is running: pid_repos=()
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
 
 ========================================
 = fetch is running: pids+=($!)
@@ -3883,67 +3946,30 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Elastica
 = fetch is running: git -C ref/mediawiki/extensions/WikibaseMediaInfo.git fetch
 
 ========================================
+= fetch is running: '[' 1 -ge 2 ']'
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: pids+=($!)
+
+========================================
+= fetch is running: pid_repos+=("$repo")
+
+========================================
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/GlobalCssJs.git fetch
 = fetch is running: '[' 2 -ge 2 ']'
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710293
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventBus
- * branch            HEAD       -> FETCH_HEAD
+= fetch is running: wait 746825
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseMediaInfo
  * branch              HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710294
-
-========================================
-= fetch is running: pids=()
-
-========================================
-= fetch is running: pid_repos=()
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: pids+=($!)
-
-========================================
-= fetch is running: pid_repos+=("$repo")
-
-========================================
-
-========================================
-= fetch is running: '[' 1 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/GlobalCssJs.git fetch
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: pids+=($!)
-
-========================================
-= fetch is running: pid_repos+=("$repo")
-
-========================================
-
-========================================
-= fetch is running: '[' 2 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/LabeledSectionTransclusion.git fetch
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710310
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/LabeledSectionTransclusion
- * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalCssJs
  * branch            HEAD       -> FETCH_HEAD
 
@@ -3951,7 +3977,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalCssJs
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710311
+= fetch is running: wait 746826
 
 ========================================
 = fetch is running: pids=()
@@ -3971,8 +3997,8 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalCssJs
 ========================================
 
 ========================================
+= fetch is running: git -C ref/mediawiki/extensions/LabeledSectionTransclusion.git fetch
 = fetch is running: '[' 1 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/JsonConfig.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -3984,18 +4010,18 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalCssJs
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-
-========================================
 = fetch is running: '[' 2 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/WikibaseLexeme.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710324
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseLexeme
- * branch              HEAD       -> FETCH_HEAD
+= fetch is running: wait 746842
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/JsonConfig.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/LabeledSectionTransclusion
+ * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/JsonConfig
  * branch            HEAD       -> FETCH_HEAD
 
@@ -4003,7 +4029,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/JsonConfig
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710325
+= fetch is running: wait 746843
 
 ========================================
 = fetch is running: pids=()
@@ -4021,13 +4047,13 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/JsonConfig
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
+= fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/WikibaseLexeme.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
-= fetch is running: git -C ref/mediawiki/extensions/AbuseFilter.git fetch
 
 ========================================
 = fetch is running: pids+=($!)
@@ -4036,17 +4062,17 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/JsonConfig
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-
-========================================
 = fetch is running: '[' 2 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/FileImporter.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710341
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/FileImporter
+= fetch is running: wait 746856
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/AbuseFilter.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseLexeme
  * branch              HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/AbuseFilter
  * branch              HEAD       -> FETCH_HEAD
@@ -4055,7 +4081,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/AbuseFilter
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710342
+= fetch is running: wait 746857
 
 ========================================
 = fetch is running: pids=()
@@ -4073,13 +4099,13 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/AbuseFilter
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
+= fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/FileImporter.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
-= fetch is running: git -C ref/mediawiki/extensions/AntiSpoof.git fetch
 
 ========================================
 = fetch is running: pids+=($!)
@@ -4088,18 +4114,18 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/AbuseFilter
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+= fetch is running: git -C ref/mediawiki/extensions/AntiSpoof.git fetch
 
 ========================================
 = fetch is running: '[' 2 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/SpamBlacklist.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710355
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/SpamBlacklist
- * branch            HEAD       -> FETCH_HEAD
+= fetch is running: wait 746873
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/FileImporter
+ * branch              HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/AntiSpoof
  * branch            HEAD       -> FETCH_HEAD
 
@@ -4107,7 +4133,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/AntiSpoof
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710356
+= fetch is running: wait 746874
 
 ========================================
 = fetch is running: pids=()
@@ -4130,17 +4156,14 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/AntiSpoof
 ========================================
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/PageViewInfo.git fetch
 = fetch is running: for repo in "${repos[@]}"
+= fetch is running: git -C ref/mediawiki/extensions/SpamBlacklist.git fetch
 
 ========================================
 = fetch is running: pids+=($!)
 
 ========================================
 = fetch is running: pid_repos+=("$repo")
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/GlobalBlocking.git fetch
 
 ========================================
 = fetch is running: '[' 2 -ge 2 ']'
@@ -4149,17 +4172,20 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/AntiSpoof
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710372
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalBlocking
- * branch              HEAD       -> FETCH_HEAD
+= fetch is running: wait 746887
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/PageViewInfo.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageViewInfo
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/SpamBlacklist
  * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710373
+= fetch is running: wait 746888
 
 ========================================
 = fetch is running: pids=()
@@ -4177,12 +4203,49 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageViewInfo
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
+= fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/GlobalBlocking.git fetch
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: pids+=($!)
+
+========================================
+= fetch is running: pid_repos+=("$repo")
+
+========================================
+= fetch is running: '[' 2 -ge 2 ']'
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
 
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/ConfirmEdit.git fetch
+
+========================================
+= fetch is running: wait 746904
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalBlocking
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/ConfirmEdit
+ * branch              HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 746905
+
+========================================
+= fetch is running: pids=()
+
+========================================
+= fetch is running: pid_repos=()
+
+========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
@@ -4195,29 +4258,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageViewInfo
 
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/Linter.git fetch
-= fetch is running: '[' 2 -ge 2 ']'
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710386
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Linter
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/ConfirmEdit
- * branch              HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710387
-
-========================================
-= fetch is running: pids=()
-
-========================================
-= fetch is running: pid_repos=()
+= fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -4229,41 +4270,26 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/ConfirmEdit
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
+= fetch is running: '[' 2 -ge 2 ']'
 = fetch is running: git -C ref/mediawiki/extensions/CodeEditor.git fetch
 
 ========================================
-= fetch is running: pids+=($!)
+= fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: pid_repos+=("$repo")
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/CommunityConfiguration.git fetch
-
-========================================
-= fetch is running: '[' 2 -ge 2 ']'
+= fetch is running: wait 746918
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Linter
+ * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710403
+= fetch is running: wait 746919
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/CodeEditor
  * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfiguration
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710404
 
 ========================================
 = fetch is running: pids=()
@@ -4281,12 +4307,12 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfiguration
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+
+========================================
 = fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/CommunityConfiguration.git fetch
 
 ========================================
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/WikiLove.git fetch
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
@@ -4298,15 +4324,15 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfiguration
 ========================================
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/EventLogging.git fetch
 = fetch is running: '[' 2 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/WikiLove.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710417
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventLogging
+= fetch is running: wait 746935
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfiguration
  * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikiLove
  * branch            HEAD       -> FETCH_HEAD
@@ -4315,7 +4341,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikiLove
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710418
+= fetch is running: wait 746936
 
 ========================================
 = fetch is running: pids=()
@@ -4333,18 +4359,21 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikiLove
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
+= fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/EventLogging.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: pids+=($!)
+
+========================================
 = fetch is running: git -C ref/mediawiki/extensions/SiteMatrix.git fetch
 
 ========================================
-= fetch is running: pids+=($!)
-
-========================================
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
@@ -4354,20 +4383,17 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikiLove
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710431
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/UserMerge.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/UserMerge
- * branch            HEAD       -> FETCH_HEAD
+= fetch is running: wait 746949
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/SiteMatrix
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/EventLogging
  * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710432
+= fetch is running: wait 746950
 
 ========================================
 = fetch is running: pids=()
@@ -4388,7 +4414,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/SiteMatrix
 
 ========================================
 = fetch is running: '[' 1 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/WikimediaMessages.git fetch
+= fetch is running: git -C ref/mediawiki/extensions/UserMerge.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -4400,17 +4426,17 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/SiteMatrix
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+= fetch is running: git -C ref/mediawiki/extensions/WikimediaMessages.git fetch
 
 ========================================
 = fetch is running: '[' 2 -ge 2 ']'
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
-= fetch is running: git -C ref/mediawiki/extensions/GeoData.git fetch
 
 ========================================
-= fetch is running: wait 710448
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GeoData
+= fetch is running: wait 746963
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/UserMerge
  * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaMessages
  * branch                HEAD       -> FETCH_HEAD
@@ -4419,7 +4445,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaMessages
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710449
+= fetch is running: wait 746964
 
 ========================================
 = fetch is running: pids=()
@@ -4443,7 +4469,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaMessages
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
-= fetch is running: git -C ref/mediawiki/extensions/MobileFrontend.git fetch
+= fetch is running: git -C ref/mediawiki/extensions/GeoData.git fetch
 
 ========================================
 = fetch is running: pids+=($!)
@@ -4452,7 +4478,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaMessages
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/TemplateData.git fetch
+= fetch is running: git -C ref/mediawiki/extensions/MobileFrontend.git fetch
 
 ========================================
 = fetch is running: '[' 2 -ge 2 ']'
@@ -4461,17 +4487,17 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaMessages
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710462
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/TemplateData
- * branch              HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
- * branch                HEAD       -> FETCH_HEAD
+= fetch is running: wait 746980
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GeoData
+ * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710463
+= fetch is running: wait 746981
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
+ * branch                HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: pids=()
@@ -4489,13 +4515,50 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+
+========================================
 = fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/TemplateData.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
+= fetch is running: pids+=($!)
+
+========================================
+= fetch is running: pid_repos+=("$repo")
+
+========================================
 = fetch is running: git -C ref/mediawiki/extensions/Flow.git fetch
+
+========================================
+= fetch is running: '[' 2 -ge 2 ']'
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 746994
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/TemplateData
+ * branch              HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Flow
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 746995
+
+========================================
+= fetch is running: pids=()
+
+========================================
+= fetch is running: pid_repos=()
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
 
 ========================================
 = fetch is running: pids+=($!)
@@ -4507,47 +4570,10 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
 
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/GuidedTour.git fetch
-= fetch is running: '[' 2 -ge 2 ']'
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710479
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Flow
- * branch                HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GuidedTour
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710480
-
-========================================
-= fetch is running: pids=()
-
-========================================
-= fetch is running: pid_repos=()
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: pids+=($!)
-
-========================================
-= fetch is running: pid_repos+=("$repo")
-
-========================================
 = fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
-
-========================================
 = fetch is running: for repo in "${repos[@]}"
-= fetch is running: git -C ref/mediawiki/extensions/ProofreadPage.git fetch
 
 ========================================
 = fetch is running: pids+=($!)
@@ -4559,15 +4585,15 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/GuidedTour
 
 ========================================
 = fetch is running: '[' 2 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/TimedMediaHandler.git fetch
+= fetch is running: git -C ref/mediawiki/extensions/ProofreadPage.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710493
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/TimedMediaHandler
- * branch              HEAD       -> FETCH_HEAD
+= fetch is running: wait 747011
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GuidedTour
+ * branch            HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/ProofreadPage
  * branch              HEAD       -> FETCH_HEAD
 
@@ -4575,7 +4601,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/ProofreadPage
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710494
+= fetch is running: wait 747012
 
 ========================================
 = fetch is running: pids=()
@@ -4593,41 +4619,41 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/ProofreadPage
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+
+========================================
 = fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/TimedMediaHandler.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: pids+=($!)
+
+========================================
+= fetch is running: pid_repos+=("$repo")
+
+========================================
 
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/SandboxLink.git fetch
-
-========================================
-= fetch is running: pids+=($!)
-
-========================================
-= fetch is running: pid_repos+=("$repo")
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/ParserFunctions.git fetch
-
-========================================
 = fetch is running: '[' 2 -ge 2 ']'
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710510
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/ParserFunctions
- * branch            HEAD       -> FETCH_HEAD
+= fetch is running: wait 747025
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/SandboxLink
  * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/TimedMediaHandler
+ * branch              HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710511
+= fetch is running: wait 747026
 
 ========================================
 = fetch is running: pids=()
@@ -4645,10 +4671,59 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/SandboxLink
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+= fetch is running: '[' 1 -ge 2 ']'
+
+========================================
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+= fetch is running: git -C ref/mediawiki/extensions/ParserFunctions.git fetch
+
+========================================
+= fetch is running: pids+=($!)
+
+========================================
+= fetch is running: pid_repos+=("$repo")
+
+========================================
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/TestKitchen.git fetch
+= fetch is running: '[' 2 -ge 2 ']'
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 747042
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/TestKitchen
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/ParserFunctions
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 747043
+
+========================================
+= fetch is running: pids=()
+
+========================================
+= fetch is running: pid_repos=()
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: pids+=($!)
+
+========================================
+= fetch is running: pid_repos+=("$repo")
 
 ========================================
 = fetch is running: '[' 1 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/TestKitchen.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -4663,15 +4738,16 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/SandboxLink
 
 ========================================
 = fetch is running: '[' 2 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/Babel.git fetch
+= fetch is running: git -C ref/mediawiki/extensions/Translate.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710524
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/TestKitchen
- * branch            HEAD       -> FETCH_HEAD
+= fetch is running: wait 747056
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/Babel.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Babel
  * branch            HEAD       -> FETCH_HEAD
 
@@ -4679,7 +4755,9 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Babel
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710525
+= fetch is running: wait 747057
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/Translate
+ * branch                HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: pids=()
@@ -4689,21 +4767,6 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Babel
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: pids+=($!)
-
-========================================
-= fetch is running: pid_repos+=("$repo")
-
-========================================
-= fetch is running: '[' 1 -ge 2 ']'
-
-========================================
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-= fetch is running: git -C ref/mediawiki/extensions/Translate.git fetch
 
 ========================================
 = fetch is running: pids+=($!)
@@ -4715,29 +4778,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Babel
 = fetch is running: git -C ref/mediawiki/extensions/GlobalPreferences.git fetch
 
 ========================================
-= fetch is running: '[' 2 -ge 2 ']'
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710541
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalPreferences
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Translate
- * branch                HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710542
-
-========================================
-= fetch is running: pids=()
-
-========================================
-= fetch is running: pid_repos=()
+= fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -4749,13 +4790,35 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Translate
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-= fetch is running: '[' 1 -ge 2 ']'
+
+========================================
+= fetch is running: '[' 2 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/GrowthExperiments.git fetch
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 747070
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GlobalPreferences
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 747071
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/GrowthExperiments
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: pids=()
+
+========================================
+= fetch is running: pid_repos=()
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/GrowthExperiments.git fetch
 
 ========================================
 = fetch is running: pids+=($!)
@@ -4767,29 +4830,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Translate
 = fetch is running: git -C ref/mediawiki/extensions/PropertySuggester.git fetch
 
 ========================================
-= fetch is running: '[' 2 -ge 2 ']'
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710555
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/PropertySuggester
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/GrowthExperiments
- * branch                HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710556
-
-========================================
-= fetch is running: pids=()
-
-========================================
-= fetch is running: pid_repos=()
+= fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -4801,10 +4842,32 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/GrowthExperiments
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+= fetch is running: '[' 2 -ge 2 ']'
 
 ========================================
-= fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+
+========================================
 = fetch is running: git -C ref/mediawiki/extensions/WikibaseCirrusSearch.git fetch
+= fetch is running: wait 747087
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/PropertySuggester
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseCirrusSearch
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 747088
+
+========================================
+= fetch is running: pids=()
+
+========================================
+= fetch is running: pid_repos=()
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -4819,29 +4882,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/GrowthExperiments
 
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/VisualEditor.git fetch
-= fetch is running: '[' 2 -ge 2 ']'
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710572
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseCirrusSearch
- * branch            HEAD       -> FETCH_HEAD
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
- * branch                HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710573
-
-========================================
-= fetch is running: pids=()
-
-========================================
-= fetch is running: pid_repos=()
+= fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -4853,10 +4894,32 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+= fetch is running: git -C ref/mediawiki/extensions/WikimediaBadges.git fetch
 
 ========================================
-= fetch is running: '[' 1 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/WikimediaBadges.git fetch
+= fetch is running: '[' 2 -ge 2 ']'
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 747101
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaBadges
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
+ * branch                HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 747102
+
+========================================
+= fetch is running: pids=()
+
+========================================
+= fetch is running: pid_repos=()
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -4871,15 +4934,28 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
 
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/Disambiguator.git fetch
+= fetch is running: '[' 1 -ge 2 ']'
+
+========================================
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: pids+=($!)
+
+========================================
+= fetch is running: pid_repos+=("$repo")
+
+========================================
+
+========================================
 = fetch is running: '[' 2 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/CheckUser.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710586
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikimediaBadges
- * branch            HEAD       -> FETCH_HEAD
+= fetch is running: wait 747118
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Disambiguator
  * branch            HEAD       -> FETCH_HEAD
 
@@ -4887,61 +4963,11 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Disambiguator
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710587
-
-========================================
-= fetch is running: pids=()
-
-========================================
-= fetch is running: pid_repos=()
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: pids+=($!)
-
-========================================
-= fetch is running: pid_repos+=("$repo")
-
-========================================
-= fetch is running: '[' 1 -ge 2 ']'
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/CheckUser.git fetch
-
-========================================
-= fetch is running: pids+=($!)
-
-========================================
-= fetch is running: pid_repos+=("$repo")
-
-========================================
-
-========================================
-= fetch is running: '[' 2 -ge 2 ']'
-= fetch is running: git -C ref/mediawiki/extensions/CampaignEvents.git fetch
-
-========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710603
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CampaignEvents
- * branch              HEAD       -> FETCH_HEAD
+= fetch is running: wait 747119
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/CheckUser
  * branch              HEAD       -> FETCH_HEAD
 
 ========================================
-= fetch is running: for i in "${!pids[@]}"
-
-========================================
-= fetch is running: wait 710604
-
-========================================
 = fetch is running: pids=()
 
 ========================================
@@ -4957,13 +4983,13 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/CheckUser
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+
+========================================
 = fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: git -C ref/mediawiki/extensions/CampaignEvents.git fetch
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/IPInfo.git fetch
 
 ========================================
 = fetch is running: pids+=($!)
@@ -4972,18 +4998,18 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/CheckUser
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/MediaModeration.git fetch
 = fetch is running: '[' 2 -ge 2 ']'
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710617
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/MediaModeration
- * branch            HEAD       -> FETCH_HEAD
+= fetch is running: wait 747132
+
+========================================
+= fetch is running: git -C ref/mediawiki/extensions/IPInfo.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CampaignEvents
+ * branch              HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/IPInfo
  * branch            HEAD       -> FETCH_HEAD
 
@@ -4991,7 +5017,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/IPInfo
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710618
+= fetch is running: wait 747133
 
 ========================================
 = fetch is running: pids=()
@@ -5009,22 +5035,51 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/IPInfo
 = fetch is running: pid_repos+=("$repo")
 
 ========================================
+= fetch is running: '[' 1 -ge 2 ']'
 
 ========================================
-= fetch is running: '[' 1 -ge 2 ']'
+= fetch is running: for repo in "${repos[@]}"
+
+========================================
+= fetch is running: pids+=($!)
+
+========================================
+= fetch is running: pid_repos+=("$repo")
+
+========================================
+
+========================================
+= fetch is running: '[' 2 -ge 2 ']'
 = fetch is running: git -C ref/mediawiki/extensions/CommunityConfigurationExample.git fetch
 
 ========================================
 = fetch is running: for i in "${!pids[@]}"
 
 ========================================
-= fetch is running: wait 710634
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfigurationExample
- * branch            HEAD       -> FETCH_HEAD
-(39s)
+= fetch is running: wait 747149
 
 ========================================
-= Running: ./fresh_install 2026-05-27 15:04:49 UTC
+= fetch is running: git -C ref/mediawiki/extensions/MediaModeration.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfigurationExample
+ * branch            HEAD       -> FETCH_HEAD
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/MediaModeration
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for i in "${!pids[@]}"
+
+========================================
+= fetch is running: wait 747150
+
+========================================
+= fetch is running: pids=()
+
+========================================
+= fetch is running: pid_repos=()
+(35s)
+
+========================================
+= Running: ./fresh_install 2026-05-28 12:48:44 UTC
 ========================================
 
 
@@ -5131,12 +5186,12 @@ docker run \
 ========================================
 = fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
 + /usr/bin/supervisord
-2026-05-27 15:04:50,419 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:04:50,422 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:04:50,422 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:04:50,424 INFO daemonizing the supervisord process
+2026-05-28 12:48:45,450 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:48:45,454 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:48:45,454 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:48:45,456 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
-2026-05-27 15:04:50,425 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:48:45,457 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -5166,7 +5221,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (1s)
 
 ========================================
-= Running: env DRY_RUN=1 ./fresh_install 2026-05-27 15:04:50 UTC
+= Running: env DRY_RUN=1 ./fresh_install 2026-05-28 12:48:45 UTC
 ========================================
 
 
@@ -5273,12 +5328,12 @@ docker run \
 ========================================
 = fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
 + /usr/bin/supervisord
-2026-05-27 15:04:51,842 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:04:51,846 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:04:51,846 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:04:51,847 INFO daemonizing the supervisord process
+2026-05-28 12:48:46,867 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:48:46,871 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:48:46,871 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:48:46,873 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
-2026-05-27 15:04:51,848 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:48:46,874 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -5308,7 +5363,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (2s)
 
 ========================================
-= Running: ./save 2026-05-27 15:04:52 UTC
+= Running: ./save 2026-05-28 12:48:47 UTC
 ========================================
 
 
@@ -5351,7 +5406,7 @@ Error: src/ is empty or missing. Run ./fresh_install first.
 (0s)
 
 ========================================
-= Running: ./restore 2026-05-27 15:04:52 UTC
+= Running: ./restore 2026-05-28 12:48:47 UTC
 ========================================
 
 
@@ -5402,7 +5457,7 @@ Error: src/ is empty or missing. Run ./fresh_install first.
 (1s)
 
 ========================================
-= Running: env ENVIRONMENT=0 ./fresh_install 2026-05-27 15:04:53 UTC
+= Running: env ENVIRONMENT=0 ./fresh_install 2026-05-28 12:48:48 UTC
 ========================================
 
 
@@ -5509,12 +5564,12 @@ docker run \
 ========================================
 = fresh_install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src_0:/workspace/src docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true
 + /usr/bin/supervisord
-2026-05-27 15:04:54,812 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:04:54,815 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:04:54,815 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:04:54,817 INFO daemonizing the supervisord process
+2026-05-28 12:48:49,685 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:48:49,691 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:48:49,691 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:48:49,694 INFO daemonizing the supervisord process
+2026-05-28 12:48:49,695 CRIT could not write pidfile /var/run/supervisord.pid
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true
-2026-05-27 15:04:54,818 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -5544,7 +5599,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (2s)
 
 ========================================
-= Running: env ENVIRONMENT=0 ./save 2026-05-27 15:04:55 UTC
+= Running: env ENVIRONMENT=0 ./save 2026-05-28 12:48:50 UTC
 ========================================
 
 
@@ -5587,7 +5642,7 @@ Error: src_0/ is empty or missing. Run ./fresh_install first.
 (0s)
 
 ========================================
-= Running: env ENVIRONMENT=0 ./restore 2026-05-27 15:04:55 UTC
+= Running: env ENVIRONMENT=0 ./restore 2026-05-28 12:48:50 UTC
 ========================================
 
 
@@ -5614,31 +5669,16 @@ Error: src_0/ is empty or missing. Run ./fresh_install first.
 ========================================
 = restore is running: '[' '!' -d src_save_0 ']'
 
+========================================
+= restore is running: echo 'Error: src_save_0/ is empty or missing. Run ./save first.'
+Error: src_save_0/ is empty or missing. Run ./save first.
 
 ========================================
-= restore is running: ls -A src_save_0
+= restore is running: exit 1
+(0s)
 
 ========================================
-= restore is running: '[' -z $'.dockerignore\n.editorconfig\n.eslintignore\n.eslintrc.json\n.fresnel.yml\n.git\n.git-blame-ignore-revs\n.gitattributes\n.gitignore\n.gitmessage\n.gitreview\n.mailmap\n.minus-x.json\n.phan\n.phpcs.xml\n.stylelintrc.json\n.svgo.config.js\n.vsls.json\nCODE_OF_CONDUCT.md\nCOPYING\nCREDITS\nDEVELOPERS.md\nFAQ\nGruntfile.js\nHISTORY\nINSTALL\nLocalSettings-installer.php\nLocalSettings.php\nREADME.md\nRELEASE-NOTES-1.46\nSECURITY\nUPGRADE\napi.php\nautoload.php\nbundlesize.config.json\ncache\ncomposer.json\ncomposer.local.json-sample\ndocker-compose.yml\ndocs\nextensions\nimages\nimg_auth.php\nincludes\nindex.php\njsdoc.json\nlanguages\nload.php\nmaintenance\nmw-config\nnode_modules\nopensearch_desc.php\npackage-lock.json\npackage.json\nphpunit.xml.template\nresources\nrest.php\nskins\nsql\ntests\nthumb.php\nthumb_handler.php\nvendor' ']'
-
-========================================
-= restore is running: mkdir -p src_0
-
-========================================
-= restore is running: docker_chmod src_0
-
-========================================
-= restore is running: chmod 777 src_0
-
-========================================
-= restore is running: return 0
-
-========================================
-= restore is running: docker run --rm --entrypoint bash --user root -v $PWD/src_0:/workspace/src -v $PWD/src_save_0:/workspace/src_save:ro docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/'
-(39s)
-
-========================================
-= Running: env ENVIRONMENT=0 ./remove 2026-05-27 15:05:34 UTC
+= Running: env ENVIRONMENT=0 ./remove 2026-05-28 12:48:50 UTC
 ========================================
 
 
@@ -5660,15 +5700,15 @@ Error: src_0/ is empty or missing. Run ./fresh_install first.
 
 ========================================
 = remove is running: rm -rf src_0
-(4s)
+(1s)
 
 ========================================
-= Running: ./selenium_tests_exist 2026-05-27 15:05:38 UTC
+= Running: ./selenium_tests_exist 2026-05-28 12:48:51 UTC
 ========================================
 (0s)
 
 ========================================
-= Running: ./run_selenium_tests 2026-05-27 15:05:38 UTC
+= Running: ./run_selenium_tests 2026-05-28 12:48:51 UTC
 ========================================
 
 
@@ -5744,12 +5784,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-27 15:05:39,680 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:05:39,685 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:05:39,685 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:05:39,687 INFO daemonizing the supervisord process
+2026-05-28 12:48:51,727 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:48:51,731 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:48:51,731 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:48:51,733 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-27 15:05:39,688 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:48:51,735 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -5772,10 +5812,10 @@ DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:Run all browser tests
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(2s)
+(1s)
 
 ========================================
-= Running: ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js 2026-05-27 15:05:40 UTC
+= Running: ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js 2026-05-28 12:48:52 UTC
 ========================================
 
 
@@ -5851,12 +5891,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --command 'npm run selenium-test -- --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js'
 + /usr/bin/supervisord
-2026-05-27 15:05:41,050 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:05:41,054 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:05:41,054 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:05:41,056 INFO daemonizing the supervisord process
+2026-05-28 12:48:52,864 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:48:52,868 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:48:52,868 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:48:52,870 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --command 'npm run selenium-test -- --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js'
-2026-05-27 15:05:41,057 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:48:52,871 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -5882,7 +5922,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (1s)
 
 ========================================
-= Running: ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account 2026-05-27 15:05:41 UTC
+= Running: ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account 2026-05-28 12:48:53 UTC
 ========================================
 
 
@@ -5958,12 +5998,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --command 'npm run selenium-test -- --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account'
 + /usr/bin/supervisord
-2026-05-27 15:05:42,508 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:05:42,511 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:05:42,512 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:05:42,513 INFO daemonizing the supervisord process
+2026-05-28 12:48:53,866 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:48:53,869 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:48:53,869 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:48:53,872 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --command 'npm run selenium-test -- --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account'
-2026-05-27 15:05:42,514 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:48:53,873 CRIT could not write pidfile /var/run/supervisord.pid
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/Vector, mediawiki/vendor
@@ -5986,186 +6026,10 @@ DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: npm run selenium-test -- --spec tests/selenium/specs/user.js --mochaOpts.grep should be able to create account
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(2s)
+(1s)
 
 ========================================
-= Running: ./install extensions/Echo 2026-05-27 15:05:43 UTC
-========================================
-
-
-
-========================================
-= install is running: dirname ./install
-
-
-========================================
-= install is running: . ./lib/silent_output
-
-
-
-========================================
-= install is running: '[' -z 1 ']'
-
-
-========================================
-= install is running: dirname ./install
-
-========================================
-= install is running: . ./lib/clone_or_fetch
-
-
-========================================
-= install is running: dirname ./install
-
-========================================
-= install is running: . ./lib/print_quibble_command
-
-========================================
-= install is running: clone_or_fetch mediawiki/extensions/Echo
-
-========================================
-= install is running: local quiet=
-
-========================================
-= install is running: '[' mediawiki/extensions/Echo = --quiet ']'
-
-========================================
-= install is running: local repo=mediawiki/extensions/Echo
-
-========================================
-= install is running: local ref_dir=ref/mediawiki/extensions/Echo.git
-
-========================================
-= install is running: '[' -d ref/mediawiki/extensions/Echo.git ']'
-
-========================================
-= install is running: git -C ref/mediawiki/extensions/Echo.git fetch
-
-========================================
-= install is running: clone_or_fetch integration/config
-
-========================================
-= install is running: local quiet=
-
-========================================
-= install is running: '[' integration/config = --quiet ']'
-
-========================================
-= install is running: local repo=integration/config
-
-========================================
-= install is running: local ref_dir=ref/integration/config.git
-
-========================================
-= install is running: '[' -d ref/integration/config.git ']'
-
-========================================
-= install is running: git -C ref/integration/config.git fetch
-
-
-========================================
-= install is running: dirname ./install
-
-========================================
-= install is running: . ./lib/ensure_config
-
-
-========================================
-= install is running: config_ref_dir=ref/integration/config.git
-
-
-========================================
-= install is running: config_src_dir=src/config
-
-
-========================================
-= install is running: '[' '!' -d src/config ']'
-
-
-========================================
-= install is running: dirname ./install
-
-========================================
-= install is running: . ./lib/resolve_deps
-
-
-========================================
-= install is running: set +x
-
-========================================
-= install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} ${QUIBBLE_RESOLVE_REQUIRES[@]+"${QUIBBLE_RESOLVE_REQUIRES[@]}"} --command true ${deps[@]+"${deps[@]}"})
-
-========================================
-= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-
-========================================
-= install is running: local _xtrace_was_on=
-
-========================================
-= install is running: case "$-" in
-
-========================================
-= install is running: _xtrace_was_on=1
-
-========================================
-= install is running: set +x
-########################################
-docker run \
-  -it \
-  --rm \
-  --entrypoint=quibble-with-supervisord \
-  -v $PWD/cache:/cache \
-  -v $PWD/log:/workspace/log \
-  -v $PWD/ref:/srv/git:ro \
-  -v $PWD/src:/workspace/src \
-  -e ZUUL_PROJECT=mediawiki/extensions/Echo \
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
-  --dry-run \
-  --resolve-requires \
-  --command true \
-  mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-########################################
-
-========================================
-= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-+ /usr/bin/supervisord
-2026-05-27 15:05:49,989 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:05:49,992 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:05:49,992 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:05:49,994 INFO daemonizing the supervisord process
-+ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-27 15:05:49,995 CRIT could not write pidfile /var/run/supervisord.pid
-DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
-INFO:quibble.cmd:Adding mediawiki/vendor
-INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
-INFO:zuul.CloneMapper:Workspace path set to: ./
-INFO:zuul.CloneMapper:Mapping projects to workspace...
-INFO:zuul.CloneMapper:  mediawiki/extensions/Echo -> extensions/Echo
-INFO:zuul.CloneMapper:Expansion completed.
-DEBUG:quibble.cmd:Running stages: 
-DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
-DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/Echo
-DEBUG:quibble.cmd:Reporting URL: not specified
-DEBUG:quibble.cmd:Execution plan:
-DEBUG:quibble.cmd:Report durations
-DEBUG:quibble.cmd:Versions
-DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
-DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/Echo", "mediawiki/extensions/EventLogging", "mediawiki/extensions/MobileFrontend", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}
-DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
-DEBUG:quibble.cmd:Submodule update: /workspace/src
-DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
-DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
-DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
-* Install MediaWiki, db=<MySQL (no socket)>
-* npm install in /workspace/src
-DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
-DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
-DEBUG:quibble.cmd:User commands: true
-WARNING:quibble.cmd:Exiting without execution: --dry-run
-(7s)
-
-========================================
-= Running: env DRY_RUN=1 ./install extensions/Echo 2026-05-27 15:05:50 UTC
+= Running: ./install extensions/Echo 2026-05-28 12:48:54 UTC
 ========================================
 
 
@@ -6305,12 +6169,188 @@ docker run \
 ========================================
 = install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 + /usr/bin/supervisord
-2026-05-27 15:05:57,251 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:05:57,255 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:05:57,255 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:05:57,257 INFO daemonizing the supervisord process
+2026-05-28 12:49:00,204 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:49:00,209 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:49:00,209 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:49:00,211 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-27 15:05:57,258 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:49:00,213 CRIT could not write pidfile /var/run/supervisord.pid
+DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
+INFO:quibble.cmd:Adding mediawiki/vendor
+INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
+INFO:zuul.CloneMapper:Workspace path set to: ./
+INFO:zuul.CloneMapper:Mapping projects to workspace...
+INFO:zuul.CloneMapper:  mediawiki/extensions/Echo -> extensions/Echo
+INFO:zuul.CloneMapper:Expansion completed.
+DEBUG:quibble.cmd:Running stages: 
+DEBUG:quibble.cmd:QUIBBLE_PHPUNIT_PARALLEL: None
+DEBUG:quibble.cmd:Project dir: /workspace/src/extensions/Echo
+DEBUG:quibble.cmd:Reporting URL: not specified
+DEBUG:quibble.cmd:Execution plan:
+DEBUG:quibble.cmd:Report durations
+DEBUG:quibble.cmd:Versions
+DEBUG:quibble.cmd:Ensure dir: '/workspace/log'
+DEBUG:quibble.cmd:Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/Echo", "mediawiki/extensions/EventLogging", "mediawiki/extensions/MobileFrontend", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}
+DEBUG:quibble.cmd:Recursively process registration dependencies. Fails on extra requires: False
+DEBUG:quibble.cmd:Submodule update: /workspace/src
+DEBUG:quibble.cmd:Install composer dev-requires for vendor.git
+DEBUG:quibble.cmd:Start backends: <MySQL (no socket)>
+DEBUG:quibble.cmd:Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
+* Install MediaWiki, db=<MySQL (no socket)>
+* npm install in /workspace/src
+DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
+DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
+DEBUG:quibble.cmd:User commands: true
+WARNING:quibble.cmd:Exiting without execution: --dry-run
+(6s)
+
+========================================
+= Running: env DRY_RUN=1 ./install extensions/Echo 2026-05-28 12:49:00 UTC
+========================================
+
+
+
+========================================
+= install is running: dirname ./install
+
+
+========================================
+= install is running: . ./lib/silent_output
+
+
+
+========================================
+= install is running: '[' -z 1 ']'
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/clone_or_fetch
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/print_quibble_command
+
+========================================
+= install is running: clone_or_fetch mediawiki/extensions/Echo
+
+========================================
+= install is running: local quiet=
+
+========================================
+= install is running: '[' mediawiki/extensions/Echo = --quiet ']'
+
+========================================
+= install is running: local repo=mediawiki/extensions/Echo
+
+========================================
+= install is running: local ref_dir=ref/mediawiki/extensions/Echo.git
+
+========================================
+= install is running: '[' -d ref/mediawiki/extensions/Echo.git ']'
+
+========================================
+= install is running: git -C ref/mediawiki/extensions/Echo.git fetch
+
+========================================
+= install is running: clone_or_fetch integration/config
+
+========================================
+= install is running: local quiet=
+
+========================================
+= install is running: '[' integration/config = --quiet ']'
+
+========================================
+= install is running: local repo=integration/config
+
+========================================
+= install is running: local ref_dir=ref/integration/config.git
+
+========================================
+= install is running: '[' -d ref/integration/config.git ']'
+
+========================================
+= install is running: git -C ref/integration/config.git fetch
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/ensure_config
+
+
+========================================
+= install is running: config_ref_dir=ref/integration/config.git
+
+
+========================================
+= install is running: config_src_dir=src/config
+
+
+========================================
+= install is running: '[' '!' -d src/config ']'
+
+
+========================================
+= install is running: dirname ./install
+
+========================================
+= install is running: . ./lib/resolve_deps
+
+
+========================================
+= install is running: set +x
+
+========================================
+= install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} ${QUIBBLE_RESOLVE_REQUIRES[@]+"${QUIBBLE_RESOLVE_REQUIRES[@]}"} --command true ${deps[@]+"${deps[@]}"})
+
+========================================
+= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+
+========================================
+= install is running: local _xtrace_was_on=
+
+========================================
+= install is running: case "$-" in
+
+========================================
+= install is running: _xtrace_was_on=1
+
+========================================
+= install is running: set +x
+########################################
+docker run \
+  -it \
+  --rm \
+  --entrypoint=quibble-with-supervisord \
+  -v $PWD/cache:/cache \
+  -v $PWD/log:/workspace/log \
+  -v $PWD/ref:/srv/git:ro \
+  -v $PWD/src:/workspace/src \
+  -e ZUUL_PROJECT=mediawiki/extensions/Echo \
+  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  --dry-run \
+  --resolve-requires \
+  --command true \
+  mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+########################################
+
+========================================
+= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
++ /usr/bin/supervisord
+2026-05-28 12:49:06,613 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:49:06,617 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:49:06,617 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:49:06,619 INFO daemonizing the supervisord process
++ exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+2026-05-28 12:49:06,620 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -6341,7 +6381,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (7s)
 
 ========================================
-= Running: env RESOLVE_REQUIRES=0 ./install extensions/Echo 2026-05-27 15:05:57 UTC
+= Running: env RESOLVE_REQUIRES=0 ./install extensions/Echo 2026-05-28 12:49:07 UTC
 ========================================
 
 
@@ -6480,12 +6520,12 @@ docker run \
 ========================================
 = install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 + /usr/bin/supervisord
-2026-05-27 15:06:04,121 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:06:04,124 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:06:04,124 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:06:04,126 INFO daemonizing the supervisord process
+2026-05-28 12:49:12,926 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:49:12,930 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:49:12,930 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:49:12,932 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-27 15:06:04,127 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:49:12,933 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -6512,10 +6552,10 @@ DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(7s)
+(6s)
 
 ========================================
-= Running: env QUIBBLE_DEPS= ./install extensions/Echo 2026-05-27 15:06:04 UTC
+= Running: env QUIBBLE_DEPS= ./install extensions/Echo 2026-05-28 12:49:13 UTC
 ========================================
 
 
@@ -6654,12 +6694,12 @@ docker run \
 ========================================
 = install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true
 + /usr/bin/supervisord
-2026-05-27 15:06:07,166 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:06:07,169 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:06:07,169 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:06:07,171 INFO daemonizing the supervisord process
+2026-05-28 12:49:15,676 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:49:15,680 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:49:15,680 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:49:15,682 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true
-2026-05-27 15:06:07,172 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:49:15,684 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -6690,7 +6730,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (3s)
 
 ========================================
-= Running: env QUIBBLE_DEPS=EventLogging ./install extensions/Echo 2026-05-27 15:06:07 UTC
+= Running: env QUIBBLE_DEPS=EventLogging ./install extensions/Echo 2026-05-28 12:49:16 UTC
 ========================================
 
 
@@ -6830,12 +6870,12 @@ docker run \
 ========================================
 = install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/EventLogging
 + /usr/bin/supervisord
-2026-05-27 15:06:11,202 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:06:11,205 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:06:11,205 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:06:11,207 INFO daemonizing the supervisord process
+2026-05-28 12:49:19,326 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:49:19,331 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:49:19,331 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:49:19,333 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/EventLogging
-2026-05-27 15:06:11,208 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:49:19,334 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/skins/Vector, mediawiki/vendor
@@ -6863,15 +6903,15 @@ DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(4s)
+(3s)
 
 ========================================
-= Running: ./selenium_tests_exist extensions/Echo 2026-05-27 15:06:11 UTC
+= Running: ./selenium_tests_exist extensions/Echo 2026-05-28 12:49:19 UTC
 ========================================
 (1s)
 
 ========================================
-= Running: ./run_selenium_tests extensions/Echo 2026-05-27 15:06:12 UTC
+= Running: ./run_selenium_tests extensions/Echo 2026-05-28 12:49:20 UTC
 ========================================
 
 
@@ -6948,12 +6988,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-27 15:06:13,330 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:06:13,334 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:06:13,334 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:06:13,336 INFO daemonizing the supervisord process
+2026-05-28 12:49:21,189 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:49:21,194 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:49:21,194 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:49:21,196 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-27 15:06:13,337 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:49:21,197 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -6979,7 +7019,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (1s)
 
 ========================================
-= Running: ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js 2026-05-27 15:06:13 UTC
+= Running: ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js 2026-05-28 12:49:21 UTC
 ========================================
 
 
@@ -7056,12 +7096,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --command 'cd extensions/Echo && npm run selenium-test -- --spec tests/selenium/specs/notifications.js'
 + /usr/bin/supervisord
-2026-05-27 15:06:14,585 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:06:14,588 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:06:14,588 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:06:14,590 INFO daemonizing the supervisord process
+2026-05-28 12:49:22,181 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:49:22,185 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:49:22,185 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:49:22,187 INFO daemonizing the supervisord process
+2026-05-28 12:49:22,188 CRIT could not write pidfile /var/run/supervisord.pid
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --command 'cd extensions/Echo && npm run selenium-test -- --spec tests/selenium/specs/notifications.js'
-2026-05-27 15:06:14,591 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -7084,10 +7124,10 @@ DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: cd extensions/Echo && npm run selenium-test -- --spec tests/selenium/specs/notifications.js
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(2s)
+(1s)
 
 ========================================
-= Running: ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep alerts and notices are visible 2026-05-27 15:06:15 UTC
+= Running: ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep alerts and notices are visible 2026-05-28 12:49:22 UTC
 ========================================
 
 
@@ -7164,12 +7204,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --command 'cd extensions/Echo && npm run selenium-test -- --spec tests/selenium/specs/notifications.js --mochaOpts.grep alerts and notices are visible'
 + /usr/bin/supervisord
-2026-05-27 15:06:15,774 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:06:15,777 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:06:15,777 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:06:15,779 INFO daemonizing the supervisord process
+2026-05-28 12:49:23,134 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:49:23,137 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:49:23,138 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:49:23,140 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --command 'cd extensions/Echo && npm run selenium-test -- --spec tests/selenium/specs/notifications.js --mochaOpts.grep alerts and notices are visible'
-2026-05-27 15:06:15,780 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:49:23,141 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -7195,7 +7235,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (1s)
 
 ========================================
-= Running: ./run_php_unit_tests extensions/Echo 2026-05-27 15:06:16 UTC
+= Running: ./run_php_unit_tests extensions/Echo 2026-05-28 12:49:23 UTC
 ========================================
 
 
@@ -7272,12 +7312,12 @@ docker run \
 ========================================
 = run_php_unit_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run phpunit
 + /usr/bin/supervisord
-2026-05-27 15:06:16,965 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:06:16,968 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:06:16,968 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:06:16,970 INFO daemonizing the supervisord process
+2026-05-28 12:49:24,108 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:49:24,112 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:49:24,112 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:49:24,115 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run phpunit
-2026-05-27 15:06:16,971 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:49:24,116 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -7303,7 +7343,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (1s)
 
 ========================================
-= Running: ./run_php_unit_tests extensions/Echo --filter testNotificationCount 2026-05-27 15:06:17 UTC
+= Running: ./run_php_unit_tests extensions/Echo --filter testNotificationCount 2026-05-28 12:49:24 UTC
 ========================================
 
 
@@ -7380,12 +7420,12 @@ docker run \
 ========================================
 = run_php_unit_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --command 'composer run --timeout=0 phpunit -- --filter testNotificationCount'
 + /usr/bin/supervisord
-2026-05-27 15:06:18,191 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:06:18,195 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:06:18,195 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:06:18,197 INFO daemonizing the supervisord process
+2026-05-28 12:49:25,130 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:49:25,134 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:49:25,134 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:49:25,136 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --command 'composer run --timeout=0 phpunit -- --filter testNotificationCount'
-2026-05-27 15:06:18,197 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:49:25,137 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -7411,7 +7451,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (1s)
 
 ========================================
-= Running: env DRY_RUN=1 ./run_php_unit_tests extensions/Echo 2026-05-27 15:06:18 UTC
+= Running: env DRY_RUN=1 ./run_php_unit_tests extensions/Echo 2026-05-28 12:49:25 UTC
 ========================================
 
 
@@ -7488,12 +7528,12 @@ docker run \
 ========================================
 = run_php_unit_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run phpunit
 + /usr/bin/supervisord
-2026-05-27 15:06:19,419 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:06:19,423 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:06:19,423 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:06:19,425 INFO daemonizing the supervisord process
+2026-05-28 12:49:26,222 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:49:26,226 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:49:26,226 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:49:26,228 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run phpunit
-2026-05-27 15:06:19,426 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:49:26,229 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Echo, mediawiki/skins/Vector, mediawiki/vendor
@@ -7519,7 +7559,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (1s)
 
 ========================================
-= Running: ./install skins/MinervaNeue 2026-05-27 15:06:19 UTC
+= Running: ./install skins/MinervaNeue 2026-05-28 12:49:26 UTC
 ========================================
 
 
@@ -7659,12 +7699,12 @@ docker run \
 ========================================
 = install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/skins/MinervaNeue docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/Cite mediawiki/extensions/Echo mediawiki/extensions/MobileFrontend mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/EventStreamConfig mediawiki/extensions/TestKitchen
 + /usr/bin/supervisord
-2026-05-27 15:06:29,179 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:06:29,183 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:06:29,183 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:06:29,185 INFO daemonizing the supervisord process
+2026-05-28 12:49:35,138 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:49:35,142 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:49:35,142 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:49:35,144 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/Cite mediawiki/extensions/Echo mediawiki/extensions/MobileFrontend mediawiki/extensions/EventBus mediawiki/extensions/EventLogging mediawiki/extensions/EventStreamConfig mediawiki/extensions/TestKitchen
-2026-05-27 15:06:29,186 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 12:49:35,145 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/skins/MinervaNeue
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/Cite, mediawiki/extensions/Echo, mediawiki/extensions/EventBus, mediawiki/extensions/EventLogging, mediawiki/extensions/EventStreamConfig, mediawiki/extensions/MobileFrontend, mediawiki/extensions/TestKitchen, mediawiki/skins/MinervaNeue, mediawiki/skins/Vector, mediawiki/vendor
@@ -7692,15 +7732,15 @@ DEBUG:quibble.cmd:Start backends: <Memcached on port 11211>
 DEBUG:quibble.cmd:Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 DEBUG:quibble.cmd:User commands: true
 WARNING:quibble.cmd:Exiting without execution: --dry-run
-(10s)
+(9s)
 
 ========================================
-= Running: ./selenium_tests_exist skins/MinervaNeue 2026-05-27 15:06:29 UTC
+= Running: ./selenium_tests_exist skins/MinervaNeue 2026-05-28 12:49:35 UTC
 ========================================
 (1s)
 
 ========================================
-= Running: ./run_selenium_tests skins/MinervaNeue 2026-05-27 15:06:30 UTC
+= Running: ./run_selenium_tests skins/MinervaNeue 2026-05-28 12:49:36 UTC
 ========================================
 
 
@@ -7777,12 +7817,12 @@ docker run \
 ========================================
 = run_selenium_tests is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/skins/MinervaNeue docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --skip-zuul --skip-deps --run selenium
 + /usr/bin/supervisord
-2026-05-27 15:06:31,383 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 15:06:31,387 INFO RPC interface 'supervisor' initialized
-2026-05-27 15:06:31,387 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 15:06:31,389 INFO daemonizing the supervisord process
+2026-05-28 12:49:37,067 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 12:49:37,071 INFO RPC interface 'supervisor' initialized
+2026-05-28 12:49:37,071 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 12:49:37,073 INFO daemonizing the supervisord process
+2026-05-28 12:49:37,074 CRIT could not write pidfile /var/run/supervisord.pid
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --skip-zuul --skip-deps --run selenium
-2026-05-27 15:06:31,390 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/skins/MinervaNeue
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/skins/MinervaNeue, mediawiki/skins/Vector, mediawiki/vendor
@@ -7808,21 +7848,7 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 (1s)
 
 ========================================
-= Running: ./list_dependencies extensions/Echo 2026-05-27 15:06:31 UTC
-========================================
-AntiSpoof
-CentralAuth
-EventLogging
-MobileFrontend
-(1s)
-
-========================================
-= Running: ./list_dependencies_required extensions/Echo 2026-05-27 15:06:32 UTC
-========================================
-(0s)
-
-========================================
-= Running: ./list_dependencies_optional extensions/Echo 2026-05-27 15:06:32 UTC
+= Running: ./list_dependencies extensions/Echo 2026-05-28 12:49:37 UTC
 ========================================
 AntiSpoof
 CentralAuth
@@ -7831,7 +7857,21 @@ MobileFrontend
 (0s)
 
 ========================================
-= Running: ./list_dependencies_combinations extensions/Echo 2026-05-27 15:06:32 UTC
+= Running: ./list_dependencies_required extensions/Echo 2026-05-28 12:49:37 UTC
+========================================
+(0s)
+
+========================================
+= Running: ./list_dependencies_optional extensions/Echo 2026-05-28 12:49:37 UTC
+========================================
+AntiSpoof
+CentralAuth
+EventLogging
+MobileFrontend
+(0s)
+
+========================================
+= Running: ./list_dependencies_combinations extensions/Echo 2026-05-28 12:49:37 UTC
 ========================================
 AntiSpoof
 CentralAuth
@@ -7851,7 +7891,7 @@ AntiSpoof CentralAuth EventLogging MobileFrontend
 (0s)
 
 ========================================
-= Running: ./list_dependencies skins/MinervaNeue 2026-05-27 15:06:32 UTC
+= Running: ./list_dependencies skins/MinervaNeue 2026-05-28 12:49:37 UTC
 ========================================
 Cite
 Echo
@@ -7863,12 +7903,12 @@ TestKitchen
 (0s)
 
 ========================================
-= Running: ./list_dependencies_required skins/MinervaNeue 2026-05-27 15:06:32 UTC
+= Running: ./list_dependencies_required skins/MinervaNeue 2026-05-28 12:49:37 UTC
 ========================================
 (0s)
 
 ========================================
-= Running: ./list_dependencies_optional skins/MinervaNeue 2026-05-27 15:06:32 UTC
+= Running: ./list_dependencies_optional skins/MinervaNeue 2026-05-28 12:49:37 UTC
 ========================================
 Cite
 Echo
@@ -7880,7 +7920,7 @@ TestKitchen
 (0s)
 
 ========================================
-= Running: ./list_dependencies_combinations skins/MinervaNeue 2026-05-27 15:06:32 UTC
+= Running: ./list_dependencies_combinations skins/MinervaNeue 2026-05-28 12:49:37 UTC
 ========================================
 Cite
 Echo
@@ -8012,7 +8052,7 @@ Cite Echo MobileFrontend EventBus EventLogging EventStreamConfig TestKitchen
 (0s)
 
 ========================================
-= Running: ./list_gated 2026-05-27 15:06:32 UTC
+= Running: ./list_gated 2026-05-28 12:49:37 UTC
 ========================================
 extensions/AbuseFilter
 extensions/AntiSpoof
@@ -8069,13 +8109,13 @@ skins/Vector
 (0s)
 
 ========================================
-= Running: ./suggest_parallel 2026-05-27 15:06:32 UTC
+= Running: ./suggest_parallel 2026-05-28 12:49:37 UTC
 ========================================
 1
 (0s)
 
 ========================================
-= Running: ./remove 2026-05-27 15:06:32 UTC
+= Running: ./remove 2026-05-28 12:49:37 UTC
 ========================================
 
 
@@ -8117,7 +8157,6 @@ PASSED:
   env DRY_RUN=1 ./fresh_install
   ./restore
   env ENVIRONMENT=0 ./fresh_install
-  env ENVIRONMENT=0 ./restore
   env ENVIRONMENT=0 ./remove
   ./run_selenium_tests
   ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js
@@ -8151,5 +8190,6 @@ PASSED:
 FAILED:
   ./save
   env ENVIRONMENT=0 ./save
+  env ENVIRONMENT=0 ./restore
   ./selenium_tests_exist
-(4m 53s) 2026-05-27 15:06:33 UTC
+(3m 57s) 2026-05-28 12:49:38 UTC

@@ -12,59 +12,59 @@ docker: Docker version 29.4.0, build 9d7ad9f
 docker CPUs: 4
 docker RAM: 3.3 GB
 
-core fresh_install .............................................. ok (2s) save . FAIL (0s)  2026-05-27 13:46:56 UTC
-extensions/AbuseFilter restore  ok (1s) install .................................................. ok (12s) run_selenium_tests .............................................. ok (1s)  2026-05-27 13:47:11 UTC
-extensions/AntiSpoof restore  ok (1s) install ................................................. ok (3s)  2026-05-27 13:47:16 UTC
-extensions/Babel restore  ok (1s) install .................................................. ok (4s)  2026-05-27 13:47:22 UTC
-extensions/BetaFeatures restore  ok (1s) install ................................................. ok (3s)  2026-05-27 13:47:27 UTC
-extensions/CampaignEvents restore  ok (1s) install .................................................. ok (10s) run_selenium_tests .............................................. ok (1s)  2026-05-27 13:47:40 UTC
-extensions/CheckUser restore  ok (1s) install .................................................. ok (16s)  2026-05-27 13:47:58 UTC
-extensions/CirrusSearch restore  ok (1s) install .................................................. ok (12s)  2026-05-27 13:48:12 UTC
-extensions/cldr restore  ok (1s) install ................................................. ok (3s)  2026-05-27 13:48:17 UTC
-extensions/ContentTranslation restore  ok (1s) install .................................................. ok (9s)  2026-05-27 13:48:28 UTC
-extensions/CommunityConfiguration restore  ok (1s) install .................................................. ok (4s) run_selenium_tests .............................................. ok (1s)  2026-05-27 13:48:36 UTC
-extensions/CommunityConfigurationExample restore  ok (1s) install .................................................. ok (4s)  2026-05-27 13:48:42 UTC
-extensions/Disambiguator restore  ok (1s) install .................................................. ok (4s)  2026-05-27 13:48:48 UTC
-extensions/Echo restore  ok (1s) install .................................................. ok (7s) run_selenium_tests .............................................. ok (1s)  2026-05-27 13:48:58 UTC
-extensions/Elastica restore  ok (0s) install ................................................. ok (3s)  2026-05-27 13:49:02 UTC
-extensions/EventBus restore  ok (1s) install .................................................. ok (4s)  2026-05-27 13:49:08 UTC
-extensions/EventLogging restore  ok (1s) install .................................................. ok (5s)  2026-05-27 13:49:15 UTC
-extensions/EventStreamConfig restore  ok (1s) install ................................................. ok (3s)  2026-05-27 13:49:20 UTC
-extensions/FileImporter restore  ok (1s) install .................................................. ok (6s)  2026-05-27 13:49:28 UTC
-extensions/GeoData restore  ok (1s) install .................................................. ok (5s)  2026-05-27 13:49:35 UTC
-extensions/GlobalCssJs restore  ok (1s) install ................................................. ok (3s)  2026-05-27 13:49:40 UTC
-extensions/GlobalPreferences restore  ok (1s) install ................................................. ok (3s)  2026-05-27 13:49:45 UTC
-extensions/GrowthExperiments restore  ok (1s) install .................................................. ok (19s)  2026-05-27 13:50:06 UTC
-extensions/GuidedTour restore  ok (0s) install .................................................. ok (4s) run_selenium_tests .............................................. ok (2s)  2026-05-27 13:50:13 UTC
-extensions/IPInfo restore  ok (0s) install .................................................. ok (9s)  2026-05-27 13:50:23 UTC
-extensions/JsonConfig restore  ok (1s) install .................................................. ok (7s)  2026-05-27 13:50:32 UTC
-extensions/Kartographer restore  ok (0s) install .................................................. ok (8s)  2026-05-27 13:50:41 UTC
-extensions/Math restore  ok (1s) install .................................................. ok (6s) run_selenium_tests .............................................. ok (1s)  2026-05-27 13:50:50 UTC
-extensions/MediaModeration restore  ok (1s) install ................................................. ok (3s)  2026-05-27 13:50:55 UTC
-extensions/MobileApp restore  ok (1s) install .................................................. ok (7s)  2026-05-27 13:51:04 UTC
-extensions/MobileFrontend restore  ok (1s) install .................................................. ok (6s)  2026-05-27 13:51:12 UTC
-extensions/NavigationTiming restore  ok (1s) install .................................................. ok (4s)  2026-05-27 13:51:18 UTC
-extensions/PageImages restore  ok (1s) install ................................................. ok (3s)  2026-05-27 13:51:23 UTC
-extensions/PageTriage restore  ok (1s) install .................................................. ok (7s) run_selenium_tests .............................................. ok (1s)  2026-05-27 13:51:33 UTC
-extensions/PageViewInfo restore  ok (1s) install ................................................. ok (3s)  2026-05-27 13:51:38 UTC
-extensions/ProofreadPage restore  ok (1s) install .................................................. ok (8s) run_selenium_tests .............................................. ok (1s)  2026-05-27 13:51:49 UTC
-extensions/SandboxLink restore  ok (1s) install ................................................. ok (2s)  2026-05-27 13:51:53 UTC
-extensions/Scribunto restore  ok (1s) install ................................................. ok (3s)  2026-05-27 13:51:58 UTC
-extensions/SiteMatrix restore  ok (1s) install ................................................. ok (3s)  2026-05-27 13:52:03 UTC
-extensions/TemplateData restore  ok (1s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s)  2026-05-27 13:52:09 UTC
-extensions/Thanks restore  ok (1s) install .................................................. ok (8s)  2026-05-27 13:52:19 UTC
-extensions/TimedMediaHandler restore  ok (0s) install ................................................. ok (3s)  2026-05-27 13:52:23 UTC
-extensions/Translate restore  ok (1s) install .................................................. ok (8s)  2026-05-27 13:52:33 UTC
-extensions/UniversalLanguageSelector restore  ok (1s) install .................................................. ok (4s)  2026-05-27 13:52:39 UTC
-extensions/VisualEditor restore  ok (1s) install .................................................. ok (8s) run_selenium_tests .............................................. ok (1s)  2026-05-27 13:52:50 UTC
-extensions/Wikibase restore  ok (1s) install .................................................. ok (19s)  2026-05-27 13:53:12 UTC
-extensions/WikibaseCirrusSearch restore  ok (1s) install .................................................. ok (7s)  2026-05-27 13:53:21 UTC
-extensions/WikibaseMediaInfo restore  ok (1s) install .................................................. ok (9s)  2026-05-27 13:53:32 UTC
-extensions/WikiLove restore  ok (1s) install ................................................. ok (3s)  2026-05-27 13:53:37 UTC
-extensions/WikimediaCampaignEvents restore  ok (1s) install .................................................. ok (5s)  2026-05-27 13:53:44 UTC
-extensions/WikimediaMessages restore  ok (1s) install .................................................. ok (3s)  2026-05-27 13:53:49 UTC
-skins/MinervaNeue restore  ok (1s) install .................................................. ok (10s) run_selenium_tests .............................................. ok (1s)  2026-05-27 13:54:02 UTC
-skins/Vector restore  ok (1s) install ................................................. ok (3s)  2026-05-27 13:54:07 UTC
+core fresh_install .............................................. ok (2s) save . FAIL (0s)  2026-05-28 11:35:36 UTC
+extensions/AbuseFilter restore  ok (1s) install .................................................. ok (11s) run_selenium_tests .............................................. ok (1s)  2026-05-28 11:35:50 UTC
+extensions/AntiSpoof restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:35:55 UTC
+extensions/Babel restore  ok (1s) install .................................................. ok (4s)  2026-05-28 11:36:01 UTC
+extensions/BetaFeatures restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:36:05 UTC
+extensions/CampaignEvents restore  ok (2s) install .................................................. ok (9s) run_selenium_tests .............................................. ok (1s)  2026-05-28 11:36:17 UTC
+extensions/CheckUser restore  ok (1s) install .................................................. ok (16s)  2026-05-28 11:36:35 UTC
+extensions/CirrusSearch restore  ok (1s) install .................................................. ok (10s)  2026-05-28 11:36:47 UTC
+extensions/cldr restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:36:52 UTC
+extensions/ContentTranslation restore  ok (1s) install .................................................. ok (9s)  2026-05-28 11:37:03 UTC
+extensions/CommunityConfiguration restore  ok (1s) install .................................................. ok (4s) run_selenium_tests .............................................. ok (1s)  2026-05-28 11:37:10 UTC
+extensions/CommunityConfigurationExample restore  ok (1s) install .................................................. ok (3s)  2026-05-28 11:37:15 UTC
+extensions/Disambiguator restore  ok (1s) install .................................................. ok (4s)  2026-05-28 11:37:21 UTC
+extensions/Echo restore  ok (1s) install .................................................. ok (6s) run_selenium_tests .............................................. ok (1s)  2026-05-28 11:37:30 UTC
+extensions/Elastica restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:37:35 UTC
+extensions/EventBus restore  ok (1s) install .................................................. ok (4s)  2026-05-28 11:37:40 UTC
+extensions/EventLogging restore  ok (1s) install .................................................. ok (5s)  2026-05-28 11:37:47 UTC
+extensions/EventStreamConfig restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:37:52 UTC
+extensions/FileImporter restore  ok (1s) install .................................................. ok (5s)  2026-05-28 11:37:59 UTC
+extensions/GeoData restore  ok (1s) install .................................................. ok (5s)  2026-05-28 11:38:06 UTC
+extensions/GlobalCssJs restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:38:11 UTC
+extensions/GlobalPreferences restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:38:16 UTC
+extensions/GrowthExperiments restore  ok (0s) install .................................................. ok (19s)  2026-05-28 11:38:36 UTC
+extensions/GuidedTour restore  ok (1s) install .................................................. ok (4s) run_selenium_tests .............................................. ok (1s)  2026-05-28 11:38:43 UTC
+extensions/IPInfo restore  ok (1s) install .................................................. ok (8s)  2026-05-28 11:38:53 UTC
+extensions/JsonConfig restore  ok (1s) install .................................................. ok (6s)  2026-05-28 11:39:01 UTC
+extensions/Kartographer restore  ok (1s) install .................................................. ok (7s)  2026-05-28 11:39:10 UTC
+extensions/Math restore  ok (1s) install .................................................. ok (5s) run_selenium_tests .............................................. ok (1s)  2026-05-28 11:39:18 UTC
+extensions/MediaModeration restore  ok (1s) install ................................................. ok (4s)  2026-05-28 11:39:23 UTC
+extensions/MobileApp restore  ok (1s) install .................................................. ok (7s)  2026-05-28 11:39:32 UTC
+extensions/MobileFrontend restore  ok (1s) install .................................................. ok (7s)  2026-05-28 11:39:41 UTC
+extensions/NavigationTiming restore  ok (1s) install .................................................. ok (4s)  2026-05-28 11:39:47 UTC
+extensions/PageImages restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:39:52 UTC
+extensions/PageTriage restore  ok (1s) install .................................................. ok (6s) run_selenium_tests .............................................. ok (1s)  2026-05-28 11:40:01 UTC
+extensions/PageViewInfo restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:40:06 UTC
+extensions/ProofreadPage restore  ok (1s) install .................................................. ok (7s) run_selenium_tests .............................................. ok (1s)  2026-05-28 11:40:16 UTC
+extensions/SandboxLink restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:40:21 UTC
+extensions/Scribunto restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:40:25 UTC
+extensions/SiteMatrix restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:40:30 UTC
+extensions/TemplateData restore  ok (1s) install ................................................. ok (3s) run_selenium_tests .............................................. ok (1s)  2026-05-28 11:40:36 UTC
+extensions/Thanks restore  ok (1s) install .................................................. ok (8s)  2026-05-28 11:40:46 UTC
+extensions/TimedMediaHandler restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:40:50 UTC
+extensions/Translate restore  ok (2s) install .................................................. ok (7s)  2026-05-28 11:41:00 UTC
+extensions/UniversalLanguageSelector restore  ok (1s) install .................................................. ok (4s)  2026-05-28 11:41:05 UTC
+extensions/VisualEditor restore  ok (1s) install .................................................. ok (10s) run_selenium_tests .............................................. ok (2s)  2026-05-28 11:41:18 UTC
+extensions/Wikibase restore  ok (1s) install .................................................. ok (17s)  2026-05-28 11:41:37 UTC
+extensions/WikibaseCirrusSearch restore  ok (1s) install .................................................. ok (7s)  2026-05-28 11:41:46 UTC
+extensions/WikibaseMediaInfo restore  ok (1s) install .................................................. ok (8s)  2026-05-28 11:41:56 UTC
+extensions/WikiLove restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:42:01 UTC
+extensions/WikimediaCampaignEvents restore  ok (1s) install .................................................. ok (4s)  2026-05-28 11:42:07 UTC
+extensions/WikimediaMessages restore  ok (1s) install .................................................. ok (4s)  2026-05-28 11:42:13 UTC
+skins/MinervaNeue restore  ok (1s) install .................................................. ok (10s) run_selenium_tests .............................................. ok (1s)  2026-05-28 11:42:26 UTC
+skins/Vector restore  ok (1s) install ................................................. ok (3s)  2026-05-28 11:42:30 UTC
 
 ========================================
 = Results
@@ -126,4 +126,4 @@ FAILED:
   core (save)
 
 Logs: log/silent/
-(7m 13s) 2026-05-27 13:54:07 UTC
+(6m 56s) 2026-05-28 11:42:30 UTC

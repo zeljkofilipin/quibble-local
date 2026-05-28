@@ -61,4 +61,4 @@ docker RAM: 3.3 GB
 
 ========================================
 = restore is running: local exit_code=0
-(2s) 2026-05-27 13:30:30 UTC
+(1s) 2026-05-28 11:20:09 UTC

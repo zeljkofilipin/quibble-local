@@ -147,12 +147,12 @@ docker run \
 ========================================
 = install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 + /usr/bin/supervisord
-2026-05-27 12:44:18,020 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-27 12:44:18,023 INFO RPC interface 'supervisor' initialized
-2026-05-27 12:44:18,023 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-27 12:44:18,025 INFO daemonizing the supervisord process
+2026-05-28 10:37:06,957 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-05-28 10:37:06,960 INFO RPC interface 'supervisor' initialized
+2026-05-28 10:37:06,961 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-05-28 10:37:06,962 INFO daemonizing the supervisord process
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --dry-run --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-27 12:44:18,026 CRIT could not write pidfile /var/run/supervisord.pid
+2026-05-28 10:37:06,963 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -186,4 +186,4 @@ WARNING:quibble.cmd:Exiting without execution: --dry-run
 
 ========================================
 = install is running: local exit_code=0
-(7s) 2026-05-27 12:44:18 UTC
+(6s) 2026-05-28 10:37:07 UTC

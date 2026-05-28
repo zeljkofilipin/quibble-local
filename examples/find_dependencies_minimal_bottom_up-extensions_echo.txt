@@ -26,15 +26,15 @@ Optional dependencies to vary (4):
 
 Total combinations to test: 16 (from 0 to 4 optional dependencies)
 fetch(AntiSpoof) ..
-fetch(CentralAuth) ..
+pre-clone(CentralAuth) .
 fetch(EventLogging) ..
 fetch(MobileFrontend) ..
 
-=== Combination 1/16: (none) === 2026-05-27 11:47:04 UTC
-fresh_install .............................................. ok (2s) install ............................................... ok (3s) run_selenium_tests .............................................. ok (1s) 
+=== Combination 1/16: (none) === 2026-05-28 09:41:38 UTC
+fresh_install .............................................. ok (1s) install ............................................... ok (3s) run_selenium_tests .............................................. ok (2s) 
 ========================================
 = FOUND: minimum dependencies for extensions/Echo
 ========================================
 
 No dependencies needed.
-(10s) 2026-05-27 11:47:10 UTC
+(36s) 2026-05-28 09:41:44 UTC

@@ -12,60 +12,60 @@ docker: Docker version 29.4.0, build 9d7ad9f
 docker CPUs: 4
 docker RAM: 3.3 GB
 
-install_all_gated install_all_gated ................................................................................................................. ok (5m 27s)  2026-05-27 14:14:53 UTC
-core(selenium)  2026-05-27 14:14:53 UTC
-extensions/AbuseFilter(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:14:55 UTC
-extensions/AntiSpoof(selenium)  2026-05-27 14:14:56 UTC
-extensions/Babel(selenium)  2026-05-27 14:14:57 UTC
-extensions/BetaFeatures(selenium)  2026-05-27 14:14:58 UTC
-extensions/CampaignEvents(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:15:00 UTC
-extensions/CheckUser(selenium)  2026-05-27 14:15:01 UTC
-extensions/CirrusSearch(selenium)  2026-05-27 14:15:02 UTC
-extensions/cldr(selenium)  2026-05-27 14:15:03 UTC
-extensions/ContentTranslation(selenium)  2026-05-27 14:15:04 UTC
-extensions/CommunityConfiguration(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:15:06 UTC
-extensions/CommunityConfigurationExample(selenium)  2026-05-27 14:15:07 UTC
-extensions/Disambiguator(selenium)  2026-05-27 14:15:08 UTC
-extensions/Echo(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:15:10 UTC
-extensions/Elastica(selenium)  2026-05-27 14:15:11 UTC
-extensions/EventBus(selenium)  2026-05-27 14:15:12 UTC
-extensions/EventLogging(selenium)  2026-05-27 14:15:13 UTC
-extensions/EventStreamConfig(selenium)  2026-05-27 14:15:14 UTC
-extensions/FileImporter(selenium)  2026-05-27 14:15:15 UTC
-extensions/GeoData(selenium)  2026-05-27 14:15:16 UTC
-extensions/GlobalCssJs(selenium)  2026-05-27 14:15:17 UTC
-extensions/GlobalPreferences(selenium)  2026-05-27 14:15:19 UTC
-extensions/GrowthExperiments(selenium)  2026-05-27 14:15:20 UTC
-extensions/GuidedTour(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:15:22 UTC
-extensions/IPInfo(selenium)  2026-05-27 14:15:23 UTC
-extensions/JsonConfig(selenium)  2026-05-27 14:15:24 UTC
-extensions/Kartographer(selenium)  2026-05-27 14:15:25 UTC
-extensions/Math(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:15:27 UTC
-extensions/MediaModeration(selenium)  2026-05-27 14:15:28 UTC
-extensions/MobileApp(selenium)  2026-05-27 14:15:29 UTC
-extensions/MobileFrontend(selenium)  2026-05-27 14:15:30 UTC
-extensions/NavigationTiming(selenium)  2026-05-27 14:15:31 UTC
-extensions/PageImages(selenium)  2026-05-27 14:15:32 UTC
-extensions/PageTriage(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:15:34 UTC
-extensions/PageViewInfo(selenium)  2026-05-27 14:15:35 UTC
-extensions/ProofreadPage(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:15:37 UTC
-extensions/SandboxLink(selenium)  2026-05-27 14:15:38 UTC
-extensions/Scribunto(selenium)  2026-05-27 14:15:39 UTC
-extensions/SiteMatrix(selenium)  2026-05-27 14:15:40 UTC
-extensions/TemplateData(selenium) run_selenium_tests .............................................. ok (2s)  2026-05-27 14:15:43 UTC
-extensions/Thanks(selenium)  2026-05-27 14:15:44 UTC
-extensions/TimedMediaHandler(selenium)  2026-05-27 14:15:45 UTC
-extensions/Translate(selenium)  2026-05-27 14:15:46 UTC
-extensions/UniversalLanguageSelector(selenium)  2026-05-27 14:15:47 UTC
-extensions/VisualEditor(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:15:49 UTC
-extensions/Wikibase(selenium)  2026-05-27 14:15:50 UTC
-extensions/WikibaseCirrusSearch(selenium)  2026-05-27 14:15:51 UTC
-extensions/WikibaseMediaInfo(selenium)  2026-05-27 14:15:52 UTC
-extensions/WikiLove(selenium)  2026-05-27 14:15:53 UTC
-extensions/WikimediaCampaignEvents(selenium)  2026-05-27 14:15:54 UTC
-extensions/WikimediaMessages(selenium)  2026-05-27 14:15:55 UTC
-skins/MinervaNeue(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-27 14:15:57 UTC
-skins/Vector(selenium)  2026-05-27 14:15:58 UTC
+install_all_gated install_all_gated ................................................................................................................. ok (5m 2s)  2026-05-28 12:02:03 UTC
+core(selenium)  2026-05-28 12:02:03 UTC
+extensions/AbuseFilter(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-28 12:02:05 UTC
+extensions/AntiSpoof(selenium)  2026-05-28 12:02:06 UTC
+extensions/Babel(selenium)  2026-05-28 12:02:07 UTC
+extensions/BetaFeatures(selenium)  2026-05-28 12:02:08 UTC
+extensions/CampaignEvents(selenium) run_selenium_tests .............................................. ok (2s)  2026-05-28 12:02:10 UTC
+extensions/CheckUser(selenium)  2026-05-28 12:02:10 UTC
+extensions/CirrusSearch(selenium)  2026-05-28 12:02:11 UTC
+extensions/cldr(selenium)  2026-05-28 12:02:12 UTC
+extensions/ContentTranslation(selenium)  2026-05-28 12:02:13 UTC
+extensions/CommunityConfiguration(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-28 12:02:15 UTC
+extensions/CommunityConfigurationExample(selenium)  2026-05-28 12:02:16 UTC
+extensions/Disambiguator(selenium)  2026-05-28 12:02:17 UTC
+extensions/Echo(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-28 12:02:19 UTC
+extensions/Elastica(selenium)  2026-05-28 12:02:20 UTC
+extensions/EventBus(selenium)  2026-05-28 12:02:21 UTC
+extensions/EventLogging(selenium)  2026-05-28 12:02:21 UTC
+extensions/EventStreamConfig(selenium)  2026-05-28 12:02:22 UTC
+extensions/FileImporter(selenium)  2026-05-28 12:02:23 UTC
+extensions/GeoData(selenium)  2026-05-28 12:02:24 UTC
+extensions/GlobalCssJs(selenium)  2026-05-28 12:02:25 UTC
+extensions/GlobalPreferences(selenium)  2026-05-28 12:02:26 UTC
+extensions/GrowthExperiments(selenium)  2026-05-28 12:02:27 UTC
+extensions/GuidedTour(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-28 12:02:29 UTC
+extensions/IPInfo(selenium)  2026-05-28 12:02:30 UTC
+extensions/JsonConfig(selenium)  2026-05-28 12:02:30 UTC
+extensions/Kartographer(selenium)  2026-05-28 12:02:31 UTC
+extensions/Math(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-28 12:02:33 UTC
+extensions/MediaModeration(selenium)  2026-05-28 12:02:34 UTC
+extensions/MobileApp(selenium)  2026-05-28 12:02:35 UTC
+extensions/MobileFrontend(selenium)  2026-05-28 12:02:36 UTC
+extensions/NavigationTiming(selenium)  2026-05-28 12:02:37 UTC
+extensions/PageImages(selenium)  2026-05-28 12:02:38 UTC
+extensions/PageTriage(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-28 12:02:40 UTC
+extensions/PageViewInfo(selenium)  2026-05-28 12:02:41 UTC
+extensions/ProofreadPage(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-28 12:02:43 UTC
+extensions/SandboxLink(selenium)  2026-05-28 12:02:44 UTC
+extensions/Scribunto(selenium)  2026-05-28 12:02:45 UTC
+extensions/SiteMatrix(selenium)  2026-05-28 12:02:45 UTC
+extensions/TemplateData(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-28 12:02:47 UTC
+extensions/Thanks(selenium)  2026-05-28 12:02:48 UTC
+extensions/TimedMediaHandler(selenium)  2026-05-28 12:02:49 UTC
+extensions/Translate(selenium)  2026-05-28 12:02:50 UTC
+extensions/UniversalLanguageSelector(selenium)  2026-05-28 12:02:51 UTC
+extensions/VisualEditor(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-28 12:02:53 UTC
+extensions/Wikibase(selenium)  2026-05-28 12:02:54 UTC
+extensions/WikibaseCirrusSearch(selenium)  2026-05-28 12:02:55 UTC
+extensions/WikibaseMediaInfo(selenium)  2026-05-28 12:02:56 UTC
+extensions/WikiLove(selenium)  2026-05-28 12:02:57 UTC
+extensions/WikimediaCampaignEvents(selenium)  2026-05-28 12:02:57 UTC
+extensions/WikimediaMessages(selenium)  2026-05-28 12:02:58 UTC
+skins/MinervaNeue(selenium) run_selenium_tests .............................................. ok (1s)  2026-05-28 12:03:00 UTC
+skins/Vector(selenium)  2026-05-28 12:03:01 UTC
 
 ========================================
 = Results
@@ -126,4 +126,4 @@ PASSED:
   skins/Vector
 
 All passed.
-(6m 32s) 2026-05-27 14:15:58 UTC
+(6m 0s) 2026-05-28 12:03:01 UTC

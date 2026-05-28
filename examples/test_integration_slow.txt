@@ -12,35 +12,35 @@ docker: Docker version 29.4.0, build 9d7ad9f
 docker CPUs: 4
 docker RAM: 3.3 GB
 
-./fresh_install .............................................. ok (2s) 2026-05-27 15:06:35 UTC
-./run_php_unit_tests ............................................. ok (1s) 2026-05-27 15:06:36 UTC
-./run_php_unit_tests --filter testValidSpecialPageAliases ............................................. ok (1s) 2026-05-27 15:06:37 UTC
-./find_dependencies_minimal_bottom_up extensions/Echo ......................... ok (11s) 2026-05-27 15:06:48 UTC
-env FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo ......................... ok (14s) 2026-05-27 15:07:02 UTC
-env PARALLEL=2 ./find_dependencies_minimal_bottom_up extensions/Echo ............................... ok (12s) 2026-05-27 15:07:14 UTC
-env PARALLEL=2 FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo ............................... ok (17s) 2026-05-27 15:07:31 UTC
-./find_dependencies_minimal_greedy extensions/CommunityConfiguration ....................... ok (14s) 2026-05-27 15:07:45 UTC
-env FAST=1 ./find_dependencies_minimal_greedy extensions/CommunityConfiguration ....................... ok (18s) 2026-05-27 15:08:03 UTC
-./find_dependencies_minimal_thorough extensions/Echo ............................................. ok (44s) 2026-05-27 15:08:47 UTC
-env FAST=1 ./find_dependencies_minimal_thorough extensions/Echo ............................................. ok (44s) 2026-05-27 15:09:31 UTC
-env PARALLEL=2 ./find_dependencies_minimal_thorough extensions/Echo ............................................. ok (43s) 2026-05-27 15:10:14 UTC
-env PARALLEL=2 FAST=1 ./find_dependencies_minimal_thorough extensions/Echo ............................................. ok (45s) 2026-05-27 15:10:59 UTC
-./find_dependencies_minimal_gated extensions/Echo ............................ ok (44s) 2026-05-27 15:11:43 UTC
-env PARALLEL=2 ./find_dependencies_minimal_gated extensions/Echo ................................. ok (44s) 2026-05-27 15:12:27 UTC
-./prepare_gated  ok (50s) 2026-05-27 15:13:17 UTC
-./install_each_gated extensions/Echo ......... ok (8s) 2026-05-27 15:13:25 UTC
-env FAST=1 ./install_each_gated extensions/Echo ......... ok (8s) 2026-05-27 15:13:33 UTC
-env PARALLEL=2 ./install_each_gated extensions/Echo .............. ok (8s) 2026-05-27 15:13:41 UTC
-env PARALLEL=2 FAST=1 ./install_each_gated extensions/Echo .............. ok (9s) 2026-05-27 15:13:50 UTC
-./run_selenium_tests_all_gated extensions/Echo ........... ok (13s) 2026-05-27 15:14:03 UTC
-env FAST=1 ./run_selenium_tests_all_gated extensions/Echo ............ FAIL (11s) 2026-05-27 15:14:14 UTC
-env PARALLEL=2 ./run_selenium_tests_all_gated extensions/Echo ................ ok (12s) 2026-05-27 15:14:26 UTC
-env PARALLEL=2 FAST=1 ./run_selenium_tests_all_gated extensions/Echo ................. FAIL (13s) 2026-05-27 15:14:39 UTC
-./run_selenium_tests_required_gated extensions/Echo .......... ok (7s) 2026-05-27 15:14:46 UTC
-env FAST=1 ./run_selenium_tests_required_gated extensions/Echo .......... ok (6s) 2026-05-27 15:14:52 UTC
-env PARALLEL=2 ./run_selenium_tests_required_gated extensions/Echo ............... ok (6s) 2026-05-27 15:14:58 UTC
-env PARALLEL=2 FAST=1 ./run_selenium_tests_required_gated extensions/Echo ............... ok (7s) 2026-05-27 15:15:05 UTC
-./run_selenium_tests_gated .................................................................................................................. ok (6m 30s) 2026-05-27 15:21:35 UTC
+./fresh_install .............................................. ok (2s) 2026-05-28 12:49:40 UTC
+./run_php_unit_tests ............................................. ok (1s) 2026-05-28 12:49:41 UTC
+./run_php_unit_tests --filter testValidSpecialPageAliases ............................................. ok (1s) 2026-05-28 12:49:42 UTC
+./find_dependencies_minimal_bottom_up extensions/Echo ......................... ok (9s) 2026-05-28 12:49:51 UTC
+env FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo ......................... ok (13s) 2026-05-28 12:50:04 UTC
+env PARALLEL=2 ./find_dependencies_minimal_bottom_up extensions/Echo ............................... ok (10s) 2026-05-28 12:50:14 UTC
+env PARALLEL=2 FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo ............................... ok (16s) 2026-05-28 12:50:30 UTC
+./find_dependencies_minimal_greedy extensions/CommunityConfiguration ....................... ok (13s) 2026-05-28 12:50:43 UTC
+env FAST=1 ./find_dependencies_minimal_greedy extensions/CommunityConfiguration ....................... ok (16s) 2026-05-28 12:50:59 UTC
+./find_dependencies_minimal_thorough extensions/Echo ............................................. ok (41s) 2026-05-28 12:51:40 UTC
+env FAST=1 ./find_dependencies_minimal_thorough extensions/Echo ............................................. ok (42s) 2026-05-28 12:52:22 UTC
+env PARALLEL=2 ./find_dependencies_minimal_thorough extensions/Echo ............................................. ok (40s) 2026-05-28 12:53:02 UTC
+env PARALLEL=2 FAST=1 ./find_dependencies_minimal_thorough extensions/Echo ............................................. ok (42s) 2026-05-28 12:53:44 UTC
+./find_dependencies_minimal_gated extensions/Echo ............................ ok (42s) 2026-05-28 12:54:26 UTC
+env PARALLEL=2 ./find_dependencies_minimal_gated extensions/Echo ................................. ok (41s) 2026-05-28 12:55:07 UTC
+./prepare_gated  ok (46s) 2026-05-28 12:55:53 UTC
+./install_each_gated extensions/Echo ......... ok (8s) 2026-05-28 12:56:01 UTC
+env FAST=1 ./install_each_gated extensions/Echo ......... ok (8s) 2026-05-28 12:56:09 UTC
+env PARALLEL=2 ./install_each_gated extensions/Echo .............. ok (8s) 2026-05-28 12:56:17 UTC
+env PARALLEL=2 FAST=1 ./install_each_gated extensions/Echo .............. ok (7s) 2026-05-28 12:56:24 UTC
+./run_selenium_tests_all_gated extensions/Echo ........... ok (12s) 2026-05-28 12:56:36 UTC
+env FAST=1 ./run_selenium_tests_all_gated extensions/Echo ............ FAIL (11s) 2026-05-28 12:56:47 UTC
+env PARALLEL=2 ./run_selenium_tests_all_gated extensions/Echo ................ ok (12s) 2026-05-28 12:56:59 UTC
+env PARALLEL=2 FAST=1 ./run_selenium_tests_all_gated extensions/Echo ................. FAIL (11s) 2026-05-28 12:57:10 UTC
+./run_selenium_tests_required_gated extensions/Echo .......... ok (7s) 2026-05-28 12:57:17 UTC
+env FAST=1 ./run_selenium_tests_required_gated extensions/Echo .......... ok (5s) 2026-05-28 12:57:22 UTC
+env PARALLEL=2 ./run_selenium_tests_required_gated extensions/Echo ............... ok (7s) 2026-05-28 12:57:29 UTC
+env PARALLEL=2 FAST=1 ./run_selenium_tests_required_gated extensions/Echo ............... ok (6s) 2026-05-28 12:57:35 UTC
+./run_selenium_tests_gated .................................................................................................................. ok (5m 58s) 2026-05-28 13:03:33 UTC
 
 ========================================
 = Results
@@ -78,4 +78,4 @@ FAILED:
   env PARALLEL=2 FAST=1 ./run_selenium_tests_all_gated extensions/Echo
 
 Logs: log/silent/
-(15m 2s) 2026-05-27 15:21:35 UTC
+(13m 55s) 2026-05-28 13:03:33 UTC

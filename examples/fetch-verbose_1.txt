@@ -539,34 +539,7 @@ docker RAM: 3.3 GB
 = fetch is running: read -r repo
 
 ========================================
-= fetch is running: repos+=("$repo")
-
-========================================
-= fetch is running: IFS=
-
-========================================
-= fetch is running: read -r repo
-
-========================================
-= fetch is running: repos+=("$repo")
-
-========================================
-= fetch is running: IFS=
-
-========================================
-= fetch is running: read -r repo
-
-========================================
-= fetch is running: repos+=("$repo")
-
-========================================
-= fetch is running: IFS=
-
-========================================
-= fetch is running: read -r repo
-
-========================================
-= fetch is running: '[' 58 -eq 0 ']'
+= fetch is running: '[' 55 -eq 0 ']'
 
 ========================================
 = fetch is running: '[' 1 -le 1 ']'
@@ -633,7 +606,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Wikibase
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/Thanks.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Thanks
- * branch            HEAD       -> FETCH_HEAD
+ * branch              HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -711,14 +684,6 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Scribunto
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/Cite.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/Cite
- * branch              HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
 = fetch is running: git -C ref/mediawiki/extensions/Math.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Math
  * branch              HEAD       -> FETCH_HEAD
@@ -746,14 +711,6 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/ContentTranslation
 = fetch is running: git -C ref/mediawiki/extensions/cldr.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/cldr
  * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
-= fetch is running: git -C ref/mediawiki/extensions/CentralAuth.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/CentralAuth
- * branch              HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in "${repos[@]}"
@@ -935,14 +892,6 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/SandboxLink
 = fetch is running: for repo in "${repos[@]}"
 
 ========================================
-= fetch is running: git -C ref/mediawiki/extensions/TestKitchen.git fetch
-From https://gerrit.wikimedia.org/r/mediawiki/extensions/TestKitchen
- * branch            HEAD       -> FETCH_HEAD
-
-========================================
-= fetch is running: for repo in "${repos[@]}"
-
-========================================
 = fetch is running: git -C ref/mediawiki/extensions/Babel.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Babel
  * branch            HEAD       -> FETCH_HEAD
@@ -1040,4 +989,4 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/CommunityConfigurationE
 
 ========================================
 = fetch is running: local exit_code=0
-(55s) 2026-05-27 11:47:00 UTC
+(48s) 2026-05-28 09:41:08 UTC

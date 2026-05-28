@@ -16,11 +16,17 @@ shellcheck passed
 
 Running bats...
 1..266
-ok 1 find_dependencies_minimal_bottom_up: shows usage with no arguments
+not ok 1 find_dependencies_minimal_bottom_up: shows usage with no arguments
+# (in test file test/find_dependencies_minimal_bottom_up.bats, line 8)
+#   `[[ "$output" == *"Usage:"* ]]' failed
 ok 2 find_dependencies_minimal_gated: exits non-zero when ref/integration/config.git is missing
-ok 3 find_dependencies_minimal_greedy: shows usage with no arguments
+not ok 3 find_dependencies_minimal_greedy: shows usage with no arguments
+# (in test file test/find_dependencies_minimal_greedy.bats, line 16)
+#   `[[ "$output" == *"Usage:"* ]]' failed
 ok 4 find_dependencies_minimal_greedy: exits non-zero when ref/integration/config.git is missing
-ok 5 find_dependencies_minimal_thorough: shows usage with no arguments
+not ok 5 find_dependencies_minimal_thorough: shows usage with no arguments
+# (in test file test/find_dependencies_minimal_thorough.bats, line 8)
+#   `[[ "$output" == *"Usage:"* ]]' failed
 ok 6 generate_example: writes command header and output to file
 ok 7 generate_example: captures command output in file
 ok 8 generate_example: captures stderr in file
@@ -282,5 +288,4 @@ ok 263 selenium_tests_exist: reads extension from ref and finds selenium-test
 ok 264 selenium_tests_exist: reads skin from ref and finds selenium-test
 ok 265 suggest_parallel: outputs a number
 ok 266 suggest_parallel: output is at least 1
-bats passed
-(52s) 2026-05-27 11:44:07 UTC
+(52s) 2026-05-28 09:38:40 UTC
