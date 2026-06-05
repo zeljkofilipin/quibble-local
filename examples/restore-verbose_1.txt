@@ -1,13 +1,13 @@
 $ VERBOSE=1 ./restore
 
-OS: Linux 7.0.0-15-generic
-CPU: Intel(R) Core(TM) i5-4260U CPU @ 1.40GHz (4 cores)
-RAM: 3.3 GB
-bash: 5.3.9(1)-release
-git: git version 2.53.0
-docker: Docker version 29.4.0, build 9d7ad9f
+OS: Linux 6.14.0-37-generic
+CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
+RAM: 15.6 GB
+bash: 5.2.21(1)-release
+git: git version 2.43.0
+docker: Docker version 29.5.2, build 79eb04c
 docker CPUs: 4
-docker RAM: 3.3 GB
+docker RAM: 15.6 GB
 
 
 
@@ -39,7 +39,71 @@ docker RAM: 3.3 GB
 = restore is running: ls -A src_save
 
 ========================================
-= restore is running: '[' -z config ']'
+= restore is running: '[' -z 'api.php
+autoload.php
+bundlesize.config.json
+cache
+CODE_OF_CONDUCT.md
+composer.json
+composer.local.json-sample
+config
+COPYING
+CREDITS
+DEVELOPERS.md
+docker-compose.yml
+.dockerignore
+docs
+.editorconfig
+.eslintignore
+.eslintrc.json
+extensions
+FAQ
+.fresnel.yml
+.git
+.gitattributes
+.git-blame-ignore-revs
+.gitignore
+.gitmessage
+.gitreview
+Gruntfile.js
+HISTORY
+images
+img_auth.php
+includes
+index.php
+INSTALL
+jsdoc.json
+languages
+load.php
+LocalSettings-installer.php
+LocalSettings.php
+.mailmap
+maintenance
+.minus-x.json
+mw-config
+node_modules
+opensearch_desc.php
+package.json
+package-lock.json
+.phan
+.phpcs.xml
+phpunit.xml.template
+README.md
+RELEASE-NOTES-1.46
+RELEASE-NOTES-1.47
+resources
+rest.php
+SECURITY
+skins
+sql
+.stylelintrc.json
+.svgo.config.js
+tests
+thumb_handler.php
+thumb.php
+UPGRADE
+vendor
+.vsls.json' ']'
 
 ========================================
 = restore is running: mkdir -p src
@@ -61,4 +125,4 @@ docker RAM: 3.3 GB
 
 ========================================
 = restore is running: local exit_code=0
-(1s) 2026-05-28 11:20:09 UTC
+(1m 14s) 2026-05-29 06:30:45 UTC

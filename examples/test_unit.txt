@@ -2,14 +2,14 @@ $ ./test_unit
 
 use VERBOSE=1 for full output
 
-OS: Linux 7.0.0-15-generic
-CPU: Intel(R) Core(TM) i5-4260U CPU @ 1.40GHz (4 cores)
-RAM: 3.3 GB
-bash: 5.3.9(1)-release
-git: git version 2.53.0
-docker: Docker version 29.4.0, build 9d7ad9f
+OS: Linux 6.14.0-37-generic
+CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
+RAM: 15.6 GB
+bash: 5.2.21(1)-release
+git: git version 2.43.0
+docker: Docker version 29.5.2, build 79eb04c
 docker CPUs: 4
-docker RAM: 3.3 GB
+docker RAM: 15.6 GB
 
 1..266
 ok 1 find_dependencies_minimal_bottom_up: shows usage with no arguments
@@ -38,9 +38,7 @@ ok 23 generate_examples: warns and skips filename collisions
 ok 24 generate_examples: Usage-line loop reads from FD 3, not stdin
 ok 25 generate_examples: pins prep scripts first and destructive scripts last
 ok 26 generate_examples: PARALLEL+PREVIEW forces serial (output identical to PREVIEW alone)
-not ok 27 generate_examples: PARALLEL=1 is equivalent to PARALLEL unset (default serial)
-# (in test file test/generate_examples.bats, line 147)
-#   `[ "$unset_output" = "$output" ]' failed
+ok 27 generate_examples: PARALLEL=1 is equivalent to PARALLEL unset (default serial)
 ok 28 generate_examples: parallel path centralises ENVIRONMENT and QUIBBLE_BACKGROUND
 ok 29 generate_examples: parallel path seeds src_N from shared src_save via ./restore
 ok 30 generate_examples: parallel path pre-walks centrally to avoid worker collision races
@@ -280,4 +278,4 @@ ok 263 selenium_tests_exist: reads extension from ref and finds selenium-test
 ok 264 selenium_tests_exist: reads skin from ref and finds selenium-test
 ok 265 suggest_parallel: outputs a number
 ok 266 suggest_parallel: output is at least 1
-(1m 3s) 2026-05-28 13:18:06 UTC
+(44s) 2026-05-31 07:29:02 UTC
