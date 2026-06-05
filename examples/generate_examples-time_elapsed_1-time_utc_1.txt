@@ -1,328 +1,235 @@
 z@imac:~/Documents/gitlab/zfilipin/quibble-local$ TIME_ELAPSED=1 TIME_UTC=1 ./generate_examples
 Generating examples/prepare.txt...
-Done!
-(2m 33s)
+(2m 42s) 2026-05-27 11:24:27 UTC
 Generating examples/prepare-verbose_1.txt...
-Done!
-(3m 48s)
+(3m 27s) 2026-05-27 11:27:54 UTC
 Generating examples/prepare_gated.txt...
-Done!
-(4m 19s)
+(4m 1s) 2026-05-27 11:31:55 UTC
 Generating examples/prepare_gated-verbose_1.txt...
-Done!
-(1m 17s)
+(1m 20s) 2026-05-27 11:33:15 UTC
 Generating examples/fresh_install.txt...
-Done!
-(1m 6s)
+(1m 5s) 2026-05-27 11:34:20 UTC
 Generating examples/fresh_install-environment_0.txt...
-Done!
-(1m 7s)
+(54s) 2026-05-27 11:35:14 UTC
 Generating examples/fresh_install-verbose_1.txt...
-Done!
-(1m 1s)
+(57s) 2026-05-27 11:36:11 UTC
 Generating examples/fresh_install-dry_run_1.txt...
-Done!
-(4s)
+(4s) 2026-05-27 11:36:15 UTC
 Generating examples/save.txt...
-Done!
-(0s)
+(0s) 2026-05-27 11:36:15 UTC
 Generating examples/save-environment_0.txt...
-Done!
-(37s)
+(11s) 2026-05-27 11:36:26 UTC
 Generating examples/save-verbose_1.txt...
-Done!
-(0s)
+(0s) 2026-05-27 11:36:26 UTC
 Generating examples/ci.txt...
-Done!
-(40s)
+(48s) 2026-05-27 11:37:14 UTC
 Generating examples/fetch.txt...
-Done!
-(1m 25s)
+(1m 39s) 2026-05-27 11:38:53 UTC
 Generating examples/fetch-ref_mediawiki_core_git.txt...
-Done!
-(5s)
+(6s) 2026-05-27 11:38:59 UTC
 Generating examples/fetch-ref_mediawiki_extensions_echo_git-ref_mediawiki_skins_vector_git.txt...
-Done!
-(3s)
-Generating examples/fetch-parallel_4.txt...
-Done!
-(28s)
+(5s) 2026-05-27 11:39:04 UTC
+Generating examples/fetch-parallel_1.txt...
+(1m 34s) 2026-05-27 11:40:38 UTC
 Generating examples/fetch-verbose_1.txt...
-Done!
-(1m 28s)
+(1m 27s) 2026-05-27 11:42:05 UTC
 Generating examples/find_dependencies_minimal_bottom_up-extensions_echo.txt...
-Done!
-(5m 10s)
+(3m 31s) 2026-05-27 11:45:36 UTC
 Generating examples/find_dependencies_minimal_bottom_up-extensions_echo-verbose_1.txt...
-Done!
-(4m 59s)
-Generating examples/find_dependencies_minimal_bottom_up-extensions_echo-parallel.txt...
-Done!
-(7m 55s)
+(3m 7s) 2026-05-27 11:48:43 UTC
+Generating examples/find_dependencies_minimal_bottom_up-extensions_echo-fast_1.txt...
+(6m 42s) 2026-05-27 11:55:25 UTC
+Generating examples/find_dependencies_minimal_bottom_up-extensions_echo-parallel_1.txt...
+(3m 52s) 2026-05-27 11:59:17 UTC
+Generating examples/find_dependencies_minimal_bottom_up-extensions_echo-parallel_1-fast_1.txt...
+(6m 46s) 2026-05-27 12:06:03 UTC
 Generating examples/find_dependencies_minimal_gated.txt...
-^[[ADone!
-(4h 3m 43s)
+(4h 34m 11s) 2026-05-27 16:40:14 UTC
 Generating examples/find_dependencies_minimal_gated-extensions_echo.txt...
-Done!
-(24m 49s)
+(24m 20s) 2026-05-27 17:04:34 UTC
 Generating examples/find_dependencies_minimal_gated-verbose_1.txt...
-Done!
-(4h 39m 46s)
-Generating examples/find_dependencies_minimal_gated-parallel.txt...
-Done!
-(5h 8m 58s)
+(4h 27m 33s) 2026-05-27 21:32:07 UTC
+Generating examples/find_dependencies_minimal_gated-fast_1.txt...
+(4h 47m 57s) 2026-05-28 02:20:04 UTC
+Generating examples/find_dependencies_minimal_gated-parallel_1.txt...
+(4h 39m 55s) 2026-05-28 06:59:59 UTC
+Generating examples/find_dependencies_minimal_gated-parallel_1-fast_1.txt...
+(4h 52m 25s) 2026-05-28 11:52:24 UTC
 Generating examples/find_dependencies_minimal_greedy-extensions_echo.txt...
-Done!
-(28m 34s)
+(24m 47s) 2026-05-28 12:17:11 UTC
 Generating examples/find_dependencies_minimal_greedy-extensions_echo-verbose_1.txt...
-Done!
-(27m 10s)
+(25m 0s) 2026-05-28 12:42:11 UTC
+Generating examples/find_dependencies_minimal_greedy-extensions_echo-fast_1.txt...
+(27m 6s) 2026-05-28 13:09:17 UTC
 Generating examples/find_dependencies_minimal_thorough-extensions_echo.txt...
-Done!
-(26m 42s)
+(26m 23s) 2026-05-28 13:35:40 UTC
 Generating examples/find_dependencies_minimal_thorough-extensions_echo-verbose_1.txt...
-Done!
-(27m 34s)
-Generating examples/find_dependencies_minimal_thorough-extensions_echo-parallel.txt...
-Done!
-(26m 41s)
+(25m 10s) 2026-05-28 14:00:50 UTC
+Generating examples/find_dependencies_minimal_thorough-extensions_echo-fast_1.txt...
+(26m 56s) 2026-05-28 14:27:46 UTC
+Generating examples/find_dependencies_minimal_thorough-extensions_echo-parallel_1.txt...
+(25m 42s) 2026-05-28 14:53:28 UTC
+Generating examples/find_dependencies_minimal_thorough-extensions_echo-parallel_1-fast_1.txt...
+(28m 35s) 2026-05-28 15:22:04 UTC
 Generating examples/help.txt...
-Done!
-(0s)
+(0s) 2026-05-28 15:22:04 UTC
 Generating examples/help-install.txt...
-Done!
-(0s)
+(1s) 2026-05-28 15:22:05 UTC
 Generating examples/help-__install.txt...
-Done!
-(0s)
+(0s) 2026-05-28 15:22:05 UTC
 Generating examples/install-extensions_echo.txt...
-Done!
-(55s)
+(1m 30s) 2026-05-28 15:23:35 UTC
 Generating examples/install-skins_minervaneue.txt...
-Done!
-(58s)
+(1m 7s) 2026-05-28 15:24:42 UTC
 Generating examples/install-extensions_echo-environment_0.txt...
-Done!
-(59s)
+(1m 8s) 2026-05-28 15:25:50 UTC
 Generating examples/install-extensions_echo-verbose_1.txt...
-Done!
-(56s)
+(1m 21s) 2026-05-28 15:27:11 UTC
 Generating examples/install-extensions_echo-quibble_deps.txt...
-Done!
-(1m 11s)
+(1m 16s) 2026-05-28 15:28:27 UTC
 Generating examples/install-extensions_echo-quibble_deps_eventlogging.txt...
-Done!
-(1m 13s)
+(49s) 2026-05-28 15:29:16 UTC
 Generating examples/install-extensions_echo-dry_run_1.txt...
-Done!
-(11s)
+(12s) 2026-05-28 15:29:28 UTC
 Generating examples/install-extensions_echo-resolve_requires_0.txt...
-Done!
-(54s)
+(57s) 2026-05-28 15:30:25 UTC
 Generating examples/install_all_gated.txt...
-Done!
-(58m 49s)
+(56m 8s) 2026-05-28 16:26:33 UTC
 Generating examples/install_all_gated-verbose_1.txt...
-Done!
-(54m 56s)
+(55m 23s) 2026-05-28 17:21:56 UTC
 Generating examples/install_each_gated.txt...
-Done!
-(2h 28m 50s)
+(2h 30m 52s) 2026-05-28 19:52:48 UTC
 Generating examples/install_each_gated-extensions_echo.txt...
-Done!
-(2m 55s)
+(2m 45s) 2026-05-28 19:55:33 UTC
 Generating examples/install_each_gated-verbose_1.txt...
-Done!
-(2h 34m 50s)
+(2h 40m 5s) 2026-05-28 22:35:38 UTC
 Generating examples/install_each_gated-fast_1.txt...
-Done!
-(2h 36m 0s)
-Generating examples/install_each_gated-parallel.txt...
-Done!
-(2h 31m 1s)
-Generating examples/install_each_gated-parallel_4-fast_1.txt...
-Done!
-(2h 31m 10s)
+(2h 39m 31s) 2026-05-29 01:15:09 UTC
+Generating examples/install_each_gated-parallel_1.txt...
+(2h 41m 4s) 2026-05-29 03:56:13 UTC
+Generating examples/install_each_gated-parallel_1-fast_1.txt...
+(2h 29m 31s) 2026-05-29 06:25:44 UTC
 Generating examples/lint.txt...
-Done!
-(12s)
+(15s) 2026-05-29 06:25:59 UTC
 Generating examples/list_dependencies-extensions_echo.txt...
-Done!
-(0s)
+(0s) 2026-05-29 06:25:59 UTC
 Generating examples/list_dependencies-skins_minervaneue.txt...
-Done!
-(0s)
+(0s) 2026-05-29 06:25:59 UTC
 Generating examples/list_dependencies_combinations-extensions_echo.txt...
-Done!
-(0s)
+(0s) 2026-05-29 06:25:59 UTC
 Generating examples/list_dependencies_combinations-skins_minervaneue.txt...
-Done!
-(0s)
+(0s) 2026-05-29 06:25:59 UTC
 Generating examples/list_dependencies_optional-extensions_echo.txt...
-Done!
-(0s)
+(0s) 2026-05-29 06:25:59 UTC
 Generating examples/list_dependencies_optional-skins_minervaneue.txt...
-Done!
-(0s)
+(0s) 2026-05-29 06:25:59 UTC
 Generating examples/list_dependencies_required-extensions_echo.txt...
-Done!
-(0s)
+(0s) 2026-05-29 06:25:59 UTC
 Generating examples/list_dependencies_required-extensions_growthexperiments.txt...
-Done!
-(0s)
+(0s) 2026-05-29 06:25:59 UTC
 Generating examples/list_dependencies_required-skins_minervaneue.txt...
-Done!
-(0s)
+(0s) 2026-05-29 06:25:59 UTC
 Generating examples/list_gated.txt...
-Done!
-(0s)
+(0s) 2026-05-29 06:25:59 UTC
 Generating examples/restore.txt...
-Done!
-(1m 55s)
+(1m 29s) 2026-05-29 06:27:28 UTC
 Generating examples/restore-environment_0.txt...
-Done!
-(1m 57s)
+(2m 3s) 2026-05-29 06:29:31 UTC
 Generating examples/restore-verbose_1.txt...
-Done!
-(1m 25s)
+(1m 14s) 2026-05-29 06:30:45 UTC
 Generating examples/run_php_unit_tests.txt...
-Done!
-(17m 34s)
+(16m 44s) 2026-05-29 06:47:29 UTC
 Generating examples/run_php_unit_tests-filter.txt...
-Done!
-(18s)
+(20s) 2026-05-29 06:47:49 UTC
 Generating examples/run_php_unit_tests-extensions_echo.txt...
-Done!
-(1m 44s)
+(1m 46s) 2026-05-29 06:49:35 UTC
 Generating examples/run_php_unit_tests-extensions_echo-environment_0.txt...
-Done!
-(1m 20s)
+(1m 25s) 2026-05-29 06:51:00 UTC
 Generating examples/run_php_unit_tests-extensions_echo-filter.txt...
-Done!
-(16s)
+(14s) 2026-05-29 06:51:14 UTC
 Generating examples/run_php_unit_tests-extensions_echo-dry_run_1.txt...
-Done!
-(2s)
+(1s) 2026-05-29 06:51:15 UTC
 Generating examples/run_selenium_tests.txt...
-Done!
-(1m 4s)
+(1m 0s) 2026-05-29 06:52:15 UTC
 Generating examples/run_selenium_tests-extensions_echo.txt...
-Done!
-(1m 19s)
+(1m 19s) 2026-05-29 06:53:34 UTC
 Generating examples/run_selenium_tests-extensions_echo-environment_0.txt...
-Done!
-(1m 1s)
+(1m 1s) 2026-05-29 06:54:35 UTC
 Generating examples/run_selenium_tests-spec.txt...
-Done!
-(19s)
+(19s) 2026-05-29 06:54:54 UTC
 Skipping ./run_selenium_tests --spec tests/selenium/specs/page.js: examples/run_selenium_tests-spec.txt already generated (filename collision)
 Generating examples/run_selenium_tests-extensions_echo-spec.txt...
-Done!
-(20s)
+(22s) 2026-05-29 06:55:16 UTC
 Generating examples/run_selenium_tests-spec-mochaopts_grep.txt...
-Done!
-(27s)
+(27s) 2026-05-29 06:55:44 UTC
 Generating examples/run_selenium_tests-extensions_echo-spec-mochaopts_grep.txt...
-Done!
-(15s)
+(15s) 2026-05-29 06:56:00 UTC
 Generating examples/run_selenium_tests-extensions_echo-dry_run_1.txt...
-Done!
-(1s)
+(2s) 2026-05-29 06:56:02 UTC
 Generating examples/run_selenium_tests_all_gated.txt...
-Done!
-(2h 52m 52s)
+(3h 1m 9s) 2026-05-29 09:57:11 UTC
 Generating examples/run_selenium_tests_all_gated-extensions_echo.txt...
-Done!
-(7m 31s)
+(8m 30s) 2026-05-29 10:05:41 UTC
 Generating examples/run_selenium_tests_all_gated-verbose_1.txt...
-Done!
-(2h 57m 51s)
+(3h 9m 32s) 2026-05-29 13:15:13 UTC
 Generating examples/run_selenium_tests_all_gated-fast_1.txt...
-Done!
-(2h 48m 57s)
-Generating examples/run_selenium_tests_all_gated-parallel.txt...
-Done!
-(2h 58m 3s)
-Generating examples/run_selenium_tests_all_gated-parallel_4-fast_1.txt...
-Done!
-(2h 52m 44s)
+(3h 7m 42s) 2026-05-29 16:22:55 UTC
+Generating examples/run_selenium_tests_all_gated-parallel_1.txt...
+(3h 7m 4s) 2026-05-29 19:29:59 UTC
+Generating examples/run_selenium_tests_all_gated-parallel_1-fast_1.txt...
+(2h 57m 59s) 2026-05-29 22:27:58 UTC
 Generating examples/run_selenium_tests_gated.txt...
-Done!
-(1h 27m 22s)
+(1h 23m 45s) 2026-05-29 23:51:43 UTC
 Generating examples/run_selenium_tests_gated-verbose_1.txt...
-Done!
-(1h 25m 50s)
+(1h 26m 38s) 2026-05-30 01:18:21 UTC
 Generating examples/run_selenium_tests_required_gated.txt...
-Done!
-(2h 47m 35s)
+(2h 51m 15s) 2026-05-30 04:09:36 UTC
 Generating examples/run_selenium_tests_required_gated-extensions_echo.txt...
-Done!
-(5m 1s)
+(4m 51s) 2026-05-30 04:14:27 UTC
 Generating examples/run_selenium_tests_required_gated-verbose_1.txt...
-Done!
-(2h 54m 25s)
+(2h 51m 57s) 2026-05-30 07:06:24 UTC
 Generating examples/run_selenium_tests_required_gated-fast_1.txt...
-^CDone!
-(22h 19m 50s)
-Generating examples/run_selenium_tests_required_gated-parallel.txt...
-Done!
-(2h 38m 3s)
-Generating examples/run_selenium_tests_required_gated-parallel_4-fast_1.txt...
-Done!
-(2h 34m 53s)
+(2h 44m 49s) 2026-05-30 09:51:13 UTC
+Generating examples/run_selenium_tests_required_gated-parallel_1.txt...
+(2h 59m 10s) 2026-05-30 12:50:23 UTC
+Generating examples/run_selenium_tests_required_gated-parallel_1-fast_1.txt...
+(2h 48m 9s) 2026-05-30 15:38:32 UTC
 Generating examples/selenium_tests_exist.txt...
-Done!
-(0s)
+(0s) 2026-05-30 15:38:32 UTC
 Generating examples/selenium_tests_exist-extensions_echo.txt...
-Done!
-(2s)
+(2s) 2026-05-30 15:38:34 UTC
 Generating examples/selenium_tests_exist-skins_minervaneue.txt...
-Done!
-(2s)
+(1s) 2026-05-30 15:38:35 UTC
 Generating examples/selenium_tests_exist-skins_vector.txt...
-Done!
-(0s)
+(0s) 2026-05-30 15:38:35 UTC
 Generating examples/suggest_parallel.txt...
-Done!
-(0s)
-Skipping PARALLEL=$(./suggest_parallel) ./run_selenium_tests_all_gated: examples/run_selenium_tests_all_gated-parallel.txt already generated (filename collision)
+(1s) 2026-05-30 15:38:36 UTC
+Generating examples/run_selenium_tests_all_gated-parallel.txt...
+(3h 3m 56s) 2026-05-30 18:42:32 UTC
 Generating examples/test_integration.txt...
-Done!
-(28m 45s)
+(25m 9s) 2026-05-30 19:07:41 UTC
 Generating examples/test_integration-verbose_1.txt...
-Done!
-(22m 32s)
+(21m 2s) 2026-05-30 19:28:43 UTC
 Generating examples/test_integration_slow.txt...
-Done!
-(4h 59m 27s)
+(6h 4m 54s) 2026-05-31 01:33:37 UTC
 Generating examples/test_integration_slow-verbose_1.txt...
-Done!
-(4h 47m 0s)
+(5h 54m 41s) 2026-05-31 07:28:18 UTC
 Generating examples/test_unit.txt...
-Done!
-(34s)
+(44s) 2026-05-31 07:29:02 UTC
 Generating examples/test_unit-test_lib_awk_bats.txt...
-Done!
-(1s)
+(2s) 2026-05-31 07:29:04 UTC
 Generating examples/remove_srcs.txt...
-Done!
-(1m 10s)
+(56s) 2026-05-31 07:30:00 UTC
 Generating examples/remove_srcs-verbose_1.txt...
-Done!
-(1s)
+(0s) 2026-05-31 07:30:00 UTC
 Generating examples/remove.txt...
-Done!
-(1s)
+(1s) 2026-05-31 07:30:01 UTC
 Generating examples/remove-environment_0.txt...
-Done!
-(1s)
+(1s) 2026-05-31 07:30:02 UTC
 Generating examples/remove-verbose_1.txt...
-Done!
-(1s)
+(1s) 2026-05-31 07:30:03 UTC
 Generating examples/remove_all.txt...
-Done!
-(11s)
+(19s) 2026-05-31 07:30:22 UTC
 Generating examples/remove_all-verbose_1.txt...
-Done!
-(0s)
-generate_examples: generated 108, skipped 2, took 3d 22h 5s
+(0s) 2026-05-31 07:30:22 UTC
+generate_examples: generated 116, skipped 1, took 3d 20h 8m 37s
