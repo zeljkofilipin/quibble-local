@@ -32,14 +32,14 @@ mkdir -p cache log "$QUIBBLE_SRC"
 docker_chmod cache log "$QUIBBLE_SRC" # make dirs world-writable for the container user
 
 # Build the docker command in an array so we can both print and execute it.
-# "${QUIBBLE_DOCKER_FLAGS[@]}": -it in verbose mode, -i in silent mode (set by lib/setup)
+# ${QUIBBLE_DOCKER_FLAGS[@]+"..."}: -it (verbose), -i (silent), or empty (background worker); ${arr[@]+"..."} guards the empty case for bash 3.2 (set by lib/setup)
 # --rm: remove container on exit
 # --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
 # "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
 # "${QUIBBLE_DRY_RUN[@]}": --dry-run when DRY_RUN=1 (set by lib/setup); empty otherwise
 # --command true: install only, don't run tests ("true" exits immediately)
 cmd=(
-  docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm
+  docker run ${QUIBBLE_DOCKER_FLAGS[@]+"${QUIBBLE_DOCKER_FLAGS[@]}"} --rm
   --entrypoint=quibble-with-supervisord
   "${QUIBBLE_VOLUMES[@]}"
   "$QUIBBLE_IMAGE"
