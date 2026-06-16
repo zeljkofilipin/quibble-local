@@ -1,4 +1,5 @@
 {
-  "model": "opus",
-  "effortLevel": "xhigh"
+  "model": "opus[1m]",
+  "effortLevel": "xhigh",
+  "alwaysThinkingEnabled": true
 }
