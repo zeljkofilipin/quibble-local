@@ -4,7 +4,7 @@
 # Bash allows only ONE handler per signal: a second `trap ... EXIT` REPLACES the
 # first rather than chaining onto it. Several lib/ helpers want to run work when a
 # script exits — lib/inhibit_sleep (kill the sleep-inhibitor helper), lib/duration_trap
-# (print elapsed time), lib/silent_output (restore fds and print ok/FAIL). With raw
+# (print elapsed time), lib/silent_output (restore fds and print FAIL on failure). With raw
 # `trap`, whichever is sourced last silently wins and the others never run. That is
 # how the sleep-inhibitor leaked on Linux: lib/batch_setup sources inhibit_sleep and
 # then duration_trap, so duration_trap's EXIT trap clobbered inhibit_sleep's cleanup.

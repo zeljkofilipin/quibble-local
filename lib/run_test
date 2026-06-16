@@ -32,14 +32,16 @@ run_test() {
   $*" # append full command on a new indented line
     fi
   else
-    # Silent: save output to log file, print a dot per line of output, then ok or FAIL with duration
+    # Silent: save output to log file, print a dot per line of output, then (on failure)
+    # FAIL with duration. On success only the dots and optional duration/timestamp remain.
     test_counter=$((test_counter + 1)) # increment counter for unique log file names
     local log_file
     log_file=$(printf "log/silent/%02d-%s.log" "$test_counter" "${1##*/}") # e.g. log/silent/03-prepare.log
     printf "%s " "$*" # print full command without newline
     if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
-      # _quibble_format_duration_padded returns " (Ns)" when TIME_ELAPSED=1, empty otherwise — keeps the line clean in both modes.
-      printf " ok%s %s\n" "$(_quibble_format_duration_padded "$((SECONDS - test_start))")" "$(utc_timestamp)"
+      # Success: the dots are the only feedback — no redundant "ok". Print just the elapsed time
+      # (when TIME_ELAPSED=1) and UTC timestamp (when TIME_UTC=1); each is empty when its gate is off.
+      printf "%s %s\n" "$(_quibble_format_duration_padded "$((SECONDS - test_start))")" "$(utc_timestamp)"
       passed="$passed
   $*" # append full command on a new indented line
     else

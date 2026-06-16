@@ -304,7 +304,7 @@ JSON
   # A minimal log file mirroring what find_dependencies_minimal_greedy produces:
   # progress dots, the FOUND banner from lib/print_found, then the duration line from
   # lib/duration_trap. The extractor should keep the banner + body and drop the duration.
-  input=$(printf 'install ... ok (1m 30s)\n\n========================================\n= FOUND: minimum dependencies for extensions/Echo\n========================================\n\nNo dependencies needed.\n(27m 48s)\n')
+  input=$(printf 'install ... (1m 30s)\n\n========================================\n= FOUND: minimum dependencies for extensions/Echo\n========================================\n\nNo dependencies needed.\n(27m 48s)\n')
   result=$(echo "$input" | awk -f lib/extract_found_block.awk)
   expected=$(printf '========================================\n= FOUND: minimum dependencies for extensions/Echo\n========================================\n\nNo dependencies needed.')
   [ "$result" = "$expected" ]
