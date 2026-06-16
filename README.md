@@ -27,7 +27,7 @@ When commands are called from `test_integration`, `test_integration_slow`, or `r
 
 ### `TIME_UTC`
 
-UTC timestamps in batch script output (verbose-mode separators, per-step ok/FAIL lines, wave/combination headers, and the EXIT-trap total UTC line) are **off by default**. Set `TIME_UTC=1` to append a `YYYY-MM-DD HH:MM:SS UTC` timestamp to those lines.
+UTC timestamps in batch script output (verbose-mode separators, per-step result lines, wave/combination headers, and the EXIT-trap total UTC line) are **off by default**. Set `TIME_UTC=1` to append a `YYYY-MM-DD HH:MM:SS UTC` timestamp to those lines.
 
     ./test_integration            # no timestamps (default)
     TIME_UTC=1 ./test_integration # append UTC timestamps
@@ -36,7 +36,7 @@ Useful for long-running batch scripts (`find_dependencies_minimal_*`, `run_selen
 
 ### `TIME_ELAPSED`
 
-Elapsed-time durations (per-step / per-test `(Xs)` strings, silent-mode `ok (Xs)` / `FAIL (Xs)` lines, the EXIT-trap total `(Xs)` line, and `generate_examples`' `took (Xs)` summary) are **off by default**. Set `TIME_ELAPSED=1` to enable them.
+Elapsed-time durations (per-step / per-test `(Xs)` strings, silent-mode `(Xs)` (success) / `FAIL (Xs)` lines, the EXIT-trap total `(Xs)` line, and `generate_examples`' `took (Xs)` summary) are **off by default**. Set `TIME_ELAPSED=1` to enable them.
 
     ./test_integration                # no durations (default)
     TIME_ELAPSED=1 ./test_integration # show durations
@@ -546,7 +546,7 @@ Shared setup sourced by scripts that run Docker commands. Sources `lib/debug_inf
 
 ### `lib/silent_output`
 
-Output redirection for silent mode. Saves all output to a log file (e.g. `log/fresh_install.log`) and prints a dot per line to the terminal. On exit, prints "ok" or "FAIL" with the log file path; the elapsed-time portion appears only when `TIME_ELAPSED=1`. Registers its exit handler via `lib/exit_trap` under the shared `display` key, replacing `lib/duration_trap`'s handler. Sourced by `lib/setup`.
+Output redirection for silent mode. Saves all output to a log file (e.g. `log/fresh_install.log`) and prints a dot per line to the terminal. On success the progress dots are the only feedback (optionally followed by the elapsed time when `TIME_ELAPSED=1`); on failure it prints "FAIL" with the log file path. Registers its exit handler via `lib/exit_trap` under the shared `display` key, replacing `lib/duration_trap`'s handler. Sourced by `lib/setup`.
 
 ### `lib/docker_chmod`
 

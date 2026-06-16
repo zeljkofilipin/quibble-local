@@ -75,12 +75,15 @@ run_step() {
       return 1 # step failed, caller can skip remaining steps
     fi
   else
-    # Silent: print step label, save output to log file, print a dot per line, then ok or FAIL with duration
+    # Silent: print step label, save output to log file, print a dot per line, then (on
+    # failure) FAIL with duration. On success only the dots and optional duration remain.
     local log_file="log/silent/${component//\//-}--${step}.log" # e.g. log/silent/extensions-Echo--install.log
     printf "%s " "$step" # print step name before dots (e.g. "fresh_install ")
     if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
-      # _quibble_format_duration_padded returns " (Ns)" when TIME_ELAPSED=1, empty otherwise — keeps the line clean in both modes.
-      printf " ok%s " "$(_quibble_format_duration_padded "$((SECONDS - step_start))")"
+      # Success: the dots are the only feedback — no redundant "ok". Print just the elapsed time
+      # (when TIME_ELAPSED=1) plus a trailing space separating this step from the next on the line.
+      # _quibble_format_duration_padded returns " (Ns)" when TIME_ELAPSED=1, empty otherwise.
+      printf "%s " "$(_quibble_format_duration_padded "$((SECONDS - step_start))")"
       return 0
     else
       printf " FAIL%s " "$(_quibble_format_duration_padded "$((SECONDS - step_start))")"
