@@ -21,6 +21,10 @@ GitLab CI must pass for every commit. The pipeline runs ShellCheck (lint), Bats 
 - **Local:** `./lint` (ShellCheck) and `./test_unit` (Bats) — fast, requires local installs
 - **Docker (same images as CI):** `./ci` — authoritative check, run after every change
 
+## Commits
+
+For every commit, show a **problem** (title + description, for the bug tracker) and a **solution** (title + description, for the git commit message). Keep all titles and descriptions as short as possible while retaining the relevant detail.
+
 ## Lint and test
 
 - **Lint:** `./lint` — runs ShellCheck on all scripts locally (requires ShellCheck installed)
