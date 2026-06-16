@@ -29,8 +29,10 @@
     trap -p EXIT
   '
   [ "$status" -eq 0 ]
-  # No EXIT trap should be set (stdout is not a terminal in run)
-  [[ "$output" != *"_quibble_duration_exit"* ]]
+  # No EXIT trap should be set (stdout is not a terminal in run). duration_trap now
+  # registers via lib/exit_trap, whose dispatcher (_quibble_run_exit_traps) becomes the
+  # EXIT trap only once something registers — which does not happen when not a terminal.
+  [[ "$output" != *"_quibble_run_exit_traps"* ]]
 }
 
 @test "duration_trap: sets trap with _QUIBBLE_FORCE_TERMINAL even when stdout is not a terminal" {
@@ -40,7 +42,8 @@
     trap -p EXIT
   '
   [ "$status" -eq 0 ]
-  [[ "$output" == *"_quibble_duration_exit"* ]]
+  # The EXIT trap is the lib/exit_trap dispatcher (duration_trap registers its handler with it).
+  [[ "$output" == *"_quibble_run_exit_traps"* ]]
 }
 
 @test "duration_trap: EXIT trap emits nothing when both TIME_ELAPSED and TIME_UTC are unset" {

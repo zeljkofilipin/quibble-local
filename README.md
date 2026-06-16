@@ -532,9 +532,13 @@ Outputs debug information (OS, CPU, RAM, bash, git, docker version, docker CPUs 
 
 Provides `_quibble_format_duration` function that formats elapsed seconds as a human-readable duration string (e.g. "1h 5m 30s"). Omits zero-value days, hours, and minutes; always shows seconds. Gated on the `TIME_ELAPSED` environment variable: off by default (returns empty), set `TIME_ELAPSED=1` to enable. Sourced by `lib/duration_trap` and `lib/batch_setup`.
 
+### `lib/exit_trap`
+
+Composable EXIT-trap registry. Bash allows only one handler per signal, so a second `trap ... EXIT` replaces the first; this installs a single dispatcher and runs every registered handler, in registration order, preserving the script's exit code. Handlers are keyed, so registering an existing key replaces it (the mutually-exclusive display handlers `lib/duration_trap` and `lib/silent_output` share the `display` key — last wins) while a cleanup handler under its own key always runs too. This is what stops `lib/duration_trap` from clobbering `lib/inhibit_sleep`'s cleanup. Provides `quibble_register_exit_trap`. Sourced by `lib/inhibit_sleep`, `lib/duration_trap`, and `lib/silent_output`.
+
 ### `lib/duration_trap`
 
-Sets an EXIT trap to print total script duration when the script exits. Only activates when stdout is a terminal. Output is empty unless `TIME_ELAPSED=1`. Sources `lib/format_duration`. Sourced by `lib/debug_info`, `lib/batch_setup`, and `lint`. `lib/silent_output` overrides this trap with its own handler that also includes duration.
+Registers (via `lib/exit_trap`, under the shared `display` key) an EXIT handler that prints total script duration when the script exits. Only activates when stdout is a terminal. Output is empty unless `TIME_ELAPSED=1`. Sources `lib/format_duration` and `lib/exit_trap`. Sourced by `lib/debug_info`, `lib/batch_setup`, and `lint`. `lib/silent_output` registers the same `display` key, so when both are sourced its handler replaces this one.
 
 ### `lib/setup`
 
@@ -542,7 +546,7 @@ Shared setup sourced by scripts that run Docker commands. Sources `lib/debug_inf
 
 ### `lib/silent_output`
 
-Output redirection for silent mode. Saves all output to a log file (e.g. `log/fresh_install.log`) and prints a dot per line to the terminal. On exit, prints "ok" or "FAIL" with the log file path; the elapsed-time portion appears only when `TIME_ELAPSED=1`. Sourced by `lib/setup`.
+Output redirection for silent mode. Saves all output to a log file (e.g. `log/fresh_install.log`) and prints a dot per line to the terminal. On exit, prints "ok" or "FAIL" with the log file path; the elapsed-time portion appears only when `TIME_ELAPSED=1`. Registers its exit handler via `lib/exit_trap` under the shared `display` key, replacing `lib/duration_trap`'s handler. Sourced by `lib/setup`.
 
 ### `lib/docker_chmod`
 
@@ -582,7 +586,7 @@ Sourced by scripts that need zuul config (`list_dependencies`, `list_gated`, `in
 
 ### `lib/inhibit_sleep`
 
-Sourced by long-running scripts (`find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_gated`, `find_dependencies_minimal_thorough`, `install_all_gated`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `test_integration`, `test_integration_slow`, `generate_examples`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux.
+Sourced by long-running scripts (`find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_gated`, `find_dependencies_minimal_thorough`, `install_all_gated`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `test_integration`, `test_integration_slow`, `generate_examples`) to prevent the machine from suspending. Uses `caffeinate` on macOS and `systemd-inhibit` on Linux. On Linux it registers its cleanup via `lib/exit_trap` (under its own key) so a later-sourced EXIT handler such as `lib/duration_trap` cannot clobber it.
 
 ### `lib/print_results`
 
