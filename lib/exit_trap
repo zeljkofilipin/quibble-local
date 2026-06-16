@@ -1,0 +1,70 @@
+# shellcheck shell=bash
+# Composable EXIT-trap registry.
+#
+# Bash allows only ONE handler per signal: a second `trap ... EXIT` REPLACES the
+# first rather than chaining onto it. Several lib/ helpers want to run work when a
+# script exits — lib/inhibit_sleep (kill the sleep-inhibitor helper), lib/duration_trap
+# (print elapsed time), lib/silent_output (restore fds and print ok/FAIL). With raw
+# `trap`, whichever is sourced last silently wins and the others never run. That is
+# how the sleep-inhibitor leaked on Linux: lib/batch_setup sources inhibit_sleep and
+# then duration_trap, so duration_trap's EXIT trap clobbered inhibit_sleep's cleanup.
+#
+# This registry installs a SINGLE dispatcher as the EXIT trap and runs every
+# registered handler, in registration order, preserving the script's exit code.
+# Handlers are keyed: registering a key that already exists REPLACES that handler.
+# That lets the two mutually-exclusive display handlers (duration_trap, silent_output)
+# share the key "display" — last registration wins, matching the previous clobber
+# semantics where silent_output overrode duration_trap — while a cleanup handler uses
+# its own key (e.g. "inhibit") and therefore always runs alongside the display one.
+# Re-registering the same key is idempotent, which keeps double-sourcing safe (e.g.
+# lib/duration_trap is sourced by both lib/batch_setup and lib/debug_info).
+#
+# Each handler is called with the script's exit code as its first argument ($1); do
+# not rely on $? inside a handler (it reflects the previous handler, not the script).
+# The dispatcher returns the original exit code so `set -e` scripts exit as expected.
+# Must be sourced, not run directly.
+
+# Define the registry state and functions exactly once per shell, even though several
+# libs source this file. Without the guard, a re-source would reset the arrays and
+# discard handlers registered by an earlier-sourced lib.
+if [ -z "${_quibble_exit_trap_loaded:-}" ]; then
+  _quibble_exit_trap_loaded=1   # mark the registry as loaded for this shell
+  _quibble_exit_keys=()         # parallel arrays: registration key for each handler ...
+  _quibble_exit_fns=()          # ... and the handler function name registered under it
+
+  # EXIT dispatcher: run every registered handler in registration order, then exit
+  # with the script's original code. Installed as the lone EXIT trap by the registrar.
+  _quibble_run_exit_traps() {
+    local _code=$?              # capture the script's exit code before any handler changes it
+    { set +x; } 2>/dev/null     # silence trace output (set -x may be active in verbose mode)
+    local _i=0                  # index into the parallel handler arrays
+    while [ "$_i" -lt "${#_quibble_exit_fns[@]}" ]; do
+      # Pass the exit code as $1. Tolerate a handler returning non-zero (|| :) so that
+      # under `set -e` one failing handler cannot abort the loop and skip the rest.
+      "${_quibble_exit_fns[$_i]}" "$_code" || :
+      _i=$((_i + 1))            # advance to the next registered handler
+    done
+    return "$_code"             # preserve the script's original exit code
+  }
+
+  # Register (or replace, by key) a function to run on EXIT, and (re)install the
+  # single dispatcher as the EXIT trap.
+  # Usage: quibble_register_exit_trap KEY FUNCTION_NAME
+  quibble_register_exit_trap() {
+    local _key="$1" _fn="$2" _i=0   # key, handler function name, loop index
+    # If this key is already registered, overwrite its handler (idempotent re-source,
+    # and "last display handler wins" when two libs register the same key).
+    while [ "$_i" -lt "${#_quibble_exit_keys[@]}" ]; do
+      if [ "${_quibble_exit_keys[$_i]}" = "$_key" ]; then
+        _quibble_exit_fns[_i]="$_fn"        # replace the handler for this key (no $ needed: subscript is arithmetic)
+        trap _quibble_run_exit_traps EXIT   # ensure the dispatcher is the EXIT trap
+        return 0
+      fi
+      _i=$((_i + 1))
+    done
+    # New key: append to both parallel arrays and (re)install the dispatcher.
+    _quibble_exit_keys+=("$_key")   # += appends to a bash array
+    _quibble_exit_fns+=("$_fn")
+    trap _quibble_run_exit_traps EXIT
+  }
+fi

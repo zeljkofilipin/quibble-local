@@ -8,12 +8,14 @@
 # lib/format_duration and lib/utc_timestamp). With both unset the trap fires
 # silently. With both set the duration and UTC stamp share one line, separated
 # by a space (matches install_each_gated / find_dependencies_minimal_thorough).
-# lib/silent_output overrides this trap with its own handler.
+# Registers via lib/exit_trap under the shared "display" key; lib/silent_output registers
+# the same key, so when both are sourced silent_output's handler replaces this one.
 # Must be sourced, not run directly.
 
 # Source the formatting helpers
 . "$(dirname "$0")"/lib/format_duration # provides _quibble_format_duration
 . "$(dirname "$0")"/lib/utc_timestamp   # provides utc_timestamp (gated on TIME_UTC)
+. "$(dirname "$0")"/lib/exit_trap       # provides quibble_register_exit_trap (composable EXIT trap)
 
 # Set EXIT trap for duration display (only when outputting to a terminal,
 # or when forced via _QUIBBLE_FORCE_TERMINAL=1 — see header comment).
@@ -22,7 +24,7 @@ if [ -t 1 ] || [ -n "${_QUIBBLE_FORCE_TERMINAL:-}" ]; then
   # TTY status. Idempotent across debug_info / silent_output.
   export -n _QUIBBLE_FORCE_TERMINAL 2>/dev/null || :
   _quibble_duration_exit() {
-    local exit_code=$?                # capture exit code before any command changes it
+    local exit_code="${1:-$?}"        # exit code passed by the registry dispatcher (fall back to $? if called directly)
     { set +x; } 2>/dev/null            # disable trace output silently (may be active in verbose mode)
     # Build the two halves independently so each is gated by its own env var. Both helpers
     # return empty when their gate is off, so unset gates collapse cleanly to no output —
@@ -39,5 +41,8 @@ if [ -t 1 ] || [ -n "${_QUIBBLE_FORCE_TERMINAL:-}" ]; then
     fi                                  # neither set: emit nothing
     return "$exit_code"               # preserve the original exit code
   }
-  trap _quibble_duration_exit EXIT    # run handler when script exits
+  # Register under the "display" key via lib/exit_trap. lib/silent_output registers the
+  # same key, so whichever is sourced last is the active display handler (silent_output
+  # overrides duration_trap), while a cleanup handler under a different key still runs.
+  quibble_register_exit_trap display _quibble_duration_exit
 fi
