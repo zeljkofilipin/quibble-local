@@ -80,3 +80,5 @@ There is no build step. `./test_integration` is an integration test that exercis
 **Do not read or search** `cache/`, `log/`, `ref/`, `src/`, `src_save/`, or `src_worker_*/` unless explicitly asked. These are large runtime directories (gigabytes of cloned repos, build artifacts, and logs) that are not part of the project source code.
 
 **Do not read or search** `examples/` unless explicitly working on it. It contains captured command output (regenerated via `./generate_examples`), not project source code.
+
+**Never hand-edit files in `examples/`.** They are generated output, produced *only* by running the scripts — `./generate_examples` regenerates all of them, `./generate_example <output-file> <command...>` regenerates a single one. When a code change alters a script's output, regenerate the affected example(s) by running the script through `generate_example`; do not edit the captured `.txt` files directly, even for a one-line or mechanical change. (Removing the orphaned `examples/<script>.txt` when deleting a script is the one allowed manual operation — see the script-removal rule above.)
