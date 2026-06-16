@@ -23,7 +23,7 @@ GitLab CI must pass for every commit. The pipeline runs ShellCheck (lint), Bats 
 
 ## Commits
 
-For every commit, show a **problem** (title + description, for the bug tracker), a **solution** (title + description, for the git commit message), and a **test plan** (how to verify the change). Keep them all as short as possible while retaining the relevant detail.
+For every commit, show a **problem** (title + description, for the bug tracker), a **solution** (title + description, for the git commit message), and a **test plan** (how to verify the change; mark each step as Linux, macOS, both, or anywhere). Keep them all as short as possible while retaining the relevant detail.
 
 ## Lint and test
 
