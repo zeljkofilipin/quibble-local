@@ -610,11 +610,11 @@ Provides `run_test` function and `test_counter` for `test_integration`-style scr
 
 ### `lib/run_waves`
 
-Generic wave-based parallel worker orchestration. Processes an array of items in waves of `$parallel` workers, each in an isolated `src_worker_N/` directory. The caller defines `_run_worker` and `_collect_result` functions to customize worker behavior and result handling. Sourced by `install_each_gated`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated` in parallel mode.
+Generic wave-based parallel worker orchestration. Processes an array of items in waves of `$parallel` workers, each in an isolated `src_worker_N/` directory. The caller defines `_run_worker` and `_collect_result` functions to customize worker behavior and result handling. Removes the temp dir and `src_worker_*` checkouts on normal completion and via an `INT`/`TERM` trap, so Ctrl-C / kill cannot orphan them. Sourced by `install_each_gated`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated` in parallel mode.
 
 ### `lib/remove_worker_dirs`
 
-Cleans up `src_worker_*` directories created by parallel execution. Tries `rm -rf` first (works on macOS). Falls back to Docker-as-root for container-owned files (Linux). Sourced by `lib/run_waves` and `lib/parallel` after parallel runs complete.
+Cleans up `src_worker_*` directories created by parallel execution. Tries `rm -rf` first (works on macOS). Falls back to Docker-as-root for container-owned files (Linux). Sourced by `lib/run_waves` and `lib/parallel` after parallel runs complete and from their `INT`/`TERM` cleanup on interrupt.
 
 ### `lib/worker_init`
 
@@ -678,7 +678,7 @@ Greedy algorithm for `find_dependencies_minimal_greedy`: starts with all optiona
 
 ### `lib/parallel`
 
-Parallel exhaustive search: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory. Sourced by `find_dependencies_minimal_bottom_up` and `find_dependencies_minimal_thorough` when `PARALLEL > 1`.
+Parallel exhaustive search: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory. Removes the temp dir and `src_worker_*` checkouts on normal exit and via an `INT`/`TERM` trap, so Ctrl-C / kill cannot orphan them. Sourced by `find_dependencies_minimal_bottom_up` and `find_dependencies_minimal_thorough` when `PARALLEL > 1`.
 
 ### `lib/print_found`
 

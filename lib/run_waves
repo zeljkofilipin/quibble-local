@@ -17,6 +17,17 @@ _total=${#items[@]} # total number of items to process
 # Create result directory for workers to report results
 _result_dir=$(mktemp -d) # temp dir for worker result files
 
+# Remove the result temp dir and the multi-GB src_worker_* checkouts. Called from the
+# normal-exit path below and from the INT/TERM trap so Ctrl-C / kill cannot orphan them.
+_quibble_run_waves_cleanup() {
+  rm -rf "$_result_dir"                      # remove the worker result temp dir
+  . "$(dirname "$0")"/lib/remove_worker_dirs # remove src_worker_* dirs (rm -rf, docker-as-root fallback)
+}
+# Clean up on interrupt/termination too, not just the normal-exit path below. `exit` re-fires
+# the EXIT trap (lib/exit_trap) so the sleep inhibitor is cleaned as well; 130 = 128 + SIGINT.
+# On a terminal Ctrl-C the background workers also receive SIGINT via the foreground process group.
+trap '_quibble_run_waves_cleanup; exit 130' INT TERM
+
 # Process items in waves of $parallel workers
 _wave_start=0 # index into items array for start of current wave
 while [ "$_wave_start" -lt "$_total" ]; do
@@ -79,5 +90,4 @@ while [ "$_wave_start" -lt "$_total" ]; do
 done
 
 # Clean up temp dir and worker directories
-rm -rf "$_result_dir"
-. "$(dirname "$0")"/lib/remove_worker_dirs # remove src_worker_* directories
+_quibble_run_waves_cleanup

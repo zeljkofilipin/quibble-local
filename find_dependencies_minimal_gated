@@ -126,6 +126,10 @@ else
 
   total=${#filtered[@]} # total components to process
   _result_dir=$(mktemp -d) # temp dir for worker result files
+  # Clean up the result temp dir on interrupt/termination too, not just normal exit. The
+  # src_N/src_save_N dirs (ENVIRONMENT=N) are reusable by design, so they are left alone.
+  # `exit` re-fires the EXIT trap (lib/exit_trap) to clean the sleep inhibitor; 130 = 128 + SIGINT.
+  trap 'rm -rf "$_result_dir"; exit 130' INT TERM
 
   # Process components in waves of $parallel workers
   wave_start=0 # index into filtered array for start of current wave
