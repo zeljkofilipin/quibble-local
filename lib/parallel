@@ -1,21 +1,24 @@
 # shellcheck shell=bash
-# Parallel exhaustive search: test combinations in waves of $parallel workers.
-# Each worker runs in an isolated src_worker_$i/ directory.
+# Parallel exhaustive search for the minimum dependencies: test combinations in waves of
+# $parallel workers via lib/run_waves, each in an isolated src_worker_N/ directory. Combos are
+# ordered by size, so the first passing combination is the minimum and the search stops there.
 # FAST mode: fresh_install + install once, save, then each worker restores.
 # Normal mode: each worker runs fresh_install + install independently.
 # Must be sourced, not run directly.
 # Expects these variables/functions to be set by the caller:
 #   component       — e.g. "extensions/Echo"
-#   combos          — indexed array of space-separated optional dep combinations
+#   combos          — indexed array of space-separated optional dep combinations (size-ordered)
 #   total           — total number of combinations
 #   parallel        — number of parallel workers
 #   fast            — FAST=1 flag (empty string or "1")
 #   required_str    — space-separated list of required dependency names
 #   required        — indexed array of required dependency names
 #   fresh_or_restore — function to set up core MediaWiki (fresh_install or restore)
+# On success it prints the winning combination (lib/print_found) and exits 0; otherwise it
+# returns so the caller can report that no combination was found.
 # shellcheck disable=SC2154 # variables are set by the sourcing script
 
-. "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical worker counts ("1 worker"/"2 workers")
+. "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical counts ("1 worker"/"1 combination")
 
 printf "\nParallel mode: %d %s\n" "$parallel" "$(pluralize "$parallel" worker)"
 
@@ -25,7 +28,6 @@ if [ -n "$fast" ]; then
     printf "\nfresh_install/save failed. Cannot proceed.\n"
     exit 1
   fi
-
   # Ensure save directory exists for workers to restore from
   if [ ! -d "${QUIBBLE_SAVE:-src_save}" ]; then
     printf "\nError: %s/ missing after fresh_install+save. Cannot proceed.\n" "${QUIBBLE_SAVE:-src_save}"
@@ -33,110 +35,70 @@ if [ -n "$fast" ]; then
   fi
 fi
 
-# Create result directory for workers to report pass/fail
-result_dir=$(mktemp -d) # temp dir for worker result files
-
-# Remove the result temp dir and the multi-GB src_worker_* checkouts. Called from the
-# normal-exit paths below and from the INT/TERM trap so Ctrl-C / kill cannot orphan them.
-_quibble_parallel_cleanup() {
-  rm -rf "$result_dir"                       # remove the worker result temp dir
-  . "$(dirname "$0")"/lib/remove_worker_dirs # remove src_worker_* dirs (rm -rf, docker-as-root fallback)
+# Build a worker's full dependency list (required + this combination's optional deps) from the
+# optional combo, reusing the canonical builder. $1: optional-dep combo. Echoes the full list.
+_quibble_combo_full() {
+  # local shadows keep optional_combo/full_combo from leaking (esp. the winning optional_combo
+  # set in _collect_result). SC2034: shellcheck can't follow the dynamic source that reads
+  # optional_combo and sets full_combo.
+  # shellcheck disable=SC2034
+  local optional_combo="$1" full_combo
+  . "$(dirname "$0")"/lib/build_full_combo # sets full_combo from required_str + optional_combo
+  printf '%s' "$full_combo"
 }
-# Clean up on interrupt/termination too, not just the normal-exit paths below. `exit` re-fires
-# the EXIT trap (lib/exit_trap) so the sleep inhibitor is cleaned as well; 130 = 128 + SIGINT.
-# On a terminal Ctrl-C the background workers also receive SIGINT via the foreground process group.
-trap '_quibble_parallel_cleanup; exit 130' INT TERM
 
-# Process combinations in waves
-wave_start=0 # index into combos array for start of current wave
-while [ "$wave_start" -lt "$total" ]; do
-  wave_end=$((wave_start + parallel)) # exclusive end index
-  if [ "$wave_end" -gt "$total" ]; then
-    wave_end="$total" # last wave may be smaller
+# lib/run_waves hook: per-worker progress line showing the global combo index and full deps.
+# $1: worker number (1-based)  $2: optional-dep combo (the item)  $3: item index (0-based)
+_worker_label() {
+  local _full
+  _full=$(_quibble_combo_full "$2")
+  printf "  Worker %d: combo %d/%d: %s\n" "$1" "$(($3 + 1))" "$total" "${_full:-(none)}"
+}
+
+# lib/run_waves hook: worker body (runs in a background subshell). Installs the extension with
+# this combination's deps and runs its Selenium tests. $1: result_file  $2: optional-dep combo
+_run_worker() {
+  local result_file="$1" _deps # result_file is read by lib/worker_init and written here
+  _deps=$(_quibble_combo_full "$2")
+  export QUIBBLE_DEPS="$_deps" # full dep list for ./install (QUIBBLE_DEPS overrides ./list_dependencies)
+  # worker_src / worker_log_file are set by lib/run_waves; lib/worker_init reads them to isolate
+  # this worker's src dir, redirect output to its log, and restore (fast) or fresh_install.
+  . lib/worker_init
+  if ! ./install "$component"; then
+    echo "fail" > "$result_file"
+    return 1
   fi
-  wave_size=$((wave_end - wave_start))
+  if ./run_selenium_tests "$component"; then
+    echo "pass" > "$result_file"
+  else
+    echo "fail" > "$result_file"
+  fi
+}
 
-  printf "\n--- Wave %d-%d of %d (%d %s) --- %s\n" \
-    "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(pluralize "$wave_size" worker)" "$(utc_timestamp)"
+# lib/run_waves hook: record the first passing combination (lowest index wins, since combos are
+# size-ordered) and signal run_waves to stop. $1: combo  $2: result  $3: worker_num  $4: item index
+_collect_result() {
+  if [ "$2" = "pass" ]; then
+    printf "\n  Combination %d/%d passed!\n" "$(($4 + 1))" "$total"
+    optional_combo="$1"       # winning combo, consumed by lib/print_found below
+    _quibble_found=1          # tell the post-run_waves block to print the result and exit 0
+    _quibble_run_waves_stop=1 # tell lib/run_waves to stop launching further work
+  fi
+}
 
-  # Launch workers for this wave
-  pids=() # array of background process IDs
-  worker=0 # worker index (0-based, used for src_worker_$worker/)
-  while [ "$worker" -lt "$wave_size" ]; do
-    combo_idx=$((wave_start + worker))
-    worker_optional="${combos[$combo_idx]}" # optional deps for this combination
-    worker_src="src_worker_$((worker + 1))" # isolated src directory (1-based for readability)
-    worker_log="log/silent/worker-$((worker + 1))" # per-worker log directory
+# lib/run_waves hook: report a fully-failed wave (run_waves skips this after an early stop).
+# $1: wave start index (0-based, inclusive)  $2: wave end index (exclusive)
+_wave_end() {
+  local _n=$(($2 - $1))
+  printf "  All %d %s in this wave failed.\n" "$_n" "$(pluralize "$_n" combination)"
+}
 
-    # Build full combo for this worker
-    worker_full="" # full dep string for this worker
-    if [ -n "$required_str" ] && [ -n "$worker_optional" ]; then
-      worker_full="$required_str $worker_optional"
-    elif [ -n "$required_str" ]; then
-      worker_full="$required_str"
-    else
-      worker_full="$worker_optional"
-    fi
+items=("${combos[@]}")            # lib/run_waves processes items[] in waves of $parallel
+. "$(dirname "$0")"/lib/run_waves # run the wave loop using the hooks defined above
 
-    mkdir -p "$worker_src" "$worker_log" # create worker directories
-
-    printf "  Worker %d: combo %d/%d: %s\n" "$((worker + 1))" "$((combo_idx + 1))" "$total" "${worker_full:-(none)}"
-
-    # Launch worker in background subshell.
-    # Fast mode: restore → install → run_selenium_tests in its own src directory.
-    # Normal mode: fresh_install → install → run_selenium_tests in its own src directory.
-    # QUIBBLE_DEPS: dependency combination to test
-    # Worker writes "pass" or "fail" to a result file.
-    (
-      export QUIBBLE_DEPS="$worker_full"
-      result_file="$result_dir/worker_$combo_idx"  # path for worker_init to write "fail"
-      worker_log_file="$worker_log/combination-$((combo_idx + 1)).log" # path for worker_init to redirect output
-
-      # Common worker setup: set environment, redirect output, restore/fresh_install
-      . lib/worker_init
-
-      # Install extension with this combination of deps
-      if ! ./install "$component"; then
-        echo "fail" > "$result_file"
-        exit 1
-      fi
-
-      # Run Selenium tests
-      if ./run_selenium_tests "$component"; then
-        echo "pass" > "$result_file"
-      else
-        echo "fail" > "$result_file"
-      fi
-    ) &
-    pids+=($!) # $! is the PID of the last background process
-
-    worker=$((worker + 1))
-  done
-
-  # Wait for all workers in this wave to finish
-  for pid in "${pids[@]}"; do
-    wait "$pid" 2>/dev/null || true # wait for each worker (ignore exit code, check result files)
-  done
-
-  # Check results: find the smallest-index passing combination in this wave.
-  # Combinations are already ordered by size, so the first pass is the answer.
-  combo_idx="$wave_start"
-  while [ "$combo_idx" -lt "$wave_end" ]; do
-    result_file="$result_dir/worker_$combo_idx"
-    if [ -f "$result_file" ] && [ "$(cat "$result_file")" = "pass" ]; then
-      winning_optional="${combos[$combo_idx]}" # optional deps of the winning combo
-      printf "\n  Combination %d/%d passed!\n" "$((combo_idx + 1))" "$total"
-      _quibble_parallel_cleanup # remove temp dir and src_worker_* directories
-      optional_combo="$winning_optional" # set for lib/print_found
-      . "$(dirname "$0")"/lib/print_found # print the winning combination
-      exit 0
-    fi
-    combo_idx=$((combo_idx + 1))
-  done
-
-  printf "  All %d %s in this wave failed.\n" "$wave_size" "$(pluralize "$wave_size" combination)"
-  wave_start="$wave_end" # advance to next wave
-done
-
-# Clean up temp dir and worker directories (no smaller combination found)
-_quibble_parallel_cleanup
+# If a passing combination was found, print it and exit success. Otherwise return to the caller
+# (find_dependencies_minimal_*), which prints its own "no combination found" message.
+if [ -n "${_quibble_found:-}" ]; then
+  . "$(dirname "$0")"/lib/print_found # prints the winning combination (uses optional_combo)
+  exit 0
+fi

@@ -614,7 +614,7 @@ Provides `run_test` function and `test_counter` for `test_integration`-style scr
 
 ### `lib/run_waves`
 
-Generic wave-based parallel worker orchestration. Processes an array of items in waves of `$parallel` workers, each in an isolated `src_worker_N/` directory. The caller defines `_run_worker` and `_collect_result` functions to customize worker behavior and result handling. Removes the temp dir and `src_worker_*` checkouts on normal completion and via an `INT`/`TERM` trap, so Ctrl-C / kill cannot orphan them. Sourced by `install_each_gated`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated` in parallel mode.
+Generic wave-based parallel worker orchestration. Processes an array of `items` in waves of `$parallel` workers, each in an isolated `src_worker_N/` directory. The caller defines `_run_worker` (required) and optionally `_collect_result`, plus optional `_worker_label` (custom per-worker progress line) and `_wave_end` (per-wave summary) hooks; a collector can set `_quibble_run_waves_stop` to halt the run early (used by ordered searches). Removes the temp dir and `src_worker_*` checkouts on normal completion and via an `INT`/`TERM` trap, so Ctrl-C / kill cannot orphan them. Sourced by `lib/parallel`, `install_each_gated`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated` in parallel mode.
 
 ### `lib/remove_worker_dirs`
 
@@ -682,7 +682,7 @@ Greedy algorithm for `find_dependencies_minimal_greedy`: starts with all optiona
 
 ### `lib/parallel`
 
-Parallel exhaustive search: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory. Removes the temp dir and `src_worker_*` checkouts on normal exit and via an `INT`/`TERM` trap, so Ctrl-C / kill cannot orphan them. Sourced by `find_dependencies_minimal_bottom_up` and `find_dependencies_minimal_thorough` when `PARALLEL > 1`.
+Parallel exhaustive search for the minimum dependencies, built on `lib/run_waves`: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory, stopping at the first passing combination (combos are size-ordered, so the first pass is the minimum). Defines `run_waves`' worker/label/result/wave hooks and uses its early-exit signal; cleanup and the `INT`/`TERM` trap come from `run_waves`. Sourced by `find_dependencies_minimal_bottom_up` and `find_dependencies_minimal_thorough` when `PARALLEL` ≥ 1.
 
 ### `lib/print_found`
 

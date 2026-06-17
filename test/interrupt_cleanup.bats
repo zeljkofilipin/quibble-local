@@ -1,10 +1,11 @@
 #!/usr/bin/env bats
 #
-# Tests that the parallel orchestration libs install an INT/TERM cleanup trap, so a
-# Ctrl-C / kill removes the run's temp dir (and src_worker_* checkouts) instead of
-# orphaning gigabytes. The libs run their wave loop on source, so we drive them with an
-# empty work list (loop skipped) in an isolated dir and assert the trap is armed and the
-# cleanup works. End-to-end signal cleanup is covered by the PARALLEL integration tests.
+# Tests that the parallel orchestration lib (lib/run_waves) installs an INT/TERM cleanup trap,
+# so a Ctrl-C / kill removes the run's temp dir (and src_worker_* checkouts) instead of
+# orphaning gigabytes. lib/parallel delegates to lib/run_waves, so it inherits the same trap.
+# The lib runs its wave loop on source, so we drive it with an empty work list (loop skipped)
+# in an isolated dir and assert the trap is armed and the cleanup works. End-to-end signal
+# cleanup is covered by the PARALLEL integration tests; orchestration logic is in run_waves.bats.
 
 setup() {
   # Isolate cwd so lib/remove_worker_dirs' `src_worker_*` glob cannot touch the real repo.
@@ -12,8 +13,11 @@ setup() {
   cp lib/remove_worker_dirs "$BATS_TEST_TMPDIR/lib/"
 }
 
-@test "lib/parallel: installs an INT/TERM cleanup trap" {
-  cp lib/parallel "$BATS_TEST_TMPDIR/lib/"
+@test "lib/parallel: delegates cleanup to lib/run_waves (trap armed when sourced)" {
+  # lib/parallel reimplements its search on top of lib/run_waves, so the INT/TERM cleanup trap
+  # (and src_worker_* removal) now comes from run_waves. Sourcing lib/parallel with an empty
+  # work list should still arm run_waves' trap. (run_waves' own cleanup is verified below.)
+  cp lib/parallel lib/run_waves lib/pluralize "$BATS_TEST_TMPDIR/lib/"
   run bash -c '
     cd "'"$BATS_TEST_TMPDIR"'"
     parallel=1; fast=""; total=0; combos=()   # empty work list -> wave loop is skipped
@@ -21,27 +25,7 @@ setup() {
     trap -p INT; trap -p TERM
   '
   [ "$status" -eq 0 ]
-  [[ "$output" == *"_quibble_parallel_cleanup"* ]]   # trap installed for INT and TERM
-}
-
-@test "lib/parallel: cleanup removes the temp dir and src_worker_* dirs" {
-  cp lib/parallel "$BATS_TEST_TMPDIR/lib/"
-  run bash -c '
-    cd "'"$BATS_TEST_TMPDIR"'"
-    parallel=1; fast=""; total=0; combos=()
-    . lib/parallel                            # defines _quibble_parallel_cleanup, sets result_dir
-    mkdir -p src_worker_1 src_worker_2        # fake worker checkouts to be removed
-    mkdir -p "$result_dir"                    # recreate the result dir (end-cleanup already removed it)
-    _quibble_parallel_cleanup
-    [ -d src_worker_1 ] && echo WORKER_LEFT
-    [ -d src_worker_2 ] && echo WORKER_LEFT
-    [ -d "$result_dir" ] && echo RESULTDIR_LEFT
-    echo DONE
-  '
-  [ "$status" -eq 0 ]
-  [[ "$output" == *"DONE"* ]]
-  [[ "$output" != *"WORKER_LEFT"* ]]     # src_worker_* removed
-  [[ "$output" != *"RESULTDIR_LEFT"* ]]  # temp dir removed
+  [[ "$output" == *"_quibble_run_waves_cleanup"* ]]   # trap installed (via run_waves) for INT and TERM
 }
 
 @test "lib/run_waves: installs an INT/TERM cleanup trap" {
