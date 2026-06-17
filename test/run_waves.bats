@@ -8,8 +8,9 @@
 setup() {
   # Isolate cwd: run_waves does `mkdir src_worker_N` and its cleanup globs `src_worker_*`,
   # so keep all of that inside the throwaway test dir, never the real repo.
+  # remove_worker_dirs sources lib/default_image, so copy that in too.
   mkdir -p "$BATS_TEST_TMPDIR/lib"
-  cp lib/run_waves lib/pluralize lib/remove_worker_dirs "$BATS_TEST_TMPDIR/lib/"
+  cp lib/run_waves lib/pluralize lib/remove_worker_dirs lib/default_image "$BATS_TEST_TMPDIR/lib/"
 }
 
 @test "lib/run_waves: a collector setting _quibble_run_waves_stop halts further waves" {

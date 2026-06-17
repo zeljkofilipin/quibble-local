@@ -25,7 +25,9 @@ if [ -z "${_QUIBBLE_NO_DOCKER_CHECK:-}" ]; then
 fi
 
 # --- Shared variables ---
-export QUIBBLE_IMAGE="${QUIBBLE_IMAGE:-docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest}" # Docker image for Quibble (override to test local builds)
+# shellcheck source=lib/default_image
+. "$(dirname "$0")"/lib/default_image # provides QUIBBLE_DEFAULT_IMAGE (single source of truth for the image)
+export QUIBBLE_IMAGE="${QUIBBLE_IMAGE:-$QUIBBLE_DEFAULT_IMAGE}" # Docker image for Quibble (override to test local builds)
 QUIBBLE_DIR="$(pwd)" # project root, captured before set -x to avoid noisy pwd trace
 # ENVIRONMENT=N uses isolated directories (src_N, src_save_N) so multiple sessions can run simultaneously.
 # QUIBBLE_SRC and QUIBBLE_SAVE can also be set directly (e.g. by parallel workers).

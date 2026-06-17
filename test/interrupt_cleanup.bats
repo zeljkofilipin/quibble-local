@@ -9,8 +9,9 @@
 
 setup() {
   # Isolate cwd so lib/remove_worker_dirs' `src_worker_*` glob cannot touch the real repo.
+  # remove_worker_dirs sources lib/default_image, so copy that in too.
   mkdir -p "$BATS_TEST_TMPDIR/lib"
-  cp lib/remove_worker_dirs "$BATS_TEST_TMPDIR/lib/"
+  cp lib/remove_worker_dirs lib/default_image "$BATS_TEST_TMPDIR/lib/"
 }
 
 @test "lib/parallel: delegates cleanup to lib/run_waves (trap armed when sourced)" {

@@ -6,6 +6,7 @@
     "**/lib/build_full_combo": "shellscript",
     "**/lib/clone_or_fetch": "shellscript",
     "**/lib/debug_info": "shellscript",
+    "**/lib/default_image": "shellscript",
     "**/lib/dep_repo_path": "shellscript",
     "**/lib/docker_chmod": "shellscript",
     "**/lib/duration_trap": "shellscript",
