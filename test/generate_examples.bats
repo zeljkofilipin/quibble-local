@@ -136,9 +136,10 @@
   [ "$serial_output" = "$output" ]
 }
 
-@test "generate_examples: PARALLEL=1 is equivalent to PARALLEL unset (default serial)" {
-  # parallel<=1 takes the serial path (today's behavior). Setting PARALLEL=1 explicitly
-  # should produce the same output as not setting PARALLEL at all.
+@test "generate_examples: PREVIEW forces serial even at PARALLEL=1" {
+  # PARALLEL=1 is now the smallest value that takes the parallel path (dispatch is -lt 1),
+  # but PREVIEW must still force serial — companion to the PARALLEL=4 case above. Assert the
+  # PREVIEW output is byte-identical with PARALLEL unset and with PARALLEL=1.
   run env PREVIEW=1 _QUIBBLE_NO_INHIBIT=1 ./generate_examples
   [ "$status" -eq 0 ]
   unset_output="$output"

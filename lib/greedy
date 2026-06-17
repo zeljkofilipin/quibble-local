@@ -17,7 +17,9 @@
 #   optional_combo  — space-separated list of minimum optional deps found
 # shellcheck disable=SC2154 # variables are set by the sourcing script
 
-printf "\nGreedy mode: starting with all %d optional deps, removing one at a time.\n" "$n"
+. "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical counts ("1 dep"/"2 deps")
+
+printf "\nGreedy mode: starting with all %d optional %s, removing one at a time.\n" "$n" "$(pluralize "$n" dep)"
 
 # Start with all optional deps as "kept" (indices into the optional array)
 kept=() # indices of optional deps still included
@@ -68,7 +70,7 @@ while [ "$removed" -eq 1 ]; do
   removed=0 # reset for this pass
   pass=$((pass + 1)) # increment pass counter
   if [ "$pass" -gt 1 ]; then
-    printf "\n--- Verification pass %d (re-checking %d remaining deps) ---\n" "$pass" "${#kept[@]}"
+    printf "\n--- Verification pass %d (re-checking %d remaining %s) ---\n" "$pass" "${#kept[@]}" "$(pluralize "${#kept[@]}" dep)"
   fi
 
   # Iterate over a copy of kept indices (kept may shrink during the loop)

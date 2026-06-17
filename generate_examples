@@ -43,6 +43,7 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/format_duration # provides _quibble_format_duration for the summary line below (also pulled in transitively by duration_trap; sourced explicitly so the dependency is obvious)
 . "$(dirname "$0")"/lib/cmd_to_filename # provides cmd_to_filename function
 . "$(dirname "$0")"/lib/inhibit_sleep # prevent the machine from suspending during the long run
+. "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical worker counts ("1 worker"/"2 workers")
 
 # DRY_RUN mode: warn loudly on stderr so the user can't miss it when piping/teeing.
 # DRY_RUN=1 is inherited by every inner Usage command via the env (no explicit prepend
@@ -51,9 +52,9 @@ if [ -n "${DRY_RUN:-}" ]; then
   echo "generate_examples: DRY_RUN mode enabled — do not commit the resulting examples/" >&2
 fi
 
-# PARALLEL=N runs middle-phase scripts in N concurrent workers (default 1 = serial).
+# PARALLEL=N runs middle-phase scripts in N concurrent workers; unset/0 = serial (default).
 # See the header comment for behavior; PREVIEW=1 forces serial regardless.
-parallel="${PARALLEL:-1}"
+parallel="${PARALLEL:-0}"
 
 # Switch to the script's directory (project root) so relative paths and ./scripts work
 # regardless of where this is invoked from. $0 may be relative or absolute; dirname handles both.
@@ -197,10 +198,10 @@ _execute_work_file() {
   done < "$work_file"
 }
 
-# Dispatch: PREVIEW and parallel<=1 take the serial path (today's behavior). parallel>=2
-# takes the parallel path. PREVIEW forces serial regardless of PARALLEL because parallel
-# worker output would interleave unhelpfully when previewing the work plan.
-if [ -n "${PREVIEW:-}" ] || [ "$parallel" -le 1 ]; then
+# Dispatch: PREVIEW or parallel<1 (unset/0) takes the serial path; parallel>=1 takes the
+# parallel path (one isolated worker per script). PREVIEW forces serial regardless of PARALLEL
+# because parallel worker output would interleave unhelpfully when previewing the work plan.
+if [ -n "${PREVIEW:-}" ] || [ "$parallel" -lt 1 ]; then
   # --- Serial path ---
   # Final ordered iteration: early (pinned order) → alphabetical others → late (pinned order).
   # `${others[@]+"${others[@]}"}` is the bash 3.2-safe way to expand a possibly-empty array
@@ -233,7 +234,7 @@ else
   # src_save once via ./restore, then executes its work file. Worker stdout/stderr is
   # redirected to log/silent/worker-N/<script>.log so concurrent workers don't scramble
   # the terminal.
-  printf "\nParallel mode: %d workers\n" "$parallel" >&2
+  printf "\nParallel mode: %d %s\n" "$parallel" "$(pluralize "$parallel" worker)" >&2
   total="${#others[@]}"
   wave_start=0
   while [ "$wave_start" -lt "$total" ]; do
@@ -242,8 +243,8 @@ else
       wave_end="$total" # last wave may be smaller than $parallel
     fi
     wave_size=$((wave_end - wave_start))
-    printf "\n--- Wave %d-%d of %d (%d workers) ---\n" \
-      "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" >&2
+    printf "\n--- Wave %d-%d of %d (%d %s) ---\n" \
+      "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(pluralize "$wave_size" worker)" >&2
 
     pids=() # background worker PIDs for this wave
     worker=0

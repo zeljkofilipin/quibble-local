@@ -34,7 +34,7 @@
 # shellcheck disable=SC1091 # silence IDE warning about not following sources
 . "$(dirname "$0")"/lib/minimal_setup "$@" # shared setup: read deps, classify, pre-clone
 
-parallel="${PARALLEL:-1}" # PARALLEL=N runs N combinations in parallel (default 1 = sequential)
+parallel="${PARALLEL:-0}" # PARALLEL=N runs N combinations in parallel, each in its own src dir; unset/0 = sequential (default)
 
 # Generate all combinations of optional deps (including empty set), ordered by size.
 # See lib/combinations_with_empty.awk for the bitmask logic.
@@ -48,8 +48,8 @@ else
 fi
 total=${#combos[@]} # total number of combinations
 
-if [ "$parallel" -le 1 ]; then
-  # --- Sequential mode (PARALLEL=1, default) ---
+if [ "$parallel" -lt 1 ]; then
+  # --- Sequential mode (PARALLEL unset/0, default) ---
   # Uses run_step from lib/batch_setup for progress tracking.
   combo_num=0 # combination counter for progress display
 

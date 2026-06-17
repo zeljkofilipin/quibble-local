@@ -532,6 +532,10 @@ Outputs debug information (OS, CPU, RAM, bash, git, docker version, docker CPUs 
 
 Provides `_quibble_format_duration` function that formats elapsed seconds as a human-readable duration string (e.g. "1h 5m 30s"). Omits zero-value days, hours, and minutes; always shows seconds. Gated on the `TIME_ELAPSED` environment variable: off by default (returns empty), set `TIME_ELAPSED=1` to enable. Sourced by `lib/duration_trap` and `lib/batch_setup`.
 
+### `lib/pluralize`
+
+Provides the `pluralize` function that returns the singular or plural form of a word for a given count, so counts read grammatically (e.g. "1 worker" vs "2 workers"). Usage: `pluralize COUNT SINGULAR [PLURAL]`; `PLURAL` defaults to `SINGULAR` + "s", or pass it explicitly for irregular words. Sourced by the scripts that print worker counts in parallel mode (`lib/parallel`, `lib/run_waves`, `find_dependencies_minimal_gated`, `generate_examples`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_required_gated`).
+
 ### `lib/exit_trap`
 
 Composable EXIT-trap registry. Bash allows only one handler per signal, so a second `trap ... EXIT` replaces the first; this installs a single dispatcher and runs every registered handler, in registration order, preserving the script's exit code. Handlers are keyed, so registering an existing key replaces it (the mutually-exclusive display handlers `lib/duration_trap` and `lib/silent_output` share the `display` key — last wins) while a cleanup handler under its own key always runs too. This is what stops `lib/duration_trap` from clobbering `lib/inhibit_sleep`'s cleanup. Provides `quibble_register_exit_trap`. Sourced by `lib/inhibit_sleep`, `lib/duration_trap`, and `lib/silent_output`.
@@ -610,7 +614,7 @@ Provides `run_test` function and `test_counter` for `test_integration`-style scr
 
 ### `lib/run_waves`
 
-Generic wave-based parallel worker orchestration. Processes an array of items in waves of `$parallel` workers, each in an isolated `src_worker_N/` directory. The caller defines `_run_worker` and `_collect_result` functions to customize worker behavior and result handling. Removes the temp dir and `src_worker_*` checkouts on normal completion and via an `INT`/`TERM` trap, so Ctrl-C / kill cannot orphan them. Sourced by `install_each_gated`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated` in parallel mode.
+Generic wave-based parallel worker orchestration. Processes an array of `items` in waves of `$parallel` workers, each in an isolated `src_worker_N/` directory. The caller defines `_run_worker` (required) and optionally `_collect_result`, plus optional `_worker_label` (custom per-worker progress line) and `_wave_end` (per-wave summary) hooks; a collector can set `_quibble_run_waves_stop` to halt the run early (used by ordered searches). Removes the temp dir and `src_worker_*` checkouts on normal completion and via an `INT`/`TERM` trap, so Ctrl-C / kill cannot orphan them. Sourced by `lib/parallel`, `install_each_gated`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated` in parallel mode.
 
 ### `lib/remove_worker_dirs`
 
@@ -678,7 +682,7 @@ Greedy algorithm for `find_dependencies_minimal_greedy`: starts with all optiona
 
 ### `lib/parallel`
 
-Parallel exhaustive search: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory. Removes the temp dir and `src_worker_*` checkouts on normal exit and via an `INT`/`TERM` trap, so Ctrl-C / kill cannot orphan them. Sourced by `find_dependencies_minimal_bottom_up` and `find_dependencies_minimal_thorough` when `PARALLEL > 1`.
+Parallel exhaustive search for the minimum dependencies, built on `lib/run_waves`: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory, stopping at the first passing combination (combos are size-ordered, so the first pass is the minimum). Defines `run_waves`' worker/label/result/wave hooks and uses its early-exit signal; cleanup and the `INT`/`TERM` trap come from `run_waves`. Sourced by `find_dependencies_minimal_bottom_up` and `find_dependencies_minimal_thorough` when `PARALLEL` ≥ 1.
 
 ### `lib/print_found`
 
