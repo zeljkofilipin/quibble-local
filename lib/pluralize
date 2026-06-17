@@ -1,0 +1,17 @@
+# shellcheck shell=bash
+# Echo the singular or plural form of a word for a given count, so counts read
+# grammatically: "1 worker" vs "2 workers". Must be sourced; defines pluralize().
+#
+# Usage: pluralize COUNT SINGULAR [PLURAL]
+#   pluralize 1 worker        -> worker
+#   pluralize 2 worker        -> workers          (PLURAL defaults to SINGULAR + "s")
+#   pluralize 1 entry entries -> entry            (pass PLURAL for irregular words)
+#   printf '%d %s\n' "$n" "$(pluralize "$n" worker)"
+
+pluralize() {
+  if [ "$1" -eq 1 ]; then   # a count of exactly 1 takes the singular form
+    printf '%s' "$2"        # SINGULAR
+  else                      # 0 or 2+ takes the plural form
+    printf '%s' "${3:-$2s}" # explicit PLURAL, or SINGULAR + "s" by default
+  fi
+}

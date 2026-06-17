@@ -12,6 +12,8 @@
 #   _collect_result ITEM RESULT WORKER_NUM — called for each completed worker to record its result
 # shellcheck disable=SC2154 # variables and functions are set by the sourcing script
 
+. "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical worker counts ("1 worker"/"2 workers")
+
 _total=${#items[@]} # total number of items to process
 
 # Create result directory for workers to report results
@@ -37,8 +39,8 @@ while [ "$_wave_start" -lt "$_total" ]; do
   fi
   _wave_size=$((_wave_end - _wave_start))
 
-  printf "\n--- Wave %d-%d of %d (%d workers) --- %s\n" \
-    "$((_wave_start + 1))" "$_wave_end" "$_total" "$_wave_size" "$(utc_timestamp)"
+  printf "\n--- Wave %d-%d of %d (%d %s) --- %s\n" \
+    "$((_wave_start + 1))" "$_wave_end" "$_total" "$_wave_size" "$(pluralize "$_wave_size" worker)" "$(utc_timestamp)"
 
   # Launch workers for this wave
   _pids=() # array of background process IDs

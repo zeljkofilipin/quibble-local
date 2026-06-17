@@ -25,6 +25,7 @@
 # No set -euo pipefail: we want to continue after failures to collect all results
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
+. "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical worker counts ("1 worker"/"2 workers")
 
 # We invoke find_dependencies_minimal_greedy as a child via run_step, which pipes its output
 # through `tee log/silent/<component>--find_dependencies_minimal_greedy.log`. The child script
@@ -122,7 +123,7 @@ if [ "$parallel" -lt 1 ]; then
 
 else
   # --- Parallel mode ---
-  printf "\nParallel mode: %d workers\n" "$parallel"
+  printf "\nParallel mode: %d %s\n" "$parallel" "$(pluralize "$parallel" worker)"
 
   total=${#filtered[@]} # total components to process
   _result_dir=$(mktemp -d) # temp dir for worker result files
@@ -140,8 +141,8 @@ else
     fi
     wave_size=$((wave_end - wave_start)) # number of workers in this wave
 
-    printf "\n--- Wave %d-%d of %d (%d workers) --- %s\n" \
-      "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(utc_timestamp)"
+    printf "\n--- Wave %d-%d of %d (%d %s) --- %s\n" \
+      "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(pluralize "$wave_size" worker)" "$(utc_timestamp)"
 
     # Launch workers for this wave
     pids=() # array of background process IDs

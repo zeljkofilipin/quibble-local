@@ -43,6 +43,7 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/format_duration # provides _quibble_format_duration for the summary line below (also pulled in transitively by duration_trap; sourced explicitly so the dependency is obvious)
 . "$(dirname "$0")"/lib/cmd_to_filename # provides cmd_to_filename function
 . "$(dirname "$0")"/lib/inhibit_sleep # prevent the machine from suspending during the long run
+. "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical worker counts ("1 worker"/"2 workers")
 
 # DRY_RUN mode: warn loudly on stderr so the user can't miss it when piping/teeing.
 # DRY_RUN=1 is inherited by every inner Usage command via the env (no explicit prepend
@@ -233,7 +234,7 @@ else
   # src_save once via ./restore, then executes its work file. Worker stdout/stderr is
   # redirected to log/silent/worker-N/<script>.log so concurrent workers don't scramble
   # the terminal.
-  printf "\nParallel mode: %d workers\n" "$parallel" >&2
+  printf "\nParallel mode: %d %s\n" "$parallel" "$(pluralize "$parallel" worker)" >&2
   total="${#others[@]}"
   wave_start=0
   while [ "$wave_start" -lt "$total" ]; do
@@ -242,8 +243,8 @@ else
       wave_end="$total" # last wave may be smaller than $parallel
     fi
     wave_size=$((wave_end - wave_start))
-    printf "\n--- Wave %d-%d of %d (%d workers) ---\n" \
-      "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" >&2
+    printf "\n--- Wave %d-%d of %d (%d %s) ---\n" \
+      "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(pluralize "$wave_size" worker)" >&2
 
     pids=() # background worker PIDs for this wave
     worker=0

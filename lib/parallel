@@ -15,7 +15,9 @@
 #   fresh_or_restore — function to set up core MediaWiki (fresh_install or restore)
 # shellcheck disable=SC2154 # variables are set by the sourcing script
 
-printf "\nParallel mode: %d workers\n" "$parallel"
+. "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical worker counts ("1 worker"/"2 workers")
+
+printf "\nParallel mode: %d %s\n" "$parallel" "$(pluralize "$parallel" worker)"
 
 if [ -n "$fast" ]; then
   # Fast mode: initial fresh_install + install + save (workers restore from src_save/)
@@ -54,8 +56,8 @@ while [ "$wave_start" -lt "$total" ]; do
   fi
   wave_size=$((wave_end - wave_start))
 
-  printf "\n--- Wave %d-%d of %d (%d workers) --- %s\n" \
-    "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(utc_timestamp)"
+  printf "\n--- Wave %d-%d of %d (%d %s) --- %s\n" \
+    "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(pluralize "$wave_size" worker)" "$(utc_timestamp)"
 
   # Launch workers for this wave
   pids=() # array of background process IDs

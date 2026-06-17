@@ -532,6 +532,10 @@ Outputs debug information (OS, CPU, RAM, bash, git, docker version, docker CPUs 
 
 Provides `_quibble_format_duration` function that formats elapsed seconds as a human-readable duration string (e.g. "1h 5m 30s"). Omits zero-value days, hours, and minutes; always shows seconds. Gated on the `TIME_ELAPSED` environment variable: off by default (returns empty), set `TIME_ELAPSED=1` to enable. Sourced by `lib/duration_trap` and `lib/batch_setup`.
 
+### `lib/pluralize`
+
+Provides the `pluralize` function that returns the singular or plural form of a word for a given count, so counts read grammatically (e.g. "1 worker" vs "2 workers"). Usage: `pluralize COUNT SINGULAR [PLURAL]`; `PLURAL` defaults to `SINGULAR` + "s", or pass it explicitly for irregular words. Sourced by the scripts that print worker counts in parallel mode (`lib/parallel`, `lib/run_waves`, `find_dependencies_minimal_gated`, `generate_examples`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_required_gated`).
+
 ### `lib/exit_trap`
 
 Composable EXIT-trap registry. Bash allows only one handler per signal, so a second `trap ... EXIT` replaces the first; this installs a single dispatcher and runs every registered handler, in registration order, preserving the script's exit code. Handlers are keyed, so registering an existing key replaces it (the mutually-exclusive display handlers `lib/duration_trap` and `lib/silent_output` share the `display` key — last wins) while a cleanup handler under its own key always runs too. This is what stops `lib/duration_trap` from clobbering `lib/inhibit_sleep`'s cleanup. Provides `quibble_register_exit_trap`. Sourced by `lib/inhibit_sleep`, `lib/duration_trap`, and `lib/silent_output`.
