@@ -624,6 +624,10 @@ Generic wave-based parallel worker orchestration. Processes an array of `items` 
 
 Generic dynamic worker pool — the refill-as-you-go counterpart to `lib/run_waves`. Where `run_waves` launches a fixed wave of `$parallel` workers and waits for all of them before starting the next wave (so one slow item idles the rest of its wave), `run_pool` keeps `$parallel` reusable slots busy and refills each slot the instant its item finishes. The caller sets `items[]` and `parallel` and defines `_run_pool_worker SLOT ITEM` (runs in a background subshell; `SLOT` is a stable `1..parallel` id reused as items complete, for per-slot isolation), plus an optional `_pool_worker_label` hook. Because bash 3.2 has no `wait -n`, completion is detected via a per-slot sentinel file written by an `EXIT` trap inside each worker and polled (interval overridable with `_QUIBBLE_POOL_POLL_SECONDS`, default 1s); the sentinel temp dir is removed on normal completion and via an `INT`/`TERM` trap. Sourced by `generate_examples` in parallel mode.
 
+### `lib/heavy_scripts`
+
+Curated list of the heaviest middle scripts (defines `_quibble_heavy_scripts`, most-expensive first), used only as a scheduling hint by `generate_examples`' parallel pool: their Usage lines are dispatched before everything else so the long-running jobs start immediately and the many short jobs backfill the tail, keeping every worker slot busy to the end. Best-effort hint only — `lib/run_pool` is correct in any order, so a stale or missing entry only costs a little scheduling efficiency. Sourced by `generate_examples` in parallel mode.
+
 ### `lib/remove_worker_dirs`
 
 Cleans up `src_worker_*` directories created by parallel execution. Tries `rm -rf` first (works on macOS). Falls back to Docker-as-root for container-owned files (Linux). Sourced by `lib/run_waves` and `lib/parallel` after parallel runs complete and from their `INT`/`TERM` cleanup on interrupt.

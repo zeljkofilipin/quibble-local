@@ -275,3 +275,48 @@ EOF
   [[ "$output" != *"NONE|"* ]]                       # ENVIRONMENT/QUIBBLE_LOG_DIR always set in the worker
   [[ "$output" != *"PARALLEL_IS_SET"* ]]             # worker unset PARALLEL — parent's PARALLEL=2 did not leak in
 }
+
+@test "generate_examples: parallel path dispatches heavy scripts (lib/heavy_scripts) first" {
+  # Heavy-first ordering: a script listed in lib/heavy_scripts must be dispatched before a
+  # non-heavy script that sorts earlier alphabetically. Run at PARALLEL=1 so the single slot
+  # dispatches strictly in items order — the calls file then records that order directly.
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+  ln -s "$PWD/lib" "$tmpdir/lib"
+  cp generate_examples "$tmpdir/generate_examples"
+
+  cat > "$tmpdir/generate_example" <<'EOF'
+#!/usr/bin/env bash
+printf '%s\n' "$2" >> "$GE_RESULTS"
+EOF
+  chmod +x "$tmpdir/generate_example"
+
+  local s
+  for s in prepare prepare_gated fresh_install save remove_srcs remove remove_all; do
+    printf '#!/usr/bin/env bash\nexit 0\n' > "$tmpdir/$s"
+    chmod +x "$tmpdir/$s"
+  done
+
+  # aatool sorts before test_integration alphabetically, so without heavy-first ordering it
+  # would dispatch first. test_integration is in lib/heavy_scripts, so it must dispatch first.
+  printf '#!/usr/bin/env bash\n# Usage: ./aatool\nexit 0\n' > "$tmpdir/aatool"
+  printf '#!/usr/bin/env bash\n# Usage: ./test_integration\nexit 0\n' > "$tmpdir/test_integration"
+  chmod +x "$tmpdir/aatool" "$tmpdir/test_integration"
+
+  run bash -c "
+    cd '$tmpdir'
+    export PARALLEL=1 _QUIBBLE_NO_INHIBIT=1 _QUIBBLE_POOL_POLL_SECONDS=0.05 GE_RESULTS='$tmpdir/calls'
+    ./generate_examples >/dev/null 2>&1
+    echo \"GEN=\$?\"
+    ti=\$(grep -n '^\./test_integration\$' calls | head -1 | cut -d: -f1)
+    aa=\$(grep -n '^\./aatool\$' calls | head -1 | cut -d: -f1)
+    echo \"TI=\$ti AA=\$aa\"
+    [ -n \"\$ti\" ] && [ -n \"\$aa\" ] && [ \"\$ti\" -lt \"\$aa\" ] && echo HEAVY_FIRST || echo NOT_HEAVY_FIRST
+  "
+
+  rm -rf "$tmpdir"
+
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"GEN=0"* ]]
+  [[ "$output" == *"HEAVY_FIRST"* ]]                 # test_integration dispatched before the earlier-sorting aatool
+}

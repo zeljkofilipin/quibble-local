@@ -204,6 +204,18 @@ _execute_work_file() {
   done < "$work_file"
 }
 
+# Append every "<file>\t<cmd>" tuple from a pre-walked work file to the global `items` array
+# (the dispatch list lib/run_pool consumes). Missing/empty work file (script had no Usage
+# block) is a silent no-op.
+_append_work_tuples() {
+  local work_file="$1" tuple
+  [ -f "$work_file" ] || return 0
+  while IFS= read -r tuple; do                                      # one tuple per line; IFS= preserves the tab inside it
+    [ -n "$tuple" ] || continue
+    items+=("$tuple")                                               # append to the ambient `items` dispatch array
+  done < "$work_file"
+}
+
 # Worker body for one middle Usage line, run by lib/run_pool inside a background subshell.
 # SLOT is a stable 1..parallel id (reused as items complete). Isolates per-slot state, seeds
 # src_$SLOT from the shared src_save, and captures the command's output via ./generate_example.
@@ -275,14 +287,19 @@ else
   # item finishes). Per-line (not per-script) granularity lets a script's heavy variants run on
   # different slots, so the slowest single command — not the slowest script's total — bounds the
   # run. _run_pool_worker (defined above) isolates each slot's state and captures the output.
-  items=() # lib/run_pool reads this ambient array of "<file>\t<cmd>" tuples
+  #
+  # Order heavy scripts first (lib/heavy_scripts), so the long jobs start at t=0 and the many
+  # short jobs backfill the tail — keeping every slot busy to the end. Best-effort hint only:
+  # the pool is correct in any order, so a stale/missing entry just costs a little efficiency.
+  . "$(dirname "$0")"/lib/heavy_scripts # defines _quibble_heavy_scripts (most-expensive first)
+  items=() # lib/run_pool reads this ambient array of "<file>\t<cmd>" tuples; _append_work_tuples fills it
+  for script in ${_quibble_heavy_scripts[@]+"${_quibble_heavy_scripts[@]}"}; do
+    case " ${others[*]} " in *" $script "*) ;; *) continue ;; esac # only front-load names that are actual middle scripts
+    _append_work_tuples "$work_dir/$script.work"
+  done
   for script in ${others[@]+"${others[@]}"}; do
-    work_file="$work_dir/$script.work"
-    [ -f "$work_file" ] || continue # script had no Usage block — nothing to dispatch
-    while IFS= read -r tuple; do    # one tuple per line; IFS= preserves the tab inside the tuple
-      [ -n "$tuple" ] || continue
-      items+=("$tuple")
-    done < "$work_file"
+    case " ${_quibble_heavy_scripts[*]} " in *" $script "*) continue ;; esac # already emitted in the heavy pass above
+    _append_work_tuples "$work_dir/$script.work"
   done
   if [ "${#items[@]}" -gt 0 ]; then
     . "$(dirname "$0")"/lib/run_pool # dispatch items across $parallel slots via _run_pool_worker
