@@ -16,7 +16,7 @@ for _cleanup_dir in src_worker_*; do
     # -v: mount worker dir so we can delete its contents from inside the container
     docker run --rm --entrypoint bash --user root \
       -v "$PWD/$_cleanup_dir":/workspace/worker \
-      "${QUIBBLE_IMAGE:-docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest}" \
+      "${QUIBBLE_IMAGE:-docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest}" \
       -c 'find /workspace/worker -mindepth 1 -delete' 2>/dev/null || true # ignore errors if image missing
     rm -rf "$_cleanup_dir" 2>/dev/null || true # remove the now-empty directory
   fi

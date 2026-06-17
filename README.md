@@ -50,9 +50,9 @@ Combinable with `TIME_UTC=1` for full timing output:
 Override the Docker image used by all commands. Useful when developing or testing changes to Quibble itself.
 
     QUIBBLE_IMAGE=my-quibble:dev ./fresh_install
-    QUIBBLE_IMAGE=docker-registry.wikimedia.org/releng/quibble-bullseye-php83:1.2.3 ./install extensions/Echo
+    QUIBBLE_IMAGE=docker-registry.wikimedia.org/releng/quibble-bookworm-php83:1.2.3 ./install extensions/Echo
 
-Default: `docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest`
+Default: `docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest`
 
 ### `ENVIRONMENT`
 
