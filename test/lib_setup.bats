@@ -10,7 +10,10 @@
     echo "$QUIBBLE_IMAGE"
   '
   [ "$status" -eq 0 ]
-  [[ "$output" == *"quibble-bookworm-php83"* ]]
+  # Distro-agnostic: assert the image shape, not the Debian codename, so a future
+  # base bump (e.g. bookworm -> trixie) updates only lib/default_image, not this test.
+  # Outer wildcards tolerate the set -x trace lines VERBOSE=1 merges into $output.
+  [[ "$output" == *"docker-registry.wikimedia.org/releng/quibble-"*"-php83:latest"* ]]
 }
 
 @test "setup: QUIBBLE_IMAGE can be overridden" {

@@ -546,7 +546,11 @@ Registers (via `lib/exit_trap`, under the shared `display` key) an EXIT handler 
 
 ### `lib/setup`
 
-Shared setup sourced by scripts that run Docker commands. Sources `lib/debug_info` for debug output, checks Docker prerequisites (docker installed, Docker daemon running), exports `QUIBBLE_IMAGE` and `QUIBBLE_VOLUMES`, sets a custom debug prompt, enables trace output (`set -x`), and sources `lib/silent_output` for output redirection.
+Shared setup sourced by scripts that run Docker commands. Sources `lib/debug_info` for debug output, checks Docker prerequisites (docker installed, Docker daemon running), sources `lib/default_image` and exports `QUIBBLE_IMAGE` (defaulting to `QUIBBLE_DEFAULT_IMAGE`) and `QUIBBLE_VOLUMES`, sets a custom debug prompt, enables trace output (`set -x`), and sources `lib/silent_output` for output redirection.
+
+### `lib/default_image`
+
+Single source of truth for the default Quibble Docker image, as `QUIBBLE_DEFAULT_IMAGE`. Sourced by `lib/setup` (to seed `QUIBBLE_IMAGE` for the user-facing scripts) and by `lib/remove_worker_dirs` (the parallel-run interrupt-cleanup trap, which runs in a shell that never sources `lib/setup` and so has no `QUIBBLE_IMAGE`). To move to a newer image (e.g. a new Debian base), edit only this file; both consumers pick it up. Override at runtime with `QUIBBLE_IMAGE`.
 
 ### `lib/silent_output`
 
