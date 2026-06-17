@@ -1,0 +1,26 @@
+# shellcheck shell=bash
+# Curated list of the heaviest middle scripts, most-expensive first, used ONLY as a scheduling
+# hint by generate_examples' parallel pool (lib/run_pool): the Usage lines of these scripts are
+# dispatched before everything else, so the long-running jobs start at t=0 and the many short
+# jobs backfill the tail. This keeps all worker slots busy until the very end (Graham's
+# list-scheduling bound: a few multi-hour jobs left for last would otherwise idle most slots).
+#
+# This is a best-effort hint, NOT load-bearing: lib/run_pool processes items correctly in any
+# order, so a stale, missing, or misspelled entry only costs a little scheduling efficiency —
+# never correctness. Names not present as middle scripts are ignored. Runtimes are approximate
+# (from a serial TIME_ELAPSED=1 ./generate_examples run) and drift slowly; reorder when the
+# ranking changes materially. Must be sourced, not run directly.
+
+# shellcheck disable=SC2034 # _quibble_heavy_scripts is consumed by the script that sources this file
+_quibble_heavy_scripts=(
+  find_dependencies_minimal_gated      # ~24h total across its Usage variants
+  run_selenium_tests_all_gated         # ~14h
+  test_integration_slow                # ~12h
+  run_selenium_tests_required_gated    # ~10h
+  install_each_gated                   # ~10h
+  run_selenium_tests_gated             # ~3h
+  find_dependencies_minimal_thorough   # ~2h
+  install_all_gated                    # ~2h
+  find_dependencies_minimal_greedy     # ~1h
+  test_integration                     # ~46m
+)

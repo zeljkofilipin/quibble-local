@@ -114,7 +114,7 @@ for dep_name in "${all_deps[@]}"; do
       git -C "$dep_ref_dir" fetch || true  # ignore errors if remote unreachable
     else
       printf "fetch(%s) " "$dep_name" # print step label before dots
-      run_with_dots "log/silent/fetch--${dep_name//\//-}.log" \
+      run_with_dots "${QUIBBLE_LOG_DIR:-log/silent}/fetch--${dep_name//\//-}.log" \
         git -C "$dep_ref_dir" fetch || true  # ignore errors if remote unreachable
       printf "\n" # newline after dots
     fi
@@ -126,7 +126,7 @@ for dep_name in "${all_deps[@]}"; do
       git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
     else
       printf "pre-clone(%s) " "$dep_name" # print step label before dots
-      run_with_dots "log/silent/pre-clone--${dep_name//\//-}.log" \
+      run_with_dots "${QUIBBLE_LOG_DIR:-log/silent}/pre-clone--${dep_name//\//-}.log" \
         git clone --bare "https://gerrit.wikimedia.org/r/${dep_repo}" "$dep_ref_dir"
       printf "\n" # newline after dots
     fi

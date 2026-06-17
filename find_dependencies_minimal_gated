@@ -117,8 +117,10 @@ if [ "$parallel" -lt 1 ]; then
     fi
     printf " %s\n" "$(utc_timestamp)"
 
-    # Surface the minimum-dependencies result captured in the log file (silent mode only)
-    print_found_from_log "$component" "log/silent/${component//\//-}--find_dependencies_minimal_greedy.log"
+    # Surface the minimum-dependencies result captured in the log file (silent mode only).
+    # Read from the same dir run_step wrote to ($QUIBBLE_LOG_DIR, set by lib/batch_setup) so a
+    # per-worker log dir (generate_examples pool) still resolves the greedy log correctly.
+    print_found_from_log "$component" "${QUIBBLE_LOG_DIR:-log/silent}/${component//\//-}--find_dependencies_minimal_greedy.log"
   done
 
 else

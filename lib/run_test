@@ -36,7 +36,7 @@ run_test() {
     # FAIL with duration. On success only the dots and optional duration/timestamp remain.
     test_counter=$((test_counter + 1)) # increment counter for unique log file names
     local log_file
-    log_file=$(printf "log/silent/%02d-%s.log" "$test_counter" "${1##*/}") # e.g. log/silent/03-prepare.log
+    log_file=$(printf "%s/%02d-%s.log" "${QUIBBLE_LOG_DIR:-log/silent}" "$test_counter" "${1##*/}") # e.g. log/silent/03-prepare.log (QUIBBLE_LOG_DIR set by lib/batch_setup, sourced first)
     printf "%s " "$*" # print full command without newline
     if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
       # Success: the dots are the only feedback — no redundant "ok". Print just the elapsed time

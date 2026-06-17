@@ -199,3 +199,124 @@ line3' <<< 'stdin content for cat to drain')
   [[ "$result" == *"got: line2"* ]]
   [[ "$result" == *"got: line3"* ]]
 }
+
+@test "generate_examples: parallel path dispatches Usage lines via lib/run_pool" {
+  # Regression guard: the middle phase must use the dynamic pool (lib/run_pool) with a
+  # caller-defined _run_pool_worker, not the old static wave loop.
+  run grep -E '_run_pool_worker\(\)' generate_examples
+  [ "$status" -eq 0 ]
+  run grep -E '/lib/run_pool' generate_examples
+  [ "$status" -eq 0 ]
+}
+
+@test "generate_examples: parallel worker unsets PARALLEL and isolates QUIBBLE_LOG_DIR" {
+  # Regression guards for the per-tuple pool worker:
+  # - unset PARALLEL so a bare inner command captures serial output (and the parent's PARALLEL=N
+  #   can't leak in and multiply into nested parallel runs); an inline `PARALLEL=1 ...` still wins.
+  # - export QUIBBLE_LOG_DIR=log/silent/slot-N so concurrent batch scripts don't clobber each
+  #   other's silent logs (which find_dependencies_minimal_gated reads back into its output).
+  run grep -E 'unset PARALLEL' generate_examples
+  [ "$status" -eq 0 ]
+  run grep -E 'export QUIBBLE_LOG_DIR="log/silent/slot-' generate_examples
+  [ "$status" -eq 0 ]
+}
+
+@test "generate_examples: parallel path dispatches each Usage line in an isolated slot" {
+  # End-to-end (sandboxed, no Docker): run the real parallel path with a stub generate_example
+  # that records how it was invoked. Proves per-Usage-line granularity (one dispatch per line,
+  # not per script), a stable per-slot ENVIRONMENT + QUIBBLE_LOG_DIR, and that PARALLEL is unset
+  # inside the worker — so a bare inner command would capture serial output and the parent's
+  # PARALLEL=2 cannot leak in.
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+  ln -s "$PWD/lib" "$tmpdir/lib"
+  cp generate_examples "$tmpdir/generate_examples"
+
+  # Stub generate_example: append one line per call recording the worker's env and the command.
+  cat > "$tmpdir/generate_example" <<'EOF'
+#!/usr/bin/env bash
+printf '%s|%s|%s|%s\n' "${ENVIRONMENT:-NONE}" "${QUIBBLE_LOG_DIR:-NONE}" "${PARALLEL+PARALLEL_IS_SET}" "$2" >> "$GE_RESULTS"
+EOF
+  chmod +x "$tmpdir/generate_example"
+
+  # Early/late scripts are hardcoded in generate_examples and get pre-walked, so they must exist
+  # (awk reads them); minimal stubs with no Usage block are skipped harmlessly.
+  local s
+  for s in prepare prepare_gated fresh_install save remove_srcs remove remove_all; do
+    printf '#!/usr/bin/env bash\nexit 0\n' > "$tmpdir/$s"
+    chmod +x "$tmpdir/$s"
+  done
+
+  # Two fake middle scripts with three distinct Usage lines total.
+  printf '#!/usr/bin/env bash\n# Usage: ./aatool\n#        VERBOSE=1 ./aatool\nexit 0\n' > "$tmpdir/aatool"
+  printf '#!/usr/bin/env bash\n# Usage: ./bbtool extensions/Echo\nexit 0\n' > "$tmpdir/bbtool"
+  chmod +x "$tmpdir/aatool" "$tmpdir/bbtool"
+
+  run bash -c "
+    cd '$tmpdir'
+    export PARALLEL=2 _QUIBBLE_NO_INHIBIT=1 _QUIBBLE_POOL_POLL_SECONDS=0.05 GE_RESULTS='$tmpdir/calls'
+    ./generate_examples >/dev/null 2>&1
+    echo \"GEN=\$?\"
+    echo '--- CALLS ---'
+    sort calls
+  "
+
+  rm -rf "$tmpdir"
+
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"GEN=0"* ]]                       # the run completed cleanly
+  # One dispatch per Usage line (3 lines), each recorded by the stub.
+  [[ "$output" == *"|./aatool"* ]]
+  [[ "$output" == *"|VERBOSE=1 ./aatool"* ]]
+  [[ "$output" == *"|./bbtool extensions/Echo"* ]]
+  # Per-slot isolation: ENVIRONMENT and QUIBBLE_LOG_DIR are set together for both slots used.
+  [[ "$output" == *"1|log/silent/slot-1|"* ]]
+  [[ "$output" == *"2|log/silent/slot-2|"* ]]
+  [[ "$output" != *"NONE|"* ]]                       # ENVIRONMENT/QUIBBLE_LOG_DIR always set in the worker
+  [[ "$output" != *"PARALLEL_IS_SET"* ]]             # worker unset PARALLEL — parent's PARALLEL=2 did not leak in
+}
+
+@test "generate_examples: parallel path dispatches heavy scripts (lib/heavy_scripts) first" {
+  # Heavy-first ordering: a script listed in lib/heavy_scripts must be dispatched before a
+  # non-heavy script that sorts earlier alphabetically. Run at PARALLEL=1 so the single slot
+  # dispatches strictly in items order — the calls file then records that order directly.
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+  ln -s "$PWD/lib" "$tmpdir/lib"
+  cp generate_examples "$tmpdir/generate_examples"
+
+  cat > "$tmpdir/generate_example" <<'EOF'
+#!/usr/bin/env bash
+printf '%s\n' "$2" >> "$GE_RESULTS"
+EOF
+  chmod +x "$tmpdir/generate_example"
+
+  local s
+  for s in prepare prepare_gated fresh_install save remove_srcs remove remove_all; do
+    printf '#!/usr/bin/env bash\nexit 0\n' > "$tmpdir/$s"
+    chmod +x "$tmpdir/$s"
+  done
+
+  # aatool sorts before test_integration alphabetically, so without heavy-first ordering it
+  # would dispatch first. test_integration is in lib/heavy_scripts, so it must dispatch first.
+  printf '#!/usr/bin/env bash\n# Usage: ./aatool\nexit 0\n' > "$tmpdir/aatool"
+  printf '#!/usr/bin/env bash\n# Usage: ./test_integration\nexit 0\n' > "$tmpdir/test_integration"
+  chmod +x "$tmpdir/aatool" "$tmpdir/test_integration"
+
+  run bash -c "
+    cd '$tmpdir'
+    export PARALLEL=1 _QUIBBLE_NO_INHIBIT=1 _QUIBBLE_POOL_POLL_SECONDS=0.05 GE_RESULTS='$tmpdir/calls'
+    ./generate_examples >/dev/null 2>&1
+    echo \"GEN=\$?\"
+    ti=\$(grep -n '^\./test_integration\$' calls | head -1 | cut -d: -f1)
+    aa=\$(grep -n '^\./aatool\$' calls | head -1 | cut -d: -f1)
+    echo \"TI=\$ti AA=\$aa\"
+    [ -n \"\$ti\" ] && [ -n \"\$aa\" ] && [ \"\$ti\" -lt \"\$aa\" ] && echo HEAVY_FIRST || echo NOT_HEAVY_FIRST
+  "
+
+  rm -rf "$tmpdir"
+
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"GEN=0"* ]]
+  [[ "$output" == *"HEAVY_FIRST"* ]]                 # test_integration dispatched before the earlier-sorting aatool
+}
