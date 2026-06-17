@@ -13,7 +13,7 @@
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
-parallel="${PARALLEL:-1}" # PARALLEL=N fetches N repos at a time (default 1 = sequential)
+parallel="${PARALLEL:-0}" # PARALLEL=N fetches N repos at a time; unset/0 = sequential (default)
 
 # Build list of repos to fetch
 repos=() # array of repo paths
@@ -38,7 +38,7 @@ if [ ${#repos[@]} -eq 0 ]; then
   exit 0
 fi
 
-if [ "$parallel" -le 1 ]; then
+if [ "$parallel" -lt 1 ]; then
   # --- Sequential mode ---
   for repo in "${repos[@]}"; do
     git -C "$repo" fetch # -C runs git in the repo's directory

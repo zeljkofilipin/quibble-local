@@ -20,7 +20,7 @@
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
 fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-running
-parallel="${PARALLEL:-1}" # PARALLEL=N runs N components in parallel (default 1 = sequential)
+parallel="${PARALLEL:-0}" # PARALLEL=N runs N components in parallel, each in its own src dir; unset/0 = sequential (default)
 
 # --- Core ---
 print_header "core"
@@ -39,7 +39,7 @@ printf " %s\n" "$(utc_timestamp)" # print UTC timestamp after core
 # --- Build list of gated components ---
 . "$(dirname "$0")"/lib/build_component_list # sets components[] from $1 or ./list_gated
 
-if [ "$parallel" -le 1 ]; then
+if [ "$parallel" -lt 1 ]; then
   # --- Sequential mode ---
   # IFS= preserves whitespace in component names; -r prevents backslash interpretation.
   # <&3 reads from file descriptor 3 instead of stdin, because docker's -it flag needs stdin.

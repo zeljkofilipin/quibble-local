@@ -34,7 +34,7 @@
 # of the parent run. Our own batch_setup has already done the outer cleanup above.
 export _QUIBBLE_NESTED_BATCH=1
 
-parallel="${PARALLEL:-1}" # PARALLEL=N runs N components in parallel (default 1 = sequential)
+parallel="${PARALLEL:-0}" # PARALLEL=N runs N components in parallel, each in its own src dir; unset/0 = sequential (default)
 
 # --- Build list of gated components ---
 . "$(dirname "$0")"/lib/build_component_list # sets components[] from $1 or ./list_gated
@@ -105,7 +105,7 @@ ${_block}
   : "$_component" # silence shellcheck about unused parameter
 }
 
-if [ "$parallel" -le 1 ]; then
+if [ "$parallel" -lt 1 ]; then
   # --- Sequential mode ---
   for component in "${filtered[@]}"; do
     print_header "$component"

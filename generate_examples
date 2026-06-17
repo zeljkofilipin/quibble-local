@@ -51,9 +51,9 @@ if [ -n "${DRY_RUN:-}" ]; then
   echo "generate_examples: DRY_RUN mode enabled — do not commit the resulting examples/" >&2
 fi
 
-# PARALLEL=N runs middle-phase scripts in N concurrent workers (default 1 = serial).
+# PARALLEL=N runs middle-phase scripts in N concurrent workers; unset/0 = serial (default).
 # See the header comment for behavior; PREVIEW=1 forces serial regardless.
-parallel="${PARALLEL:-1}"
+parallel="${PARALLEL:-0}"
 
 # Switch to the script's directory (project root) so relative paths and ./scripts work
 # regardless of where this is invoked from. $0 may be relative or absolute; dirname handles both.
@@ -197,10 +197,10 @@ _execute_work_file() {
   done < "$work_file"
 }
 
-# Dispatch: PREVIEW and parallel<=1 take the serial path (today's behavior). parallel>=2
-# takes the parallel path. PREVIEW forces serial regardless of PARALLEL because parallel
-# worker output would interleave unhelpfully when previewing the work plan.
-if [ -n "${PREVIEW:-}" ] || [ "$parallel" -le 1 ]; then
+# Dispatch: PREVIEW or parallel<1 (unset/0) takes the serial path; parallel>=1 takes the
+# parallel path (one isolated worker per script). PREVIEW forces serial regardless of PARALLEL
+# because parallel worker output would interleave unhelpfully when previewing the work plan.
+if [ -n "${PREVIEW:-}" ] || [ "$parallel" -lt 1 ]; then
   # --- Serial path ---
   # Final ordered iteration: early (pinned order) → alphabetical others → late (pinned order).
   # `${others[@]+"${others[@]}"}` is the bash 3.2-safe way to expand a possibly-empty array
