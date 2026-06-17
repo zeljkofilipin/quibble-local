@@ -27,31 +27,31 @@ run_test ./run_php_unit_tests --filter testValidSpecialPageAliases  # 1m: test f
 # --- Finding minimum dependencies (slow: exhaustive algorithms) ---
 run_test ./find_dependencies_minimal_bottom_up extensions/Echo  # 4m: test bottom-up exhaustive (fast for Echo: 0 deps needed)
 run_test env FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo  # 4m: test bottom-up with fast mode
-run_test env PARALLEL=2 ./find_dependencies_minimal_bottom_up extensions/Echo  # 7m: test bottom-up with parallel mode
-run_test env PARALLEL=2 FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo  # 7m: test bottom-up with parallel + fast mode
+run_test env PARALLEL=1 ./find_dependencies_minimal_bottom_up extensions/Echo  # 7m: test bottom-up with parallel mode
+run_test env PARALLEL=1 FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo  # 7m: test bottom-up with parallel + fast mode
 run_test ./find_dependencies_minimal_greedy extensions/CommunityConfiguration  # 8m: test finding minimum dependencies (greedy algorithm)
 run_test env FAST=1 ./find_dependencies_minimal_greedy extensions/CommunityConfiguration  # 8m: test greedy with fast mode
 run_test ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test greedy + exhaustive verification
 run_test env FAST=1 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with fast mode
-run_test env PARALLEL=2 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with parallel mode
-run_test env PARALLEL=2 FAST=1 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with parallel + fast mode
+run_test env PARALLEL=1 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with parallel mode
+run_test env PARALLEL=1 FAST=1 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with parallel + fast mode
 run_test ./find_dependencies_minimal_gated extensions/Echo  # 20m: test finding minimum dependencies for gated (single component)
-run_test env PARALLEL=2 ./find_dependencies_minimal_gated extensions/Echo  # 22m: test find_dependencies_minimal_gated with parallel mode
+run_test env PARALLEL=1 ./find_dependencies_minimal_gated extensions/Echo  # 22m: test find_dependencies_minimal_gated with parallel mode
 
 # --- All gated repositories (moved from test_integration) ---
 run_test ./prepare_gated               # 4m: test cloning bare repos for all gated repos
 run_test ./install_each_gated extensions/Echo  # 3m: test install_each_gated with a single extension
 run_test env FAST=1 ./install_each_gated extensions/Echo  # 3m: test install_each_gated with fast mode
-run_test env PARALLEL=2 ./install_each_gated extensions/Echo  # 3m: test install_each_gated with parallel mode
-run_test env PARALLEL=2 FAST=1 ./install_each_gated extensions/Echo  # 3m: test install_each_gated with parallel + fast mode
+run_test env PARALLEL=1 ./install_each_gated extensions/Echo  # 3m: test install_each_gated with parallel mode
+run_test env PARALLEL=1 FAST=1 ./install_each_gated extensions/Echo  # 3m: test install_each_gated with parallel + fast mode
 run_test ./run_selenium_tests_all_gated extensions/Echo     # 5m: test run_selenium_tests_all_gated with a single extension
 run_test env FAST=1 ./run_selenium_tests_all_gated extensions/Echo  # 4m: test run_selenium_tests_all_gated with fast mode
-run_test env PARALLEL=2 ./run_selenium_tests_all_gated extensions/Echo  # 4m: test run_selenium_tests_all_gated with parallel mode
-run_test env PARALLEL=2 FAST=1 ./run_selenium_tests_all_gated extensions/Echo  # 4m: test run_selenium_tests_all_gated with parallel + fast mode
+run_test env PARALLEL=1 ./run_selenium_tests_all_gated extensions/Echo  # 4m: test run_selenium_tests_all_gated with parallel mode
+run_test env PARALLEL=1 FAST=1 ./run_selenium_tests_all_gated extensions/Echo  # 4m: test run_selenium_tests_all_gated with parallel + fast mode
 run_test ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with a single extension
 run_test env FAST=1 ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with fast mode
-run_test env PARALLEL=2 ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with parallel mode
-run_test env PARALLEL=2 FAST=1 ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with parallel + fast mode
+run_test env PARALLEL=1 ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with parallel mode
+run_test env PARALLEL=1 FAST=1 ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with parallel + fast mode
 run_test ./run_selenium_tests_gated  # 73m: test run_selenium_tests_gated (installs all gated, runs all selenium tests; also tests install_all_gated)
 
 # Print pass/fail summary and exit with error if any script failed

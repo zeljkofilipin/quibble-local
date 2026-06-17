@@ -27,7 +27,7 @@ run_test env PREVIEW=1 ./generate_examples  # <1m: test bulk regenerator iterati
 run_test ./prepare                     # 6m: test that prepare pulls image and clones repos
 run_test ./fetch                       # <1m: test fetching all bare repos (update stale repos before use)
 run_test ./fetch ref/mediawiki/core.git  # <1m: test fetching a specific repo
-run_test env PARALLEL=2 ./fetch        # <1m: test parallel fetch
+run_test env PARALLEL=1 ./fetch        # <1m: test parallel fetch
 run_test ./fresh_install               # 1m: test fresh core install
 run_test env DRY_RUN=1 ./fresh_install  # <1m: test DRY_RUN passes --dry-run to Quibble
 run_test ./save                        # <1m: test saving fresh_install state

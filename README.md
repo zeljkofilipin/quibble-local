@@ -308,7 +308,7 @@ On macOS, the result may differ depending on whether Docker is running. When Doc
 To maximize parallel workers on macOS, increase Docker Desktop memory: Docker Desktop → Settings → Resources → Memory. The formula is: workers = min(CPUs / 2, memory / 2 GB). On a 10-core / 64 GB machine with Docker Desktop defaults (~6 GB), memory is the bottleneck (3 workers instead of 5). Increasing Docker memory to 10+ GB removes the bottleneck.
 
     ./suggest_parallel
-    PARALLEL=$(./suggest_parallel) ./run_selenium_tests_all_gated
+    PARALLEL=1 ./run_selenium_tests_all_gated
 
 ## Finding minimum dependencies
 
