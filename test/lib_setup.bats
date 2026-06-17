@@ -10,7 +10,7 @@
     echo "$QUIBBLE_IMAGE"
   '
   [ "$status" -eq 0 ]
-  [[ "$output" == *"quibble-bullseye-php83"* ]]
+  [[ "$output" == *"quibble-bookworm-php83"* ]]
 }
 
 @test "setup: QUIBBLE_IMAGE can be overridden" {
