@@ -6,6 +6,16 @@
 # Check verbose mode (default is silent)
 verbose="${VERBOSE:-}" # VERBOSE=1 enables verbose mode; empty string means silent
 
+# Directory for silent-mode per-step log files. Defaults to log/silent. A parent that runs
+# batch scripts concurrently overrides it per worker (e.g. generate_examples' pool workers set
+# log/silent/slot-N) so concurrent workers don't clobber each other's logs or delete logs that a
+# sibling is reading back (e.g. find_dependencies_minimal_gated's FOUND block). Exported so nested
+# batch children (e.g. find_dependencies_minimal_greedy) write to the same directory. NOTE: this is
+# the file-write location only — the user-facing "logs:" hint (_QUIBBLE_LOG below) stays the
+# canonical log/silent/ so a per-worker slot path can't leak into captured examples/.
+QUIBBLE_LOG_DIR="${QUIBBLE_LOG_DIR:-log/silent}"
+export QUIBBLE_LOG_DIR
+
 . "$(dirname "$0")"/lib/inhibit_sleep  # prevent the machine from suspending
 . "$(dirname "$0")"/lib/print_results  # provides print_results function
 . "$(dirname "$0")"/lib/utc_timestamp  # provides utc_timestamp function
@@ -16,7 +26,7 @@ verbose="${VERBOSE:-}" # VERBOSE=1 enables verbose mode; empty string means sile
 
 # Create and clean log directory for silent mode
 if [ -z "$verbose" ]; then
-  _QUIBBLE_LOG="log/silent/" # tell lib/debug_info where silent mode logs are saved
+  _QUIBBLE_LOG="log/silent/" # tell lib/debug_info where silent mode logs are saved (literal, NOT $QUIBBLE_LOG_DIR: debug_info prints this to stdout and generate_example captures it — a slot path here would leak into examples/)
   . "$(dirname "$0")"/lib/debug_info # check prerequisites and print debug info before output is redirected
   # Best-effort fix-up of log/ permissions before creating log/silent/. Docker mounts log/
   # as a volume and writes to it as the container user, which can leave log/ root-owned on
@@ -24,12 +34,12 @@ if [ -z "$verbose" ]; then
   # a no-op when log/ is already 777. Suppress errors and don't fail here — the mkdir
   # below is the authoritative check.
   chmod 777 log 2>/dev/null || :
-  mkdir -p log/silent 2>/dev/null || : # create log directory for captured output (errors handled below)
+  mkdir -p "$QUIBBLE_LOG_DIR" 2>/dev/null || : # create log directory for captured output (errors handled below)
   # Fail loudly if log/silent could not be created. Without this check, subsequent `tee`
   # commands in run_with_dots would fail per-step with `tee: log/silent/...: No such file or
   # directory` and the script would limp along producing noise instead of useful output.
-  if [ ! -d log/silent ]; then
-    echo "Error: cannot create log/silent. log/ is likely owned by root from a previous Docker run." >&2
+  if [ ! -d "$QUIBBLE_LOG_DIR" ]; then
+    echo "Error: cannot create $QUIBBLE_LOG_DIR. log/ is likely owned by root from a previous Docker run." >&2
     echo "Fix: run ./remove_all to wipe all generated directories (uses Docker-as-root to delete root-owned files), then start fresh." >&2
     exit 1
   fi
@@ -41,7 +51,7 @@ if [ -z "$verbose" ]; then
   # flowing into the unlinked inode but the directory entry is gone after greedy exits,
   # leaving the outer script with no log to read for the FOUND-block extraction.
   if [ -z "${_QUIBBLE_NESTED_BATCH:-}" ]; then
-    rm -f log/silent/*.log # clear old logs to avoid confusion from stale results
+    rm -f "$QUIBBLE_LOG_DIR"/*.log # clear old logs to avoid confusion from stale results (scoped to this run's dir, so concurrent workers don't wipe each other)
   fi
 fi
 
@@ -77,7 +87,7 @@ run_step() {
   else
     # Silent: print step label, save output to log file, print a dot per line, then (on
     # failure) FAIL with duration. On success only the dots and optional duration remain.
-    local log_file="log/silent/${component//\//-}--${step}.log" # e.g. log/silent/extensions-Echo--install.log
+    local log_file="$QUIBBLE_LOG_DIR/${component//\//-}--${step}.log" # e.g. log/silent/extensions-Echo--install.log
     printf "%s " "$step" # print step name before dots (e.g. "fresh_install ")
     if run_with_dots "$log_file" "$@"; then # run command, print dots, check exit code
       # Success: the dots are the only feedback — no redundant "ok". Print just the elapsed time

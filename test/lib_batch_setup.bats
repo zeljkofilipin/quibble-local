@@ -181,3 +181,52 @@ teardown() {
   [ "$status" -eq 0 ]
   [[ "$output" == *"PRESENT"* ]]
 }
+
+@test "batch_setup: QUIBBLE_LOG_DIR scopes cleanup to its own dir (concurrent workers don't wipe each other)" {
+  # generate_examples' pool workers set QUIBBLE_LOG_DIR=log/silent/slot-N. The startup
+  # cleanup must clear only that worker's dir, never a sibling worker's (or the default).
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+  ln -s "$PWD/lib" "$tmpdir/lib"
+  mkdir -p "$tmpdir/log/silent/slot-3"
+  : > "$tmpdir/log/silent/slot-3/stale.log" # in this worker's dir -> should be removed
+  : > "$tmpdir/log/silent/keep.log"          # the default dir (another run) -> must be untouched
+
+  run bash -c "
+    cd '$tmpdir'
+    export _QUIBBLE_NO_INHIBIT=1
+    export QUIBBLE_LOG_DIR=log/silent/slot-3
+    unset VERBOSE
+    unset _QUIBBLE_NESTED_BATCH
+    . lib/batch_setup
+    [ -f log/silent/slot-3/stale.log ] && echo SLOT_PRESENT || echo SLOT_ABSENT
+    [ -f log/silent/keep.log ] && echo DEFAULT_PRESENT || echo DEFAULT_ABSENT
+  "
+
+  rm -rf "$tmpdir"
+
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"SLOT_ABSENT"* ]]     # cleared its own dir
+  [[ "$output" == *"DEFAULT_PRESENT"* ]] # left the default (sibling) dir alone
+}
+
+@test "run_step: writes its silent-mode log under QUIBBLE_LOG_DIR" {
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+  ln -s "$PWD/lib" "$tmpdir/lib"
+
+  run bash -c "
+    cd '$tmpdir'
+    export _QUIBBLE_NO_INHIBIT=1
+    export QUIBBLE_LOG_DIR=log/silent/slot-2
+    unset VERBOSE
+    . lib/batch_setup
+    run_step core echo hello
+    [ -f log/silent/slot-2/core--echo.log ] && echo FOUND || echo MISSING
+  "
+
+  rm -rf "$tmpdir"
+
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"FOUND"* ]]           # step log landed in the per-worker dir
+}

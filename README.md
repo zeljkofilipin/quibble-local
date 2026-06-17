@@ -518,7 +518,7 @@ These are sourced by other scripts and are not intended to be run directly.
 
 ### `lib/batch_setup`
 
-Shared setup for batch scripts (`test_integration`, `test_integration_slow`, `install_all_gated`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_gated`, `find_dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables.
+Shared setup for batch scripts (`test_integration`, `test_integration_slow`, `install_all_gated`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_gated`, `run_selenium_tests_required_gated`, `find_dependencies_minimal_greedy`, `find_dependencies_minimal_bottom_up`, `find_dependencies_minimal_gated`, `find_dependencies_minimal_thorough`). Sets up verbose/silent mode, sources helper libraries (`inhibit_sleep`, `print_results`, `heartbeat`), creates log directory, and initializes result tracking variables. Defines and exports `QUIBBLE_LOG_DIR` (default `log/silent`), the directory for silent-mode per-step log files; the startup cleanup, `run_step`, `lib/run_test`, and `lib/minimal_setup` all write there. A parent that runs batch scripts concurrently (e.g. `generate_examples`' pool workers) overrides it per worker (e.g. `log/silent/slot-3`) so concurrent workers don't clobber each other's logs or delete a log a sibling is reading back. The user-facing "logs:" hint stays the canonical `log/silent/` (not the per-worker path) so it can't leak into captured `examples/`.
 
 ### `lib/heartbeat`
 
