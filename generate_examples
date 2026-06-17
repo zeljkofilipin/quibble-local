@@ -23,19 +23,26 @@
 #                                    instead of minutes. Other scripts ignore the unused env var.
 #                                    This matches how DRY_RUN already propagates in
 #                                    find_dependencies_minimal_* and other batch scripts.
-#   PARALLEL=N ./generate_examples — run middle-phase scripts concurrently across N workers,
-#                                    each in an isolated ENVIRONMENT=N (src_N/, src_save_N/).
-#                                    Early scripts (prepare, prepare_gated, fresh_install, save)
-#                                    and late scripts (remove_srcs, remove, remove_all) stay
-#                                    serial — they prepare/destroy state every middle worker
-#                                    depends on. Per-worker output goes to log/silent/worker-N/.
-#                                    PREVIEW=1 forces serial regardless of PARALLEL because
-#                                    parallel worker output would interleave unhelpfully when
-#                                    previewing the work plan.
+#   PARALLEL=N ./generate_examples — run middle-phase Usage lines (not whole scripts)
+#                                    concurrently across N reusable worker slots (lib/run_pool):
+#                                    as each line finishes, its slot is refilled, so a script's
+#                                    slow variants spread across slots and no slot idles while
+#                                    work remains. Each slot runs in an isolated ENVIRONMENT=N
+#                                    (src_N/) seeded from the shared src_save, so every line runs
+#                                    against a clean baseline, with its own QUIBBLE_LOG_DIR
+#                                    (log/silent/slot-N) so concurrent batch scripts don't clobber
+#                                    each other's logs. Each worker also unsets PARALLEL so a bare
+#                                    inner command captures serial output (an inline
+#                                    `PARALLEL=1 ...` in a Usage line still wins). Early scripts
+#                                    (prepare, prepare_gated, fresh_install, save) and late scripts
+#                                    (remove_srcs, remove, remove_all) stay serial — they
+#                                    prepare/destroy state every middle worker depends on.
+#                                    Per-worker output goes to log/silent/slot-N/. PREVIEW=1
+#                                    forces serial regardless of PARALLEL because parallel worker
+#                                    output would interleave unhelpfully when previewing the plan.
 # Combinations: PREVIEW=1 DRY_RUN=1 previews the DRY_RUN command list (PREVIEW wins — nothing runs).
-# PARALLEL=N DRY_RUN=1 runs the parallel path while short-circuiting Quibble — used by the
-# integration test. Use DRY_RUN=1 to iterate on generate_examples itself or to validate the
-# pipeline end-to-end.
+# PARALLEL=N DRY_RUN=1 runs the parallel path while short-circuiting Quibble. Use DRY_RUN=1 to
+# iterate on generate_examples itself or to validate the pipeline end-to-end.
 # Do NOT commit examples/*.txt produced under DRY_RUN=1 — they do not reflect real script behavior.
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
@@ -43,7 +50,6 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/format_duration # provides _quibble_format_duration for the summary line below (also pulled in transitively by duration_trap; sourced explicitly so the dependency is obvious)
 . "$(dirname "$0")"/lib/cmd_to_filename # provides cmd_to_filename function
 . "$(dirname "$0")"/lib/inhibit_sleep # prevent the machine from suspending during the long run
-. "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical worker counts ("1 worker"/"2 workers")
 
 # DRY_RUN mode: warn loudly on stderr so the user can't miss it when piping/teeing.
 # DRY_RUN=1 is inherited by every inner Usage command via the env (no explicit prepend
@@ -52,7 +58,7 @@ if [ -n "${DRY_RUN:-}" ]; then
   echo "generate_examples: DRY_RUN mode enabled — do not commit the resulting examples/" >&2
 fi
 
-# PARALLEL=N runs middle-phase scripts in N concurrent workers; unset/0 = serial (default).
+# PARALLEL=N runs middle-phase Usage lines across N concurrent worker slots; unset/0 = serial (default).
 # See the header comment for behavior; PREVIEW=1 forces serial regardless.
 parallel="${PARALLEL:-0}"
 
@@ -198,6 +204,40 @@ _execute_work_file() {
   done < "$work_file"
 }
 
+# Worker body for one middle Usage line, run by lib/run_pool inside a background subshell.
+# SLOT is a stable 1..parallel id (reused as items complete). Isolates per-slot state, seeds
+# src_$SLOT from the shared src_save, and captures the command's output via ./generate_example.
+# DRY_RUN (if set) propagates to the inner command via the env. Defines no globals.
+_run_pool_worker() {
+  local slot="$1"          # 1..parallel slot id (stable; reused as items finish)
+  local item="$2"          # "<file>\t<cmd>" tuple produced by _prewalk_script
+  local file cmd
+  IFS=$'\t' read -r file cmd <<< "$item"          # split on the tab (same delimiter _prewalk_script wrote)
+  export ENVIRONMENT="$slot"                       # lib/setup derives QUIBBLE_SRC=src_$slot
+  export QUIBBLE_BACKGROUND=1                       # lib/setup drops Docker -i/-t flags for background runs
+  export QUIBBLE_LOG_DIR="log/silent/slot-$slot"   # per-slot log dir so concurrent batch scripts don't clobber each other's logs (lib/batch_setup)
+  export _QUIBBLE_NESTED_BATCH=1                    # child batch scripts must not wipe this slot's log dir mid-run
+  unset PARALLEL                                    # bare inner commands capture serial output; an inline `PARALLEL=1 ...` in the Usage line still wins
+  rm -rf "$QUIBBLE_LOG_DIR"; mkdir -p "$QUIBBLE_LOG_DIR" # start each item with a clean slot log dir
+  exec > "$QUIBBLE_LOG_DIR/${file##*/}.log" 2>&1   # redirect this worker's own output to its slot log (${file##*/} strips the examples/ prefix)
+  # Seed src_$slot from the shared src_save (populated by the early-phase ./save) so every line
+  # runs against a clean baseline. Concurrent reads from src_save are safe (it's a regular dir).
+  # Under DRY_RUN=1 the early ./fresh_install short-circuits, src/ is empty, ./save errors out
+  # (it requires a populated src/), and src_save may not exist — skip the seed then; the DRY_RUN
+  # inner commands won't actually need a populated src_$slot.
+  if [ -d src_save ]; then
+    QUIBBLE_SAVE=src_save ./restore || true        # best-effort; don't abort the worker on failure
+  fi
+  ./generate_example "$file" "$cmd"                # run the command and capture its output to examples/<file>.txt
+}
+
+# Friendlier pool progress line: show the slot and the command, not the raw "<file>\t<cmd>" tuple.
+_pool_worker_label() {
+  local _file _cmd
+  IFS=$'\t' read -r _file _cmd <<< "$2"            # $2 is the tuple; keep only the command for display
+  printf "  Slot %d: %s\n" "$1" "$_cmd" >&2
+}
+
 # Dispatch: PREVIEW or parallel<1 (unset/0) takes the serial path; parallel>=1 takes the
 # parallel path (one isolated worker per script). PREVIEW forces serial regardless of PARALLEL
 # because parallel worker output would interleave unhelpfully when previewing the work plan.
@@ -229,62 +269,24 @@ else
     _execute_work_file "$work_dir/$script.work"
   done
 
-  # Middle phase: wave loop, one worker per script. Each worker isolates state via
-  # ENVIRONMENT=N (lib/setup derives QUIBBLE_SRC=src_N), seeds src_N from the shared
-  # src_save once via ./restore, then executes its work file. Worker stdout/stderr is
-  # redirected to log/silent/worker-N/<script>.log so concurrent workers don't scramble
-  # the terminal.
-  printf "\nParallel mode: %d %s\n" "$parallel" "$(pluralize "$parallel" worker)" >&2
-  total="${#others[@]}"
-  wave_start=0
-  while [ "$wave_start" -lt "$total" ]; do
-    wave_end=$((wave_start + parallel)) # exclusive end of this wave
-    if [ "$wave_end" -gt "$total" ]; then
-      wave_end="$total" # last wave may be smaller than $parallel
-    fi
-    wave_size=$((wave_end - wave_start))
-    printf "\n--- Wave %d-%d of %d (%d %s) ---\n" \
-      "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(pluralize "$wave_size" worker)" >&2
-
-    pids=() # background worker PIDs for this wave
-    worker=0
-    while [ "$worker" -lt "$wave_size" ]; do
-      item_idx=$((wave_start + worker))
-      item_script="${others[$item_idx]}"
-      worker_num=$((worker + 1)) # 1-based to match install_each_gated / lib/run_waves convention
-      worker_log_dir="log/silent/worker-$worker_num"
-      worker_log_file="$worker_log_dir/$item_script.log"
-      mkdir -p "$worker_log_dir" "src_$worker_num" # docker volume mount needs src_N to exist
-      printf "  Worker %d: %s\n" "$worker_num" "$item_script" >&2
-
-      (
-        # Worker subshell: isolate env, seed src_N from shared src_save, execute work file.
-        export ENVIRONMENT="$worker_num"   # lib/setup derives QUIBBLE_SRC=src_$worker_num
-        export QUIBBLE_BACKGROUND=1        # lib/setup drops Docker -i/-t flags for background runs
-        exec > "$worker_log_file" 2>&1     # redirect this subshell's stdout/stderr to the worker log
-        # Seed src_N from shared src_save (populated by the early-phase ./save). Concurrent
-        # reads from src_save by parallel workers are safe (it's a regular dir). Under DRY_RUN=1,
-        # the early ./fresh_install short-circuits, src/ is empty, ./save errors out (it requires
-        # a populated src/), and src_save may not exist — skip the seed step in that case; the
-        # workers' DRY_RUN inner commands won't actually need a populated src_N.
-        if [ -d src_save ]; then
-          QUIBBLE_SAVE=src_save ./restore || true # best-effort; don't abort the worker on failure
-        fi
-        _execute_work_file "$work_dir/$item_script.work"
-      ) &
-      pids+=($!) # $! is the most recent background PID
-
-      worker=$((worker + 1))
-    done
-
-    # Wait for all workers in this wave. `|| true` so a worker's non-zero exit doesn't
-    # abort the parent under `set -e`; per-worker failures are visible in their log files.
-    for pid in ${pids[@]+"${pids[@]}"}; do
-      wait "$pid" 2>/dev/null || true
-    done
-
-    wave_start="$wave_end" # advance to next wave
+  # Middle phase: per-Usage-line dynamic pool. Flatten every middle script's pre-walked work
+  # file into one list of "<file>\t<cmd>" tuples, then dispatch them across $parallel reusable
+  # slots (lib/run_pool, which prints its own progress and refills each slot the instant its
+  # item finishes). Per-line (not per-script) granularity lets a script's heavy variants run on
+  # different slots, so the slowest single command — not the slowest script's total — bounds the
+  # run. _run_pool_worker (defined above) isolates each slot's state and captures the output.
+  items=() # lib/run_pool reads this ambient array of "<file>\t<cmd>" tuples
+  for script in ${others[@]+"${others[@]}"}; do
+    work_file="$work_dir/$script.work"
+    [ -f "$work_file" ] || continue # script had no Usage block — nothing to dispatch
+    while IFS= read -r tuple; do    # one tuple per line; IFS= preserves the tab inside the tuple
+      [ -n "$tuple" ] || continue
+      items+=("$tuple")
+    done < "$work_file"
   done
+  if [ "${#items[@]}" -gt 0 ]; then
+    . "$(dirname "$0")"/lib/run_pool # dispatch items across $parallel slots via _run_pool_worker
+  fi
 
   # Late phase: serial in main process. Destructive scripts (remove_srcs/remove/remove_all)
   # must run only after all middle work is done, otherwise they'd wipe state mid-flight.
