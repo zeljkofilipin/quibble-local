@@ -134,7 +134,7 @@ while [ "$wave_start" -lt "$total" ]; do
     combo_idx=$((combo_idx + 1))
   done
 
-  printf "  All %d combinations in this wave failed.\n" "$wave_size"
+  printf "  All %d %s in this wave failed.\n" "$wave_size" "$(pluralize "$wave_size" combination)"
   wave_start="$wave_end" # advance to next wave
 done
 

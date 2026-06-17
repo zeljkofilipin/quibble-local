@@ -81,7 +81,7 @@ if [ ${#filtered[@]} -eq 0 ]; then
   exit 0
 fi
 
-printf "\n%d components to process.\n" "${#filtered[@]}"
+printf "\n%d %s to process.\n" "${#filtered[@]}" "$(pluralize "${#filtered[@]}" component)"
 
 # Accumulate per-component "FOUND" blocks (extracted from each component's log) for
 # a final summary printed before print_results. In silent mode the FOUND block is

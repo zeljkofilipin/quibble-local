@@ -35,6 +35,7 @@
 # shellcheck source=lib/minimal_setup
 # shellcheck disable=SC1091 # silence IDE warning about not following sources
 . "$(dirname "$0")"/lib/minimal_setup "$@" # shared setup: read deps, classify, pre-clone
+. "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical counts ("1 combination"/"2 combinations")
 
 parallel="${PARALLEL:-0}" # PARALLEL=N runs N combinations in parallel, each in its own src dir; unset/0 = sequential (default)
 
@@ -62,8 +63,8 @@ if [ "$greedy_count" -eq 0 ]; then
 fi
 
 # --- Phase 2: Exhaustive verification of smaller combinations ---
-printf "\n=== Phase 2: Verifying greedy result (testing combinations with fewer than %d optional deps) === %s\n" \
-  "$greedy_count" "$(utc_timestamp)"
+printf "\n=== Phase 2: Verifying greedy result (testing combinations with fewer than %d optional %s) === %s\n" \
+  "$greedy_count" "$(pluralize "$greedy_count" dep)" "$(utc_timestamp)"
 
 # Generate only combinations smaller than greedy result (ordered by size).
 # See lib/combinations_with_empty.awk for the bitmask logic.
@@ -86,7 +87,7 @@ if [ "$n" -gt 0 ]; then
 fi
 total=${#combos[@]} # total combinations to verify
 
-printf "Testing %d combinations (size 0 to %d)...\n" "$total" "$((greedy_count - 1))"
+printf "Testing %d %s (size 0 to %d)...\n" "$total" "$(pluralize "$total" combination)" "$((greedy_count - 1))"
 
 if [ "$parallel" -lt 1 ]; then
   # --- Sequential verification ---
