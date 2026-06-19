@@ -1,10 +1,8 @@
 # shellcheck shell=bash
 # Single source of truth for the default Quibble Docker image.
 #
-# Sourced by lib/setup (to seed QUIBBLE_IMAGE for the user-facing scripts) and by
-# lib/remove_worker_dirs (the parallel-run interrupt-cleanup trap, which runs in a
-# shell that deliberately never sources lib/setup, so it has no QUIBBLE_IMAGE and
-# needs the default on its own). Override at runtime by exporting QUIBBLE_IMAGE.
+# Sourced by lib/setup to seed QUIBBLE_IMAGE for the user-facing scripts.
+# Override at runtime by exporting QUIBBLE_IMAGE.
 #
 # To move to a newer image (e.g. a new Debian base when MediaWiki raises its
 # minimum MariaDB version), edit ONLY the line below; both consumers pick it up.

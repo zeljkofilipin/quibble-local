@@ -75,11 +75,11 @@ There is no build step. `./test_integration` is an integration test that exercis
 - `ref/` — bare git repos cloned from Gerrit, used as `--reference` to speed up clones
 - `src/` — MediaWiki working copy (created by Quibble inside the container)
 - `src_save/` — saved copy of `src/` for fast restore (created by `./save`)
-- `src_worker_*/` — isolated src directories for parallel workers (created by `PARALLEL=N ./find_dependencies_minimal_thorough`)
+- `src_N/`, `src_save_N/` — per-slot isolated src/save directories for parallel workers (`ENVIRONMENT=N`), created by `PARALLEL=N` runs of the gated / `find_dependencies_minimal_*` scripts and by `generate_examples`. (`src_worker_*/` was the pre-pool scheme — no longer created; `remove_srcs`/`remove_all` still sweep up any leftovers.)
 - `cache/` — Quibble cache (composer, npm)
 - `log/` — Quibble logs
 
-**Do not read or search** `cache/`, `log/`, `ref/`, `src/`, `src_save/`, or `src_worker_*/` unless explicitly asked. These are large runtime directories (gigabytes of cloned repos, build artifacts, and logs) that are not part of the project source code.
+**Do not read or search** `cache/`, `log/`, `ref/`, `src/`, `src_save/`, `src_N/`, or `src_save_N/` unless explicitly asked. These are large runtime directories (gigabytes of cloned repos, build artifacts, and logs) that are not part of the project source code.
 
 **Do not read or search** `examples/` unless explicitly working on it. It contains captured command output (regenerated via `./generate_examples`), not project source code.
 
