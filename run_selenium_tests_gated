@@ -8,7 +8,6 @@
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
 # Usage: ./run_selenium_tests_gated
-#        VERBOSE=1 ./run_selenium_tests_gated
 #
 
 # No set -euo pipefail: we want to continue after failures to collect all results

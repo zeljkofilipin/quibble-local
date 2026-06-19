@@ -196,7 +196,6 @@ To start from a completely clean state, run `./remove_all` first.
 Run integration tests that are too slow for the fast suite (`./test_integration`). Includes network-heavy setup, full test suites, exhaustive algorithms, and gated repository tests. Silent by default; use `VERBOSE=1` for full output.
 
     ./test_integration_slow
-    VERBOSE=1 ./test_integration_slow
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a long time to run.
 
@@ -440,7 +439,6 @@ Run Selenium tests for core and all gated repositories. For each component: `./f
 Install all gated extensions and skins into a single MediaWiki, then run all Selenium tests. Unlike `./run_selenium_tests_all_gated` (which does `./fresh_install` per component), this installs everything together into one `src/`.
 
     ./run_selenium_tests_gated
-    VERBOSE=1 ./run_selenium_tests_gated
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a long time to run (50+ components).
 
