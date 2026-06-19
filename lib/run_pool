@@ -14,18 +14,26 @@
 #   parallel  — number of concurrent slots (>= 1)
 #
 # Expects this function to be defined by the caller:
-#   _run_pool_worker SLOT ITEM — runs inside a background worker subshell. SLOT is a stable
-#       1..parallel slot id, reused as items complete, so the worker can isolate per-slot
-#       state (e.g. export ENVIRONMENT=$SLOT so lib/setup uses src_$SLOT). The worker's exit
-#       code is ignored (like run_waves's _run_worker); surface failures via its own logs.
-#       It must NOT install its own EXIT trap — run_pool sets one in the subshell to detect
+#   _run_pool_worker SLOT ITEM INDEX — runs inside a background worker subshell. SLOT is a stable
+#       1..parallel slot id, reused as items complete, so the worker can isolate per-slot state
+#       (e.g. export ENVIRONMENT=$SLOT so lib/setup uses src_$SLOT). INDEX is the item's 0-based
+#       position in items[] (handy for keying per-item output, esp. in ordered searches). The
+#       worker's exit code is ignored (like run_waves's _run_worker); surface failures via its own
+#       logs. It must NOT install its own EXIT trap — run_pool sets one in the subshell to detect
 #       completion (a second `trap ... EXIT` would replace it; see lib/exit_trap).
 #
 # Optional caller functions (omit for the default):
-#   _pool_worker_label SLOT ITEM — prints the per-dispatch progress line. Default: "  Slot N: ITEM".
-#   _pool_reap SLOT ITEM — called in the dispatch loop the moment SLOT's worker finishes (the
+#   _pool_worker_label SLOT ITEM INDEX — prints the per-dispatch progress line. Default: "  Slot N: ITEM".
+#   _pool_reap SLOT ITEM INDEX — called in the dispatch loop the moment SLOT's worker finishes (the
 #       refill-as-you-go analog of run_waves' _collect_result), so the caller can surface that
 #       item's result live rather than after the whole pool drains. Runs inline — keep it quick.
+#
+# Optional caller signal (the ordered-search analog of run_waves' _quibble_run_waves_stop):
+#   _quibble_run_pool_stop — set it (e.g. inside _pool_reap) to stop dispatching NEW items; run_pool
+#       then drains the in-flight slots and returns. Items dispatch in queue order, so every index
+#       below the one that triggered the stop is already in flight and still gets reaped — a caller
+#       tracking the lowest passing index therefore still sees the true minimum (used by
+#       lib/parallel's ordered minimum-dependency search).
 # shellcheck disable=SC2154 # items/parallel and _run_pool_worker are set by the sourcing script
 
 . "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical slot counts ("1 slot"/"2 slots")
@@ -53,6 +61,7 @@ trap '_quibble_run_pool_cleanup; exit 130' INT TERM
 _pool_pid=()      # _pool_pid[S] = PID of the worker currently in slot S, or "" when the slot is free
 _pool_sentinel=() # _pool_sentinel[S] = sentinel file slot S's current worker touches when it exits
 _pool_item=()     # _pool_item[S] = item slot S's current worker is processing (passed to _pool_reap)
+_pool_idx=()      # _pool_idx[S] = 0-based items[] index of slot S's current item (passed to the hooks)
 
 # Progress to stderr, matching generate_examples' parallel-progress convention (its sole caller).
 printf "\nParallel mode: %d %s\n" "$parallel" "$(pluralize "$parallel" slot)" >&2
@@ -60,21 +69,25 @@ printf "\nParallel mode: %d %s\n" "$parallel" "$(pluralize "$parallel" slot)" >&
 _pool_next=0    # index into items[] of the next item to dispatch
 _pool_running=0 # number of slots currently busy
 
-# Keep going until every item has been dispatched AND every busy slot has drained.
-while [ "$_pool_next" -lt "$_pool_total" ] || [ "$_pool_running" -gt 0 ]; do
-  # Fill every currently-free slot with the next pending item (front of the queue).
+# Keep going until every item has been dispatched AND every busy slot has drained. A caller may set
+# _quibble_run_pool_stop (e.g. in _pool_reap) to halt early: we then launch nothing more and just
+# drain the slots still in flight (the ordered-search analog of run_waves' _quibble_run_waves_stop).
+while { [ -z "${_quibble_run_pool_stop:-}" ] && [ "$_pool_next" -lt "$_pool_total" ]; } || [ "$_pool_running" -gt 0 ]; do
+  # Fill every currently-free slot with the next pending item (front of the queue) — unless an early
+  # stop was signalled, in which case dispatch nothing more and let the in-flight slots drain.
   _slot=1
-  while [ "$_slot" -le "$parallel" ] && [ "$_pool_next" -lt "$_pool_total" ]; do
+  while [ "$_slot" -le "$parallel" ] && [ "$_pool_next" -lt "$_pool_total" ] && [ -z "${_quibble_run_pool_stop:-}" ]; do
     if [ -z "${_pool_pid[$_slot]:-}" ]; then # slot is free (no PID recorded)
       _item="${items[$_pool_next]}"          # next item to run
       _sentinel="$_pool_dir/slot-$_slot.done" # this slot's completion marker
       rm -f "$_sentinel"                      # drop the previous item's stale marker before reuse
       _pool_sentinel[_slot]="$_sentinel"      # remember it so the poll loop knows what to watch
       _pool_item[_slot]="$_item"              # remember the item so _pool_reap can name it on completion
+      _pool_idx[_slot]=$_pool_next            # remember its 0-based items[] index (passed to the hooks)
 
       # Per-dispatch progress line. A caller may define _pool_worker_label for a richer label.
       if command -v _pool_worker_label >/dev/null 2>&1; then
-        _pool_worker_label "$_slot" "$_item"
+        _pool_worker_label "$_slot" "$_item" "$_pool_next"
       else
         printf "  Slot %d: %s\n" "$_slot" "$_item" >&2
       fi
@@ -85,7 +98,7 @@ while [ "$_pool_next" -lt "$_pool_total" ] || [ "$_pool_running" -gt 0 ]; do
       # in bash 3.2, where `wait -n` is unavailable). `rc=$?` preserves the worker's exit code.
       (
         trap 'rc=$?; touch "$_sentinel"; exit $rc' EXIT
-        _run_pool_worker "$_slot" "$_item"
+        _run_pool_worker "$_slot" "$_item" "$_pool_next"
       ) &
       _pool_pid[_slot]=$!                     # $! is the most recent background PID; it now owns this slot
       _pool_next=$((_pool_next + 1))          # advance the queue
@@ -108,7 +121,7 @@ while [ "$_pool_next" -lt "$_pool_total" ] || [ "$_pool_running" -gt 0 ]; do
         # keep it quick) and in the caller's shell (run_pool is sourced), so it can update the
         # caller's own variables directly.
         if command -v _pool_reap >/dev/null 2>&1; then
-          _pool_reap "$_slot" "${_pool_item[$_slot]:-}"
+          _pool_reap "$_slot" "${_pool_item[$_slot]:-}" "${_pool_idx[$_slot]:-}"
         fi
         _pool_pid[_slot]=""                              # mark the slot free for the next item
         _pool_running=$((_pool_running - 1))             # one fewer slot busy

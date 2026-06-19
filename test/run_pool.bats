@@ -150,3 +150,42 @@ setup() {
   [[ "$output" == *"REAPS=3"* ]]                                     # fired once per item (not per slot)
   [[ "$output" == *"REAP s=1 i=i0 REAP s=1 i=i1 REAP s=1 i=i2"* ]]   # each call gets its slot id + item
 }
+
+@test "lib/run_pool: passes the 0-based items[] index as the 3rd arg to the worker and _pool_reap" {
+  run bash -c '
+    cd "'"$BATS_TEST_TMPDIR"'"
+    : > idx
+    items=(a b c); parallel=1
+    export _QUIBBLE_POOL_POLL_SECONDS=0.05
+    _run_pool_worker() { printf "worker %s=%s\n" "$2" "$3" >> idx; }  # ITEM=$2, INDEX=$3
+    _pool_reap() { printf "reap %s=%s\n" "$2" "$3" >> idx; }          # ITEM=$2, INDEX=$3
+    . lib/run_pool
+    cat idx
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"worker a=0"* ]]   # index tracks the item: a=0, b=1, c=2
+  [[ "$output" == *"worker c=2"* ]]
+  [[ "$output" == *"reap b=1"* ]]
+}
+
+@test "lib/run_pool: a _pool_reap that sets _quibble_run_pool_stop halts dispatch but drains in-flight" {
+  # Ordered-search early exit: once the caller signals stop, no NEW item is dispatched, but the
+  # slots already in flight still run and get reaped. With 2 slots, only the first wave (i0,i1)
+  # ever launches; i2.. are never dispatched. (run_pool analog of run_waves.bats "halts further waves".)
+  run bash -c '
+    cd "'"$BATS_TEST_TMPDIR"'"
+    : > processed
+    items=(i0 i1 i2 i3 i4); parallel=2
+    export _QUIBBLE_POOL_POLL_SECONDS=0.05
+    _run_pool_worker() { echo "$2" >> processed; }   # record each item that actually launches
+    _pool_reap() { _quibble_run_pool_stop=1; }        # stop the instant the first item finishes
+    . lib/run_pool
+    echo "COUNT=$(grep -c . processed)"
+    echo "RAN=$(sort -u processed | tr "\n" " ")"
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"COUNT=2"* ]]      # only the 2 in-flight slots ran
+  [[ "$output" == *"i0"* ]]
+  [[ "$output" == *"i1"* ]]
+  [[ "$output" != *"i2"* ]]           # nothing dispatched after the stop
+}
