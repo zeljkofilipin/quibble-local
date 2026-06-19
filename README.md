@@ -36,7 +36,7 @@ Useful for long-running batch scripts (`find_dependencies_minimal_*`, `run_selen
 
 ### `TIME_ELAPSED`
 
-Elapsed-time durations (per-step / per-test `(Xs)` strings, silent-mode `(Xs)` (success) / `FAIL (Xs)` lines, the EXIT-trap total `(Xs)` line, and `generate_examples`' `took (Xs)` summary) are **off by default**. Set `TIME_ELAPSED=1` to enable them.
+Elapsed-time durations (per-step / per-test `(Xs)` strings, silent-mode `(Xs)` (success) / `FAIL (Xs)` lines, the EXIT-trap total `(Xs)` line, and `generate_examples`' `took (Xs)` summary plus, at `PARALLEL=N`, its per-item pool completion times and a sorted `Slowest items:` list) are **off by default**. Set `TIME_ELAPSED=1` to enable them.
 
     ./test_integration                # no durations (default)
     TIME_ELAPSED=1 ./test_integration # show durations

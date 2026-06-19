@@ -320,3 +320,42 @@ EOF
   [[ "$output" == *"GEN=0"* ]]
   [[ "$output" == *"HEAVY_FIRST"* ]]                 # test_integration dispatched before the earlier-sorting aatool
 }
+
+@test "generate_examples: TIME_ELAPSED=1 reports per-item durations and a Slowest items summary" {
+  # The pool logs only "Slot N: cmd" at dispatch. Under TIME_ELAPSED=1 it must also print a
+  # per-item completion line with the item's wall-clock and a sorted "Slowest items" summary, so
+  # the long poles of the multi-hour run are visible. Default output (TIME_ELAPSED unset) is
+  # unchanged. Sandboxed (no Docker): stub generate_example, fake scripts, real parallel path.
+  local tmpdir
+  tmpdir="$(mktemp -d)"
+  ln -s "$PWD/lib" "$tmpdir/lib"
+  cp generate_examples "$tmpdir/generate_examples"
+
+  printf '#!/usr/bin/env bash\nexit 0\n' > "$tmpdir/generate_example" # stub: succeed, capture nothing
+  chmod +x "$tmpdir/generate_example"
+
+  local s
+  for s in prepare prepare_gated fresh_install save remove_srcs remove remove_all; do
+    printf '#!/usr/bin/env bash\nexit 0\n' > "$tmpdir/$s"
+    chmod +x "$tmpdir/$s"
+  done
+  # One middle script, two Usage lines -> two pool items -> two completion lines + a 2-row summary.
+  printf '#!/usr/bin/env bash\n# Usage: ./aatool\n#        VERBOSE=1 ./aatool\nexit 0\n' > "$tmpdir/aatool"
+  chmod +x "$tmpdir/aatool"
+
+  # With TIME_ELAPSED=1: per-item completion lines and the sorted summary appear (stderr, merged).
+  run bash -c "cd '$tmpdir'; export PARALLEL=1 TIME_ELAPSED=1 _QUIBBLE_NO_INHIBIT=1 _QUIBBLE_POOL_POLL_SECONDS=0.05; ./generate_examples 2>&1"
+  local timed_status="$status" timed_output="$output"
+
+  # Without TIME_ELAPSED: the timing summary must NOT appear (default output unchanged).
+  run bash -c "cd '$tmpdir'; export PARALLEL=1 _QUIBBLE_NO_INHIBIT=1 _QUIBBLE_POOL_POLL_SECONDS=0.05; ./generate_examples 2>&1"
+  local plain_status="$status" plain_output="$output"
+
+  rm -rf "$tmpdir"
+
+  [ "$timed_status" -eq 0 ]
+  [[ "$timed_output" == *"done ("* ]]              # per-item completion line carries a duration
+  [[ "$timed_output" == *"Slowest items:"* ]]      # sorted summary block present
+  [ "$plain_status" -eq 0 ]
+  [[ "$plain_output" != *"Slowest items:"* ]]      # gated: no timing output by default
+}
