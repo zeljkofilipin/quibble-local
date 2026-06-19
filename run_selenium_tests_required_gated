@@ -20,7 +20,6 @@
 # No set -euo pipefail: we want to continue after failures to collect all results
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
-. "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical worker counts ("1 worker"/"2 workers")
 fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-running
 parallel="${PARALLEL:-0}" # PARALLEL=N runs N components in parallel, each in its own src dir; unset/0 = sequential (default)
 
@@ -94,11 +93,12 @@ if [ "$parallel" -lt 1 ]; then
   done 3< <(printf '%s\n' "${components[@]}")
 
 else
-  # --- Parallel mode ---
-  printf "\nParallel mode: %d %s\n" "$parallel" "$(pluralize "$parallel" worker)"
+  # --- Parallel mode (lib/run_pool: a dynamic slot pool, refilled as each component finishes) ---
+  # run_pool keeps $parallel slots busy and refills each the instant its component finishes; it
+  # prints its own "Parallel mode: N slots" header. The hooks below isolate and report each item.
 
   if [ -n "$fast" ] && [ ! -d "${QUIBBLE_SAVE:-src_save}" ]; then
-    # Fast mode needs a saved state. Run fresh_install + save first.
+    # Fast mode needs a saved state. Run fresh_install + save first (workers restore from it).
     print_header "setup (fresh_install + save)"
     if run_step setup ./fresh_install; then
       run_step setup ./save
@@ -109,32 +109,37 @@ else
     printf " %s\n" "$(utc_timestamp)"
   fi
 
-  # Define worker function: restore/fresh_install → install with required deps → run_selenium_tests.
-  # Runs inside a background subshell via lib/run_waves.
-  # $1: result_file path to write pass/fail/skip
-  # $2: component name (e.g. "extensions/Echo")
-  _run_worker() {
-    local result_file="$1" # path to write "pass", "fail", or "skip"
-    local component="$2"   # e.g. "extensions/Echo"
+  # Per-component log + result files, keyed by COMPONENT (not slot): run_pool reuses each slot id
+  # as items finish, so a slot-keyed path would be clobbered before _pool_reap reads it. Each
+  # component runs exactly once, so its name is a collision-free key. Rooted at $QUIBBLE_LOG_DIR so
+  # a nested run (e.g. under generate_examples) can't collide with a sibling pool worker.
+  _reqgated_log_dir="${QUIBBLE_LOG_DIR:-log/silent}/parallel"
+  rm -rf "$_reqgated_log_dir"   # drop stale logs/results from a prior run
+  mkdir -p "$_reqgated_log_dir"
 
-    # Common worker setup: set environment, redirect output, restore/fresh_install
-    . lib/worker_init
-
-    # Get required dependencies for this component
-    local required_deps=""
-    local dep
+  # lib/run_pool hook: worker body (background subshell). $1 = stable 1..parallel slot id, $2 =
+  # component. Must NOT install its own EXIT trap — run_pool sets one to touch its sentinel.
+  _run_pool_worker() {
+    local component="$2"
+    local log_file="$_reqgated_log_dir/${component//\//-}.log"
+    local result_file="$_reqgated_log_dir/${component//\//-}.result"
+    export ENVIRONMENT="$1"     # lib/setup derives QUIBBLE_SRC=src_$slot (isolated per slot)
+    export QUIBBLE_BACKGROUND=1 # skip Docker -i/-t flags (no stdin in a background worker)
+    exec > "$log_file" 2>&1     # capture this component's output to its per-component log
+    # Set up core MediaWiki: restore from src_save (fast) or fresh_install, into this slot's src_$slot.
+    if [ -n "$fast" ]; then
+      if ! ./restore; then echo "fail" > "$result_file"; return 1; fi
+    else
+      if ! ./fresh_install; then echo "fail" > "$result_file"; return 1; fi
+    fi
+    # Install with only required dependencies (QUIBBLE_DEPS overrides zuul's full dep list)
+    local required_deps="" dep
     while IFS= read -r dep; do
       [ -z "$dep" ] && continue # skip empty lines
       required_deps="${required_deps:+$required_deps }$dep"
     done < <(./list_dependencies_required "$component")
-
-    # Install with only required dependencies
     export QUIBBLE_DEPS="$required_deps"
-    if ! ./install "$component"; then
-      echo "fail" > "$result_file"
-      exit 1
-    fi
-
+    if ! ./install "$component"; then echo "fail" > "$result_file"; return 1; fi
     # Run Selenium tests if they exist
     if ./selenium_tests_exist "$component"; then
       if ./run_selenium_tests "$component"; then
@@ -147,12 +152,18 @@ else
     fi
   }
 
-  # Define result collector: record pass/fail/skip for each component.
-  # $1: component name
-  # $2: result string (pass/fail/skip/empty)
-  # $3: worker number (1-based)
-  _collect_result() {
-    local component="$1" result="$2" worker_num="$3"
+  # lib/run_pool hook: per-dispatch progress line (run_pool prints progress to stderr, so match it).
+  _pool_worker_label() {
+    printf "  Slot %d: %s (ENVIRONMENT=%d)\n" "$1" "$2" "$1" >&2
+  }
+
+  # lib/run_pool hook: per-completion. Runs in THIS shell (run_pool is sourced, not a subshell), so
+  # it updates the counters/lists directly, surfacing each result live. $1 = slot (unused), $2 = component.
+  _pool_reap() {
+    local component="$2" result=""
+    local log_file="$_reqgated_log_dir/${component//\//-}.log"
+    local result_file="$_reqgated_log_dir/${component//\//-}.result"
+    [ -f "$result_file" ] && result=$(cat "$result_file")
     case "$result" in
       pass)
         printf "  %s: ok\n" "$component"
@@ -167,7 +178,7 @@ else
   $component"
         ;;
       *)
-        printf "  %s: FAIL (see log/silent/worker-%d/%s.log)\n" "$component" "$worker_num" "${component//\//-}"
+        printf "  %s: FAIL (see %s)\n" "$component" "$log_file"
         fail_count=$((fail_count + 1))
         failed="$failed
   $component"
@@ -175,11 +186,11 @@ else
     esac
   }
 
-  # Run all components in parallel waves
-  items=("${components[@]}") # lib/run_waves expects items[] array
-  . "$(dirname "$0")"/lib/run_waves
+  # Run all components across $parallel reusable slots
+  items=("${components[@]}")        # lib/run_pool processes this ambient items[] array
+  . "$(dirname "$0")"/lib/run_pool
 
-  # Print running tally after all waves
+  # Print running tally after the pool drains
   printf "  (%d passed, %d failed, %d skipped) %s\n" "$pass_count" "$fail_count" "$skip_count" "$(utc_timestamp)"
 fi
 
