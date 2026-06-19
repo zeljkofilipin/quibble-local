@@ -415,10 +415,10 @@ Install each gated extension or skin into its own fresh MediaWiki, one at a time
 
     ./install_each_gated
     ./install_each_gated extensions/Echo
-    VERBOSE=1 ./install_each_gated
-    FAST=1 ./install_each_gated
-    PARALLEL=1 ./install_each_gated
-    PARALLEL=1 FAST=1 ./install_each_gated
+    VERBOSE=1 ./install_each_gated extensions/Echo
+    FAST=1 ./install_each_gated extensions/Echo
+    PARALLEL=1 ./install_each_gated extensions/Echo
+    PARALLEL=1 FAST=1 ./install_each_gated extensions/Echo
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
