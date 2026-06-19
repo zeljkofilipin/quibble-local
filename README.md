@@ -320,7 +320,7 @@ On macOS, the result may differ depending on whether Docker is running. When Doc
 To maximize parallel workers on macOS, increase Docker Desktop memory: Docker Desktop → Settings → Resources → Memory. The formula is: workers = min(CPUs / 2, memory / 2 GB). On a 10-core / 64 GB machine with Docker Desktop defaults (~6 GB), memory is the bottleneck (3 workers instead of 5). Increasing Docker memory to 10+ GB removes the bottleneck.
 
     ./suggest_parallel
-    PARALLEL=1 ./run_selenium_tests_all_gated
+    PARALLEL=1 ./run_selenium_tests_all_gated extensions/Echo
 
 ## Finding minimum dependencies
 
@@ -428,10 +428,10 @@ Run Selenium tests for core and all gated repositories. For each component: `./f
 
     ./run_selenium_tests_all_gated
     ./run_selenium_tests_all_gated extensions/Echo
-    VERBOSE=1 ./run_selenium_tests_all_gated
-    FAST=1 ./run_selenium_tests_all_gated
-    PARALLEL=1 ./run_selenium_tests_all_gated
-    PARALLEL=1 FAST=1 ./run_selenium_tests_all_gated
+    VERBOSE=1 ./run_selenium_tests_all_gated extensions/Echo
+    FAST=1 ./run_selenium_tests_all_gated extensions/Echo
+    PARALLEL=1 ./run_selenium_tests_all_gated extensions/Echo
+    PARALLEL=1 FAST=1 ./run_selenium_tests_all_gated extensions/Echo
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
