@@ -544,7 +544,7 @@ Provides `_quibble_format_duration` function that formats elapsed seconds as a h
 
 ### `lib/pluralize`
 
-Provides the `pluralize` function that returns the singular or plural form of a word for a given count, so counts read grammatically (e.g. "1 worker" vs "2 workers"). Usage: `pluralize COUNT SINGULAR [PLURAL]`; `PLURAL` defaults to `SINGULAR` + "s", or pass it explicitly for irregular words. Sourced by the scripts that print worker counts in parallel mode (`lib/parallel`, `lib/run_waves`, `find_dependencies_minimal_gated`, `generate_examples`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_required_gated`).
+Provides the `pluralize` function that returns the singular or plural form of a word for a given count, so counts read grammatically (e.g. "1 worker" vs "2 workers"). Usage: `pluralize COUNT SINGULAR [PLURAL]`; `PLURAL` defaults to `SINGULAR` + "s", or pass it explicitly for irregular words. Sourced by `lib/parallel`, `lib/run_waves`, `lib/run_pool`, and `find_dependencies_minimal_gated`.
 
 ### `lib/exit_trap`
 

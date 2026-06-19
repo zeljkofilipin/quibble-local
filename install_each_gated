@@ -21,7 +21,6 @@
 # No set -euo pipefail: we want to continue after failures to collect all results
 
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking, duration
-. "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical worker counts ("1 worker"/"2 workers")
 fast="${FAST:-}" # FAST=1 saves fresh_install state and restores instead of re-running
 parallel="${PARALLEL:-0}" # PARALLEL=N runs N components in parallel, each in its own src dir; unset/0 = sequential (default)
 
