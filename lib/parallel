@@ -1,7 +1,9 @@
 # shellcheck shell=bash
-# Parallel exhaustive search for the minimum dependencies: test combinations in waves of
-# $parallel workers via lib/run_waves, each in an isolated src_worker_N/ directory. Combos are
-# ordered by size, so the first passing combination is the minimum and the search stops there.
+# Parallel exhaustive search for the minimum dependencies: test combinations across $parallel
+# reusable slots via lib/run_pool, each in an isolated src_$slot/ directory (ENVIRONMENT=$slot).
+# Combos are size-ordered and dispatched in order, so the lowest-index passing combination is the
+# minimum; lib/run_pool's _quibble_run_pool_stop halts dispatch once a pass is found, and the
+# lowest passing index across the drained in-flight slots wins.
 # FAST mode: fresh_install + install once, save, then each worker restores.
 # Normal mode: each worker runs fresh_install + install independently.
 # Must be sourced, not run directly.
@@ -9,7 +11,7 @@
 #   component       — e.g. "extensions/Echo"
 #   combos          — indexed array of space-separated optional dep combinations (size-ordered)
 #   total           — total number of combinations
-#   parallel        — number of parallel workers
+#   parallel        — number of parallel slots
 #   fast            — FAST=1 flag (empty string or "1")
 #   required_str    — space-separated list of required dependency names
 #   required        — indexed array of required dependency names
@@ -17,10 +19,6 @@
 # On success it prints the winning combination (lib/print_found) and exits 0; otherwise it
 # returns so the caller can report that no combination was found.
 # shellcheck disable=SC2154 # variables are set by the sourcing script
-
-. "$(dirname "$0")"/lib/pluralize # provides pluralize() for grammatical counts ("1 worker"/"1 combination")
-
-printf "\nParallel mode: %d %s\n" "$parallel" "$(pluralize "$parallel" worker)"
 
 if [ -n "$fast" ]; then
   # Fast mode: initial fresh_install + install + save (workers restore from src_save/)
@@ -35,6 +33,13 @@ if [ -n "$fast" ]; then
   fi
 fi
 
+# Per-combo log + result files, keyed by the combo's 0-based index — combos are opaque dep-lists
+# and can be empty, so the index is the safe key. Rooted at $QUIBBLE_LOG_DIR so a nested run can't
+# collide with a sibling pool worker; run_pool reuses each slot id as combos finish.
+_parallel_log_dir="${QUIBBLE_LOG_DIR:-log/silent}/parallel"
+rm -rf "$_parallel_log_dir"   # drop stale logs/results from a prior run
+mkdir -p "$_parallel_log_dir"
+
 # Build a worker's full dependency list (required + this combination's optional deps) from the
 # optional combo, reusing the canonical builder. $1: optional-dep combo. Echoes the full list.
 _quibble_combo_full() {
@@ -47,54 +52,62 @@ _quibble_combo_full() {
   printf '%s' "$full_combo"
 }
 
-# lib/run_waves hook: per-worker progress line showing the global combo index and full deps.
-# $1: worker number (1-based)  $2: optional-dep combo (the item)  $3: item index (0-based)
-_worker_label() {
+# lib/run_pool hook: per-dispatch progress line showing the global combo index and full deps.
+# run_pool prints progress to stderr, so match it. $1: slot  $2: optional-dep combo  $3: 0-based index.
+_pool_worker_label() {
   local _full
   _full=$(_quibble_combo_full "$2")
-  printf "  Worker %d: combo %d/%d: %s\n" "$1" "$(($3 + 1))" "$total" "${_full:-(none)}"
+  printf "  Slot %d: combo %d/%d: %s\n" "$1" "$(($3 + 1))" "$total" "${_full:-(none)}" >&2
 }
 
-# lib/run_waves hook: worker body (runs in a background subshell). Installs the extension with
-# this combination's deps and runs its Selenium tests. $1: result_file  $2: optional-dep combo
-_run_worker() {
-  local result_file="$1" _deps # result_file is read by lib/worker_init and written here
-  _deps=$(_quibble_combo_full "$2")
-  export QUIBBLE_DEPS="$_deps" # full dep list for ./install (QUIBBLE_DEPS overrides ./list_dependencies)
-  # worker_src / worker_log_file are set by lib/run_waves; lib/worker_init reads them to isolate
-  # this worker's src dir, redirect output to its log, and restore (fast) or fresh_install.
-  . lib/worker_init
-  if ! ./install "$component"; then
-    echo "fail" > "$result_file"
-    return 1
-  fi
-  if ./run_selenium_tests "$component"; then
-    echo "pass" > "$result_file"
+# lib/run_pool hook: worker body (runs in a background subshell). Sets up core MediaWiki in this
+# slot's isolated src_$slot (restore in FAST mode, else fresh_install, done inline here), installs
+# the extension with this combination's deps, runs its Selenium tests,
+# and writes pass/fail to a per-index result file. Must NOT install its own EXIT trap — run_pool
+# sets one to touch its sentinel. $1: slot  $2: optional-dep combo  $3: 0-based combo index.
+_run_pool_worker() {
+  local _combo="$2" _idx="$3" _deps
+  local _result_file="$_parallel_log_dir/combo-$_idx.result"
+  export ENVIRONMENT="$1"     # lib/setup derives QUIBBLE_SRC=src_$slot (isolated per slot)
+  export QUIBBLE_BACKGROUND=1 # skip Docker -i/-t flags (no stdin in a background worker)
+  exec > "$_parallel_log_dir/combo-$_idx.log" 2>&1 # capture this combo's output to its per-index log
+  # Set up core MediaWiki: restore from src_save (fast) or fresh_install, into this slot's src_$slot.
+  if [ -n "$fast" ]; then
+    if ! ./restore; then echo "fail" > "$_result_file"; return 1; fi
   else
-    echo "fail" > "$result_file"
+    if ! ./fresh_install; then echo "fail" > "$_result_file"; return 1; fi
+  fi
+  _deps=$(_quibble_combo_full "$_combo")
+  export QUIBBLE_DEPS="$_deps" # full dep list for ./install (QUIBBLE_DEPS overrides ./list_dependencies)
+  if ! ./install "$component"; then echo "fail" > "$_result_file"; return 1; fi
+  if ./run_selenium_tests "$component"; then
+    echo "pass" > "$_result_file"
+  else
+    echo "fail" > "$_result_file"
   fi
 }
 
-# lib/run_waves hook: record the first passing combination (lowest index wins, since combos are
-# size-ordered) and signal run_waves to stop. $1: combo  $2: result  $3: worker_num  $4: item index
-_collect_result() {
-  if [ "$2" = "pass" ]; then
-    printf "\n  Combination %d/%d passed!\n" "$(($4 + 1))" "$total"
-    optional_combo="$1"       # winning combo, consumed by lib/print_found below
-    _quibble_found=1          # tell the post-run_waves block to print the result and exit 0
-    _quibble_run_waves_stop=1 # tell lib/run_waves to stop launching further work
+# lib/run_pool hook: record the lowest-index passing combination and signal run_pool to stop
+# dispatching. Runs in this shell (run_pool is sourced), so it updates the winner vars directly.
+# Combos are size-ordered, so the lowest passing index is the minimum; track the min (not the first
+# reaped — completion is out of order, and in-flight lower indices still drain and are seen here).
+# $1: slot (unused)  $2: combo  $3: 0-based combo index.
+_pool_reap() {
+  local _idx="$3" _result=""
+  [ -f "$_parallel_log_dir/combo-$_idx.result" ] && _result=$(cat "$_parallel_log_dir/combo-$_idx.result")
+  if [ "$_result" = "pass" ]; then
+    if [ -z "${_quibble_found:-}" ] || [ "$_idx" -lt "$_quibble_win_idx" ]; then
+      _quibble_win_idx="$_idx" # lowest passing index so far (also gates the comparison above)
+      optional_combo="$2"      # winning combo, consumed by lib/print_found below
+      _quibble_found=1         # tell the post-run block to print the result and exit 0
+      printf "\n  Combination %d/%d passed!\n" "$(($3 + 1))" "$total"
+    fi
+    _quibble_run_pool_stop=1   # stop launching further combos; in-flight lower indices still drain
   fi
 }
 
-# lib/run_waves hook: report a fully-failed wave (run_waves skips this after an early stop).
-# $1: wave start index (0-based, inclusive)  $2: wave end index (exclusive)
-_wave_end() {
-  local _n=$(($2 - $1))
-  printf "  All %d %s in this wave failed.\n" "$_n" "$(pluralize "$_n" combination)"
-}
-
-items=("${combos[@]}")            # lib/run_waves processes items[] in waves of $parallel
-. "$(dirname "$0")"/lib/run_waves # run the wave loop using the hooks defined above
+items=("${combos[@]}")           # lib/run_pool processes items[] across $parallel slots
+. "$(dirname "$0")"/lib/run_pool # run the pool using the hooks defined above
 
 # If a passing combination was found, print it and exit success. Otherwise return to the caller
 # (find_dependencies_minimal_*), which prints its own "no combination found" message.

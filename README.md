@@ -362,7 +362,7 @@ Find the minimum dependencies by testing combinations from smallest (0 deps) to 
 Environment variables:
 
 - `FAST=1`: Runs `./fresh_install` once, saves state, then restores instead of re-running `./fresh_install` for each combination.
-- `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggest_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
+- `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `ENVIRONMENT=N` (`src_N/`). Use `./suggest_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
 
@@ -384,7 +384,7 @@ Find and verify the minimum dependencies. Phase 1: greedy for a fast estimate. P
 Environment variables:
 
 - `FAST=1`: Runs `./fresh_install` once, saves state, then restores instead of re-running `./fresh_install` for each combination.
-- `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `src_worker_$i/` directory. Use `./suggest_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
+- `PARALLEL=N`: Run N combinations simultaneously, each in an isolated `ENVIRONMENT=N` (`src_N/`). Use `./suggest_parallel` to determine N for your machine. Each worker needs ~2 CPU cores and ~2 GB of Docker memory.
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending.
 
@@ -712,7 +712,7 @@ Greedy algorithm for `find_dependencies_minimal_greedy`: starts with all optiona
 
 ### `lib/parallel`
 
-Parallel exhaustive search for the minimum dependencies, built on `lib/run_waves`: tests combinations in waves of N workers, each in an isolated `src_worker_$i/` directory, stopping at the first passing combination (combos are size-ordered, so the first pass is the minimum). Defines `run_waves`' worker/label/result/wave hooks and uses its early-exit signal; cleanup and the `INT`/`TERM` trap come from `run_waves`. Sourced by `find_dependencies_minimal_bottom_up` and `find_dependencies_minimal_thorough` when `PARALLEL` ≥ 1.
+Parallel exhaustive search for the minimum dependencies, built on `lib/run_pool`: dispatches size-ordered combinations across N reusable slots, each in an isolated `src_N/` directory (`ENVIRONMENT=N`). The lowest-index passing combination is the minimum, so it sets `lib/run_pool`'s `_quibble_run_pool_stop` on the first pass and takes the lowest passing index across the drained in-flight slots as the winner. Defines run_pool's worker/label/reap hooks; cleanup and the `INT`/`TERM` trap come from `run_pool`. Sourced by `find_dependencies_minimal_bottom_up` and `find_dependencies_minimal_thorough` when `PARALLEL` ≥ 1.
 
 ### `lib/print_found`
 
