@@ -133,3 +133,20 @@ setup() {
   [ "$status" -eq 0 ]
   [[ "$output" == *"LABELED s=1 i=alpha"* ]]            # hook gets slot id and item
 }
+
+@test "lib/run_pool: calls the _pool_reap hook once per item, with slot id and item, as each finishes" {
+  run bash -c '
+    cd "'"$BATS_TEST_TMPDIR"'"
+    : > reaped
+    items=(i0 i1 i2); parallel=1
+    export _QUIBBLE_POOL_POLL_SECONDS=0.05
+    _run_pool_worker() { :; }                                        # body irrelevant; we test the hook
+    _pool_reap() { printf "REAP s=%s i=%s\n" "$1" "$2" >> reaped; }  # SLOT=$1, ITEM=$2
+    . lib/run_pool
+    echo "REAPS=$(grep -c . reaped)"
+    sort reaped | tr "\n" " "
+  '
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"REAPS=3"* ]]                                     # fired once per item (not per slot)
+  [[ "$output" == *"REAP s=1 i=i0 REAP s=1 i=i1 REAP s=1 i=i2"* ]]   # each call gets its slot id + item
+}

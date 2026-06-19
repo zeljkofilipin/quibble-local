@@ -124,93 +124,64 @@ if [ "$parallel" -lt 1 ]; then
   done
 
 else
-  # --- Parallel mode ---
-  printf "\nParallel mode: %d %s\n" "$parallel" "$(pluralize "$parallel" worker)"
+  # --- Parallel mode (lib/run_pool: a dynamic slot pool, refilled as each component finishes) ---
+  # Each component is tested independently by a child find_dependencies_minimal_greedy in an
+  # isolated ENVIRONMENT=$slot (src_$slot/src_save_$slot). lib/run_pool keeps $parallel slots busy
+  # and refills each the instant its item finishes. It prints its own "Parallel mode: N slots"
+  # header; the hooks below add the per-dispatch and per-completion lines.
 
-  total=${#filtered[@]} # total components to process
-  _result_dir=$(mktemp -d) # temp dir for worker result files
-  # Clean up the result temp dir on interrupt/termination too, not just normal exit. The
-  # src_N/src_save_N dirs (ENVIRONMENT=N) are reusable by design, so they are left alone.
-  # `exit` re-fires the EXIT trap (lib/exit_trap) to clean the sleep inhibitor; 130 = 128 + SIGINT.
-  trap 'rm -rf "$_result_dir"; exit 130' INT TERM
+  # Per-component log + result files live here, keyed by COMPONENT (not slot): run_pool reuses each
+  # slot id as items finish, so a slot-keyed path would be overwritten by the next item in that slot
+  # before _pool_reap reads it. gated tests each component exactly once (filtered[] above), so the
+  # component name is a collision-free key. Rooted at $QUIBBLE_LOG_DIR (like the sequential path)
+  # so a nested run under generate_examples doesn't collide with a sibling pool worker.
+  _gated_log_dir="${QUIBBLE_LOG_DIR:-log/silent}/parallel"
+  rm -rf "$_gated_log_dir"   # drop stale logs/results from a prior run (batch_setup's startup
+  mkdir -p "$_gated_log_dir" # *.log cleanup is non-recursive and won't reach this subdir)
 
-  # Process components in waves of $parallel workers
-  wave_start=0 # index into filtered array for start of current wave
-  while [ "$wave_start" -lt "$total" ]; do
-    wave_end=$((wave_start + parallel)) # exclusive end index
-    if [ "$wave_end" -gt "$total" ]; then
-      wave_end="$total" # last wave may be smaller
+  # lib/run_pool hook: worker body, run in a background subshell. $1 = stable 1..parallel slot id,
+  # $2 = component. Must NOT install its own EXIT trap — run_pool sets one to touch its sentinel.
+  _run_pool_worker() {
+    local component="$2"
+    local log_file="$_gated_log_dir/${component//\//-}.log"
+    local result_file="$_gated_log_dir/${component//\//-}.result"
+    export ENVIRONMENT="$1" # isolate src_$slot / src_save_$slot (lib/setup derives them from it)
+    exec > "$log_file" 2>&1 # capture greedy's output (incl. its FOUND block) to the per-component log
+    if ./find_dependencies_minimal_greedy "$component"; then
+      echo "pass" > "$result_file"
+    else
+      echo "fail" > "$result_file"
     fi
-    wave_size=$((wave_end - wave_start)) # number of workers in this wave
+  }
 
-    printf "\n--- Wave %d-%d of %d (%d %s) --- %s\n" \
-      "$((wave_start + 1))" "$wave_end" "$total" "$wave_size" "$(pluralize "$wave_size" worker)" "$(utc_timestamp)"
+  # lib/run_pool hook: per-dispatch progress line. run_pool prints progress to stderr, so match it.
+  # $1 = slot, $2 = component. Slot id equals ENVIRONMENT, shown so a user knows which src_N to read.
+  _pool_worker_label() {
+    printf "  Slot %d: %s (ENVIRONMENT=%d)\n" "$1" "$2" "$1" >&2
+  }
 
-    # Launch workers for this wave
-    pids=() # array of background process IDs
-    worker=0 # worker index (0-based)
-    while [ "$worker" -lt "$wave_size" ]; do
-      item_idx=$((wave_start + worker)) # index into filtered array
-      component="${filtered[$item_idx]}" # component name
-      env_num=$((worker + 1)) # ENVIRONMENT number (1-based)
-      worker_log="log/silent/worker-${env_num}" # per-worker log directory
-      log_file="${worker_log}/${component//\//-}.log" # full log path
-      result_file="$_result_dir/worker_$item_idx" # path for worker to write result
-
-      mkdir -p "$worker_log" # create log directory
-
-      printf "  Worker %d: %s (ENVIRONMENT=%d)\n" "$env_num" "$component" "$env_num"
-
-      # Launch worker in background subshell
-      (
-        export ENVIRONMENT="$env_num" # isolated directories (src_N, src_save_N)
-        exec > "$log_file" 2>&1 # redirect all output to log file
-        if ./find_dependencies_minimal_greedy "$component"; then
-          echo "pass" > "$result_file"
-        else
-          echo "fail" > "$result_file"
-        fi
-      ) &
-      pids+=($!) # $! is the PID of the last background process
-
-      worker=$((worker + 1))
-    done
-
-    # Wait for all workers in this wave to finish
-    for pid in "${pids[@]}"; do
-      wait "$pid" 2>/dev/null || true # wait for each worker (ignore exit code, check result files)
-    done
-
-    # Collect results from this wave
-    worker=0 # reset worker index for result collection
-    while [ "$worker" -lt "$wave_size" ]; do
-      item_idx=$((wave_start + worker)) # index into filtered array
-      component="${filtered[$item_idx]}" # component name
-      env_num=$((worker + 1)) # ENVIRONMENT number (1-based)
-      result_file="$_result_dir/worker_$item_idx" # path to read result from
-      result="" # default empty
-      if [ -f "$result_file" ]; then
-        result=$(cat "$result_file") # read worker result
-      fi
-      if [ "$result" = "pass" ]; then
-        printf "  %s: ok\n" "$component"
-        passed="$passed
+  # lib/run_pool hook: per-completion. Runs in THIS shell (run_pool is sourced, not a subshell), so
+  # it updates passed/failed and accumulates found_blocks directly, surfacing each result live, per
+  # component (not batched at the end). $1 = slot (unused), $2 = component.
+  _pool_reap() {
+    local component="$2" result=""
+    local log_file="$_gated_log_dir/${component//\//-}.log"
+    local result_file="$_gated_log_dir/${component//\//-}.result"
+    [ -f "$result_file" ] && result=$(cat "$result_file")
+    if [ "$result" = "pass" ]; then
+      printf "  %s: ok\n" "$component"
+      passed="$passed
   $component" # append component on a new indented line
-        # Surface the minimum-dependencies result captured in the worker log
-        print_found_from_log "$component" "log/silent/worker-${env_num}/${component//\//-}.log"
-      else
-        printf "  %s: FAIL (see log/silent/worker-%d/%s.log)\n" "$component" "$env_num" "${component//\//-}"
-        failed="$failed
+      print_found_from_log "$component" "$log_file" # surface (and accumulate) the FOUND block
+    else
+      printf "  %s: FAIL (see %s)\n" "$component" "$log_file"
+      failed="$failed
   $component" # append component on a new indented line
-      fi
-      worker=$((worker + 1))
-    done
+    fi
+  }
 
-    wave_start="$wave_end" # advance to next wave
-  done
-
-  # Clean up temp dir
-  rm -rf "$_result_dir"
+  items=("${filtered[@]}")          # lib/run_pool processes this ambient items[] across $parallel slots
+  . "$(dirname "$0")"/lib/run_pool  # dispatch every component; the hooks above isolate + report each
 fi
 
 # Print all captured "FOUND" blocks together so the per-component results are
