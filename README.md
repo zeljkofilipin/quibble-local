@@ -463,10 +463,10 @@ Find minimum dependencies for all gated repositories (or a single component). Fo
 
     ./find_dependencies_minimal_gated
     ./find_dependencies_minimal_gated extensions/Echo
-    VERBOSE=1 ./find_dependencies_minimal_gated
-    FAST=1 ./find_dependencies_minimal_gated
-    PARALLEL=1 ./find_dependencies_minimal_gated
-    PARALLEL=1 FAST=1 ./find_dependencies_minimal_gated
+    VERBOSE=1 ./find_dependencies_minimal_gated extensions/Echo
+    FAST=1 ./find_dependencies_minimal_gated extensions/Echo
+    PARALLEL=1 ./find_dependencies_minimal_gated extensions/Echo
+    PARALLEL=1 FAST=1 ./find_dependencies_minimal_gated extensions/Echo
 
 Environment variables:
 
