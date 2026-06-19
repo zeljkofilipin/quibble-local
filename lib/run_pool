@@ -1,12 +1,9 @@
 # shellcheck shell=bash
-# Generic dynamic worker pool — the refill-as-you-go counterpart to lib/run_waves.
-#
-# run_waves launches a fixed wave of $parallel workers, waits for ALL of them, then
-# starts the next wave; one slow item idles the rest of its wave. run_pool instead keeps
-# $parallel reusable "slots" busy: the moment any item finishes, that slot is refilled
-# with the next pending item, so all slots stay busy until the work runs out. For a
-# lopsided workload (a few multi-hour jobs mixed with many short ones) this cuts the
-# wall-clock from "sum of per-wave maxima" down to roughly max(total/N, longest item).
+# Generic dynamic worker pool: keeps $parallel reusable "slots" busy — the moment any item
+# finishes, that slot is refilled with the next pending item, so all slots stay busy until the
+# work runs out (no fixed "wave" barrier in which one slow item would idle the rest). For a
+# lopsided workload (a few multi-hour jobs mixed with many short ones) this cuts the wall-clock
+# from "sum of maxima" down to roughly max(total/N, longest item).
 # Must be sourced, not run directly.
 #
 # Expects these variables to be set by the caller:
@@ -18,17 +15,17 @@
 #       1..parallel slot id, reused as items complete, so the worker can isolate per-slot state
 #       (e.g. export ENVIRONMENT=$SLOT so lib/setup uses src_$SLOT). INDEX is the item's 0-based
 #       position in items[] (handy for keying per-item output, esp. in ordered searches). The
-#       worker's exit code is ignored (like run_waves's _run_worker); surface failures via its own
+#       worker's exit code is ignored; surface failures via its own
 #       logs. It must NOT install its own EXIT trap — run_pool sets one in the subshell to detect
 #       completion (a second `trap ... EXIT` would replace it; see lib/exit_trap).
 #
 # Optional caller functions (omit for the default):
 #   _pool_worker_label SLOT ITEM INDEX — prints the per-dispatch progress line. Default: "  Slot N: ITEM".
-#   _pool_reap SLOT ITEM INDEX — called in the dispatch loop the moment SLOT's worker finishes (the
-#       refill-as-you-go analog of run_waves' _collect_result), so the caller can surface that
-#       item's result live rather than after the whole pool drains. Runs inline — keep it quick.
+#   _pool_reap SLOT ITEM INDEX — called in the dispatch loop the moment SLOT's worker finishes, so
+#       the caller can surface that item's result live rather than after the whole pool drains.
+#       Runs inline — keep it quick.
 #
-# Optional caller signal (the ordered-search analog of run_waves' _quibble_run_waves_stop):
+# Optional caller signal for ordered searches (stop dispatching early once the answer is known):
 #   _quibble_run_pool_stop — set it (e.g. inside _pool_reap) to stop dispatching NEW items; run_pool
 #       then drains the in-flight slots and returns. Items dispatch in queue order, so every index
 #       below the one that triggered the stop is already in flight and still gets reaped — a caller
@@ -71,7 +68,7 @@ _pool_running=0 # number of slots currently busy
 
 # Keep going until every item has been dispatched AND every busy slot has drained. A caller may set
 # _quibble_run_pool_stop (e.g. in _pool_reap) to halt early: we then launch nothing more and just
-# drain the slots still in flight (the ordered-search analog of run_waves' _quibble_run_waves_stop).
+# drain the slots still in flight.
 while { [ -z "${_quibble_run_pool_stop:-}" ] && [ "$_pool_next" -lt "$_pool_total" ]; } || [ "$_pool_running" -gt 0 ]; do
   # Fill every currently-free slot with the next pending item (front of the queue) — unless an early
   # stop was signalled, in which case dispatch nothing more and let the in-flight slots drain.
@@ -115,7 +112,7 @@ while { [ -z "${_quibble_run_pool_stop:-}" ] && [ "$_pool_next" -lt "$_pool_tota
     while [ "$_slot" -le "$parallel" ]; do
       if [ -n "${_pool_pid[$_slot]:-}" ] && [ -f "${_pool_sentinel[$_slot]:-}" ]; then
         wait "${_pool_pid[$_slot]}" 2>/dev/null || true # reap (ignore exit code; sentinel already proves done)
-        # Optional per-completion hook (the refill-as-you-go analog of run_waves' _collect_result):
+        # Optional per-completion hook (_pool_reap, if the caller defines one):
         # fires the instant a slot's item finishes, so a caller can surface that item's result live
         # instead of after the whole pool drains. Runs inline here (delays refilling this slot, so
         # keep it quick) and in the caller's shell (run_pool is sourced), so it can update the

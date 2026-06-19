@@ -171,7 +171,7 @@ setup() {
 @test "lib/run_pool: a _pool_reap that sets _quibble_run_pool_stop halts dispatch but drains in-flight" {
   # Ordered-search early exit: once the caller signals stop, no NEW item is dispatched, but the
   # slots already in flight still run and get reaped. With 2 slots, only the first wave (i0,i1)
-  # ever launches; i2.. are never dispatched. (run_pool analog of run_waves.bats "halts further waves".)
+  # ever launches; i2.. are never dispatched.
   run bash -c '
     cd "'"$BATS_TEST_TMPDIR"'"
     : > processed

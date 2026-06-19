@@ -14,7 +14,7 @@
 #        PARALLEL=1 ./install_each_gated extensions/Echo
 #        PARALLEL=1 FAST=1 ./install_each_gated extensions/Echo
 # FAST=1: Runs fresh_install once, saves state, then restores instead of re-running fresh_install.
-# PARALLEL=N: Run N components in parallel (each in isolated src_worker_$i/ directory).
+# PARALLEL=N: Run N components in parallel (each in isolated ENVIRONMENT=N).
 #             Use ./suggest_parallel to determine N for your machine.
 #
 

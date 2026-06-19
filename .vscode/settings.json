@@ -27,15 +27,12 @@
     "**/lib/print_header": "shellscript",
     "**/lib/print_results": "shellscript",
     "**/lib/record_passed": "shellscript",
-    "**/lib/remove_worker_dirs": "shellscript",
     "**/lib/resolve_deps": "shellscript",
     "**/lib/run_quibble_test": "shellscript",
     "**/lib/run_test": "shellscript",
-    "**/lib/run_waves": "shellscript",
     "**/lib/setup": "shellscript",
     "**/lib/silent_output": "shellscript",
     "**/lib/utc_timestamp": "shellscript",
-    "**/lib/worker_init": "shellscript",
     "*.awk": "awk",
     "*.bats": "shellscript"
   }

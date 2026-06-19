@@ -544,7 +544,7 @@ Provides `_quibble_format_duration` function that formats elapsed seconds as a h
 
 ### `lib/pluralize`
 
-Provides the `pluralize` function that returns the singular or plural form of a word for a given count, so counts read grammatically (e.g. "1 worker" vs "2 workers"). Usage: `pluralize COUNT SINGULAR [PLURAL]`; `PLURAL` defaults to `SINGULAR` + "s", or pass it explicitly for irregular words. Sourced by `lib/parallel`, `lib/run_waves`, `lib/run_pool`, and `find_dependencies_minimal_gated`.
+Provides the `pluralize` function that returns the singular or plural form of a word for a given count, so counts read grammatically (e.g. "1 worker" vs "2 workers"). Usage: `pluralize COUNT SINGULAR [PLURAL]`; `PLURAL` defaults to `SINGULAR` + "s", or pass it explicitly for irregular words. Sourced by `lib/run_pool`, `lib/greedy`, `find_dependencies_minimal_gated`, and `find_dependencies_minimal_thorough`.
 
 ### `lib/exit_trap`
 
@@ -560,7 +560,7 @@ Shared setup sourced by scripts that run Docker commands. Sources `lib/debug_inf
 
 ### `lib/default_image`
 
-Single source of truth for the default Quibble Docker image, as `QUIBBLE_DEFAULT_IMAGE`. Sourced by `lib/setup` (to seed `QUIBBLE_IMAGE` for the user-facing scripts) and by `lib/remove_worker_dirs` (the parallel-run interrupt-cleanup trap, which runs in a shell that never sources `lib/setup` and so has no `QUIBBLE_IMAGE`). To move to a newer image (e.g. a new Debian base), edit only this file; both consumers pick it up. Override at runtime with `QUIBBLE_IMAGE`.
+Single source of truth for the default Quibble Docker image, as `QUIBBLE_DEFAULT_IMAGE`. Sourced by `lib/setup` to seed `QUIBBLE_IMAGE` for the user-facing scripts. To move to a newer image (e.g. a new Debian base), edit only this file. Override at runtime with `QUIBBLE_IMAGE`.
 
 ### `lib/silent_output`
 
@@ -634,25 +634,13 @@ Provides `record_passed` function that records a component as passed (if not alr
 
 Provides `run_test` function and `test_counter` for `test_integration`-style scripts. Runs a command, prints what it does, and records pass/fail in `$passed`/`$failed`. In verbose mode prints a separator box and full output; in silent mode saves output to a numbered log file (e.g. `log/silent/01-help.log`) and prints a dot per line. Must be sourced after `lib/batch_setup`. Sourced by `test_integration` and `test_integration_slow`.
 
-### `lib/run_waves`
-
-Generic wave-based parallel worker orchestration. Processes an array of `items` in waves of `$parallel` workers, each in an isolated `src_worker_N/` directory. The caller defines `_run_worker` (required) and optionally `_collect_result`, plus optional `_worker_label` (custom per-worker progress line) and `_wave_end` (per-wave summary) hooks; a collector can set `_quibble_run_waves_stop` to halt the run early (used by ordered searches). Removes the temp dir and `src_worker_*` checkouts on normal completion and via an `INT`/`TERM` trap, so Ctrl-C / kill cannot orphan them. Sourced by `lib/parallel`, `install_each_gated`, `run_selenium_tests_all_gated`, and `run_selenium_tests_required_gated` in parallel mode.
-
 ### `lib/run_pool`
 
-Generic dynamic worker pool — the refill-as-you-go counterpart to `lib/run_waves`. Where `run_waves` launches a fixed wave of `$parallel` workers and waits for all of them before starting the next wave (so one slow item idles the rest of its wave), `run_pool` keeps `$parallel` reusable slots busy and refills each slot the instant its item finishes. The caller sets `items[]` and `parallel` and defines `_run_pool_worker SLOT ITEM` (runs in a background subshell; `SLOT` is a stable `1..parallel` id reused as items complete, for per-slot isolation), plus optional `_pool_worker_label` (custom per-dispatch progress line) and `_pool_reap SLOT ITEM` (called the instant a slot's item finishes — the refill-as-you-go analog of `run_waves`' `_collect_result` — so a caller can surface results live rather than after the pool drains) hooks. Because bash 3.2 has no `wait -n`, completion is detected via a per-slot sentinel file written by an `EXIT` trap inside each worker and polled (interval overridable with `_QUIBBLE_POOL_POLL_SECONDS`, default 1s); the sentinel temp dir is removed on normal completion and via an `INT`/`TERM` trap. Sourced by `generate_examples` and `find_dependencies_minimal_gated` in parallel mode.
+Generic dynamic worker pool: keeps `$parallel` reusable slots busy and refills each slot the instant its item finishes, so one slow item never idles the rest. The caller sets `items[]` and `parallel` and defines `_run_pool_worker SLOT ITEM INDEX` (runs in a background subshell; `SLOT` is a stable `1..parallel` id reused as items complete, for per-slot isolation; `INDEX` is the item's 0-based position in `items[]`), plus optional `_pool_worker_label` (custom per-dispatch progress line) and `_pool_reap SLOT ITEM INDEX` (called the instant a slot's item finishes, so a caller can surface results live rather than after the pool drains) hooks. A caller may also set `_quibble_run_pool_stop` (e.g. inside `_pool_reap`) to stop dispatching new items and drain the in-flight slots — the ordered-search early exit used by `lib/parallel`. Because bash 3.2 has no `wait -n`, completion is detected via a per-slot sentinel file written by an `EXIT` trap inside each worker and polled (interval overridable with `_QUIBBLE_POOL_POLL_SECONDS`, default 1s); the sentinel temp dir is removed on normal completion and via an `INT`/`TERM` trap. Sourced by `generate_examples`, `find_dependencies_minimal_gated`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_required_gated`, and `lib/parallel` in parallel mode.
 
 ### `lib/heavy_scripts`
 
 Curated list of the heaviest middle scripts (defines `_quibble_heavy_scripts`, most-expensive first), used only as a scheduling hint by `generate_examples`' parallel pool: their Usage lines are dispatched before everything else so the long-running jobs start immediately and the many short jobs backfill the tail, keeping every worker slot busy to the end. Best-effort hint only — `lib/run_pool` is correct in any order, so a stale or missing entry only costs a little scheduling efficiency. Sourced by `generate_examples` in parallel mode.
-
-### `lib/remove_worker_dirs`
-
-Cleans up `src_worker_*` directories created by parallel execution. Tries `rm -rf` first (works on macOS). Falls back to Docker-as-root for container-owned files (Linux). Sourced by `lib/run_waves` and `lib/parallel` after parallel runs complete and from their `INT`/`TERM` cleanup on interrupt.
-
-### `lib/worker_init`
-
-Common setup for parallel worker subshells. Sets `QUIBBLE_SRC` and `QUIBBLE_BACKGROUND`, redirects output to a log file, and runs `./restore` (fast mode) or `./fresh_install`. Sourced inside worker subshells by `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_required_gated`, and `lib/parallel`.
 
 ### `lib/parse_requires.awk`
 
