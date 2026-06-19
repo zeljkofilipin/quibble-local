@@ -85,6 +85,18 @@ else
   QUIBBLE_RESOLVE_REQUIRES=()
 fi
 
+# --- Quibble --branch flag ---
+# BRANCH=<branch> tells Quibble which git branch to clone and check out for core and any
+# components (matching mediawiki-quickstart's BRANCH; e.g. master, REL1_44, wmf/1.47.0-wmf.5).
+# Empty by default: Quibble uses its Zuul-selected branch (master). After the run,
+# lib/checkout_branch re-attaches HEAD to this branch, since Quibble leaves repos detached.
+# shellcheck disable=SC2034 # used by scripts that source this file
+if [ -n "${BRANCH:-}" ]; then
+  QUIBBLE_BRANCH=(--branch "$BRANCH")
+else
+  QUIBBLE_BRANCH=()
+fi
+
 # --- Trace output (verbose mode only) ---
 # In silent mode, skip set -x to keep output clean. Only show trace in verbose mode.
 if [ "${VERBOSE:-}" = "1" ]; then

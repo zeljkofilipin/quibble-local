@@ -12,6 +12,7 @@
 #        QUIBBLE_DEPS="EventLogging" ./install extensions/Echo        # only specific dependencies
 #        DRY_RUN=1 ./install extensions/Echo                          # pass --dry-run to Quibble (no real install)
 #        RESOLVE_REQUIRES=0 ./install extensions/Echo                 # install only QUIBBLE_DEPS; do not auto-resolve transitive requires
+#        BRANCH=REL1_44 ./install extensions/Echo                     # install and check out a branch (default: leave Quibble's detached HEAD)
 #
 # QUIBBLE_DEPS: Override which dependencies to install (space-separated). When set, replaces
 #               the dependencies from zuul/dependencies.yaml. Set to empty string for no
@@ -21,6 +22,11 @@
 #                   and installs transitive dependencies from each repo's extension.json/skin.json
 #                   "requires" field. Set to 0 to install exactly the deps listed in QUIBBLE_DEPS
 #                   (used by find_dependencies_minimal_* scripts for honest minimization).
+#
+# BRANCH: When set, passes --branch to Quibble (which branch to clone/install for the component
+#         and its dependencies) and re-attaches HEAD to it afterwards, so the repos are on a
+#         named branch instead of Quibble's detached HEAD. Unset (default): leave the detached
+#         HEAD as Quibble produces it.
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension
 #
@@ -40,6 +46,7 @@ ref_dir="ref/${repo}.git"           # e.g. "ref/mediawiki/extensions/Echo.git"
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 . "$(dirname "$0")"/lib/clone_or_fetch # provides clone_or_fetch function
 . "$(dirname "$0")"/lib/print_quibble_command # provides print_quibble_command function
+. "$(dirname "$0")"/lib/checkout_branch # provides checkout_branch function (BRANCH support)
 
 # Clone or fetch bare repos for the extension/skin and integration/config
 clone_or_fetch "$repo"              # e.g. "mediawiki/extensions/Echo"
@@ -59,6 +66,7 @@ clone_or_fetch "integration/config" # needed by ./list_dependencies
 # -e ZUUL_PROJECT: tell Quibble which extension/skin is the main project
 # "${QUIBBLE_DRY_RUN[@]}": --dry-run when DRY_RUN=1 (set by lib/setup); empty otherwise
 # "${QUIBBLE_RESOLVE_REQUIRES[@]}": --resolve-requires by default; empty when RESOLVE_REQUIRES=0 (set by lib/setup)
+# "${QUIBBLE_BRANCH[@]}": --branch <branch> when BRANCH is set (set by lib/setup); empty otherwise
 # --command true: install only, don't run tests
 # ${deps[@]+"..."}: list of dependency repos to clone; ${arr[@]+"..."} is safe for empty arrays in bash 3.2
 cmd=(
@@ -69,6 +77,7 @@ cmd=(
   "$QUIBBLE_IMAGE"
   ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"}
   ${QUIBBLE_RESOLVE_REQUIRES[@]+"${QUIBBLE_RESOLVE_REQUIRES[@]}"}
+  ${QUIBBLE_BRANCH[@]+"${QUIBBLE_BRANCH[@]}"}
   --command true
   ${deps[@]+"${deps[@]}"}
 )
@@ -77,3 +86,7 @@ cmd=(
 # appears on the terminal.
 print_quibble_command "${cmd[@]}"
 "${cmd[@]}"
+
+# When BRANCH is set, re-attach HEAD to that branch (Quibble leaves the cloned repos detached).
+# No-op when BRANCH is unset or DRY_RUN=1.
+checkout_branch

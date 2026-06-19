@@ -101,6 +101,15 @@ Applied directly by `./fresh_install`, `./install`, `./run_selenium_tests`, and 
 
 `./find_dependencies_minimal_*` sets `RESOLVE_REQUIRES=0` automatically (via the shared `lib/minimal_setup`) — otherwise Quibble silently re-installs an optional dependency the algorithm just removed (via some kept dep's transitive `requires`), and the reported minimum is artificially small.
 
+### `BRANCH`
+
+`BRANCH` selects which git branch to install and check out, matching [mediawiki-quickstart's `BRANCH`](https://gitlab.wikimedia.org/repos/test-platform/mediawiki-quickstart). When set, it passes [`--branch`](https://doc.wikimedia.org/quibble/) to Quibble (which branch to clone for core and any components) and then re-attaches `HEAD` to that branch, so `src/` ends up on a named branch. Unset (the default), `src/` is left in Quibble's detached `HEAD` state.
+
+    BRANCH="wmf/1.44.0-wmf.20" ./fresh_install
+    BRANCH="REL1_44" ./install extensions/Echo
+
+Applied by `./fresh_install` and `./install`. Repos that lack the requested branch fall back to their own default branch (the same fallback Quibble uses), so no repo is left detached. If a repo can't be put on the branch or its fallback, the command fails — since `BRANCH` is explicit, an unmet request is surfaced rather than silently ignored.
+
 ## Commands (same as mediawiki-quickstart)
 
 ### `./fresh_install`
@@ -110,6 +119,7 @@ Set up MediaWiki (without running tests). Runs `./prepare` first if needed, then
     ./fresh_install
     VERBOSE=1 ./fresh_install
     DRY_RUN=1 ./fresh_install                                   # pass --dry-run to Quibble (no real install)
+    BRANCH=REL1_44 ./fresh_install                              # install and check out a branch (default: leave detached HEAD)
 
 See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
 
@@ -124,11 +134,13 @@ Install an extension or skin. Assumes `./fresh_install` has been run first. Run 
     QUIBBLE_DEPS="EventLogging" ./install extensions/Echo        # only specific dependencies
     DRY_RUN=1 ./install extensions/Echo                          # pass --dry-run to Quibble (no real install)
     RESOLVE_REQUIRES=0 ./install extensions/Echo                 # install only QUIBBLE_DEPS; do not auto-resolve transitive requires
+    BRANCH=REL1_44 ./install extensions/Echo                     # install and check out a branch (default: leave detached HEAD)
 
 Environment variables:
 
 - `QUIBBLE_DEPS`: Override which dependencies to install (space-separated). When set, replaces the dependencies from `zuul/dependencies.yaml`. Set to empty string for no dependencies.
 - `RESOLVE_REQUIRES`: Default `1`. Set to `0` to install exactly the deps listed in `QUIBBLE_DEPS` without Quibble auto-resolving transitive `requires`. See [`RESOLVE_REQUIRES`](#resolve_requires).
+- `BRANCH`: When set, install and check out this branch (passed to Quibble as `--branch`, then `HEAD` re-attached); unset leaves Quibble's detached `HEAD`. See [`BRANCH`](#branch).
 
 See: [Install MediaWiki Core and an Extension](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core_and_an_Extension)
 
@@ -559,6 +571,14 @@ Output redirection for silent mode. Saves all output to a log file (e.g. `log/fr
 ### `lib/docker_chmod`
 
 Provides `docker_chmod` function that sets directories to world-writable (`chmod 777`), falling back to Docker-as-root when directories are owned by root from previous container runs. Sourced by `fresh_install`, `save`, and `restore`.
+
+### `lib/checkout_branch`
+
+Provides the `checkout_branch` function: after a Quibble run, checks out the branch named by `BRANCH` in the MediaWiki repos under `src/` (core, `vendor`, skins, extensions), so they end up on a named branch instead of Quibble's detached `HEAD`. No-op unless `BRANCH` is set (and skipped when `DRY_RUN=1`). Runs the re-attach inside the Quibble image as the file-owning user — so host UID and file ownership don't matter, the same reason `./remove` and `lib/docker_chmod` use Docker; the git logic lives in `lib/checkout_branch_worker`. Sourced by `fresh_install` and `install`.
+
+### `lib/checkout_branch_worker`
+
+The git logic run by `lib/checkout_branch`, executed inside the Quibble Docker container (mounted read-only), not sourced. Walks the MediaWiki layout (core, `vendor`, `skins/*`, `extensions/*`) and, for each repo still in detached `HEAD`, checks out the requested branch — falling back to the repo's own default branch (`origin/HEAD`) when it lacks the requested one, mirroring Quibble's fallback. Exits non-zero if any detached repo can't be put on a branch, so an unmet `BRANCH` request fails the run rather than being silently ignored. Kept as a separate file so it can be unit-tested with Bats on the host without Docker.
 
 ### `lib/print_quibble_command`
 

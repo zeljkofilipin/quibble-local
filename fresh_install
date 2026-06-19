@@ -9,6 +9,11 @@
 #        ENVIRONMENT=0 ./fresh_install
 #        VERBOSE=1 ./fresh_install
 #        DRY_RUN=1 ./fresh_install                                   # pass --dry-run to Quibble (no real install)
+#        BRANCH=REL1_44 ./fresh_install                              # install and check out a branch (default: leave Quibble's detached HEAD)
+#
+# BRANCH: When set, passes --branch to Quibble (which branch to clone/install) and re-attaches
+#         HEAD to it afterwards, so src/ is on a named branch instead of Quibble's detached
+#         HEAD. Unset (default): leave the detached HEAD as Quibble produces it.
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core
 #
@@ -16,6 +21,7 @@ set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 . "$(dirname "$0")"/lib/docker_chmod # provides docker_chmod function
 . "$(dirname "$0")"/lib/print_quibble_command # provides print_quibble_command function
+. "$(dirname "$0")"/lib/checkout_branch # provides checkout_branch function (BRANCH support)
 
 # Run prepare if bare repos haven't been cloned yet
 if [ ! -d ref/mediawiki/core.git ]; then
@@ -37,6 +43,7 @@ docker_chmod cache log "$QUIBBLE_SRC" # make dirs world-writable for the contain
 # --entrypoint=quibble-with-supervisord: use Quibble's supervisord entrypoint
 # "${QUIBBLE_VOLUMES[@]}": mount shared volumes (cache, log, ref, src)
 # "${QUIBBLE_DRY_RUN[@]}": --dry-run when DRY_RUN=1 (set by lib/setup); empty otherwise
+# "${QUIBBLE_BRANCH[@]}": --branch <branch> when BRANCH is set (set by lib/setup); empty otherwise
 # --command true: install only, don't run tests ("true" exits immediately)
 cmd=(
   docker run ${QUIBBLE_DOCKER_FLAGS[@]+"${QUIBBLE_DOCKER_FLAGS[@]}"} --rm
@@ -44,6 +51,7 @@ cmd=(
   "${QUIBBLE_VOLUMES[@]}"
   "$QUIBBLE_IMAGE"
   ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"}
+  ${QUIBBLE_BRANCH[@]+"${QUIBBLE_BRANCH[@]}"}
   --command true
 )
 # Pretty-print the command (one option per line, framed by a '#' banner) so it stands
@@ -51,3 +59,7 @@ cmd=(
 # appears on the terminal.
 print_quibble_command "${cmd[@]}"
 "${cmd[@]}"
+
+# When BRANCH is set, re-attach HEAD to that branch (Quibble leaves the cloned repos detached).
+# No-op when BRANCH is unset or DRY_RUN=1.
+checkout_branch

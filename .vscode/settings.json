@@ -4,6 +4,8 @@
     "**/lib/batch_setup": "shellscript",
     "**/lib/build_component_list": "shellscript",
     "**/lib/build_full_combo": "shellscript",
+    "**/lib/checkout_branch": "shellscript",
+    "**/lib/checkout_branch_worker": "shellscript",
     "**/lib/clone_or_fetch": "shellscript",
     "**/lib/debug_info": "shellscript",
     "**/lib/default_image": "shellscript",
