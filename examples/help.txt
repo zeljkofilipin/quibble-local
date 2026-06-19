@@ -2,14 +2,14 @@ $ ./help
 
 use VERBOSE=1 for full output
 
-OS: Linux 6.14.0-37-generic
-CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
-RAM: 15.6 GB
-bash: 5.2.21(1)-release
-git: git version 2.43.0
-docker: Docker version 29.5.2, build 79eb04c
-docker CPUs: 4
-docker RAM: 15.6 GB
+OS: Darwin 25.5.0
+CPU: Apple M5 Max (18 cores)
+RAM: 64.0 GB
+bash: 3.2.57(1)-release
+git: git version 2.50.1 (Apple Git-155)
+docker: Docker version 29.5.3, build d1c06ef
+docker CPUs: 18
+docker RAM: 19.5 GB
 
 ./ci
   Run the same checks that GitLab CI runs, using Docker.
@@ -159,4 +159,4 @@ docker RAM: 15.6 GB
   Run Bats unit tests.
   Usage: ./test_unit
 
-(0s) 2026-05-28 15:22:04 UTC
+(0s) 2026-06-18 23:42:57 UTC

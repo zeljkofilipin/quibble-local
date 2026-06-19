@@ -1,13 +1,13 @@
 $ VERBOSE=1 ./save
 
-OS: Linux 6.14.0-37-generic
-CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
-RAM: 15.6 GB
-bash: 5.2.21(1)-release
-git: git version 2.43.0
-docker: Docker version 29.5.2, build 79eb04c
-docker CPUs: 4
-docker RAM: 15.6 GB
+OS: Darwin 25.5.0
+CPU: Apple M5 Max (18 cores)
+RAM: 64.0 GB
+bash: 3.2.57(1)-release
+git: git version 2.50.1 (Apple Git-155)
+docker: Docker version 29.5.3, build d1c06ef
+docker CPUs: 18
+docker RAM: 19.5 GB
 
 
 
@@ -39,18 +39,90 @@ docker RAM: 15.6 GB
 = save is running: ls -A src
 
 ========================================
-= save is running: '[' -z '' ']'
+= save is running: '[' -z '.dockerignore
+.editorconfig
+.eslintignore
+.eslintrc.json
+.fresnel.yml
+.git
+.git-blame-ignore-revs
+.gitattributes
+.gitignore
+.gitmessage
+.gitreview
+.mailmap
+.minus-x.json
+.phan
+.phpcs.xml
+.stylelintrc.json
+.svgo.config.js
+.vsls.json
+CODE_OF_CONDUCT.md
+COPYING
+CREDITS
+DEVELOPERS.md
+FAQ
+Gruntfile.js
+HISTORY
+INSTALL
+LocalSettings-installer.php
+LocalSettings.php
+README.md
+RELEASE-NOTES-1.46
+RELEASE-NOTES-1.47
+SECURITY
+UPGRADE
+api.php
+autoload.php
+bundlesize.config.json
+cache
+composer.json
+composer.local.json-sample
+docker-compose.yml
+docs
+extensions
+images
+img_auth.php
+includes
+index.php
+jsdoc.json
+languages
+load.php
+maintenance
+mw-config
+node_modules
+opensearch_desc.php
+package-lock.json
+package.json
+phpunit.xml.template
+resources
+rest.php
+skins
+sql
+tests
+thumb.php
+thumb_handler.php
+vendor' ']'
 
 ========================================
-= save is running: echo 'Error: src/ is empty or missing. Run ./fresh_install first.'
-Error: src/ is empty or missing. Run ./fresh_install first.
+= save is running: mkdir -p src_save
 
 ========================================
-= save is running: exit 1
+= save is running: docker_chmod src_save
 
 ========================================
-= save is running: _quibble_duration_exit
+= save is running: chmod 777 src_save
 
 ========================================
-= save is running: local exit_code=1
-(0s) 2026-05-27 11:36:26 UTC
+= save is running: return 0
+
+========================================
+= save is running: docker run --rm --entrypoint bash --user root -v $PWD/src:/workspace/src:ro -v $PWD/src_save:/workspace/src_save docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest -c 'find /workspace/src_save -mindepth 1 -delete && cp -a /workspace/src/. /workspace/src_save/'
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+
+========================================
+= save is running: _quibble_run_exit_traps
+
+========================================
+= save is running: local _code=0
+(39s) 2026-06-17 21:27:13 UTC

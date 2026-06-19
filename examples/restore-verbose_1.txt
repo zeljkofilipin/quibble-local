@@ -1,13 +1,13 @@
 $ VERBOSE=1 ./restore
 
-OS: Linux 6.14.0-37-generic
-CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
-RAM: 15.6 GB
-bash: 5.2.21(1)-release
-git: git version 2.43.0
-docker: Docker version 29.5.2, build 79eb04c
-docker CPUs: 4
-docker RAM: 15.6 GB
+OS: Darwin 25.5.0
+CPU: Apple M5 Max (18 cores)
+RAM: 64.0 GB
+bash: 3.2.57(1)-release
+git: git version 2.50.1 (Apple Git-155)
+docker: Docker version 29.5.3, build d1c06ef
+docker CPUs: 18
+docker RAM: 19.5 GB
 
 
 
@@ -32,97 +32,18 @@ docker RAM: 15.6 GB
 = restore is running: . ./lib/docker_chmod
 
 ========================================
-= restore is running: '[' '!' -d src_save ']'
-
-
-========================================
-= restore is running: ls -A src_save
+= restore is running: '[' '!' -d src_save_9 ']'
 
 ========================================
-= restore is running: '[' -z 'api.php
-autoload.php
-bundlesize.config.json
-cache
-CODE_OF_CONDUCT.md
-composer.json
-composer.local.json-sample
-config
-COPYING
-CREDITS
-DEVELOPERS.md
-docker-compose.yml
-.dockerignore
-docs
-.editorconfig
-.eslintignore
-.eslintrc.json
-extensions
-FAQ
-.fresnel.yml
-.git
-.gitattributes
-.git-blame-ignore-revs
-.gitignore
-.gitmessage
-.gitreview
-Gruntfile.js
-HISTORY
-images
-img_auth.php
-includes
-index.php
-INSTALL
-jsdoc.json
-languages
-load.php
-LocalSettings-installer.php
-LocalSettings.php
-.mailmap
-maintenance
-.minus-x.json
-mw-config
-node_modules
-opensearch_desc.php
-package.json
-package-lock.json
-.phan
-.phpcs.xml
-phpunit.xml.template
-README.md
-RELEASE-NOTES-1.46
-RELEASE-NOTES-1.47
-resources
-rest.php
-SECURITY
-skins
-sql
-.stylelintrc.json
-.svgo.config.js
-tests
-thumb_handler.php
-thumb.php
-UPGRADE
-vendor
-.vsls.json' ']'
+= restore is running: echo 'Error: src_save_9/ is empty or missing. Run ./save first.'
+Error: src_save_9/ is empty or missing. Run ./save first.
 
 ========================================
-= restore is running: mkdir -p src
+= restore is running: exit 1
 
 ========================================
-= restore is running: docker_chmod src
+= restore is running: _quibble_run_exit_traps
 
 ========================================
-= restore is running: chmod 777 src
-
-========================================
-= restore is running: return 0
-
-========================================
-= restore is running: docker run --rm --entrypoint bash --user root -v $PWD/src:/workspace/src -v $PWD/src_save:/workspace/src_save:ro docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/'
-
-========================================
-= restore is running: _quibble_duration_exit
-
-========================================
-= restore is running: local exit_code=0
-(1m 14s) 2026-05-29 06:30:45 UTC
+= restore is running: local _code=1
+(0s) 2026-06-19 00:22:19 UTC

@@ -2,14 +2,14 @@ $ ./test_unit test/lib_awk.bats
 
 use VERBOSE=1 for full output
 
-OS: Linux 6.14.0-37-generic
-CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
-RAM: 15.6 GB
-bash: 5.2.21(1)-release
-git: git version 2.43.0
-docker: Docker version 29.5.2, build 79eb04c
-docker CPUs: 4
-docker RAM: 15.6 GB
+OS: Darwin 25.5.0
+CPU: Apple M5 Max (18 cores)
+RAM: 64.0 GB
+bash: 3.2.57(1)-release
+git: git version 2.50.1 (Apple Git-155)
+docker: Docker version 29.5.3, build d1c06ef
+docker CPUs: 18
+docker RAM: 19.5 GB
 
 1..41
 ok 1 combinations.awk: single item
@@ -53,4 +53,4 @@ ok 38 extract_found_block.awk: extracts 'No dependencies needed' block
 ok 39 extract_found_block.awk: extracts block with required and optional deps
 ok 40 extract_found_block.awk: handles seconds-only duration line
 ok 41 extract_found_block.awk: returns nothing when no FOUND block is present
-(2s) 2026-05-31 07:29:04 UTC
+(1s) 2026-06-19 00:51:46 UTC

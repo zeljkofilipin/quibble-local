@@ -1,13 +1,13 @@
 $ VERBOSE=1 ./install extensions/Echo
 
-OS: Linux 6.14.0-37-generic
-CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
-RAM: 15.6 GB
-bash: 5.2.21(1)-release
-git: git version 2.43.0
-docker: Docker version 29.5.2, build 79eb04c
-docker CPUs: 4
-docker RAM: 15.6 GB
+OS: Darwin 25.5.0
+CPU: Apple M5 Max (18 cores)
+RAM: 64.0 GB
+bash: 3.2.57(1)-release
+git: git version 2.50.1 (Apple Git-155)
+docker: Docker version 29.5.3, build d1c06ef
+docker CPUs: 18
+docker RAM: 19.5 GB
 
 
 
@@ -111,10 +111,10 @@ docker RAM: 15.6 GB
 = install is running: set +x
 
 ========================================
-= install is running: cmd=(docker run "${QUIBBLE_DOCKER_FLAGS[@]}" --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} ${QUIBBLE_RESOLVE_REQUIRES[@]+"${QUIBBLE_RESOLVE_REQUIRES[@]}"} --command true ${deps[@]+"${deps[@]}"})
+= install is running: cmd=(docker run ${QUIBBLE_DOCKER_FLAGS[@]+"${QUIBBLE_DOCKER_FLAGS[@]}"} --rm --entrypoint=quibble-with-supervisord "${QUIBBLE_VOLUMES[@]}" -e ZUUL_PROJECT="${repo}" "$QUIBBLE_IMAGE" ${QUIBBLE_DRY_RUN[@]+"${QUIBBLE_DRY_RUN[@]}"} ${QUIBBLE_RESOLVE_REQUIRES[@]+"${QUIBBLE_RESOLVE_REQUIRES[@]}"} --command true ${deps[@]+"${deps[@]}"})
 
 ========================================
-= install is running: print_quibble_command docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+= install is running: print_quibble_command docker run --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src_9:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 
 ========================================
 = install is running: local _xtrace_was_on=
@@ -129,29 +129,29 @@ docker RAM: 15.6 GB
 = install is running: set +x
 ########################################
 docker run \
-  -it \
   --rm \
   --entrypoint=quibble-with-supervisord \
   -v $PWD/cache:/cache \
   -v $PWD/log:/workspace/log \
   -v $PWD/ref:/srv/git:ro \
-  -v $PWD/src:/workspace/src \
+  -v $PWD/src_9:/workspace/src \
   -e ZUUL_PROJECT=mediawiki/extensions/Echo \
-  docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest \
+  docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest \
   --resolve-requires \
   --command true \
   mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
 ########################################
 
 ========================================
-= install is running: docker run -it --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bullseye-php83:latest --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+= install is running: docker run --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src_9:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 + /usr/bin/supervisord
-2026-05-28 15:26:01,923 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-05-28 15:26:01,926 INFO RPC interface 'supervisor' initialized
-2026-05-28 15:26:01,926 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-05-28 15:26:01,927 INFO daemonizing the supervisord process
+2026-06-18 23:57:20,287 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-06-18 23:57:20,290 INFO RPC interface 'supervisor' initialized
+2026-06-18 23:57:20,290 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-06-18 23:57:20,291 INFO daemonizing the supervisord process
+2026-06-18 23:57:20,292 CRIT could not write pidfile /var/run/supervisord.pid
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --resolve-requires --command true mediawiki/extensions/AntiSpoof mediawiki/extensions/CentralAuth mediawiki/extensions/EventLogging mediawiki/extensions/MobileFrontend
-2026-05-28 15:26:01,928 CRIT could not write pidfile /var/run/supervisord.pid
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
 INFO:quibble.cmd:Projects: mediawiki/core, mediawiki/extensions/AntiSpoof, mediawiki/extensions/CentralAuth, mediawiki/extensions/Echo, mediawiki/extensions/EventLogging, mediawiki/extensions/MobileFrontend, mediawiki/skins/Vector, mediawiki/vendor
@@ -181,25 +181,24 @@ DEBUG:quibble.cmd:User commands: true
 INFO:quibble.commands:>>> Start: Report durations
 INFO:quibble.commands:<<< Finish: Report durations, in 0.000 s
 INFO:quibble.commands:>>> Start: Versions
-INFO:quibble.commands:Python version: 3.9.2 (default, May 14 2026, 03:00:00) 
-[GCC 10.2.1 20210110]
-INFO:quibble.commands:chromedriver --version: ChromeDriver 120.0.6099.224 (3587067cafd6f5b1e567380acb485d96e623ef39-refs/branch-heads/6099@{#1761})
-INFO:quibble.commands:chromium --version: Chromium 120.0.6099.224 built on Debian 11.8, running on Debian 11.11
+INFO:quibble.commands:Python version: 3.11.2 (main, Apr  8 2026, 01:58:00) [GCC 12.2.0]
+INFO:quibble.commands:chromedriver --version: ChromeDriver 149.0.7827.114 (5be7af702aa73ed64f47858cecc86290e42f2a20-refs/branch-heads/7827_102@{#39})
+INFO:quibble.commands:chromium --version: Chromium 149.0.7827.114 built on Debian GNU/Linux 12 (bookworm)
 INFO:quibble.commands:composer --version: Composer version 2.9.7 2026-04-14 13:31:52
 INFO:quibble.commands:PHP version 8.3.31 (/usr/bin/php8.3)
 INFO:quibble.commands:Run the "diagnose" command to get more detailed diagnostics output.
-INFO:quibble.commands:memcached --version: memcached 1.6.9
-INFO:quibble.commands:mysql --version: mysql  Ver 15.1 Distrib 10.5.29-MariaDB, for debian-linux-gnu (x86_64) using  EditLine wrapper
+INFO:quibble.commands:memcached --version: memcached 1.6.18
+INFO:quibble.commands:mysql --version: mysql  Ver 15.1 Distrib 10.11.14-MariaDB, for debian-linux-gnu (x86_64) using  EditLine wrapper
 INFO:quibble.commands:node --version: v24.14.1
 INFO:quibble.commands:npm --version: 11.11.0
-INFO:quibble.commands:php --version: PHP 8.3.31 (cli) (built: May 19 2026 02:13:43) (NTS)
+INFO:quibble.commands:php --version: PHP 8.3.31 (cli) (built: May 26 2026 20:31:22) (NTS)
 INFO:quibble.commands:Copyright (c) The PHP Group
 INFO:quibble.commands:Zend Engine v4.3.31, Copyright (c) Zend Technologies
 INFO:quibble.commands:    with Zend OPcache v8.3.31, Copyright (c), by Zend Technologies
-INFO:quibble.commands:psql --version: psql (PostgreSQL) 13.23 (Debian 13.23-0+deb11u3)
-INFO:quibble.commands:<<< Finish: Versions, in 0.157 s
+INFO:quibble.commands:psql --version: psql (PostgreSQL) 15.18 (Debian 15.18-0+deb12u1)
+INFO:quibble.commands:<<< Finish: Versions, in 0.409 s
 INFO:quibble.commands:>>> Start: Ensure dir: '/workspace/log'
-INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.000 s
+INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.001 s
 INFO:quibble.commands:>>> Start: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/Echo", "mediawiki/extensions/EventLogging", "mediawiki/extensions/MobileFrontend", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}
 INFO:zuul.CloneMapper:Workspace path set to: /workspace/src
 INFO:zuul.CloneMapper:Mapping projects to workspace...
@@ -214,35 +213,40 @@ INFO:zuul.CloneMapper:  mediawiki/vendor -> /workspace/src/vendor
 INFO:zuul.CloneMapper:Expansion completed.
 INFO:quibble.zuul.clone:Preparing 8 repositories with 4 workers
 INFO:zuul.Cloner.mediawiki/core:Creating repo mediawiki/core from upstream https://gerrit.wikimedia.org/r/mediawiki/core
-INFO:zuul.Cloner.mediawiki/extensions/AntiSpoof:Creating repo mediawiki/extensions/AntiSpoof from upstream https://gerrit.wikimedia.org/r/mediawiki/extensions/AntiSpoof
-INFO:zuul.Cloner.mediawiki/extensions/CentralAuth:Creating repo mediawiki/extensions/CentralAuth from upstream https://gerrit.wikimedia.org/r/mediawiki/extensions/CentralAuth
-INFO:zuul.Cloner.mediawiki/extensions/Echo:Creating repo mediawiki/extensions/Echo from upstream https://gerrit.wikimedia.org/r/mediawiki/extensions/Echo
-2026-05-28 15:26:02,931 INFO spawned: 'apache' with pid 79
-2026-05-28 15:26:02,933 INFO spawned: 'php-fpm' with pid 80
-2026-05-28 15:26:02,955 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
-2026-05-28 15:26:03,991 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+INFO:zuul.Cloner.mediawiki/extensions/AntiSpoof:Creating repo mediawiki/extensions/AntiSpoof from cache /srv/git/mediawiki/extensions/AntiSpoof.git
+INFO:zuul.Cloner.mediawiki/extensions/Echo:Creating repo mediawiki/extensions/Echo from cache /srv/git/mediawiki/extensions/Echo.git
+INFO:zuul.Cloner.mediawiki/extensions/CentralAuth:Creating repo mediawiki/extensions/CentralAuth from cache /srv/git/mediawiki/extensions/CentralAuth.git
+2026-06-18 23:57:21,296 INFO spawned: 'apache' with pid 79
+2026-06-18 23:57:21,297 INFO spawned: 'php-fpm' with pid 80
+2026-06-18 23:57:21,379 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+INFO:zuul.Cloner.mediawiki/extensions/AntiSpoof:Updating origin remote in repo mediawiki/extensions/AntiSpoof to https://gerrit.wikimedia.org/r/mediawiki/extensions/AntiSpoof
+2026-06-18 23:57:22,426 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+INFO:zuul.Cloner.mediawiki/extensions/Echo:Updating origin remote in repo mediawiki/extensions/Echo to https://gerrit.wikimedia.org/r/mediawiki/extensions/Echo
+INFO:zuul.Cloner.mediawiki/extensions/CentralAuth:Updating origin remote in repo mediawiki/extensions/CentralAuth to https://gerrit.wikimedia.org/r/mediawiki/extensions/CentralAuth
 INFO:zuul.Cloner.mediawiki/extensions/AntiSpoof:Falling back to branch master
-INFO:zuul.Cloner.mediawiki/extensions/AntiSpoof:Prepared mediawiki/extensions/AntiSpoof repo with branch master at commit 4d7e75c6c551126629a96a45d578cae4ec4d73c6
-INFO:zuul.Cloner.mediawiki/extensions/EventLogging:Creating repo mediawiki/extensions/EventLogging from upstream https://gerrit.wikimedia.org/r/mediawiki/extensions/EventLogging
+INFO:zuul.Cloner.mediawiki/extensions/AntiSpoof:Prepared mediawiki/extensions/AntiSpoof repo with branch master at commit a03632ad4b77eebc7ad80d12a4f042cea577f841
+INFO:zuul.Cloner.mediawiki/extensions/EventLogging:Creating repo mediawiki/extensions/EventLogging from cache /srv/git/mediawiki/extensions/EventLogging.git
+INFO:zuul.Cloner.mediawiki/extensions/EventLogging:Updating origin remote in repo mediawiki/extensions/EventLogging to https://gerrit.wikimedia.org/r/mediawiki/extensions/EventLogging
 INFO:zuul.Cloner.mediawiki/extensions/Echo:Falling back to branch master
+INFO:zuul.Cloner.mediawiki/extensions/Echo:Prepared mediawiki/extensions/Echo repo with branch master at commit 2c24a9c5d834a73b8d4a43804ee6bef29f3ee49a
+INFO:zuul.Cloner.mediawiki/extensions/MobileFrontend:Creating repo mediawiki/extensions/MobileFrontend from cache /srv/git/mediawiki/extensions/MobileFrontend.git
 INFO:zuul.Cloner.mediawiki/extensions/CentralAuth:Falling back to branch master
-INFO:zuul.Cloner.mediawiki/extensions/Echo:Prepared mediawiki/extensions/Echo repo with branch master at commit fec7bfe698db448d03524e472e71c3dec2dd269e
-INFO:zuul.Cloner.mediawiki/extensions/MobileFrontend:Creating repo mediawiki/extensions/MobileFrontend from upstream https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
-INFO:zuul.Cloner.mediawiki/extensions/CentralAuth:Prepared mediawiki/extensions/CentralAuth repo with branch master at commit e54a69351f95681fa4dee4d1437312d07e0dc3a4
+INFO:zuul.Cloner.mediawiki/extensions/CentralAuth:Prepared mediawiki/extensions/CentralAuth repo with branch master at commit adc2b58e66161e2ce916b89998faac75088da33e
 INFO:zuul.Cloner.mediawiki/skins/Vector:Creating repo mediawiki/skins/Vector from upstream https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
 INFO:zuul.Cloner.mediawiki/extensions/EventLogging:Falling back to branch master
-INFO:zuul.Cloner.mediawiki/extensions/EventLogging:Prepared mediawiki/extensions/EventLogging repo with branch master at commit d311d9bc1f4a15158ade6ee8caa16c13066c4043
+INFO:zuul.Cloner.mediawiki/extensions/EventLogging:Prepared mediawiki/extensions/EventLogging repo with branch master at commit 14ecf2eab5a53e2b08d6b1ea6eba7d90dd3387a8
 INFO:zuul.Cloner.mediawiki/vendor:Creating repo mediawiki/vendor from upstream https://gerrit.wikimedia.org/r/mediawiki/vendor
+INFO:zuul.Cloner.mediawiki/extensions/MobileFrontend:Updating origin remote in repo mediawiki/extensions/MobileFrontend to https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
 INFO:zuul.Cloner.mediawiki/skins/Vector:Falling back to branch master
-INFO:zuul.Cloner.mediawiki/skins/Vector:Prepared mediawiki/skins/Vector repo with branch master at commit d3183ccd9b1ed8acdf94ad10cad7c091f07c3159
+INFO:zuul.Cloner.mediawiki/skins/Vector:Prepared mediawiki/skins/Vector repo with branch master at commit 3960dc57a3e49b2f43d287091964104094faaa66
 INFO:zuul.Cloner.mediawiki/extensions/MobileFrontend:Falling back to branch master
-INFO:zuul.Cloner.mediawiki/extensions/MobileFrontend:Prepared mediawiki/extensions/MobileFrontend repo with branch master at commit c2788b8d5c29809fc3413f4853c3250f9a684318
-INFO:zuul.Cloner.mediawiki/core:Falling back to branch master
-INFO:zuul.Cloner.mediawiki/core:Prepared mediawiki/core repo with branch master at commit 7d645c4c0c993165815d7b9150b54d95d2146611
+INFO:zuul.Cloner.mediawiki/extensions/MobileFrontend:Prepared mediawiki/extensions/MobileFrontend repo with branch master at commit a045afb754347c22f07ccf474ae406823162dd67
 INFO:zuul.Cloner.mediawiki/vendor:Falling back to branch master
-INFO:zuul.Cloner.mediawiki/vendor:Prepared mediawiki/vendor repo with branch master at commit db93907b22c05717a9c5f889908a46659384013e
+INFO:zuul.Cloner.mediawiki/vendor:Prepared mediawiki/vendor repo with branch master at commit 7a63dab2acf8b4712e277e6590e98bb56cd1efb0
+INFO:zuul.Cloner.mediawiki/core:Falling back to branch master
+INFO:zuul.Cloner.mediawiki/core:Prepared mediawiki/core repo with branch master at commit b9692a386e4fa56e79d1fbc382f6be748845f492
 INFO:quibble.zuul.clone:Prepared all repositories
-INFO:quibble.commands:<<< Finish: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/Echo", "mediawiki/extensions/EventLogging", "mediawiki/extensions/MobileFrontend", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}, in 8.038 s
+INFO:quibble.commands:<<< Finish: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/AntiSpoof", "mediawiki/extensions/CentralAuth", "mediawiki/extensions/Echo", "mediawiki/extensions/EventLogging", "mediawiki/extensions/MobileFrontend", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}, in 185.932 s
 INFO:quibble.commands:>>> Start: Recursively process registration dependencies. Fails on extra requires: False
 INFO:quibble.commands:Looking for requirements of mediawiki/extensions/AntiSpoof
 INFO:quibble.commands:Looking for requirements of mediawiki/extensions/CentralAuth
@@ -254,13 +258,13 @@ INFO:quibble.commands:Found requirement(s): mediawiki/extensions/AntiSpoof
 INFO:quibble.commands:Looking for requirements of mediawiki/extensions/AntiSpoof
 DEBUG:quibble.commands:No additional requirements from mediawiki/extensions/AntiSpoof
 WARNING:quibble.commands:Found extra requirements: 
-INFO:quibble.commands:<<< Finish: Recursively process registration dependencies. Fails on extra requires: False, in 0.022 s
+INFO:quibble.commands:<<< Finish: Recursively process registration dependencies. Fails on extra requires: False, in 0.021 s
 INFO:quibble.commands:>>> Start: Submodule update: /workspace/src
 INFO:quibble.commands:Updating git submodules of extensions and skins
-INFO:quibble.commands:<<< Finish: Submodule update: /workspace/src, in 0.001 s
+INFO:quibble.commands:<<< Finish: Submodule update: /workspace/src, in 0.028 s
 INFO:quibble.commands:>>> Start: Install composer dev-requires for vendor.git
 INFO:quibble.commands:mediawiki/vendor is used, add require-dev dependencies
-DEBUG:quibble.commands:composer require --dev composer/spdx-licenses=1.6.0 doctrine/dbal=3.10.5 doctrine/sql-formatter=1.5.4 ergebnis/phpunit-slow-test-detector=2.24.0 ext-simplexml=* giorgiosironi/eris=^0.14.0 hamcrest/hamcrest-php=^2.0 mediawiki/mediawiki-codesniffer=51.0.0 mediawiki/mediawiki-phan-config=0.20.0 mediawiki/minus-x=2.0.1 nikic/php-parser=^5.5.0 php-parallel-lint/php-console-highlighter=1.0.0 php-parallel-lint/php-parallel-lint=1.4.0 phpunit/phpunit=9.6.34 psy/psysh=^0.12.19 seld/jsonlint=1.11.0 wikimedia/alea=1.0.1 wikimedia/langconv=^0.5.0 wikimedia/testing-access-wrapper=4.0.0 wmde/hamcrest-html-matchers=^1.0.0
+DEBUG:quibble.commands:composer require --dev composer/spdx-licenses=1.6.0 doctrine/dbal=3.10.5 doctrine/sql-formatter=1.5.4 ergebnis/phpunit-slow-test-detector=2.24.0 ext-simplexml=* fig/log-test=1.2.1 giorgiosironi/eris=^0.14.0 hamcrest/hamcrest-php=^2.0 mediawiki/mediawiki-codesniffer=51.0.0 mediawiki/mediawiki-phan-config=0.20.0 mediawiki/minus-x=2.0.1 nikic/php-parser=^5.5.0 php-parallel-lint/php-console-highlighter=1.0.0 php-parallel-lint/php-parallel-lint=1.4.0 phpunit/phpunit=9.6.34 psy/psysh=^0.12.19 seld/jsonlint=1.11.0 wikimedia/alea=1.0.1 wikimedia/langconv=^0.5.0 wikimedia/testing-access-wrapper=4.0.0 wmde/hamcrest-html-matchers=^1.0.0
 > init: Wikimedia\Composer\Merge\V2\MergePlugin->onInit
 nikic/php-parser is currently present in the require key and you ran the command with the --dev flag, which will move it to the require-dev key.
 psy/psysh is currently present in the require key and you ran the command with the --dev flag, which will move it to the require-dev key.
@@ -268,19 +272,19 @@ wikimedia/langconv is currently present in the require key and you ran the comma
 wikimedia/testing-access-wrapper is currently present in the require key and you ran the command with the --dev flag, which will move it to the require-dev key.
 ./composer.json has been updated
 > init: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onInit
-Running composer update composer/spdx-licenses doctrine/dbal doctrine/sql-formatter ergebnis/phpunit-slow-test-detector ext-simplexml giorgiosironi/eris hamcrest/hamcrest-php mediawiki/mediawiki-codesniffer mediawiki/mediawiki-phan-config mediawiki/minus-x nikic/php-parser php-parallel-lint/php-console-highlighter php-parallel-lint/php-parallel-lint phpunit/phpunit psy/psysh seld/jsonlint wikimedia/alea wikimedia/langconv wikimedia/testing-access-wrapper wmde/hamcrest-html-matchers
+Running composer update composer/spdx-licenses doctrine/dbal doctrine/sql-formatter ergebnis/phpunit-slow-test-detector ext-simplexml fig/log-test giorgiosironi/eris hamcrest/hamcrest-php mediawiki/mediawiki-codesniffer mediawiki/mediawiki-phan-config mediawiki/minus-x nikic/php-parser php-parallel-lint/php-console-highlighter php-parallel-lint/php-parallel-lint phpunit/phpunit psy/psysh seld/jsonlint wikimedia/alea wikimedia/langconv wikimedia/testing-access-wrapper wmde/hamcrest-html-matchers
 > pre-update-cmd: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onInstallUpdateOrDump
 Loading composer repositories with package information
 Pattern "ext-simplexml" listed for update matches platform packages, but these cannot be updated by Composer.
 Updating dependencies
-Dependency resolution completed in 0.002 seconds
-Analyzed 356 packages to resolve dependencies
-Analyzed 921 rules to resolve dependencies
 Dependency resolution completed in 0.001 seconds
-Lock file operations: 57 installs, 1 update, 0 removals
-Installs: squizlabs/php_codesniffer:3.13.5, dealerdirect/phpcodesniffer-composer-installer:v1.2.1, composer/pcre:3.3.2, psr/cache:3.0.0, doctrine/event-manager:2.1.1, doctrine/deprecations:1.1.6, doctrine/dbal:3.10.5, doctrine/sql-formatter:1.5.4, sebastian/version:3.0.2, sebastian/type:3.2.1, sebastian/resource-operations:3.0.4, sebastian/recursion-context:4.0.6, sebastian/object-reflector:2.0.4, sebastian/object-enumerator:4.0.4, sebastian/global-state:5.0.8, sebastian/exporter:4.0.8, sebastian/environment:5.1.5, sebastian/diff:4.0.6, sebastian/comparator:4.0.10, sebastian/code-unit:1.0.8, sebastian/cli-parser:1.0.2, phpunit/php-timer:5.0.3, phpunit/php-text-template:2.0.4, phpunit/php-invoker:3.1.1, phpunit/php-file-iterator:3.0.6, theseer/tokenizer:1.3.1, sebastian/lines-of-code:1.0.4, sebastian/complexity:2.0.3, sebastian/code-unit-reverse-lookup:2.0.3, phpunit/php-code-coverage:9.2.32, phar-io/version:3.2.1, phar-io/manifest:2.0.4, myclabs/deep-copy:1.13.4, doctrine/instantiator:2.0.0, phpunit/phpunit:9.6.34, ergebnis/phpunit-slow-test-detector:2.24.0, giorgiosironi/eris:0.14.1, phpcsstandards/phpcsutils:1.2.2, phpcsstandards/phpcsextra:1.5.0, composer/spdx-licenses:1.6.0, mediawiki/mediawiki-codesniffer:v51.0.0, sabre/event:6.1.0, phan/var_representation_polyfill:0.1.4, phan/tolerant-php-parser:v0.2.0, netresearch/jsonmapper:v5.0.1, danog/advanced-json-rpc:v3.2.3, composer/xdebug-handler:3.0.5, phan/phan:6.0.2, mediawiki/phan-taint-check-plugin:9.1.0, mediawiki/mediawiki-phan-config:0.20.0, mediawiki/minus-x:2.0.1, php-parallel-lint/php-console-color:v1.0.1, php-parallel-lint/php-console-highlighter:v1.0.0, seld/jsonlint:1.11.0, wikimedia/alea:1.0.1, hamcrest/hamcrest-php:v2.1.1, wmde/hamcrest-html-matchers:v1.1.0
+Analyzed 356 packages to resolve dependencies
+Analyzed 931 rules to resolve dependencies
+Dependency resolution completed in 0.000 seconds
+Lock file operations: 58 installs, 1 update, 0 removals
+Installs: squizlabs/php_codesniffer:3.13.5, dealerdirect/phpcodesniffer-composer-installer:v1.2.1, composer/pcre:3.4.0, psr/cache:3.0.0, doctrine/event-manager:2.1.1, doctrine/deprecations:1.1.6, doctrine/dbal:3.10.5, doctrine/sql-formatter:1.5.4, sebastian/version:3.0.2, sebastian/type:3.2.1, sebastian/resource-operations:3.0.4, sebastian/recursion-context:4.0.6, sebastian/object-reflector:2.0.4, sebastian/object-enumerator:4.0.4, sebastian/global-state:5.0.8, sebastian/exporter:4.0.8, sebastian/environment:5.1.5, sebastian/diff:4.0.6, sebastian/comparator:4.0.10, sebastian/code-unit:1.0.8, sebastian/cli-parser:1.0.2, phpunit/php-timer:5.0.3, phpunit/php-text-template:2.0.4, phpunit/php-invoker:3.1.1, phpunit/php-file-iterator:3.0.6, theseer/tokenizer:1.3.1, sebastian/lines-of-code:1.0.4, sebastian/complexity:2.0.3, sebastian/code-unit-reverse-lookup:2.0.3, phpunit/php-code-coverage:9.2.32, phar-io/version:3.2.1, phar-io/manifest:2.0.4, myclabs/deep-copy:1.13.4, doctrine/instantiator:2.0.0, phpunit/phpunit:9.6.34, ergebnis/phpunit-slow-test-detector:2.24.0, fig/log-test:1.2.1, giorgiosironi/eris:0.14.1, phpcsstandards/phpcsutils:1.2.2, phpcsstandards/phpcsextra:1.5.0, composer/spdx-licenses:1.6.0, mediawiki/mediawiki-codesniffer:v51.0.0, sabre/event:6.1.0, phan/var_representation_polyfill:0.1.4, phan/tolerant-php-parser:v0.2.0, netresearch/jsonmapper:v5.0.1, danog/advanced-json-rpc:v3.2.3, composer/xdebug-handler:3.0.5, phan/phan:6.0.2, mediawiki/phan-taint-check-plugin:9.1.0, mediawiki/mediawiki-phan-config:0.20.0, mediawiki/minus-x:2.0.1, php-parallel-lint/php-console-color:v1.0.1, php-parallel-lint/php-console-highlighter:v1.0.0, seld/jsonlint:1.11.0, wikimedia/alea:1.0.1, hamcrest/hamcrest-php:v2.1.1, wmde/hamcrest-html-matchers:v1.1.0
 Updates: psy/psysh:v0.12.23
-  - Locking composer/pcre (3.3.2)
+  - Locking composer/pcre (3.4.0)
   - Locking composer/spdx-licenses (1.6.0)
   - Locking composer/xdebug-handler (3.0.5)
   - Locking danog/advanced-json-rpc (v3.2.3)
@@ -291,6 +295,7 @@ Updates: psy/psysh:v0.12.23
   - Locking doctrine/instantiator (2.0.0)
   - Locking doctrine/sql-formatter (1.5.4)
   - Locking ergebnis/phpunit-slow-test-detector (2.24.0)
+  - Locking fig/log-test (1.2.1)
   - Locking giorgiosironi/eris (0.14.1)
   - Locking hamcrest/hamcrest-php (v2.1.1)
   - Locking mediawiki/mediawiki-codesniffer (v51.0.0)
@@ -340,14 +345,14 @@ Updates: psy/psysh:v0.12.23
   - Locking wmde/hamcrest-html-matchers (v1.1.0)
 Writing lock file
 Installing dependencies from lock file (including require-dev)
-Package operations: 58 installs, 1 update, 0 removals
-Installs: squizlabs/php_codesniffer:3.13.5, dealerdirect/phpcodesniffer-composer-installer:v1.2.1, composer/pcre:3.3.2, psr/cache:3.0.0, doctrine/event-manager:2.1.1, doctrine/deprecations:1.1.6, doctrine/dbal:3.10.5, doctrine/sql-formatter:1.5.4, sebastian/version:3.0.2, sebastian/type:3.2.1, sebastian/resource-operations:3.0.4, sebastian/recursion-context:4.0.6, sebastian/object-reflector:2.0.4, sebastian/object-enumerator:4.0.4, sebastian/global-state:5.0.8, sebastian/exporter:4.0.8, sebastian/environment:5.1.5, sebastian/diff:4.0.6, sebastian/comparator:4.0.10, sebastian/code-unit:1.0.8, sebastian/cli-parser:1.0.2, phpunit/php-timer:5.0.3, phpunit/php-text-template:2.0.4, phpunit/php-invoker:3.1.1, phpunit/php-file-iterator:3.0.6, theseer/tokenizer:1.3.1, sebastian/lines-of-code:1.0.4, sebastian/complexity:2.0.3, sebastian/code-unit-reverse-lookup:2.0.3, phpunit/php-code-coverage:9.2.32, phar-io/version:3.2.1, phar-io/manifest:2.0.4, myclabs/deep-copy:1.13.4, doctrine/instantiator:2.0.0, phpunit/phpunit:9.6.34, ergebnis/phpunit-slow-test-detector:2.24.0, giorgiosironi/eris:0.14.1, phpcsstandards/phpcsutils:1.2.2, phpcsstandards/phpcsextra:1.5.0, composer/spdx-licenses:1.6.0, mediawiki/mediawiki-codesniffer:v51.0.0, sabre/event:6.1.0, phan/var_representation_polyfill:0.1.4, phan/tolerant-php-parser:v0.2.0, netresearch/jsonmapper:v5.0.1, danog/advanced-json-rpc:v3.2.3, composer/xdebug-handler:3.0.5, phan/phan:6.0.2, mediawiki/phan-taint-check-plugin:9.1.0, mediawiki/mediawiki-phan-config:0.20.0, mediawiki/minus-x:2.0.1, php-parallel-lint/php-console-color:v1.0.1, php-parallel-lint/php-console-highlighter:v1.0.0, php-parallel-lint/php-parallel-lint:v1.4.0, seld/jsonlint:1.11.0, wikimedia/alea:1.0.1, hamcrest/hamcrest-php:v2.1.1, wmde/hamcrest-html-matchers:v1.1.0
+Package operations: 59 installs, 1 update, 0 removals
+Installs: squizlabs/php_codesniffer:3.13.5, dealerdirect/phpcodesniffer-composer-installer:v1.2.1, composer/pcre:3.4.0, psr/cache:3.0.0, doctrine/event-manager:2.1.1, doctrine/deprecations:1.1.6, doctrine/dbal:3.10.5, doctrine/sql-formatter:1.5.4, sebastian/version:3.0.2, sebastian/type:3.2.1, sebastian/resource-operations:3.0.4, sebastian/recursion-context:4.0.6, sebastian/object-reflector:2.0.4, sebastian/object-enumerator:4.0.4, sebastian/global-state:5.0.8, sebastian/exporter:4.0.8, sebastian/environment:5.1.5, sebastian/diff:4.0.6, sebastian/comparator:4.0.10, sebastian/code-unit:1.0.8, sebastian/cli-parser:1.0.2, phpunit/php-timer:5.0.3, phpunit/php-text-template:2.0.4, phpunit/php-invoker:3.1.1, phpunit/php-file-iterator:3.0.6, theseer/tokenizer:1.3.1, sebastian/lines-of-code:1.0.4, sebastian/complexity:2.0.3, sebastian/code-unit-reverse-lookup:2.0.3, phpunit/php-code-coverage:9.2.32, phar-io/version:3.2.1, phar-io/manifest:2.0.4, myclabs/deep-copy:1.13.4, doctrine/instantiator:2.0.0, phpunit/phpunit:9.6.34, ergebnis/phpunit-slow-test-detector:2.24.0, fig/log-test:1.2.1, giorgiosironi/eris:0.14.1, phpcsstandards/phpcsutils:1.2.2, phpcsstandards/phpcsextra:1.5.0, composer/spdx-licenses:1.6.0, mediawiki/mediawiki-codesniffer:v51.0.0, sabre/event:6.1.0, phan/var_representation_polyfill:0.1.4, phan/tolerant-php-parser:v0.2.0, netresearch/jsonmapper:v5.0.1, danog/advanced-json-rpc:v3.2.3, composer/xdebug-handler:3.0.5, phan/phan:6.0.2, mediawiki/phan-taint-check-plugin:9.1.0, mediawiki/mediawiki-phan-config:0.20.0, mediawiki/minus-x:2.0.1, php-parallel-lint/php-console-color:v1.0.1, php-parallel-lint/php-console-highlighter:v1.0.0, php-parallel-lint/php-parallel-lint:v1.4.0, seld/jsonlint:1.11.0, wikimedia/alea:1.0.1, hamcrest/hamcrest-php:v2.1.1, wmde/hamcrest-html-matchers:v1.1.0
 Updates: psy/psysh:v0.12.23
   - Installing squizlabs/php_codesniffer (3.13.5): Extracting archive
 > post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
   - Installing dealerdirect/phpcodesniffer-composer-installer (v1.2.1): Extracting archive
 > post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
-  - Installing composer/pcre (3.3.2): Extracting archive
+  - Installing composer/pcre (3.4.0): Extracting archive
   - Installing psr/cache (3.0.0): Extracting archive
   - Installing doctrine/event-manager (2.1.1): Extracting archive
   - Installing doctrine/deprecations (1.1.6): Extracting archive
@@ -381,6 +386,7 @@ Updates: psy/psysh:v0.12.23
   - Installing doctrine/instantiator (2.0.0): Extracting archive
   - Installing phpunit/phpunit (9.6.34): Extracting archive
   - Installing ergebnis/phpunit-slow-test-detector (2.24.0): Extracting archive
+  - Installing fig/log-test (1.2.1): Extracting archive
   - Installing giorgiosironi/eris (0.14.1): Extracting archive
   - Installing phpcsstandards/phpcsutils (1.2.2): Extracting archive
   - Installing phpcsstandards/phpcsextra (1.5.0): Extracting archive
@@ -460,11 +466,11 @@ Updates: psy/psysh:v0.12.23
 > post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
 > post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
 > post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
+> post-package-install: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostPackageInstall
 7 package suggestions were added by new dependencies, use `composer suggest` to see details.
-Package pear/net_socket is abandoned, you should avoid using it. No replacement was suggested.
 Generating optimized autoload files
 > pre-autoload-dump: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onInstallUpdateOrDump
-78 packages you are using are looking for funding.
+84 packages you are using are looking for funding.
 Use the `composer fund` command to find out more!
 > post-update-cmd: Wikimedia\Composer\Merge\V2\MergePlugin_composer_tmp0->onPostInstallOrUpdate
 > post-update-cmd: PHPCSStandards\Composer\Plugin\Installers\PHPCodeSniffer\Plugin->onDependenciesChangedEvent
@@ -476,27 +482,26 @@ Config value "installed_paths" added successfully
 
 No security vulnerability advisories found.
 Generating optimized autoload files (authoritative)
-Generated optimized autoload files (authoritative) containing 7959 classes
+Generated optimized autoload files (authoritative) containing 8178 classes
 INFO:quibble.util:Copying /workspace/src/composer.json to /workspace/log/composer.core.json.txt
 INFO:quibble.util:Copying /workspace/src/vendor/composer.json to /workspace/log/composer.vendor.json.txt
 INFO:quibble.util:Copying /workspace/src/vendor/composer/autoload_files.php to /workspace/log/composer.autoload_files.php.txt
-INFO:quibble.commands:<<< Finish: Install composer dev-requires for vendor.git, in 11.445 s
+INFO:quibble.commands:<<< Finish: Install composer dev-requires for vendor.git, in 69.065 s
 INFO:quibble.commands:>>> Start: Start backends: <MySQL (no socket)>
 INFO:backend.MySQL:Starting MySQL
 INFO:backend.MySQL:Initializing MySQL data directory
 INFO:backend.MySQL:Waiting for MySQL socket
 INFO:backend.MySQL:Creating the wiki database and grant
 INFO:backend.MySQL:MySQL is ready
-INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 3.648 s
+INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 2.891 s
 INFO:quibble.commands:>>> Start: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-x0d965vn/socket>
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-hflkas5t/socket>
 * npm install in /workspace/src
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 10s elapsed, 0/2 completed
-DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 20s elapsed, 0/2 completed
-INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-x0d965vn/socket>
-php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-x0d965vn/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
+INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-hflkas5t/socket>
+php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-hflkas5t/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
 PHP 8.3.31 is installed.
-ICU 67.1 is installed (supports Unicode 13.0.0).
+ICU 72.1 is installed (supports Unicode 15.0.0).
 Found ImageMagick: /usr/bin/convert. Image thumbnailing will be enabled if you enable uploads.
 Found the Git version control software: /usr/bin/git.
 Using server name "http://localhost".
@@ -594,90 +599,100 @@ Fixing log entries with log_title starting with 'User:#'
 done.
 Skipped 52 updates that were already applied.
 Purging caches...
-Done in 1.5 s.
+Done in 1.1 s.
 php maintenance/rebuildLocalisationCache.php --lang en
 Rebuilding en...
 1 languages rebuilt out of 1
-<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-x0d965vn/socket>, in 23.092 s
+<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-hflkas5t/socket>, in 16.312 s
 
+DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 20s elapsed, 1/2 completed
+DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 30s elapsed, 1/2 completed
+DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 40s elapsed, 1/2 completed
+DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 50s elapsed, 1/2 completed
+DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 60s elapsed, 1/2 completed
+DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 70s elapsed, 1/2 completed
+DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 80s elapsed, 1/2 completed
+DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 90s elapsed, 1/2 completed
 INFO:quibble.commands:>>> Start: npm install in /workspace/src
 
-added 1714 packages, and audited 1716 packages in 24s
+added 1714 packages, and audited 1716 packages in 2m
 
 240 packages are looking for funding
   run `npm fund` for details
 
-29 vulnerabilities (1 low, 10 moderate, 18 high)
+55 vulnerabilities (2 low, 32 moderate, 21 high)
 
 To address issues that do not require attention, run:
   npm audit fix
 
-To address all issues (including breaking changes), run:
+To address all issues possible (including breaking changes), run:
   npm audit fix --force
 
+Some issues need review, and may require choosing
+a different dependency.
+
 Run `npm audit` for details.
-<<< Finish: npm install in /workspace/src, in 24.146 s
+<<< Finish: npm install in /workspace/src, in 97.437 s
 
 INFO:quibble.commands:<<< Finish: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-x0d965vn/socket>
-* npm install in /workspace/src, in 24.161 s
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-hflkas5t/socket>
+* npm install in /workspace/src, in 97.456 s
 INFO:quibble.commands:>>> Start: Start backends: <Memcached on port 11211>
 INFO:backend.Memcached:Starting Memcached on port 11211
 INFO:backend.Memcached:Waiting for Memcached on port 11211
-INFO:quibble.commands:<<< Finish: Start backends: <Memcached on port 11211>, in 0.104 s
+INFO:quibble.commands:<<< Finish: Start backends: <Memcached on port 11211>, in 0.103 s
 INFO:quibble.commands:>>> Start: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ExternalWebserver:Not starting a webserver.
 INFO:backend.Xvfb:Starting Xvfb on display :94
 INFO:backend.ChromeWebDriver:Starting Chromedriver
 INFO:quibble.use_headless:Display: :94
 DEBUG:quibble.chromium_flags:Flags: ['--autoplay-policy=no-user-gesture-required', '--disable-pushstate-throttle', '--no-sandbox']
-INFO:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.008 s
+INFO:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.005 s
 INFO:quibble.commands:>>> Start: User commands: true
 INFO:quibble.commands:User commands, working directory: /workspace/src
-INFO:quibble.commands:<<< Finish: User commands: true, in 0.003 s
+INFO:quibble.commands:<<< Finish: User commands: true, in 0.012 s
 INFO:quibble.commands:Shutting down backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ChromeWebDriver:Terminating ChromeWebDriver
 INFO:backend.Xvfb:Terminating Xvfb
 INFO:quibble.commands:Shutting down backends: <Memcached on port 11211>
 INFO:backend.Memcached:Terminating Memcached
-Signal handled: Terminated.
-INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-x0d965vn/socket>
+INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-hflkas5t/socket>
 INFO:backend.MySQL:Terminating MySQL
 INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
-                   [ REPORT FOR COMMAND DURATIONS ]
+                       [ REPORT FOR COMMAND DURATIONS ]
 
-╒═════════╤══════════════════════════════════════════════════════════╕
-│  0.000s │ Report durations                                         │
-│  0.157s │ Versions                                                 │
-│  0.000s │ Ensure dir: '/workspace/log'                             │
-│  8.038s │ Zuul clone {"cache_dir": "/srv/git", "projects":         │
-│         │ ["mediawiki/core", "mediawiki/extensions/AntiSpoof",     │
-│         │ "mediawiki/extensions/CentralAuth",                      │
-│         │ "mediawiki/extensions/Echo",                             │
-│         │ "mediawiki/extensions/EventLogging",                     │
-│         │ "mediawiki/extensions/MobileFrontend",                   │
-│         │ "mediawiki/skins/Vector", "mediawiki/vendor"],           │
-│         │ "workers": 4, "workspace": "/workspace/src",             │
-│         │ "zuul_project": "mediawiki/extensions/Echo"}             │
-│  0.022s │ Recursively process registration dependencies. Fails on  │
-│         │ extra requires: False                                    │
-│  0.001s │ Submodule update: /workspace/src                         │
-│ 11.445s │ Install composer dev-requires for vendor.git             │
-│  3.648s │ Start backends: <MySQL (no socket)>                      │
-│ 24.161s │ Run Post-dependency install, pre-database dependent      │
-│         │ steps in parallel (concurrency=2): * Install MediaWiki,  │
-│         │ db=<MySQL /tmp/quibble-mysql-x0d965vn/socket> * npm      │
-│         │ install in /workspace/src                                │
-│  0.104s │ Start backends: <Memcached on port 11211>                │
-│  0.008s │ Start backends: <ExternalWebserver http://127.0.0.1:9413 │
-│         │ /workspace/src> <Xvfb :94> <ChromeWebDriver :94>         │
-│  0.003s │ User commands: true                                      │
-╘═════════╧══════════════════════════════════════════════════════════╛
-
-========================================
-= install is running: _quibble_duration_exit
+╒══════════╤═════════════════════════════════════════════════════════════════╕
+│   0.000s │ Report durations                                                │
+│   0.409s │ Versions                                                        │
+│   0.001s │ Ensure dir: '/workspace/log'                                    │
+│ 185.932s │ Zuul clone {"cache_dir": "/srv/git", "projects":                │
+│          │ ["mediawiki/core", "mediawiki/extensions/AntiSpoof",            │
+│          │ "mediawiki/extensions/CentralAuth",                             │
+│          │ "mediawiki/extensions/Echo",                                    │
+│          │ "mediawiki/extensions/EventLogging",                            │
+│          │ "mediawiki/extensions/MobileFrontend",                          │
+│          │ "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4,    │
+│          │ "workspace": "/workspace/src", "zuul_project":                  │
+│          │ "mediawiki/extensions/Echo"}                                    │
+│   0.021s │ Recursively process registration dependencies. Fails on extra   │
+│          │ requires: False                                                 │
+│   0.028s │ Submodule update: /workspace/src                                │
+│  69.065s │ Install composer dev-requires for vendor.git                    │
+│   2.891s │ Start backends: <MySQL (no socket)>                             │
+│  97.456s │ Run Post-dependency install, pre-database dependent steps in    │
+│          │ parallel (concurrency=2): * Install MediaWiki, db=<MySQL        │
+│          │ /tmp/quibble-mysql-hflkas5t/socket> * npm install in            │
+│          │ /workspace/src                                                  │
+│   0.103s │ Start backends: <Memcached on port 11211>                       │
+│   0.005s │ Start backends: <ExternalWebserver http://127.0.0.1:9413        │
+│          │ /workspace/src> <Xvfb :94> <ChromeWebDriver :94>                │
+│   0.012s │ User commands: true                                             │
+╘══════════╧═════════════════════════════════════════════════════════════════╛
 
 ========================================
-= install is running: local exit_code=0
-(1m 21s) 2026-05-28 15:27:11 UTC
+= install is running: _quibble_run_exit_traps
+
+========================================
+= install is running: local _code=0
+(6m 5s) 2026-06-19 00:03:18 UTC

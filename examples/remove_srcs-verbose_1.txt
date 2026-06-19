@@ -1,13 +1,13 @@
 $ VERBOSE=1 ./remove_srcs
 
-OS: Linux 6.14.0-37-generic
-CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
-RAM: 15.6 GB
-bash: 5.2.21(1)-release
-git: git version 2.43.0
-docker: Docker version 29.5.2, build 79eb04c
-docker CPUs: 4
-docker RAM: 15.6 GB
+OS: Darwin 25.5.0
+CPU: Apple M5 Max (18 cores)
+RAM: 64.0 GB
+bash: 3.2.57(1)-release
+git: git version 2.50.1 (Apple Git-155)
+docker: Docker version 29.5.3, build d1c06ef
+docker CPUs: 18
+docker RAM: 19.5 GB
 
 
 
@@ -27,14 +27,14 @@ docker RAM: 15.6 GB
 
 
 ========================================
-= remove_srcs is running: printf '%s ' 'src_[0-9]*' 'src_save_[0-9]*' 'src_worker_*'
+= remove_srcs is running: printf '%s ' src_0 src_1 src_2 src_5 src_7 src_save_5 src_save_6 'src_worker_*'
 
 
 ========================================
-= remove_srcs is running: printf '%s ' src src_save 'src_[0-9]*' 'src_save_[0-9]*' 'src_worker_*'
+= remove_srcs is running: printf '%s ' src src_save src_0 src_1 src_2 src_5 src_7 src_save_5 src_save_6 'src_worker_*'
 
 ========================================
-= remove_srcs is running: src_dirs='src src_save src_[0-9]* src_save_[0-9]* src_worker_* '
+= remove_srcs is running: src_dirs='src src_save src_0 src_1 src_2 src_5 src_7 src_save_5 src_save_6 src_worker_* '
 
 ========================================
 = remove_srcs is running: volumes=
@@ -43,7 +43,7 @@ docker RAM: 15.6 GB
 = remove_srcs is running: paths=
 
 ========================================
-= remove_srcs is running: for dir in $src_dirs
+= remove_srcs is running: for dir in '$src_dirs'
 
 ========================================
 = remove_srcs is running: '[' -d src ']'
@@ -52,34 +52,103 @@ docker RAM: 15.6 GB
 = remove_srcs is running: continue
 
 ========================================
-= remove_srcs is running: for dir in $src_dirs
+= remove_srcs is running: for dir in '$src_dirs'
 
 ========================================
 = remove_srcs is running: '[' -d src_save ']'
 
 ========================================
-= remove_srcs is running: continue
+= remove_srcs is running: volumes=' -v $PWD/src_save:/workspace/src_save'
 
 ========================================
-= remove_srcs is running: for dir in $src_dirs
+= remove_srcs is running: paths=' /workspace/src_save'
 
 ========================================
-= remove_srcs is running: '[' -d 'src_[0-9]*' ']'
+= remove_srcs is running: for dir in '$src_dirs'
 
 ========================================
-= remove_srcs is running: continue
+= remove_srcs is running: '[' -d src_0 ']'
 
 ========================================
-= remove_srcs is running: for dir in $src_dirs
+= remove_srcs is running: volumes=' -v $PWD/src_save:/workspace/src_save -v $PWD/src_0:/workspace/src_0'
 
 ========================================
-= remove_srcs is running: '[' -d 'src_save_[0-9]*' ']'
+= remove_srcs is running: paths=' /workspace/src_save /workspace/src_0'
 
 ========================================
-= remove_srcs is running: continue
+= remove_srcs is running: for dir in '$src_dirs'
 
 ========================================
-= remove_srcs is running: for dir in $src_dirs
+= remove_srcs is running: '[' -d src_1 ']'
+
+========================================
+= remove_srcs is running: volumes=' -v $PWD/src_save:/workspace/src_save -v $PWD/src_0:/workspace/src_0 -v $PWD/src_1:/workspace/src_1'
+
+========================================
+= remove_srcs is running: paths=' /workspace/src_save /workspace/src_0 /workspace/src_1'
+
+========================================
+= remove_srcs is running: for dir in '$src_dirs'
+
+========================================
+= remove_srcs is running: '[' -d src_2 ']'
+
+========================================
+= remove_srcs is running: volumes=' -v $PWD/src_save:/workspace/src_save -v $PWD/src_0:/workspace/src_0 -v $PWD/src_1:/workspace/src_1 -v $PWD/src_2:/workspace/src_2'
+
+========================================
+= remove_srcs is running: paths=' /workspace/src_save /workspace/src_0 /workspace/src_1 /workspace/src_2'
+
+========================================
+= remove_srcs is running: for dir in '$src_dirs'
+
+========================================
+= remove_srcs is running: '[' -d src_5 ']'
+
+========================================
+= remove_srcs is running: volumes=' -v $PWD/src_save:/workspace/src_save -v $PWD/src_0:/workspace/src_0 -v $PWD/src_1:/workspace/src_1 -v $PWD/src_2:/workspace/src_2 -v $PWD/src_5:/workspace/src_5'
+
+========================================
+= remove_srcs is running: paths=' /workspace/src_save /workspace/src_0 /workspace/src_1 /workspace/src_2 /workspace/src_5'
+
+========================================
+= remove_srcs is running: for dir in '$src_dirs'
+
+========================================
+= remove_srcs is running: '[' -d src_7 ']'
+
+========================================
+= remove_srcs is running: volumes=' -v $PWD/src_save:/workspace/src_save -v $PWD/src_0:/workspace/src_0 -v $PWD/src_1:/workspace/src_1 -v $PWD/src_2:/workspace/src_2 -v $PWD/src_5:/workspace/src_5 -v $PWD/src_7:/workspace/src_7'
+
+========================================
+= remove_srcs is running: paths=' /workspace/src_save /workspace/src_0 /workspace/src_1 /workspace/src_2 /workspace/src_5 /workspace/src_7'
+
+========================================
+= remove_srcs is running: for dir in '$src_dirs'
+
+========================================
+= remove_srcs is running: '[' -d src_save_5 ']'
+
+========================================
+= remove_srcs is running: volumes=' -v $PWD/src_save:/workspace/src_save -v $PWD/src_0:/workspace/src_0 -v $PWD/src_1:/workspace/src_1 -v $PWD/src_2:/workspace/src_2 -v $PWD/src_5:/workspace/src_5 -v $PWD/src_7:/workspace/src_7 -v $PWD/src_save_5:/workspace/src_save_5'
+
+========================================
+= remove_srcs is running: paths=' /workspace/src_save /workspace/src_0 /workspace/src_1 /workspace/src_2 /workspace/src_5 /workspace/src_7 /workspace/src_save_5'
+
+========================================
+= remove_srcs is running: for dir in '$src_dirs'
+
+========================================
+= remove_srcs is running: '[' -d src_save_6 ']'
+
+========================================
+= remove_srcs is running: volumes=' -v $PWD/src_save:/workspace/src_save -v $PWD/src_0:/workspace/src_0 -v $PWD/src_1:/workspace/src_1 -v $PWD/src_2:/workspace/src_2 -v $PWD/src_5:/workspace/src_5 -v $PWD/src_7:/workspace/src_7 -v $PWD/src_save_5:/workspace/src_save_5 -v $PWD/src_save_6:/workspace/src_save_6'
+
+========================================
+= remove_srcs is running: paths=' /workspace/src_save /workspace/src_0 /workspace/src_1 /workspace/src_2 /workspace/src_5 /workspace/src_7 /workspace/src_save_5 /workspace/src_save_6'
+
+========================================
+= remove_srcs is running: for dir in '$src_dirs'
 
 ========================================
 = remove_srcs is running: '[' -d 'src_worker_*' ']'
@@ -88,14 +157,18 @@ docker RAM: 15.6 GB
 = remove_srcs is running: continue
 
 ========================================
-= remove_srcs is running: '[' -n '' ']'
+= remove_srcs is running: '[' -n ' /workspace/src_save /workspace/src_0 /workspace/src_1 /workspace/src_2 /workspace/src_5 /workspace/src_7 /workspace/src_save_5 /workspace/src_save_6' ']'
 
 ========================================
-= remove_srcs is running: rm -rf src src_save 'src_[0-9]*' 'src_save_[0-9]*' 'src_worker_*'
+= remove_srcs is running: docker run --rm --entrypoint bash --user root -v $PWD/src_save:/workspace/src_save -v $PWD/src_0:/workspace/src_0 -v $PWD/src_1:/workspace/src_1 -v $PWD/src_2:/workspace/src_2 -v $PWD/src_5:/workspace/src_5 -v $PWD/src_7:/workspace/src_7 -v $PWD/src_save_5:/workspace/src_save_5 -v $PWD/src_save_6:/workspace/src_save_6 docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest -c 'find  /workspace/src_save /workspace/src_0 /workspace/src_1 /workspace/src_2 /workspace/src_5 /workspace/src_7 /workspace/src_save_5 /workspace/src_save_6 -mindepth 1 -delete'
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 
 ========================================
-= remove_srcs is running: _quibble_duration_exit
+= remove_srcs is running: rm -rf src src_save src_0 src_1 src_2 src_5 src_7 src_save_5 src_save_6 'src_worker_*'
 
 ========================================
-= remove_srcs is running: local exit_code=0
-(0s) 2026-05-31 07:30:00 UTC
+= remove_srcs is running: _quibble_run_exit_traps
+
+========================================
+= remove_srcs is running: local _code=0
+(1s) 2026-06-19 01:11:32 UTC
