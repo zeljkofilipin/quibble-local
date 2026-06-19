@@ -29,7 +29,9 @@ run_test ./fetch                       # <1m: test fetching all bare repos (upda
 run_test ./fetch ref/mediawiki/core.git  # <1m: test fetching a specific repo
 run_test env PARALLEL=1 ./fetch        # <1m: test parallel fetch
 run_test ./fresh_install               # 1m: test fresh core install
+run_test env BRANCH=master ./fresh_install  # 1m: test BRANCH installs and checks out a branch (fails loudly if the re-attach can't)
 run_test env DRY_RUN=1 ./fresh_install  # <1m: test DRY_RUN passes --dry-run to Quibble
+run_test env DRY_RUN=1 BRANCH=master ./fresh_install  # <1m: test BRANCH+DRY_RUN skips the re-attach (no real install)
 run_test ./save                        # <1m: test saving fresh_install state
 run_test ./restore                     # <1m: test restoring saved state
 run_test env ENVIRONMENT=0 ./fresh_install  # 1m: test environment isolation
@@ -45,6 +47,7 @@ run_test ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.gr
 
 # --- Extension tests (extensions/Echo) ---
 run_test ./install extensions/Echo     # 1m: test installing an extension
+run_test env BRANCH=master ./install extensions/Echo  # 1m: test BRANCH on an extension install (fails loudly if the re-attach can't)
 run_test env DRY_RUN=1 ./install extensions/Echo  # <1m: test DRY_RUN passes --dry-run to Quibble
 run_test env RESOLVE_REQUIRES=0 ./install extensions/Echo  # 1m: test RESOLVE_REQUIRES=0 omits --resolve-requires
 run_test env QUIBBLE_DEPS="" ./install extensions/Echo  # 1m: test installing with no dependencies

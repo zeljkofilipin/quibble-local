@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+#
+# Re-attach the MediaWiki repos under a src tree to a named branch.
+# EXECUTED INSIDE THE QUIBBLE DOCKER CONTAINER (mounted read-only), NOT sourced. It runs as
+# the container's default user, which owns the files Quibble cloned, so git has no "dubious
+# ownership" or permission problems regardless of the host OS. lib/checkout_branch is the
+# wrapper that runs it; this file is the git logic, kept separate so it can be unit-tested
+# with Bats on the host (no Docker) against fixture repos.
+#
+# Quibble's Zuul cloner checks out each repo at a commit, leaving a detached HEAD. This walks
+# the known MediaWiki layout (core, vendor, skins/*, extensions/*) and, for each repo still in
+# detached HEAD, checks out the requested branch so the working copy is on a named branch.
+# Repos that lack the requested branch fall back to their own default branch (origin/HEAD),
+# mirroring how Quibble itself falls back. Fails loudly: it still tries every repo, but exits
+# non-zero if any detached repo can't be put on the requested branch or its fallback — BRANCH
+# is opt-in, so an unmet request is surfaced rather than silently ignored.
+#
+# Usage: checkout_branch_worker DIR BRANCH
+#   DIR:    MediaWiki src directory (e.g. /workspace/src)
+#   BRANCH: branch the user requested via BRANCH=... (e.g. master, REL1_44, wmf/1.47.0-wmf.5)
+
+set -u # error on undefined variables; NOT -e — we handle per-repo failures and must not abort the whole walk
+
+dir="$1"    # MediaWiki src directory to walk
+branch="$2" # branch the user asked for via BRANCH=...
+failed=0    # set to 1 if any detached repo can't be put on a branch; becomes the exit status
+
+# Print the default branch of the repo at $1 — the branch origin/HEAD points to — or "master"
+# when it can't be determined (e.g. origin/HEAD unset on an unusual clone).
+default_branch() {
+  local repo="$1" ref # repo dir, and the origin/HEAD symbolic-ref value
+  # symbolic-ref prints e.g. "refs/remotes/origin/master"; strip the prefix to get "master".
+  if ref=$(git -C "$repo" symbolic-ref refs/remotes/origin/HEAD 2>/dev/null); then
+    printf '%s\n' "${ref#refs/remotes/origin/}"
+  else
+    printf 'master\n' # fall back when origin/HEAD is not set
+  fi
+}
+
+# Check out branch $2 in the repo at $1. Returns non-zero if that branch can't be checked out
+# (e.g. the repo has no such branch locally or on origin).
+checkout_one() {
+  local repo="$1" b="$2" # repo dir, and branch to check out
+  # Fast path: a plain checkout works when the local branch exists, or when git can DWIM it
+  # from a single remote. 2>/dev/null hides the noisy error when the branch is absent.
+  git -C "$repo" checkout "$b" 2>/dev/null && return 0
+  # Otherwise only worth trying the tracking form if origin actually has the branch.
+  git -C "$repo" rev-parse --verify --quiet "refs/remotes/origin/$b" >/dev/null 2>&1 || return 1
+  # Create (or repoint) a local branch tracking origin/<branch>; handles a missing local branch.
+  git -C "$repo" checkout -B "$b" --track "origin/$b" 2>/dev/null
+}
+
+# Re-attach a single repo (only if it is a repo and is currently detached).
+attach_repo() {
+  local repo="$1" def # repo dir, and (lazily) its default branch
+  # Skip anything that is not the root of a git repo. Without this guard, "git -C $repo" on a
+  # plain directory (e.g. src/extensions) would walk UP to the parent repo (core) and wrongly
+  # re-checkout it. A normal repo has a .git directory; a submodule has a .git file — -e covers
+  # both (MediaWiki uses independent clones here, not submodules).
+  [ -e "$repo/.git" ] || return 0
+  # Only touch repos Quibble left detached. symbolic-ref -q HEAD succeeds (and prints the
+  # branch) only when HEAD is on a branch, so a success here means "already attached, leave it".
+  git -C "$repo" symbolic-ref -q HEAD >/dev/null 2>&1 && return 0
+  # Prefer the requested branch.
+  if checkout_one "$repo" "$branch"; then
+    return 0
+  fi
+  # Fall back to the repo's own default branch — what Quibble installed when this repo lacks
+  # the requested branch — so the repo still ends up on a branch rather than detached.
+  def=$(default_branch "$repo")
+  if [ "$def" != "$branch" ] && checkout_one "$repo" "$def"; then
+    return 0
+  fi
+  # Couldn't attach to the requested branch or the repo's default. Surface it and remember the
+  # failure (the worker exits non-zero at the end), but keep going so every repo is attempted.
+  echo "checkout_branch_worker: error: could not check out '$branch' or '$def' in $repo" >&2
+  failed=1
+}
+
+# Walk the known MediaWiki layout. Unmatched globs (e.g. no extensions/ yet) expand to the
+# literal pattern, which attach_repo skips via its "[ -e $repo/.git ]" guard — so no nullglob
+# is needed (keeps this bash 3.2 safe).
+attach_repo "$dir"        # MediaWiki core (the src dir itself)
+attach_repo "$dir/vendor" # mediawiki/vendor
+for repo in "$dir"/skins/*; do # installed skins (e.g. skins/Vector)
+  attach_repo "$repo"
+done
+for repo in "$dir"/extensions/*; do # installed extensions (e.g. extensions/Echo)
+  attach_repo "$repo"
+done
+
+exit "$failed" # non-zero if any detached repo could not be put on a branch (BRANCH is opt-in: be loud)

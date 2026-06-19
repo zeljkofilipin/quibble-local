@@ -1,0 +1,37 @@
+# shellcheck shell=bash
+# Provides the checkout_branch function: after a Quibble run, check out a named branch in the
+# MediaWiki repos under src/ when the user passed BRANCH=<branch> to fresh_install/install.
+# Quibble leaves each cloned repo in detached HEAD; this re-attaches HEAD to the requested
+# branch so the working copy is on a named branch (matching mediawiki-quickstart's BRANCH).
+# No-op unless BRANCH is set. Must be sourced, not run directly.
+# Expects $QUIBBLE_DIR, $QUIBBLE_IMAGE, and $QUIBBLE_SRC from lib/setup.
+#
+# Usage: checkout_branch
+# shellcheck disable=SC2154 # $QUIBBLE_DIR, $QUIBBLE_IMAGE, $QUIBBLE_SRC are set by lib/setup
+
+checkout_branch() {
+  # Nothing to do unless the user requested a branch (default: leave Quibble's detached HEAD).
+  [ -n "${BRANCH:-}" ] || return 0
+  # DRY_RUN means Quibble didn't actually install anything, so there are no repos to re-attach.
+  [ "${DRY_RUN:-}" = "1" ] && return 0
+
+  # Run the re-attach inside the Quibble image, not on the host: the cloned files are owned by
+  # the container's user, so host-side git can hit "dubious ownership"/permission errors on
+  # Linux. With no --user flag we run as the image's default user (the file owner), so git is
+  # happy on every host. This mirrors how ./remove and lib/docker_chmod handle container-owned
+  # files. lib/checkout_branch_worker is mounted read-only and does the actual git work.
+  # --rm: remove container on exit
+  # --entrypoint bash: override Quibble's entrypoint to run the worker script
+  # -e HOME=/tmp: give git a writable HOME inside the container
+  # -v src: the MediaWiki source to re-attach (uses QUIBBLE_SRC for parallel workers)
+  # -v worker:ro: mount the worker script read-only at a fixed path
+  # No || guard: BRANCH is opt-in, so a re-attach that can't honor the request fails loudly —
+  # the caller's set -e turns the worker's non-zero exit into a failed run.
+  docker run --rm \
+    --entrypoint bash \
+    -e HOME=/tmp \
+    -v "$QUIBBLE_DIR"/"$QUIBBLE_SRC":/workspace/src \
+    -v "$QUIBBLE_DIR"/lib/checkout_branch_worker:/checkout_branch_worker:ro \
+    "$QUIBBLE_IMAGE" \
+    /checkout_branch_worker /workspace/src "$BRANCH"
+}
