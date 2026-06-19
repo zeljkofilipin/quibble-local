@@ -3,14 +3,14 @@ $ FAST=1 ./find_dependencies_minimal_gated
 use VERBOSE=1 for full output
 logs: log/silent/
 
-OS: Linux 6.14.0-37-generic
-CPU: Intel(R) Core(TM) i5-3470 CPU @ 3.20GHz (4 cores)
-RAM: 15.6 GB
-bash: 5.2.21(1)-release
-git: git version 2.43.0
-docker: Docker version 29.5.2, build 79eb04c
-docker CPUs: 4
-docker RAM: 15.6 GB
+OS: Darwin 25.5.0
+CPU: Apple M5 Max (18 cores)
+RAM: 64.0 GB
+bash: 3.2.57(1)-release
+git: git version 2.50.1 (Apple Git-155)
+docker: Docker version 29.5.3, build d1c06ef
+docker CPUs: 18
+docker RAM: 19.5 GB
 
 skipped (no Selenium tests): extensions/AntiSpoof
 skipped (no Selenium tests): extensions/Babel
@@ -56,14 +56,8 @@ skipped (no Selenium tests): extensions/WikimediaMessages
 skipped (no Selenium tests): skins/Vector
 
 10 components to process.
-extensions/AbuseFilter find_dependencies_minimal_greedy ............................................................................ ok (45m 23s)  2026-05-27 22:18:52 UTC
-
-========================================
-= FOUND: minimum dependencies for extensions/AbuseFilter
-========================================
-
-No dependencies needed.
-extensions/CampaignEvents find_dependencies_minimal_greedy .................................................................. ok (38m 38s)  2026-05-27 22:57:30 UTC
+extensions/AbuseFilter find_dependencies_minimal_greedy ........................................ FAIL (24m 22s)  2026-06-17 21:54:40 UTC
+extensions/CampaignEvents find_dependencies_minimal_greedy .................................................................. (2h 42m 14s)  2026-06-18 00:36:54 UTC
 
 ========================================
 = FOUND: minimum dependencies for extensions/CampaignEvents
@@ -73,56 +67,44 @@ Minimum dependencies:
   Required (always needed):
     cldr
   Optional: (none needed)
-extensions/CommunityConfiguration find_dependencies_minimal_greedy ....................... ok (11m 41s)  2026-05-27 23:09:11 UTC
+extensions/CommunityConfiguration find_dependencies_minimal_greedy ....................... (54m 23s)  2026-06-18 01:31:17 UTC
 
 ========================================
 = FOUND: minimum dependencies for extensions/CommunityConfiguration
 ========================================
 
 No dependencies needed.
-extensions/Echo find_dependencies_minimal_greedy .............................................. ok (26m 9s)  2026-05-27 23:35:20 UTC
-
-========================================
-= FOUND: minimum dependencies for extensions/Echo
-========================================
-
-No dependencies needed.
-extensions/GuidedTour find_dependencies_minimal_greedy ....................... ok (11m 50s)  2026-05-27 23:47:10 UTC
+extensions/Echo find_dependencies_minimal_greedy ........................ FAIL (4m 13s)  2026-06-18 01:35:30 UTC
+extensions/GuidedTour find_dependencies_minimal_greedy ....................... (53m 0s)  2026-06-18 02:28:30 UTC
 
 ========================================
 = FOUND: minimum dependencies for extensions/GuidedTour
 ========================================
 
 No dependencies needed.
-extensions/Math find_dependencies_minimal_greedy ............................. ok (16m 22s)  2026-05-28 00:03:32 UTC
+extensions/Math find_dependencies_minimal_greedy ............................. (1h 12m 30s)  2026-06-18 03:41:00 UTC
 
 ========================================
 = FOUND: minimum dependencies for extensions/Math
 ========================================
 
 No dependencies needed.
-extensions/PageTriage find_dependencies_minimal_greedy ......................................... ok (24m 15s)  2026-05-28 00:27:47 UTC
-
-========================================
-= FOUND: minimum dependencies for extensions/PageTriage
-========================================
-
-No dependencies needed.
-extensions/ProofreadPage find_dependencies_minimal_greedy .................................................... ok (28m 40s)  2026-05-28 00:56:27 UTC
+extensions/PageTriage find_dependencies_minimal_greedy ......................... FAIL (28m 35s)  2026-06-18 04:09:35 UTC
+extensions/ProofreadPage find_dependencies_minimal_greedy ............................................... (2h 12m 38s)  2026-06-18 06:22:13 UTC
 
 ========================================
 = FOUND: minimum dependencies for extensions/ProofreadPage
 ========================================
 
 No dependencies needed.
-extensions/VisualEditor find_dependencies_minimal_greedy ........................................................... ok (39m 26s)  2026-05-28 01:35:53 UTC
+extensions/VisualEditor find_dependencies_minimal_greedy ..................................................... (2h 39m 11s)  2026-06-18 09:01:24 UTC
 
 ========================================
 = FOUND: minimum dependencies for extensions/VisualEditor
 ========================================
 
 No dependencies needed.
-skins/MinervaNeue find_dependencies_minimal_greedy ........................................................................ ok (44m 11s)  2026-05-28 02:20:04 UTC
+skins/MinervaNeue find_dependencies_minimal_greedy ........................................................................ (3h 43m 8s)  2026-06-18 12:44:32 UTC
 
 ========================================
 = FOUND: minimum dependencies for skins/MinervaNeue
@@ -137,12 +119,6 @@ Minimum dependencies:
 ========================================
 
 ========================================
-= FOUND: minimum dependencies for extensions/AbuseFilter
-========================================
-
-No dependencies needed.
-
-========================================
 = FOUND: minimum dependencies for extensions/CampaignEvents
 ========================================
 
@@ -158,12 +134,6 @@ Minimum dependencies:
 No dependencies needed.
 
 ========================================
-= FOUND: minimum dependencies for extensions/Echo
-========================================
-
-No dependencies needed.
-
-========================================
 = FOUND: minimum dependencies for extensions/GuidedTour
 ========================================
 
@@ -171,12 +141,6 @@ No dependencies needed.
 
 ========================================
 = FOUND: minimum dependencies for extensions/Math
-========================================
-
-No dependencies needed.
-
-========================================
-= FOUND: minimum dependencies for extensions/PageTriage
 ========================================
 
 No dependencies needed.
@@ -248,16 +212,17 @@ PASSED:
   extensions/WikimediaCampaignEvents
   extensions/WikimediaMessages
   skins/Vector
-  extensions/AbuseFilter
   extensions/CampaignEvents
   extensions/CommunityConfiguration
-  extensions/Echo
   extensions/GuidedTour
   extensions/Math
-  extensions/PageTriage
   extensions/ProofreadPage
   extensions/VisualEditor
   skins/MinervaNeue
+FAILED:
+  extensions/AbuseFilter (find_dependencies_minimal_greedy)
+  extensions/Echo (find_dependencies_minimal_greedy)
+  extensions/PageTriage (find_dependencies_minimal_greedy)
 
-All passed.
-(4h 47m 57s) 2026-05-28 02:20:04 UTC
+Logs: log/silent/
+(15h 15m 1s) 2026-06-18 12:44:32 UTC

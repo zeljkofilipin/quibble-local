@@ -1,0 +1,134 @@
+z@m5 quibble-local % PARALLEL=9 TIME_ELAPSED=1 TIME_UTC=1 ./generate_examples
+Skipping ./run_selenium_tests --spec tests/selenium/specs/page.js: examples/run_selenium_tests-spec.txt already generated (filename collision)
+Skipping PARALLEL=1 ./run_selenium_tests_all_gated: examples/run_selenium_tests_all_gated-parallel_1.txt already generated (filename collision)
+Generating examples/prepare.txt...
+(1m 31s) 2026-06-17 21:21:26 UTC
+Generating examples/prepare-verbose_1.txt...
+(2s) 2026-06-17 21:21:28 UTC
+Generating examples/prepare_gated.txt...
+(2m 45s) 2026-06-17 21:24:13 UTC
+Generating examples/prepare_gated-verbose_1.txt...
+(49s) 2026-06-17 21:25:02 UTC
+Generating examples/fresh_install.txt...
+(1m 2s) 2026-06-17 21:26:04 UTC
+Generating examples/save.txt...
+(30s) 2026-06-17 21:26:34 UTC
+Generating examples/save-environment_0.txt...
+(0s) 2026-06-17 21:26:34 UTC
+Generating examples/save-verbose_1.txt...
+(39s) 2026-06-17 21:27:13 UTC
+
+Parallel mode: 9 slots
+  Slot 1: ./find_dependencies_minimal_gated
+  Slot 2: ./find_dependencies_minimal_gated extensions/Echo
+  Slot 3: VERBOSE=1 ./find_dependencies_minimal_gated
+  Slot 4: FAST=1 ./find_dependencies_minimal_gated
+  Slot 5: PARALLEL=1 ./find_dependencies_minimal_gated
+  Slot 6: PARALLEL=1 FAST=1 ./find_dependencies_minimal_gated
+  Slot 7: ./run_selenium_tests_all_gated
+  Slot 8: ./run_selenium_tests_all_gated extensions/Echo
+  Slot 9: VERBOSE=1 ./run_selenium_tests_all_gated
+  Slot 6: FAST=1 ./run_selenium_tests_all_gated
+  Slot 1: PARALLEL=1 ./run_selenium_tests_all_gated
+  Slot 5: PARALLEL=1 FAST=1 ./run_selenium_tests_all_gated
+  Slot 8: ./test_integration_slow
+  Slot 1: VERBOSE=1 ./test_integration_slow
+  Slot 2: ./run_selenium_tests_required_gated
+  Slot 5: ./run_selenium_tests_required_gated extensions/Echo
+  Slot 5: VERBOSE=1 ./run_selenium_tests_required_gated
+  Slot 9: FAST=1 ./run_selenium_tests_required_gated
+  Slot 7: PARALLEL=1 ./run_selenium_tests_required_gated
+  Slot 9: PARALLEL=1 FAST=1 ./run_selenium_tests_required_gated
+  Slot 9: ./install_each_gated
+  Slot 6: ./install_each_gated extensions/Echo
+  Slot 2: VERBOSE=1 ./install_each_gated
+  Slot 6: FAST=1 ./install_each_gated
+  Slot 4: PARALLEL=1 ./install_each_gated
+  Slot 7: PARALLEL=1 FAST=1 ./install_each_gated
+  Slot 7: ./run_selenium_tests_gated
+  Slot 4: VERBOSE=1 ./run_selenium_tests_gated
+  Slot 3: ./find_dependencies_minimal_thorough extensions/Echo
+  Slot 3: VERBOSE=1 ./find_dependencies_minimal_thorough extensions/Echo
+  Slot 3: FAST=1 ./find_dependencies_minimal_thorough extensions/Echo
+  Slot 5: PARALLEL=1 ./find_dependencies_minimal_thorough extensions/Echo
+  Slot 7: PARALLEL=1 FAST=1 ./find_dependencies_minimal_thorough extensions/Echo
+  Slot 8: ./install_all_gated
+  Slot 3: VERBOSE=1 ./install_all_gated
+  Slot 4: ./find_dependencies_minimal_greedy extensions/Echo
+  Slot 1: VERBOSE=1 ./find_dependencies_minimal_greedy extensions/Echo
+  Slot 5: FAST=1 ./find_dependencies_minimal_greedy extensions/Echo
+  Slot 9: ./test_integration
+  Slot 7: VERBOSE=1 ./test_integration
+  Slot 2: ./ci
+  Slot 4: ./fetch
+  Slot 2: ./fetch ref/mediawiki/core.git
+  Slot 4: ./fetch ref/mediawiki/extensions/Echo.git ref/mediawiki/skins/Vector.git
+  Slot 1: PARALLEL=1 ./fetch
+  Slot 2: VERBOSE=1 ./fetch
+  Slot 4: ./find_dependencies_minimal_bottom_up extensions/Echo
+  Slot 1: VERBOSE=1 ./find_dependencies_minimal_bottom_up extensions/Echo
+  Slot 2: FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo
+  Slot 9: PARALLEL=1 ./find_dependencies_minimal_bottom_up extensions/Echo
+  Slot 7: PARALLEL=1 FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo
+  Slot 5: ./help
+  Slot 6: ./help install
+  Slot 4: ./help ./install
+  Slot 5: ./install extensions/Echo
+  Slot 6: ./install skins/MinervaNeue
+  Slot 4: ENVIRONMENT=0 ./install extensions/Echo
+  Slot 9: VERBOSE=1 ./install extensions/Echo
+  Slot 1: QUIBBLE_DEPS="" ./install extensions/Echo
+  Slot 5: QUIBBLE_DEPS="EventLogging" ./install extensions/Echo
+  Slot 6: DRY_RUN=1 ./install extensions/Echo
+  Slot 2: RESOLVE_REQUIRES=0 ./install extensions/Echo
+  Slot 9: ./lint
+  Slot 4: ./list_dependencies extensions/Echo
+  Slot 1: ./list_dependencies skins/MinervaNeue
+  Slot 6: ./list_dependencies_combinations extensions/Echo
+  Slot 5: ./list_dependencies_combinations skins/MinervaNeue
+  Slot 4: ./list_dependencies_optional extensions/Echo
+  Slot 9: ./list_dependencies_optional skins/MinervaNeue
+  Slot 1: ./list_dependencies_required extensions/Echo
+  Slot 2: ./list_dependencies_required extensions/GrowthExperiments
+  Slot 6: ./list_dependencies_required skins/MinervaNeue
+  Slot 7: ./list_gated
+  Slot 5: ./restore
+  Slot 4: ENVIRONMENT=0 ./restore
+  Slot 9: VERBOSE=1 ./restore
+  Slot 1: ./run_php_unit_tests
+  Slot 2: ./run_php_unit_tests --filter testValidSpecialPageAliases
+  Slot 6: ./run_php_unit_tests extensions/Echo
+  Slot 7: ENVIRONMENT=0 ./run_php_unit_tests extensions/Echo
+  Slot 9: ./run_php_unit_tests extensions/Echo --filter testNotificationCount
+  Slot 2: DRY_RUN=1 ./run_php_unit_tests extensions/Echo
+  Slot 6: ./run_selenium_tests
+  Slot 4: ./run_selenium_tests extensions/Echo
+  Slot 5: ENVIRONMENT=0 ./run_selenium_tests extensions/Echo
+  Slot 9: ./run_selenium_tests --spec tests/selenium/wdio-mediawiki/specs/BlankPage.js
+  Slot 7: ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js
+  Slot 2: ./run_selenium_tests --spec tests/selenium/specs/user.js --mochaOpts.grep "should be able to create account"
+  Slot 9: ./run_selenium_tests extensions/Echo --spec tests/selenium/specs/notifications.js --mochaOpts.grep "alerts and notices are visible"
+  Slot 7: DRY_RUN=1 ./run_selenium_tests extensions/Echo
+  Slot 6: ./selenium_tests_exist
+  Slot 4: ./selenium_tests_exist extensions/Echo
+  Slot 5: ./selenium_tests_exist skins/MinervaNeue
+  Slot 2: ./selenium_tests_exist skins/Vector
+  Slot 9: ./suggest_parallel
+  Slot 7: ./test_unit
+  Slot 6: ./test_unit test/lib_awk.bats
+Generating examples/remove_srcs.txt...
+(4m 31s) 2026-06-19 01:11:31 UTC
+Generating examples/remove_srcs-verbose_1.txt...
+(1s) 2026-06-19 01:11:32 UTC
+Generating examples/remove.txt...
+(0s) 2026-06-19 01:11:32 UTC
+Generating examples/remove-environment_0.txt...
+(1s) 2026-06-19 01:11:33 UTC
+Generating examples/remove-verbose_1.txt...
+(0s) 2026-06-19 01:11:33 UTC
+Generating examples/remove_all.txt...
+(10s) 2026-06-19 01:11:43 UTC
+Generating examples/remove_all-verbose_1.txt...
+(0s) 2026-06-19 01:11:43 UTC
+generate_examples: generated 115, skipped 2, took 1d 3h 51m 49s
+(1d 3h 51m 49s) 2026-06-19 01:11:43 UTC
