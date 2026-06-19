@@ -244,10 +244,26 @@ _run_pool_worker() {
 }
 
 # Friendlier pool progress line: show the slot and the command, not the raw "<file>\t<cmd>" tuple.
+# Also stamp when this slot's current item started, so _pool_reap can report its wall-clock.
 _pool_worker_label() {
   local _file _cmd
   IFS=$'\t' read -r _file _cmd <<< "$2"            # $2 is the tuple; keep only the command for display
+  _slot_start[$1]=$(date +%s)                      # epoch seconds; paired with _pool_reap (date +%s is BSD/GNU-portable)
   printf "  Slot %d: %s\n" "$1" "$_cmd" >&2
+}
+
+# lib/run_pool hook: per-completion. Runs in the main process (run_pool is sourced), so it appends
+# to the shared timing log directly. Gated on TIME_ELAPSED=1 — when unset it prints nothing and the
+# default output is unchanged. $1 = slot, $2 = "<file>\t<cmd>" tuple. The pool otherwise logs only
+# the dispatch line, so this (plus the sorted "Slowest items" summary after the pool) is what
+# surfaces which Usage lines dominate the multi-hour run.
+_pool_reap() {
+  [ -n "${TIME_ELAPSED:-}" ] || return 0           # only collect/print timing when the user opts in
+  local _file _cmd _elapsed
+  IFS=$'\t' read -r _file _cmd <<< "$2"
+  _elapsed=$(( $(date +%s) - ${_slot_start[$1]:-$(date +%s)} )) # seconds this item ran (0 if start missing)
+  printf "  Slot %d done (%s): %s\n" "$1" "$(_quibble_format_duration "$_elapsed")" "$_cmd" >&2
+  printf '%s\t%s\n' "$_elapsed" "$_cmd" >> "$_pool_timing" # record for the sorted summary after the pool
 }
 
 # Dispatch: PREVIEW or parallel<1 (unset/0) takes the serial path; parallel>=1 takes the
@@ -292,6 +308,15 @@ else
   # short jobs backfill the tail — keeping every slot busy to the end. Best-effort hint only:
   # the pool is correct in any order, so a stale/missing entry just costs a little efficiency.
   . "$(dirname "$0")"/lib/heavy_scripts # defines _quibble_heavy_scripts (most-expensive first)
+
+  # Per-item timing (TIME_ELAPSED=1 only): _pool_worker_label stamps each slot's start time,
+  # _pool_reap records each finished item's elapsed time here, and the sorted "Slowest items"
+  # summary after the pool surfaces the long poles. _slot_start is keyed by the stable 1..parallel
+  # slot id. The timing file lives in work_dir, so it's removed with everything else on success.
+  _slot_start=()                        # _slot_start[S] = epoch seconds when slot S's current item began
+  _pool_timing="$work_dir/.pool_timing" # one "<elapsed-seconds>\t<cmd>" line per completed item
+  : > "$_pool_timing"                   # start empty
+
   items=() # lib/run_pool reads this ambient array of "<file>\t<cmd>" tuples; _append_work_tuples fills it
   for script in ${_quibble_heavy_scripts[@]+"${_quibble_heavy_scripts[@]}"}; do
     case " ${others[*]} " in *" $script "*) ;; *) continue ;; esac # only front-load names that are actual middle scripts
@@ -303,6 +328,15 @@ else
   done
   if [ "${#items[@]}" -gt 0 ]; then
     . "$(dirname "$0")"/lib/run_pool # dispatch items across $parallel slots via _run_pool_worker
+  fi
+
+  # Sorted slowest-first summary of the pool items (TIME_ELAPSED=1 only): the per-item completion
+  # lines above are interleaved across slots, so this ranks them to make the long poles obvious.
+  if [ -n "${TIME_ELAPSED:-}" ] && [ -s "$_pool_timing" ]; then
+    printf "\nSlowest items:\n" >&2
+    sort -rn "$_pool_timing" | while IFS=$'\t' read -r _secs _cmd; do
+      printf "  %s\t%s\n" "$(_quibble_format_duration "$_secs")" "$_cmd" >&2
+    done
   fi
 
   # Late phase: serial in main process. Destructive scripts (remove_srcs/remove/remove_all)

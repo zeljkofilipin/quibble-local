@@ -22,7 +22,7 @@
 # of 5). Increasing Docker memory to 10+ GB removes the bottleneck.
 #
 # Usage: ./suggest_parallel
-#        PARALLEL=1 ./run_selenium_tests_all_gated
+#        PARALLEL=1 ./run_selenium_tests_all_gated extensions/Echo
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 

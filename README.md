@@ -36,7 +36,7 @@ Useful for long-running batch scripts (`find_dependencies_minimal_*`, `run_selen
 
 ### `TIME_ELAPSED`
 
-Elapsed-time durations (per-step / per-test `(Xs)` strings, silent-mode `(Xs)` (success) / `FAIL (Xs)` lines, the EXIT-trap total `(Xs)` line, and `generate_examples`' `took (Xs)` summary) are **off by default**. Set `TIME_ELAPSED=1` to enable them.
+Elapsed-time durations (per-step / per-test `(Xs)` strings, silent-mode `(Xs)` (success) / `FAIL (Xs)` lines, the EXIT-trap total `(Xs)` line, and `generate_examples`' `took (Xs)` summary plus, at `PARALLEL=N`, its per-item pool completion times and a sorted `Slowest items:` list) are **off by default**. Set `TIME_ELAPSED=1` to enable them.
 
     ./test_integration                # no durations (default)
     TIME_ELAPSED=1 ./test_integration # show durations
@@ -196,7 +196,6 @@ To start from a completely clean state, run `./remove_all` first.
 Run integration tests that are too slow for the fast suite (`./test_integration`). Includes network-heavy setup, full test suites, exhaustive algorithms, and gated repository tests. Silent by default; use `VERBOSE=1` for full output.
 
     ./test_integration_slow
-    VERBOSE=1 ./test_integration_slow
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a long time to run.
 
@@ -320,7 +319,7 @@ On macOS, the result may differ depending on whether Docker is running. When Doc
 To maximize parallel workers on macOS, increase Docker Desktop memory: Docker Desktop → Settings → Resources → Memory. The formula is: workers = min(CPUs / 2, memory / 2 GB). On a 10-core / 64 GB machine with Docker Desktop defaults (~6 GB), memory is the bottleneck (3 workers instead of 5). Increasing Docker memory to 10+ GB removes the bottleneck.
 
     ./suggest_parallel
-    PARALLEL=1 ./run_selenium_tests_all_gated
+    PARALLEL=1 ./run_selenium_tests_all_gated extensions/Echo
 
 ## Finding minimum dependencies
 
@@ -415,10 +414,10 @@ Install each gated extension or skin into its own fresh MediaWiki, one at a time
 
     ./install_each_gated
     ./install_each_gated extensions/Echo
-    VERBOSE=1 ./install_each_gated
-    FAST=1 ./install_each_gated
-    PARALLEL=1 ./install_each_gated
-    PARALLEL=1 FAST=1 ./install_each_gated
+    VERBOSE=1 ./install_each_gated extensions/Echo
+    FAST=1 ./install_each_gated extensions/Echo
+    PARALLEL=1 ./install_each_gated extensions/Echo
+    PARALLEL=1 FAST=1 ./install_each_gated extensions/Echo
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
@@ -428,10 +427,10 @@ Run Selenium tests for core and all gated repositories. For each component: `./f
 
     ./run_selenium_tests_all_gated
     ./run_selenium_tests_all_gated extensions/Echo
-    VERBOSE=1 ./run_selenium_tests_all_gated
-    FAST=1 ./run_selenium_tests_all_gated
-    PARALLEL=1 ./run_selenium_tests_all_gated
-    PARALLEL=1 FAST=1 ./run_selenium_tests_all_gated
+    VERBOSE=1 ./run_selenium_tests_all_gated extensions/Echo
+    FAST=1 ./run_selenium_tests_all_gated extensions/Echo
+    PARALLEL=1 ./run_selenium_tests_all_gated extensions/Echo
+    PARALLEL=1 FAST=1 ./run_selenium_tests_all_gated extensions/Echo
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
@@ -440,7 +439,6 @@ Run Selenium tests for core and all gated repositories. For each component: `./f
 Install all gated extensions and skins into a single MediaWiki, then run all Selenium tests. Unlike `./run_selenium_tests_all_gated` (which does `./fresh_install` per component), this installs everything together into one `src/`.
 
     ./run_selenium_tests_gated
-    VERBOSE=1 ./run_selenium_tests_gated
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a long time to run (50+ components).
 
@@ -450,10 +448,10 @@ Run Selenium tests for all gated repositories using only required dependencies (
 
     ./run_selenium_tests_required_gated
     ./run_selenium_tests_required_gated extensions/Echo
-    VERBOSE=1 ./run_selenium_tests_required_gated
-    FAST=1 ./run_selenium_tests_required_gated
-    PARALLEL=1 ./run_selenium_tests_required_gated
-    PARALLEL=1 FAST=1 ./run_selenium_tests_required_gated
+    VERBOSE=1 ./run_selenium_tests_required_gated extensions/Echo
+    FAST=1 ./run_selenium_tests_required_gated extensions/Echo
+    PARALLEL=1 ./run_selenium_tests_required_gated extensions/Echo
+    PARALLEL=1 FAST=1 ./run_selenium_tests_required_gated extensions/Echo
 
 **Warning:** This script inhibits sleep to prevent the machine from suspending. This will take a very long time to run (50+ components).
 
@@ -463,10 +461,10 @@ Find minimum dependencies for all gated repositories (or a single component). Fo
 
     ./find_dependencies_minimal_gated
     ./find_dependencies_minimal_gated extensions/Echo
-    VERBOSE=1 ./find_dependencies_minimal_gated
-    FAST=1 ./find_dependencies_minimal_gated
-    PARALLEL=1 ./find_dependencies_minimal_gated
-    PARALLEL=1 FAST=1 ./find_dependencies_minimal_gated
+    VERBOSE=1 ./find_dependencies_minimal_gated extensions/Echo
+    FAST=1 ./find_dependencies_minimal_gated extensions/Echo
+    PARALLEL=1 ./find_dependencies_minimal_gated extensions/Echo
+    PARALLEL=1 FAST=1 ./find_dependencies_minimal_gated extensions/Echo
 
 Environment variables:
 
