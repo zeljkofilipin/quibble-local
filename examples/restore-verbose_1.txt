@@ -32,18 +32,97 @@ docker RAM: 19.5 GB
 = restore is running: . ./lib/docker_chmod
 
 ========================================
-= restore is running: '[' '!' -d src_save_9 ']'
+= restore is running: '[' '!' -d src_save_1 ']'
+
 
 ========================================
-= restore is running: echo 'Error: src_save_9/ is empty or missing. Run ./save first.'
-Error: src_save_9/ is empty or missing. Run ./save first.
+= restore is running: ls -A src_save_1
 
 ========================================
-= restore is running: exit 1
+= restore is running: '[' -z '.dockerignore
+.editorconfig
+.eslintignore
+.eslintrc.json
+.fresnel.yml
+.git
+.git-blame-ignore-revs
+.gitattributes
+.gitignore
+.gitmessage
+.gitreview
+.mailmap
+.minus-x.json
+.phan
+.phpcs.xml
+.stylelintrc.json
+.svgo.config.js
+.vsls.json
+CODE_OF_CONDUCT.md
+COPYING
+CREDITS
+DEVELOPERS.md
+FAQ
+Gruntfile.js
+HISTORY
+INSTALL
+LocalSettings-installer.php
+LocalSettings.php
+README.md
+RELEASE-NOTES-1.46
+RELEASE-NOTES-1.47
+SECURITY
+UPGRADE
+api.php
+autoload.php
+bundlesize.config.json
+cache
+composer.json
+composer.local.json-sample
+docker-compose.yml
+docs
+extensions
+images
+img_auth.php
+includes
+index.php
+jsdoc.json
+languages
+load.php
+maintenance
+mw-config
+node_modules
+opensearch_desc.php
+package-lock.json
+package.json
+phpunit.xml.template
+resources
+rest.php
+skins
+sql
+tests
+thumb.php
+thumb_handler.php
+vendor' ']'
+
+========================================
+= restore is running: mkdir -p src_1
+
+========================================
+= restore is running: docker_chmod src_1
+
+========================================
+= restore is running: chmod 777 src_1
+
+========================================
+= restore is running: return 0
+
+========================================
+= restore is running: docker run --rm --entrypoint bash --user root -v $PWD/src_1:/workspace/src -v $PWD/src_save_1:/workspace/src_save:ro docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/'
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 
 ========================================
 = restore is running: _quibble_run_exit_traps
 
 ========================================
-= restore is running: local _code=1
-(0s) 2026-06-19 00:22:19 UTC
+= restore is running: local _code=0
+(7m 34s) 2026-06-20 04:41:28 UTC

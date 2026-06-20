@@ -12,4 +12,4 @@ docker: Docker version 29.5.3, build d1c06ef
 docker CPUs: 18
 docker RAM: 19.5 GB
 
-remove_srcs ......... FAIL (4m 31s) (see log/remove_srcs.log)
+remove_srcs . (3m 16s)

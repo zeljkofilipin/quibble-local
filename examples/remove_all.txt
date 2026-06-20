@@ -12,4 +12,4 @@ docker: Docker version 29.5.3, build d1c06ef
 docker CPUs: 18
 docker RAM: 19.5 GB
 
-remove_all ... (10s)
+remove_all ... (7s)

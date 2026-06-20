@@ -1,0 +1,43 @@
+$ FAST=1 ./find_dependencies_minimal_gated extensions/Echo
+
+use VERBOSE=1 for full output
+logs: log/silent/
+
+OS: Darwin 25.5.0
+CPU: Apple M5 Max (18 cores)
+RAM: 64.0 GB
+bash: 3.2.57(1)-release
+git: git version 2.50.1 (Apple Git-155)
+docker: Docker version 29.5.3, build d1c06ef
+docker CPUs: 18
+docker RAM: 19.5 GB
+
+
+1 component to process.
+extensions/Echo find_dependencies_minimal_greedy .............................................. (1h 59m 26s)  2026-06-19 18:36:21 UTC
+
+========================================
+= FOUND: minimum dependencies for extensions/Echo
+========================================
+
+No dependencies needed.
+
+========================================
+= Minimum dependencies found
+========================================
+
+========================================
+= FOUND: minimum dependencies for extensions/Echo
+========================================
+
+No dependencies needed.
+
+
+========================================
+= Results
+========================================
+PASSED:
+  extensions/Echo
+
+All passed.
+(1h 59m 28s) 2026-06-19 18:36:21 UTC

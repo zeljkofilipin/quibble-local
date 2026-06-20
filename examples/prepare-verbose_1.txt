@@ -67,16 +67,19 @@ docker RAM: 19.5 GB
 = prepare is running: ref_dir=ref/mediawiki/vendor.git
 
 ========================================
+= prepare is running: git -C ref/mediawiki/core.git fetch
+
+========================================
 = prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/vendor
 
 ========================================
-
-========================================
-= prepare is running: git -C ref/mediawiki/core.git fetch
 = prepare is running: '[' -d ref/mediawiki/vendor.git ']'
 
 ========================================
 = prepare is running: pids+=($!)
+
+========================================
+= prepare is running: git -C ref/mediawiki/vendor.git fetch
 
 ========================================
 = prepare is running: pid_names+=("$ref_dir")
@@ -85,19 +88,13 @@ docker RAM: 19.5 GB
 = prepare is running: for ref_repo in '"ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core"' '"ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor"' '"ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector"' '"ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"'
 
 ========================================
-
-========================================
 = prepare is running: ref_dir=ref/mediawiki/skins/Vector.git
-= prepare is running: git -C ref/mediawiki/vendor.git fetch
 
 ========================================
 = prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
 
 ========================================
 = prepare is running: '[' -d ref/mediawiki/skins/Vector.git ']'
-
-========================================
-= prepare is running: git -C ref/mediawiki/skins/Vector.git fetch
 
 ========================================
 = prepare is running: pids+=($!)
@@ -118,6 +115,9 @@ docker RAM: 19.5 GB
 = prepare is running: '[' -d ref/integration/config.git ']'
 
 ========================================
+= prepare is running: git -C ref/mediawiki/skins/Vector.git fetch
+
+========================================
 = prepare is running: pids+=($!)
 
 ========================================
@@ -130,12 +130,12 @@ docker RAM: 19.5 GB
 = prepare is running: for i in '"${!pids[@]}"'
 
 ========================================
-= prepare is running: wait 51473
+= prepare is running: wait 92747
 
 ========================================
 = prepare is running: git -C ref/integration/config.git fetch
 latest: Pulling from releng/quibble-bookworm-php83
-Digest: sha256:33636ef34ac835731b8be175fed3ad22c21a23e8b545fdfdd12aee2d5b5c95b9
+Digest: sha256:51b46b51a1787aa0d9dc05736d0b35c2377364f3cb3bc58eb71faecc574812a0
 Status: Image is up to date for docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest
 docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest
 
@@ -143,7 +143,7 @@ docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest
 = prepare is running: for i in '"${!pids[@]}"'
 
 ========================================
-= prepare is running: wait 51474
+= prepare is running: wait 92748
 From https://gerrit.wikimedia.org/r/integration/config
  * branch                HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
@@ -157,19 +157,19 @@ From https://gerrit.wikimedia.org/r/mediawiki/core
 = prepare is running: for i in '"${!pids[@]}"'
 
 ========================================
-= prepare is running: wait 51475
+= prepare is running: wait 92749
 
 ========================================
 = prepare is running: for i in '"${!pids[@]}"'
 
 ========================================
-= prepare is running: wait 51476
+= prepare is running: wait 92750
 
 ========================================
 = prepare is running: for i in '"${!pids[@]}"'
 
 ========================================
-= prepare is running: wait 51477
+= prepare is running: wait 92751
 
 ========================================
 = prepare is running: '[' 0 -gt 0 ']'
@@ -185,4 +185,4 @@ From https://gerrit.wikimedia.org/r/mediawiki/core
 
 ========================================
 = prepare is running: local _code=0
-(2s) 2026-06-17 21:21:28 UTC
+(1s) 2026-06-19 16:28:48 UTC
