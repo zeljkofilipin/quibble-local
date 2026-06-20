@@ -30,16 +30,25 @@ fetch(CentralAuth) ..
 fetch(EventLogging) ..
 fetch(MobileFrontend) ..
 
-Parallel mode: 1 worker
+Parallel mode: 1 slot
+  Slot 1: combo 1/16: (none)
+  Slot 1: combo 2/16: AntiSpoof
+  Slot 1: combo 3/16: CentralAuth
+  Slot 1: combo 4/16: EventLogging
+  Slot 1: combo 5/16: MobileFrontend
+  Slot 1: combo 6/16: AntiSpoof CentralAuth
+  Slot 1: combo 7/16: AntiSpoof EventLogging
+  Slot 1: combo 8/16: CentralAuth EventLogging
+  Slot 1: combo 9/16: AntiSpoof MobileFrontend
+  Slot 1: combo 10/16: CentralAuth MobileFrontend
+  Slot 1: combo 11/16: EventLogging MobileFrontend
+  Slot 1: combo 12/16: AntiSpoof CentralAuth EventLogging
+  Slot 1: combo 13/16: AntiSpoof CentralAuth MobileFrontend
+  Slot 1: combo 14/16: AntiSpoof EventLogging MobileFrontend
+  Slot 1: combo 15/16: CentralAuth EventLogging MobileFrontend
+  Slot 1: combo 16/16: AntiSpoof CentralAuth EventLogging MobileFrontend
 
---- Wave 1-1 of 16 (1 worker) --- 2026-06-18 23:32:29 UTC
-  Worker 1: combo 1/16: (none)
-
-  Combination 1/16 passed!
-
-========================================
-= FOUND: minimum dependencies for extensions/Echo
-========================================
-
-No dependencies needed.
-(17m 18s) 2026-06-18 23:49:43 UTC
+No working combination found.
+If this previously passed, zuul/dependencies.yaml may rely on Quibble's --resolve-requires
+to install a transitive requirement. Rerun with RESOLVE_REQUIRES=1 to confirm and identify it.
+(8m 49s) 2026-06-20 03:31:29 UTC

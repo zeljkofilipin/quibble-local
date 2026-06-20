@@ -53,4 +53,4 @@ ok 38 extract_found_block.awk: extracts 'No dependencies needed' block
 ok 39 extract_found_block.awk: extracts block with required and optional deps
 ok 40 extract_found_block.awk: handles seconds-only duration line
 ok 41 extract_found_block.awk: returns nothing when no FOUND block is present
-(1s) 2026-06-19 00:51:46 UTC
+(2s) 2026-06-20 05:03:02 UTC

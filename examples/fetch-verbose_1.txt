@@ -33,17 +33,26 @@ docker RAM: 19.5 GB
 ========================================
 = fetch is running: '[' 0 -gt 0 ']'
 
-========================================
-= fetch is running: IFS=
-
-========================================
-= fetch is running: read -r repo
-
 
 ========================================
 = fetch is running: find ref -name '*.git' -type d
 
 ========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
+= fetch is running: repos+=("$repo")
+
+========================================
+= fetch is running: IFS=
+
+========================================
+= fetch is running: read -r repo
+
+========================================
 = fetch is running: repos+=("$repo")
 
 ========================================
@@ -764,7 +773,7 @@ docker RAM: 19.5 GB
 = fetch is running: read -r repo
 
 ========================================
-= fetch is running: '[' 80 -eq 0 ']'
+= fetch is running: '[' 81 -eq 0 ']'
 
 ========================================
 = fetch is running: '[' 0 -lt 1 ']'
@@ -823,7 +832,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/BetaFeatures
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/Linter.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Linter
- * branch              HEAD       -> FETCH_HEAD
+ * branch            HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in '"${repos[@]}"'
@@ -847,7 +856,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseCirrusSearch
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/Cite.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/Cite
- * branch                HEAD       -> FETCH_HEAD
+ * branch              HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in '"${repos[@]}"'
@@ -1047,7 +1056,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/CirrusSearch
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/FlaggedRevs.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/FlaggedRevs
- * branch                HEAD       -> FETCH_HEAD
+ * branch              HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in '"${repos[@]}"'
@@ -1173,6 +1182,14 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseMediaInfo
 = fetch is running: for repo in '"${repos[@]}"'
 
 ========================================
+= fetch is running: git -C ref/mediawiki/extensions/WikibaseLexemeCirrusSearch.git fetch
+From https://gerrit.wikimedia.org/r/mediawiki/extensions/WikibaseLexemeCirrusSearch
+ * branch            HEAD       -> FETCH_HEAD
+
+========================================
+= fetch is running: for repo in '"${repos[@]}"'
+
+========================================
 = fetch is running: git -C ref/mediawiki/extensions/PageImages.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/PageImages
  * branch            HEAD       -> FETCH_HEAD
@@ -1215,7 +1232,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Elastica
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/DiscussionTools.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/DiscussionTools
- * branch                HEAD       -> FETCH_HEAD
+ * branch              HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in '"${repos[@]}"'
@@ -1391,7 +1408,7 @@ From https://gerrit.wikimedia.org/r/mediawiki/extensions/Echo
 ========================================
 = fetch is running: git -C ref/mediawiki/extensions/CentralAuth.git fetch
 From https://gerrit.wikimedia.org/r/mediawiki/extensions/CentralAuth
- * branch              HEAD       -> FETCH_HEAD
+ * branch                HEAD       -> FETCH_HEAD
 
 ========================================
 = fetch is running: for repo in '"${repos[@]}"'
@@ -1414,4 +1431,4 @@ From https://gerrit.wikimedia.org/r/mediawiki/vendor
 
 ========================================
 = fetch is running: local _code=0
-(1m 14s) 2026-06-18 23:22:08 UTC
+(1m 15s) 2026-06-20 03:15:33 UTC

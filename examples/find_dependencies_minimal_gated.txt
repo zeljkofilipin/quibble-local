@@ -56,16 +56,137 @@ skipped (no Selenium tests): extensions/WikimediaMessages
 skipped (no Selenium tests): skins/Vector
 
 10 components to process.
-extensions/AbuseFilter find_dependencies_minimal_greedy ....................................... FAIL (1m 3s)  2026-06-17 21:31:21 UTC
-extensions/CampaignEvents find_dependencies_minimal_greedy ................................... FAIL (9s)  2026-06-17 21:31:30 UTC
-extensions/CommunityConfiguration find_dependencies_minimal_greedy ............... FAIL (2s)  2026-06-17 21:31:32 UTC
-extensions/Echo find_dependencies_minimal_greedy ........................ FAIL (7s)  2026-06-17 21:31:39 UTC
-extensions/GuidedTour find_dependencies_minimal_greedy ............... FAIL (41s)  2026-06-17 21:32:20 UTC
-extensions/Math find_dependencies_minimal_greedy .................. FAIL (54s)  2026-06-17 21:33:14 UTC
-extensions/PageTriage find_dependencies_minimal_greedy ........................ FAIL (1m 5s)  2026-06-17 21:34:19 UTC
-extensions/ProofreadPage find_dependencies_minimal_greedy ........................... FAIL (5s)  2026-06-17 21:34:24 UTC
-extensions/VisualEditor find_dependencies_minimal_greedy .............................. FAIL (7s)  2026-06-17 21:34:32 UTC
-skins/MinervaNeue find_dependencies_minimal_greedy ................................. FAIL (9s)  2026-06-17 21:34:41 UTC
+extensions/AbuseFilter find_dependencies_minimal_greedy ....................................... FAIL (23s)  2026-06-19 16:38:07 UTC
+extensions/CampaignEvents find_dependencies_minimal_greedy .............................................................................................. (2h 27m 57s)  2026-06-19 19:06:04 UTC
+
+========================================
+= FOUND: minimum dependencies for extensions/CampaignEvents
+========================================
+
+Minimum dependencies:
+  Required (always needed):
+    cldr
+  Optional (minimum needed):
+    UserMerge
+    WikimediaCampaignEvents
+extensions/CommunityConfiguration find_dependencies_minimal_greedy ............... FAIL (1m 16s)  2026-06-19 19:07:21 UTC
+extensions/Echo find_dependencies_minimal_greedy .................................................. (1h 52m 20s)  2026-06-19 20:59:41 UTC
+
+========================================
+= FOUND: minimum dependencies for extensions/Echo
+========================================
+
+Minimum dependencies:
+  Optional (minimum needed):
+    AntiSpoof
+    CentralAuth
+extensions/GuidedTour find_dependencies_minimal_greedy ....................... (37m 47s)  2026-06-19 21:37:28 UTC
+
+========================================
+= FOUND: minimum dependencies for extensions/GuidedTour
+========================================
+
+No dependencies needed.
+extensions/Math find_dependencies_minimal_greedy ............................. (53m 52s)  2026-06-19 22:31:20 UTC
+
+========================================
+= FOUND: minimum dependencies for extensions/Math
+========================================
+
+No dependencies needed.
+extensions/PageTriage find_dependencies_minimal_greedy ......................... FAIL (14m 30s)  2026-06-19 22:45:50 UTC
+extensions/ProofreadPage find_dependencies_minimal_greedy ............................................... (1h 47m 37s)  2026-06-20 00:33:28 UTC
+
+========================================
+= FOUND: minimum dependencies for extensions/ProofreadPage
+========================================
+
+No dependencies needed.
+extensions/VisualEditor find_dependencies_minimal_greedy ..................................................... (2h 16m 14s)  2026-06-20 02:49:42 UTC
+
+========================================
+= FOUND: minimum dependencies for extensions/VisualEditor
+========================================
+
+No dependencies needed.
+skins/MinervaNeue find_dependencies_minimal_greedy ................................................................. (41m 7s)  2026-06-20 03:30:49 UTC
+
+========================================
+= FOUND: minimum dependencies for skins/MinervaNeue
+========================================
+
+Minimum dependencies:
+  Optional (minimum needed):
+    Cite
+    Echo
+    MobileFrontend
+    EventBus
+    EventLogging
+    EventStreamConfig
+    TestKitchen
+
+========================================
+= Minimum dependencies found
+========================================
+
+========================================
+= FOUND: minimum dependencies for extensions/CampaignEvents
+========================================
+
+Minimum dependencies:
+  Required (always needed):
+    cldr
+  Optional (minimum needed):
+    UserMerge
+    WikimediaCampaignEvents
+
+========================================
+= FOUND: minimum dependencies for extensions/Echo
+========================================
+
+Minimum dependencies:
+  Optional (minimum needed):
+    AntiSpoof
+    CentralAuth
+
+========================================
+= FOUND: minimum dependencies for extensions/GuidedTour
+========================================
+
+No dependencies needed.
+
+========================================
+= FOUND: minimum dependencies for extensions/Math
+========================================
+
+No dependencies needed.
+
+========================================
+= FOUND: minimum dependencies for extensions/ProofreadPage
+========================================
+
+No dependencies needed.
+
+========================================
+= FOUND: minimum dependencies for extensions/VisualEditor
+========================================
+
+No dependencies needed.
+
+========================================
+= FOUND: minimum dependencies for skins/MinervaNeue
+========================================
+
+Minimum dependencies:
+  Optional (minimum needed):
+    Cite
+    Echo
+    MobileFrontend
+    EventBus
+    EventLogging
+    EventStreamConfig
+    TestKitchen
+
 
 ========================================
 = Results
@@ -113,17 +234,17 @@ PASSED:
   extensions/WikimediaCampaignEvents
   extensions/WikimediaMessages
   skins/Vector
+  extensions/CampaignEvents
+  extensions/Echo
+  extensions/GuidedTour
+  extensions/Math
+  extensions/ProofreadPage
+  extensions/VisualEditor
+  skins/MinervaNeue
 FAILED:
   extensions/AbuseFilter (find_dependencies_minimal_greedy)
-  extensions/CampaignEvents (find_dependencies_minimal_greedy)
   extensions/CommunityConfiguration (find_dependencies_minimal_greedy)
-  extensions/Echo (find_dependencies_minimal_greedy)
-  extensions/GuidedTour (find_dependencies_minimal_greedy)
-  extensions/Math (find_dependencies_minimal_greedy)
   extensions/PageTriage (find_dependencies_minimal_greedy)
-  extensions/ProofreadPage (find_dependencies_minimal_greedy)
-  extensions/VisualEditor (find_dependencies_minimal_greedy)
-  skins/MinervaNeue (find_dependencies_minimal_greedy)
 
 Logs: log/silent/
-(5m 10s) 2026-06-17 21:34:41 UTC
+(10h 53m 54s) 2026-06-20 03:30:49 UTC

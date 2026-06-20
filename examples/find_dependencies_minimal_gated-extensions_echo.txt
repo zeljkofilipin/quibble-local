@@ -14,7 +14,7 @@ docker RAM: 19.5 GB
 
 
 1 component to process.
-extensions/Echo find_dependencies_minimal_greedy .............................................. (1h 31m 50s)  2026-06-17 23:01:22 UTC
+extensions/Echo find_dependencies_minimal_greedy .............................................. (1h 46m 41s)  2026-06-19 18:23:36 UTC
 
 ========================================
 = FOUND: minimum dependencies for extensions/Echo
@@ -40,4 +40,4 @@ PASSED:
   extensions/Echo
 
 All passed.
-(1h 31m 51s) 2026-06-17 23:01:22 UTC
+(1h 46m 43s) 2026-06-19 18:23:36 UTC
