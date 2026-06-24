@@ -10,20 +10,10 @@ bash: 3.2.57(1)-release
 git: git version 2.50.1 (Apple Git-155)
 docker: Docker version 29.5.3, build d1c06ef
 docker CPUs: 18
-docker RAM: 19.5 GB
+docker RAM: 62.7 GB
 
-
-1 component to process.
-
-Parallel mode: 1 slot
-  Slot 1: extensions/Echo (ENVIRONMENT=1)
-  extensions/Echo: FAIL (see log/silent/slot-6/parallel/extensions-Echo.log)
-
-========================================
-= Results
-========================================
-FAILED:
-  extensions/Echo
-
-Logs: log/silent/
-(1m 14s) 2026-06-19 16:38:08 UTC
+awk: can't open file src/config/zuul/dependencies.yaml
+ source line number 8
+Error: failed to list dependencies for extensions/Echo
+Error: failed to list optional dependencies for extensions/Echo
+(2s) 2026-06-22 05:36:47 UTC

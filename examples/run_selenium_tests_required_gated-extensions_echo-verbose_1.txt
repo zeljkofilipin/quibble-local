@@ -2,11 +2,11 @@ $ VERBOSE=1 ./run_selenium_tests_required_gated extensions/Echo
 
 
 ########################################
-# extensions/Echo 2026-06-19 17:26:46 UTC
+# extensions/Echo 2026-06-22 06:26:17 UTC
 ########################################
 
 ========================================
-= extensions/Echo: ./fresh_install 2026-06-19 17:26:46 UTC
+= extensions/Echo: ./fresh_install 2026-06-22 06:26:17 UTC
 ========================================
 
 
@@ -120,11 +120,11 @@ docker run \
 = fresh_install is running: docker run --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src_6:/workspace/src docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest --command true
 WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 + /usr/bin/supervisord
-2026-06-19 17:28:03,985 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-06-19 17:28:03,987 INFO RPC interface 'supervisor' initialized
-2026-06-19 17:28:03,987 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-06-19 17:28:03,989 INFO daemonizing the supervisord process
-2026-06-19 17:28:03,989 CRIT could not write pidfile /var/run/supervisord.pid
+2026-06-22 06:27:15,817 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-06-22 06:27:15,820 INFO RPC interface 'supervisor' initialized
+2026-06-22 06:27:15,820 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-06-22 06:27:15,822 INFO daemonizing the supervisord process
+2026-06-22 06:27:15,822 CRIT could not write pidfile /var/run/supervisord.pid
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --command true
 WARNING:quibble.cmd:ZUUL_PROJECT not set. Assuming mediawiki/core
 INFO:quibble.cmd:Adding mediawiki/vendor
@@ -169,9 +169,9 @@ INFO:quibble.commands:Copyright (c) The PHP Group
 INFO:quibble.commands:Zend Engine v4.3.31, Copyright (c) Zend Technologies
 INFO:quibble.commands:    with Zend OPcache v8.3.31, Copyright (c), by Zend Technologies
 INFO:quibble.commands:psql --version: psql (PostgreSQL) 15.18 (Debian 15.18-0+deb12u1)
-INFO:quibble.commands:<<< Finish: Versions, in 0.442 s
+INFO:quibble.commands:<<< Finish: Versions, in 0.413 s
 INFO:quibble.commands:>>> Start: Ensure dir: '/workspace/log'
-INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.001 s
+INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.000 s
 INFO:quibble.commands:>>> Start: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src"}
 INFO:zuul.CloneMapper:Workspace path set to: /workspace/src
 INFO:zuul.CloneMapper:Mapping projects to workspace...
@@ -182,26 +182,26 @@ INFO:zuul.CloneMapper:Expansion completed.
 INFO:quibble.zuul.clone:Preparing 3 repositories with 4 workers
 INFO:quibble.zuul.clone:Cloning mediawiki/core first
 INFO:zuul.Cloner:Creating repo mediawiki/core from cache /srv/git/mediawiki/core.git
-2026-06-19 17:28:04,993 INFO spawned: 'apache' with pid 62
-2026-06-19 17:28:04,994 INFO spawned: 'php-fpm' with pid 63
-2026-06-19 17:28:05,077 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
-2026-06-19 17:28:06,123 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2026-06-22 06:27:16,827 INFO spawned: 'apache' with pid 62
+2026-06-22 06:27:16,828 INFO spawned: 'php-fpm' with pid 63
+2026-06-22 06:27:16,905 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-06-22 06:27:17,953 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 INFO:zuul.Cloner:Updating origin remote in repo mediawiki/core to https://gerrit.wikimedia.org/r/mediawiki/core
 INFO:zuul.Cloner:Falling back to branch master
-INFO:zuul.Cloner:Prepared mediawiki/core repo with branch master at commit d7b139a93cea100434c306a1393849b7b120c961
+INFO:zuul.Cloner:Prepared mediawiki/core repo with branch master at commit abb82309c5bcc2c497c0c45b1c7645796dc587d9
 INFO:zuul.Cloner.mediawiki/vendor:Creating repo mediawiki/vendor from cache /srv/git/mediawiki/vendor.git
 INFO:zuul.Cloner.mediawiki/skins/Vector:Creating repo mediawiki/skins/Vector from cache /srv/git/mediawiki/skins/Vector.git
 INFO:zuul.Cloner.mediawiki/skins/Vector:Updating origin remote in repo mediawiki/skins/Vector to https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
 INFO:zuul.Cloner.mediawiki/skins/Vector:Falling back to branch master
-INFO:zuul.Cloner.mediawiki/skins/Vector:Prepared mediawiki/skins/Vector repo with branch master at commit eb1c81f1b94a049eb96946c68fb9b8426f068ccc
+INFO:zuul.Cloner.mediawiki/skins/Vector:Prepared mediawiki/skins/Vector repo with branch master at commit 1974479c8a50d6e56d1ebf980ff900a45914d681
 INFO:zuul.Cloner.mediawiki/vendor:Updating origin remote in repo mediawiki/vendor to https://gerrit.wikimedia.org/r/mediawiki/vendor
 INFO:zuul.Cloner.mediawiki/vendor:Falling back to branch master
 INFO:zuul.Cloner.mediawiki/vendor:Prepared mediawiki/vendor repo with branch master at commit 7a63dab2acf8b4712e277e6590e98bb56cd1efb0
 INFO:quibble.zuul.clone:Prepared all repositories
-INFO:quibble.commands:<<< Finish: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src"}, in 164.054 s
+INFO:quibble.commands:<<< Finish: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src"}, in 171.028 s
 INFO:quibble.commands:>>> Start: Submodule update: /workspace/src
 INFO:quibble.commands:Updating git submodules of extensions and skins
-INFO:quibble.commands:<<< Finish: Submodule update: /workspace/src, in 0.006 s
+INFO:quibble.commands:<<< Finish: Submodule update: /workspace/src, in 0.011 s
 INFO:quibble.commands:>>> Start: Install composer dev-requires for vendor.git
 INFO:quibble.commands:mediawiki/vendor is used, add require-dev dependencies
 DEBUG:quibble.commands:composer require --dev composer/spdx-licenses=1.6.0 doctrine/dbal=3.10.5 doctrine/sql-formatter=1.5.4 ergebnis/phpunit-slow-test-detector=2.24.0 ext-simplexml=* fig/log-test=1.2.1 giorgiosironi/eris=^0.14.0 hamcrest/hamcrest-php=^2.0 mediawiki/mediawiki-codesniffer=51.0.0 mediawiki/mediawiki-phan-config=0.20.0 mediawiki/minus-x=2.0.1 nikic/php-parser=^5.5.0 php-parallel-lint/php-console-highlighter=1.0.0 php-parallel-lint/php-parallel-lint=1.4.0 phpunit/phpunit=9.6.34 psy/psysh=^0.12.19 seld/jsonlint=1.11.0 wikimedia/alea=1.0.1 wikimedia/langconv=^0.5.0 wikimedia/testing-access-wrapper=4.0.0 wmde/hamcrest-html-matchers=^1.0.0
@@ -427,20 +427,20 @@ Generated optimized autoload files (authoritative) containing 8178 classes
 INFO:quibble.util:Copying /workspace/src/composer.json to /workspace/log/composer.core.json.txt
 INFO:quibble.util:Copying /workspace/src/vendor/composer.json to /workspace/log/composer.vendor.json.txt
 INFO:quibble.util:Copying /workspace/src/vendor/composer/autoload_files.php to /workspace/log/composer.autoload_files.php.txt
-INFO:quibble.commands:<<< Finish: Install composer dev-requires for vendor.git, in 76.307 s
+INFO:quibble.commands:<<< Finish: Install composer dev-requires for vendor.git, in 85.279 s
 INFO:quibble.commands:>>> Start: Start backends: <MySQL (no socket)>
 INFO:backend.MySQL:Starting MySQL
 INFO:backend.MySQL:Initializing MySQL data directory
 INFO:backend.MySQL:Waiting for MySQL socket
 INFO:backend.MySQL:Creating the wiki database and grant
 INFO:backend.MySQL:MySQL is ready
-INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 3.199 s
+INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 2.651 s
 INFO:quibble.commands:>>> Start: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-eiy987pb/socket>
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-qu9l3wdk/socket>
 * npm install in /workspace/src
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 10s elapsed, 0/2 completed
-INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-eiy987pb/socket>
-php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-eiy987pb/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
+INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-qu9l3wdk/socket>
+php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-qu9l3wdk/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
 PHP 8.3.31 is installed.
 ICU 72.1 is installed (supports Unicode 15.0.0).
 Found ImageMagick: /usr/bin/convert. Image thumbnailing will be enabled if you enable uploads.
@@ -529,11 +529,11 @@ Fixing log entries with log_title starting with 'User:#'
 done.
 Skipped 34 updates that were already applied.
 Purging caches...
-Done in 0.9 s.
+Done in 0.8 s.
 php maintenance/rebuildLocalisationCache.php --lang en
 Rebuilding en...
 1 languages rebuilt out of 1
-<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-eiy987pb/socket>, in 17.178 s
+<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-qu9l3wdk/socket>, in 10.893 s
 
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 20s elapsed, 1/2 completed
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 30s elapsed, 1/2 completed
@@ -543,9 +543,6 @@ DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent s
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 70s elapsed, 1/2 completed
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 80s elapsed, 1/2 completed
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 90s elapsed, 1/2 completed
-DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 100s elapsed, 1/2 completed
-DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 110s elapsed, 1/2 completed
-DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 120s elapsed, 1/2 completed
 INFO:quibble.commands:>>> Start: npm install in /workspace/src
 
 added 1714 packages, and audited 1716 packages in 2m
@@ -565,11 +562,11 @@ Some issues need review, and may require choosing
 a different dependency.
 
 Run `npm audit` for details.
-<<< Finish: npm install in /workspace/src, in 121.464 s
+<<< Finish: npm install in /workspace/src, in 98.207 s
 
 INFO:quibble.commands:<<< Finish: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-eiy987pb/socket>
-* npm install in /workspace/src, in 121.487 s
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-qu9l3wdk/socket>
+* npm install in /workspace/src, in 98.221 s
 INFO:quibble.commands:>>> Start: Start backends: <Memcached on port 11211>
 INFO:backend.Memcached:Starting Memcached on port 11211
 INFO:backend.Memcached:Waiting for Memcached on port 11211
@@ -583,13 +580,13 @@ DEBUG:quibble.chromium_flags:Flags: ['--autoplay-policy=no-user-gesture-required
 INFO:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.005 s
 INFO:quibble.commands:>>> Start: User commands: true
 INFO:quibble.commands:User commands, working directory: /workspace/src
-INFO:quibble.commands:<<< Finish: User commands: true, in 0.013 s
+INFO:quibble.commands:<<< Finish: User commands: true, in 0.012 s
 INFO:quibble.commands:Shutting down backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ChromeWebDriver:Terminating ChromeWebDriver
 INFO:backend.Xvfb:Terminating Xvfb
 INFO:quibble.commands:Shutting down backends: <Memcached on port 11211>
 INFO:backend.Memcached:Terminating Memcached
-INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-eiy987pb/socket>
+INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-qu9l3wdk/socket>
 INFO:backend.MySQL:Terminating MySQL
 INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
@@ -597,23 +594,23 @@ INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
 ╒══════════╤═════════════════════════════════════════════════════════════════╕
 │   0.000s │ Report durations                                                │
-│   0.442s │ Versions                                                        │
-│   0.001s │ Ensure dir: '/workspace/log'                                    │
-│ 164.054s │ Zuul clone {"cache_dir": "/srv/git", "projects":                │
+│   0.413s │ Versions                                                        │
+│   0.000s │ Ensure dir: '/workspace/log'                                    │
+│ 171.028s │ Zuul clone {"cache_dir": "/srv/git", "projects":                │
 │          │ ["mediawiki/core", "mediawiki/skins/Vector",                    │
 │          │ "mediawiki/vendor"], "workers": 4, "workspace":                 │
 │          │ "/workspace/src"}                                               │
-│   0.006s │ Submodule update: /workspace/src                                │
-│  76.307s │ Install composer dev-requires for vendor.git                    │
-│   3.199s │ Start backends: <MySQL (no socket)>                             │
-│ 121.487s │ Run Post-dependency install, pre-database dependent steps in    │
+│   0.011s │ Submodule update: /workspace/src                                │
+│  85.279s │ Install composer dev-requires for vendor.git                    │
+│   2.651s │ Start backends: <MySQL (no socket)>                             │
+│  98.221s │ Run Post-dependency install, pre-database dependent steps in    │
 │          │ parallel (concurrency=2): * Install MediaWiki, db=<MySQL        │
-│          │ /tmp/quibble-mysql-eiy987pb/socket> * npm install in            │
+│          │ /tmp/quibble-mysql-qu9l3wdk/socket> * npm install in            │
 │          │ /workspace/src                                                  │
 │   0.103s │ Start backends: <Memcached on port 11211>                       │
 │   0.005s │ Start backends: <ExternalWebserver http://127.0.0.1:9413        │
 │          │ /workspace/src> <Xvfb :94> <ChromeWebDriver :94>                │
-│   0.013s │ User commands: true                                             │
+│   0.012s │ User commands: true                                             │
 ╘══════════╧═════════════════════════════════════════════════════════════════╛
 
 ========================================
@@ -624,10 +621,10 @@ INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
 ========================================
 = fresh_install is running: return 0
-(7m 25s)
+(6m 58s)
 
 ========================================
-= extensions/Echo: ./install extensions/Echo 2026-06-19 17:34:11 UTC
+= extensions/Echo: ./install extensions/Echo 2026-06-22 06:33:15 UTC
 ========================================
 
 
@@ -772,11 +769,11 @@ docker run \
 = install is running: docker run --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src_6:/workspace/src -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest --resolve-requires --command true
 WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 + /usr/bin/supervisord
-2026-06-19 17:34:14,764 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-06-19 17:34:14,766 INFO RPC interface 'supervisor' initialized
-2026-06-19 17:34:14,767 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-06-19 17:34:14,768 INFO daemonizing the supervisord process
-2026-06-19 17:34:14,768 CRIT could not write pidfile /var/run/supervisord.pid
+2026-06-22 06:33:18,047 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-06-22 06:33:18,050 INFO RPC interface 'supervisor' initialized
+2026-06-22 06:33:18,050 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-06-22 06:33:18,052 INFO daemonizing the supervisord process
+2026-06-22 06:33:18,052 CRIT could not write pidfile /var/run/supervisord.pid
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --resolve-requires --command true
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
@@ -822,9 +819,9 @@ INFO:quibble.commands:Copyright (c) The PHP Group
 INFO:quibble.commands:Zend Engine v4.3.31, Copyright (c) Zend Technologies
 INFO:quibble.commands:    with Zend OPcache v8.3.31, Copyright (c), by Zend Technologies
 INFO:quibble.commands:psql --version: psql (PostgreSQL) 15.18 (Debian 15.18-0+deb12u1)
-INFO:quibble.commands:<<< Finish: Versions, in 0.423 s
+INFO:quibble.commands:<<< Finish: Versions, in 0.451 s
 INFO:quibble.commands:>>> Start: Ensure dir: '/workspace/log'
-INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.001 s
+INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.000 s
 INFO:quibble.commands:>>> Start: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Echo", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}
 INFO:zuul.CloneMapper:Workspace path set to: /workspace/src
 INFO:zuul.CloneMapper:Mapping projects to workspace...
@@ -835,33 +832,33 @@ INFO:zuul.CloneMapper:  mediawiki/vendor -> /workspace/src/vendor
 INFO:zuul.CloneMapper:Expansion completed.
 INFO:quibble.zuul.clone:Preparing 4 repositories with 4 workers
 INFO:zuul.Cloner.mediawiki/core:Creating repo mediawiki/core from upstream https://gerrit.wikimedia.org/r/mediawiki/core
-INFO:zuul.Cloner.mediawiki/vendor:Creating repo mediawiki/vendor from upstream https://gerrit.wikimedia.org/r/mediawiki/vendor
 INFO:zuul.Cloner.mediawiki/extensions/Echo:Creating repo mediawiki/extensions/Echo from cache /srv/git/mediawiki/extensions/Echo.git
 INFO:zuul.Cloner.mediawiki/skins/Vector:Creating repo mediawiki/skins/Vector from upstream https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
-2026-06-19 17:34:15,773 INFO spawned: 'apache' with pid 81
-2026-06-19 17:34:15,773 INFO spawned: 'php-fpm' with pid 82
-2026-06-19 17:34:15,851 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
-2026-06-19 17:34:16,896 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+INFO:zuul.Cloner.mediawiki/vendor:Creating repo mediawiki/vendor from upstream https://gerrit.wikimedia.org/r/mediawiki/vendor
+2026-06-22 06:33:19,055 INFO spawned: 'apache' with pid 81
+2026-06-22 06:33:19,058 INFO spawned: 'php-fpm' with pid 82
+2026-06-22 06:33:19,138 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-06-22 06:33:20,189 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 INFO:zuul.Cloner.mediawiki/extensions/Echo:Updating origin remote in repo mediawiki/extensions/Echo to https://gerrit.wikimedia.org/r/mediawiki/extensions/Echo
 INFO:zuul.Cloner.mediawiki/skins/Vector:Falling back to branch master
-INFO:zuul.Cloner.mediawiki/skins/Vector:Prepared mediawiki/skins/Vector repo with branch master at commit eb1c81f1b94a049eb96946c68fb9b8426f068ccc
+INFO:zuul.Cloner.mediawiki/skins/Vector:Prepared mediawiki/skins/Vector repo with branch master at commit 1974479c8a50d6e56d1ebf980ff900a45914d681
 INFO:zuul.Cloner.mediawiki/extensions/Echo:Falling back to branch master
 INFO:zuul.Cloner.mediawiki/extensions/Echo:Prepared mediawiki/extensions/Echo repo with branch master at commit 2c24a9c5d834a73b8d4a43804ee6bef29f3ee49a
 INFO:zuul.Cloner.mediawiki/vendor:Falling back to branch master
 INFO:zuul.Cloner.mediawiki/vendor:Prepared mediawiki/vendor repo with branch master at commit 7a63dab2acf8b4712e277e6590e98bb56cd1efb0
 INFO:zuul.Cloner.mediawiki/core:Falling back to branch master
-INFO:zuul.Cloner.mediawiki/core:Prepared mediawiki/core repo with branch master at commit d7b139a93cea100434c306a1393849b7b120c961
+INFO:zuul.Cloner.mediawiki/core:Prepared mediawiki/core repo with branch master at commit abb82309c5bcc2c497c0c45b1c7645796dc587d9
 INFO:quibble.zuul.clone:Prepared all repositories
-INFO:quibble.commands:<<< Finish: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Echo", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}, in 139.750 s
+INFO:quibble.commands:<<< Finish: Zuul clone {"cache_dir": "/srv/git", "projects": ["mediawiki/core", "mediawiki/extensions/Echo", "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4, "workspace": "/workspace/src", "zuul_project": "mediawiki/extensions/Echo"}, in 138.450 s
 INFO:quibble.commands:>>> Start: Recursively process registration dependencies. Fails on extra requires: False
 INFO:quibble.commands:Looking for requirements of mediawiki/extensions/Echo
 INFO:quibble.commands:Looking for requirements of mediawiki/skins/Vector
-DEBUG:quibble.commands:No additional requirements from mediawiki/skins/Vector, mediawiki/extensions/Echo
+DEBUG:quibble.commands:No additional requirements from mediawiki/extensions/Echo, mediawiki/skins/Vector
 WARNING:quibble.commands:Found extra requirements: 
-INFO:quibble.commands:<<< Finish: Recursively process registration dependencies. Fails on extra requires: False, in 0.013 s
+INFO:quibble.commands:<<< Finish: Recursively process registration dependencies. Fails on extra requires: False, in 0.011 s
 INFO:quibble.commands:>>> Start: Submodule update: /workspace/src
 INFO:quibble.commands:Updating git submodules of extensions and skins
-INFO:quibble.commands:<<< Finish: Submodule update: /workspace/src, in 0.010 s
+INFO:quibble.commands:<<< Finish: Submodule update: /workspace/src, in 0.012 s
 INFO:quibble.commands:>>> Start: Install composer dev-requires for vendor.git
 INFO:quibble.commands:mediawiki/vendor is used, add require-dev dependencies
 DEBUG:quibble.commands:composer require --dev composer/spdx-licenses=1.6.0 doctrine/dbal=3.10.5 doctrine/sql-formatter=1.5.4 ergebnis/phpunit-slow-test-detector=2.24.0 ext-simplexml=* fig/log-test=1.2.1 giorgiosironi/eris=^0.14.0 hamcrest/hamcrest-php=^2.0 mediawiki/mediawiki-codesniffer=51.0.0 mediawiki/mediawiki-phan-config=0.20.0 mediawiki/minus-x=2.0.1 nikic/php-parser=^5.5.0 php-parallel-lint/php-console-highlighter=1.0.0 php-parallel-lint/php-parallel-lint=1.4.0 phpunit/phpunit=9.6.34 psy/psysh=^0.12.19 seld/jsonlint=1.11.0 wikimedia/alea=1.0.1 wikimedia/langconv=^0.5.0 wikimedia/testing-access-wrapper=4.0.0 wmde/hamcrest-html-matchers=^1.0.0
@@ -1087,20 +1084,20 @@ Generated optimized autoload files (authoritative) containing 8178 classes
 INFO:quibble.util:Copying /workspace/src/composer.json to /workspace/log/composer.core.json.txt
 INFO:quibble.util:Copying /workspace/src/vendor/composer.json to /workspace/log/composer.vendor.json.txt
 INFO:quibble.util:Copying /workspace/src/vendor/composer/autoload_files.php to /workspace/log/composer.autoload_files.php.txt
-INFO:quibble.commands:<<< Finish: Install composer dev-requires for vendor.git, in 87.883 s
+INFO:quibble.commands:<<< Finish: Install composer dev-requires for vendor.git, in 87.544 s
 INFO:quibble.commands:>>> Start: Start backends: <MySQL (no socket)>
 INFO:backend.MySQL:Starting MySQL
 INFO:backend.MySQL:Initializing MySQL data directory
 INFO:backend.MySQL:Waiting for MySQL socket
 INFO:backend.MySQL:Creating the wiki database and grant
 INFO:backend.MySQL:MySQL is ready
-INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 3.079 s
+INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 3.296 s
 INFO:quibble.commands:>>> Start: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-gtgetgsy/socket>
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-32oowl34/socket>
 * npm install in /workspace/src
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 10s elapsed, 0/2 completed
-INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-gtgetgsy/socket>
-php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-gtgetgsy/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
+INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-32oowl34/socket>
+php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-32oowl34/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
 PHP 8.3.31 is installed.
 ICU 72.1 is installed (supports Unicode 15.0.0).
 Found ImageMagick: /usr/bin/convert. Image thumbnailing will be enabled if you enable uploads.
@@ -1193,11 +1190,11 @@ Fixing log entries with log_title starting with 'User:#'
 done.
 Skipped 44 updates that were already applied.
 Purging caches...
-Done in 1.4 s.
+Done in 1.7 s.
 php maintenance/rebuildLocalisationCache.php --lang en
 Rebuilding en...
 1 languages rebuilt out of 1
-<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-gtgetgsy/socket>, in 18.965 s
+<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-32oowl34/socket>, in 19.254 s
 
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 20s elapsed, 1/2 completed
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 30s elapsed, 1/2 completed
@@ -1211,9 +1208,12 @@ DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent s
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 110s elapsed, 1/2 completed
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 120s elapsed, 1/2 completed
 DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 130s elapsed, 1/2 completed
+DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 140s elapsed, 1/2 completed
+DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 150s elapsed, 1/2 completed
+DEBUG:quibble.util:Waiting for Post-dependency install, pre-database dependent steps: 160s elapsed, 1/2 completed
 INFO:quibble.commands:>>> Start: npm install in /workspace/src
 
-added 1714 packages, and audited 1716 packages in 2m
+added 1714 packages, and audited 1716 packages in 3m
 
 240 packages are looking for funding
   run `npm fund` for details
@@ -1230,31 +1230,31 @@ Some issues need review, and may require choosing
 a different dependency.
 
 Run `npm audit` for details.
-<<< Finish: npm install in /workspace/src, in 132.642 s
+<<< Finish: npm install in /workspace/src, in 161.858 s
 
 INFO:quibble.commands:<<< Finish: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=2):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-gtgetgsy/socket>
-* npm install in /workspace/src, in 132.658 s
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-32oowl34/socket>
+* npm install in /workspace/src, in 161.872 s
 INFO:quibble.commands:>>> Start: Start backends: <Memcached on port 11211>
 INFO:backend.Memcached:Starting Memcached on port 11211
 INFO:backend.Memcached:Waiting for Memcached on port 11211
-INFO:quibble.commands:<<< Finish: Start backends: <Memcached on port 11211>, in 0.106 s
+INFO:quibble.commands:<<< Finish: Start backends: <Memcached on port 11211>, in 0.104 s
 INFO:quibble.commands:>>> Start: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ExternalWebserver:Not starting a webserver.
 INFO:backend.Xvfb:Starting Xvfb on display :94
 INFO:backend.ChromeWebDriver:Starting Chromedriver
 INFO:quibble.use_headless:Display: :94
 DEBUG:quibble.chromium_flags:Flags: ['--autoplay-policy=no-user-gesture-required', '--disable-pushstate-throttle', '--no-sandbox']
-INFO:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.004 s
+INFO:quibble.commands:<<< Finish: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>, in 0.005 s
 INFO:quibble.commands:>>> Start: User commands: true
 INFO:quibble.commands:User commands, working directory: /workspace/src
-INFO:quibble.commands:<<< Finish: User commands: true, in 0.023 s
+INFO:quibble.commands:<<< Finish: User commands: true, in 0.024 s
 INFO:quibble.commands:Shutting down backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ChromeWebDriver:Terminating ChromeWebDriver
 INFO:backend.Xvfb:Terminating Xvfb
 INFO:quibble.commands:Shutting down backends: <Memcached on port 11211>
 INFO:backend.Memcached:Terminating Memcached
-INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-gtgetgsy/socket>
+INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-32oowl34/socket>
 INFO:backend.MySQL:Terminating MySQL
 INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
@@ -1262,26 +1262,26 @@ INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
 ╒══════════╤═════════════════════════════════════════════════════════════════╕
 │   0.000s │ Report durations                                                │
-│   0.423s │ Versions                                                        │
-│   0.001s │ Ensure dir: '/workspace/log'                                    │
-│ 139.750s │ Zuul clone {"cache_dir": "/srv/git", "projects":                │
+│   0.451s │ Versions                                                        │
+│   0.000s │ Ensure dir: '/workspace/log'                                    │
+│ 138.450s │ Zuul clone {"cache_dir": "/srv/git", "projects":                │
 │          │ ["mediawiki/core", "mediawiki/extensions/Echo",                 │
 │          │ "mediawiki/skins/Vector", "mediawiki/vendor"], "workers": 4,    │
 │          │ "workspace": "/workspace/src", "zuul_project":                  │
 │          │ "mediawiki/extensions/Echo"}                                    │
-│   0.013s │ Recursively process registration dependencies. Fails on extra   │
+│   0.011s │ Recursively process registration dependencies. Fails on extra   │
 │          │ requires: False                                                 │
-│   0.010s │ Submodule update: /workspace/src                                │
-│  87.883s │ Install composer dev-requires for vendor.git                    │
-│   3.079s │ Start backends: <MySQL (no socket)>                             │
-│ 132.658s │ Run Post-dependency install, pre-database dependent steps in    │
+│   0.012s │ Submodule update: /workspace/src                                │
+│  87.544s │ Install composer dev-requires for vendor.git                    │
+│   3.296s │ Start backends: <MySQL (no socket)>                             │
+│ 161.872s │ Run Post-dependency install, pre-database dependent steps in    │
 │          │ parallel (concurrency=2): * Install MediaWiki, db=<MySQL        │
-│          │ /tmp/quibble-mysql-gtgetgsy/socket> * npm install in            │
+│          │ /tmp/quibble-mysql-32oowl34/socket> * npm install in            │
 │          │ /workspace/src                                                  │
-│   0.106s │ Start backends: <Memcached on port 11211>                       │
-│   0.004s │ Start backends: <ExternalWebserver http://127.0.0.1:9413        │
+│   0.104s │ Start backends: <Memcached on port 11211>                       │
+│   0.005s │ Start backends: <ExternalWebserver http://127.0.0.1:9413        │
 │          │ /workspace/src> <Xvfb :94> <ChromeWebDriver :94>                │
-│   0.023s │ User commands: true                                             │
+│   0.024s │ User commands: true                                             │
 ╘══════════╧═════════════════════════════════════════════════════════════════╛
 
 ========================================
@@ -1292,10 +1292,10 @@ INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
 ========================================
 = install is running: return 0
-(6m 9s)
+(6m 36s)
 
 ========================================
-= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-06-19 17:40:21 UTC
+= extensions/Echo: ./run_selenium_tests extensions/Echo 2026-06-22 06:39:52 UTC
 ========================================
 
 
@@ -1371,11 +1371,11 @@ docker run \
 = run_selenium_tests is running: docker run --rm --entrypoint=quibble-with-supervisord -v $PWD/cache:/cache -v $PWD/log:/workspace/log -v $PWD/ref:/srv/git:ro -v $PWD/src_6:/workspace/src -e CI=true -e ZUUL_PROJECT=mediawiki/extensions/Echo docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest --skip-zuul --skip-deps --run selenium
 WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 + /usr/bin/supervisord
-2026-06-19 17:40:22,804 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
-2026-06-19 17:40:22,806 INFO RPC interface 'supervisor' initialized
-2026-06-19 17:40:22,806 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2026-06-19 17:40:22,807 INFO daemonizing the supervisord process
-2026-06-19 17:40:22,808 CRIT could not write pidfile /var/run/supervisord.pid
+2026-06-22 06:39:53,864 INFO Included extra file "/etc/supervisor/conf.d/quibble-services.conf" during parsing
+2026-06-22 06:39:53,866 INFO RPC interface 'supervisor' initialized
+2026-06-22 06:39:53,866 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2026-06-22 06:39:53,868 INFO daemonizing the supervisord process
+2026-06-22 06:39:53,869 CRIT could not write pidfile /var/run/supervisord.pid
 + exec /usr/local/bin/quibble --web-backend=external --web-url=http://127.0.0.1:9413 --skip-zuul --skip-deps --run selenium
 DEBUG:quibble.cmd:ZUUL_PROJECT=mediawiki/extensions/Echo
 INFO:quibble.cmd:Adding mediawiki/vendor
@@ -1416,24 +1416,24 @@ INFO:quibble.commands:Copyright (c) The PHP Group
 INFO:quibble.commands:Zend Engine v4.3.31, Copyright (c) Zend Technologies
 INFO:quibble.commands:    with Zend OPcache v8.3.31, Copyright (c), by Zend Technologies
 INFO:quibble.commands:psql --version: psql (PostgreSQL) 15.18 (Debian 15.18-0+deb12u1)
-INFO:quibble.commands:<<< Finish: Versions, in 0.447 s
+INFO:quibble.commands:<<< Finish: Versions, in 0.429 s
 INFO:quibble.commands:>>> Start: Ensure dir: '/workspace/log'
 INFO:quibble.commands:<<< Finish: Ensure dir: '/workspace/log', in 0.001 s
 INFO:quibble.commands:>>> Start: Start backends: <MySQL (no socket)>
 INFO:backend.MySQL:Starting MySQL
 INFO:backend.MySQL:Initializing MySQL data directory
-2026-06-19 17:40:23,811 INFO spawned: 'apache' with pid 91
-2026-06-19 17:40:23,812 INFO spawned: 'php-fpm' with pid 92
-2026-06-19 17:40:23,897 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
-2026-06-19 17:40:24,942 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2026-06-22 06:39:54,872 INFO spawned: 'apache' with pid 102
+2026-06-22 06:39:54,873 INFO spawned: 'php-fpm' with pid 103
+2026-06-22 06:39:54,950 INFO success: php-fpm entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2026-06-22 06:39:56,003 INFO success: apache entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 INFO:backend.MySQL:Waiting for MySQL socket
 INFO:backend.MySQL:Creating the wiki database and grant
 INFO:backend.MySQL:MySQL is ready
-INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 2.603 s
+INFO:quibble.commands:<<< Finish: Start backends: <MySQL (no socket)>, in 3.740 s
 INFO:quibble.commands:>>> Start: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=1):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-433p3awv/socket>
-INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-433p3awv/socket>
-INFO:mw.maintenance.install:php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-433p3awv/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-hzf19qhs/socket>
+INFO:quibble.commands:>>> Start: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-hzf19qhs/socket>
+INFO:mw.maintenance.install:php maintenance/install.php --scriptpath= --server=http://127.0.0.1:9413 --dbtype=mysql --dbname=wikidb --dbuser=wikiuser --dbpass=secret --dbserver=localhost:/tmp/quibble-mysql-hzf19qhs/socket --with-extensions --pass=testwikijenkinspass TestWiki WikiAdmin
 PHP 8.3.31 is installed.
 ICU 72.1 is installed (supports Unicode 15.0.0).
 Found ImageMagick: /usr/bin/convert. Image thumbnailing will be enabled if you enable uploads.
@@ -1526,17 +1526,17 @@ Fixing log entries with log_title starting with 'User:#'
 done.
 Skipped 44 updates that were already applied.
 Purging caches...
-Done in 0.7 s.
+Done in 1.4 s.
 INFO:mw.maintenance.rebuildLocalisationCache:php maintenance/rebuildLocalisationCache.php --lang en
 0 languages rebuilt out of 1
 Use --force to rebuild the caches which are still fresh.
-INFO:quibble.commands:<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-433p3awv/socket>, in 12.368 s
+INFO:quibble.commands:<<< Finish: Install MediaWiki, db=<MySQL /tmp/quibble-mysql-hzf19qhs/socket>, in 21.090 s
 INFO:quibble.commands:<<< Finish: Run Post-dependency install, pre-database dependent steps in parallel (concurrency=1):
-* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-433p3awv/socket>, in 12.368 s
+* Install MediaWiki, db=<MySQL /tmp/quibble-mysql-hzf19qhs/socket>, in 21.090 s
 INFO:quibble.commands:>>> Start: Start backends: <Memcached on port 11211>
 INFO:backend.Memcached:Starting Memcached on port 11211
 INFO:backend.Memcached:Waiting for Memcached on port 11211
-INFO:quibble.commands:<<< Finish: Start backends: <Memcached on port 11211>, in 0.104 s
+INFO:quibble.commands:<<< Finish: Start backends: <Memcached on port 11211>, in 0.108 s
 INFO:quibble.commands:>>> Start: Start backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ExternalWebserver:Not starting a webserver.
 INFO:backend.Xvfb:Starting Xvfb on display :94
@@ -1554,7 +1554,7 @@ npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMExcep
 npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
 npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
 
-added 886 packages, and audited 887 packages in 59s
+added 886 packages, and audited 887 packages in 1m
 
 212 packages are looking for funding
   run `npm fund` for details
@@ -1573,14 +1573,14 @@ Run `npm audit` for details.
 > wdio tests/selenium/wdio.conf.js
 
 Run test targeting http://127.0.0.1:9413/
-[System information] Memory (host): 12717.5 MB (12.72 GB) free
-[System information] RAM used by NodeJS 162.6 MB
+[System information] Memory (host): 49946.8 MB (49.95 GB) free
+[System information] RAM used by NodeJS 167.4 MB
 [System information] CPU: 18 cores
 
-Execution of 2 workers started at 2026-06-19T17:41:47.560Z
+Execution of 2 workers started at 2026-06-22T06:41:38.695Z
 
-[0-1] RUNNING in chrome - file:///tests/selenium/specs/notifications.js
 [0-0] RUNNING in chrome - file:///tests/selenium/specs/echo.js
+[0-1] RUNNING in chrome - file:///tests/selenium/specs/notifications.js
 [0-0] [Browser information] chrome 149.0.7827.114 viewPort 1280x937
 [0-0] PASSED in chrome - file:///tests/selenium/specs/echo.js
 [0-1] PASSED in chrome - file:///tests/selenium/specs/notifications.js
@@ -1588,7 +1588,7 @@ Execution of 2 workers started at 2026-06-19T17:41:47.560Z
  "spec" Reporter:
 ------------------------------------------------------------------
 [chrome 149.0.7827.114 linux #0-0] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-0] Session ID: 93269bdb429b9c32ba9befc565821e5c
+[chrome 149.0.7827.114 linux #0-0] Session ID: cbfc5934629e212e499464b5a93eb0f4
 [chrome 149.0.7827.114 linux #0-0]
 [chrome 149.0.7827.114 linux #0-0] » tests/selenium/specs/echo.js
 [chrome 149.0.7827.114 linux #0-0] Echo
@@ -1596,24 +1596,24 @@ Execution of 2 workers started at 2026-06-19T17:41:47.560Z
 [chrome 149.0.7827.114 linux #0-0]    ✓ flyout for alert appears when clicked @daily
 [chrome 149.0.7827.114 linux #0-0]    ✓ flyout for notices appears when clicked @daily
 [chrome 149.0.7827.114 linux #0-0]
-[chrome 149.0.7827.114 linux #0-0] 3 passing (20.5s)
+[chrome 149.0.7827.114 linux #0-0] 3 passing (22.6s)
 ------------------------------------------------------------------
 [chrome 149.0.7827.114 linux #0-1] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-1] Session ID: ee5c8e8b7c7bb84dd5533f8aa8eee126
+[chrome 149.0.7827.114 linux #0-1] Session ID: 2ee0108ab2a5bf3777af713207856aa7
 [chrome 149.0.7827.114 linux #0-1]
 [chrome 149.0.7827.114 linux #0-1] » tests/selenium/specs/notifications.js
 [chrome 149.0.7827.114 linux #0-1] Notifications
 [chrome 149.0.7827.114 linux #0-1]    ✓ checks for Notifications Page @daily
 [chrome 149.0.7827.114 linux #0-1]
-[chrome 149.0.7827.114 linux #0-1] 1 passing (21s)
+[chrome 149.0.7827.114 linux #0-1] 1 passing (22.9s)
 
 
-Spec Files:	 2 passed, 2 total (100% completed) in 00:00:34  
+Spec Files:	 2 passed, 2 total (100% completed) in 00:00:39  
 
-INFO:quibble.commands:<<< Finish: Browser tests in 'mediawiki/extensions/Echo', in 103.457 s
+INFO:quibble.commands:<<< Finish: Browser tests in 'mediawiki/extensions/Echo', in 119.442 s
 INFO:quibble.commands:>>> Start: Browser tests in 'mediawiki/core'
 
-added 1714 packages, and audited 1716 packages in 4m
+added 1714 packages, and audited 1716 packages in 3m
 
 240 packages are looking for funding
   run `npm fund` for details
@@ -1636,85 +1636,76 @@ Run `npm audit` for details.
 
 Edit link visible
 Run test targeting http://127.0.0.1:9413/
-[System information] Memory (host): 14071.9 MB (14.07 GB) free
-[System information] RAM used by NodeJS 163.4 MB
+[System information] Memory (host): 57778.4 MB (57.78 GB) free
+[System information] RAM used by NodeJS 163.3 MB
 [System information] CPU: 18 cores
 [Package information] WebdriverIO: 9.23.2
 [Package information] wdio-mediawiki: 6.5.2
 [Configuration] maxInstances 13 (max test suites running in parallel) 
 
-Execution of 13 workers started at 2026-06-19T17:46:13.719Z
+Execution of 13 workers started at 2026-06-22T06:46:02.636Z
 
-[0-8] RUNNING in chrome - file:///tests/selenium/docs/Stack/specs/expect.js
-[0-4] RUNNING in chrome - file:///tests/selenium/specs/temporaryuseraccount.js
-[0-7] RUNNING in chrome - file:///tests/selenium/docs/Page_object_pattern/specs/login.js
-[0-1] RUNNING in chrome - file:///tests/selenium/specs/pageadmin.js
-[0-9] RUNNING in chrome - file:///tests/selenium/docs/Stack/specs/mocha.js
-[0-0] RUNNING in chrome - file:///tests/selenium/specs/page.js
-[0-5] RUNNING in chrome - file:///tests/selenium/specs/user.js
-[0-10] RUNNING in chrome - file:///tests/selenium/docs/Stack/specs/pageobject.js
-[0-6] RUNNING in chrome - file:///tests/selenium/docs/Create_a_simple_test/specs/specialpages.js
 [0-12] RUNNING in chrome - file:///tests/selenium/wdio-mediawiki/specs/BlankPage.js
-[0-2] RUNNING in chrome - file:///tests/selenium/specs/recentchanges.js
+[0-10] RUNNING in chrome - file:///tests/selenium/docs/Stack/specs/pageobject.js
+[0-0] RUNNING in chrome - file:///tests/selenium/specs/page.js
+[0-7] RUNNING in chrome - file:///tests/selenium/docs/Page_object_pattern/specs/login.js
+[0-5] RUNNING in chrome - file:///tests/selenium/specs/user.js
+[0-8] RUNNING in chrome - file:///tests/selenium/docs/Stack/specs/expect.js
+[0-9] RUNNING in chrome - file:///tests/selenium/docs/Stack/specs/mocha.js
+[0-6] RUNNING in chrome - file:///tests/selenium/docs/Create_a_simple_test/specs/specialpages.js
 [0-3] RUNNING in chrome - file:///tests/selenium/specs/temporaryuser.js
+[0-4] RUNNING in chrome - file:///tests/selenium/specs/temporaryuseraccount.js
+[0-2] RUNNING in chrome - file:///tests/selenium/specs/recentchanges.js
+[0-1] RUNNING in chrome - file:///tests/selenium/specs/pageadmin.js
 [0-11] RUNNING in chrome - file:///tests/selenium/docs/Use_MediaWiki_API/specs/api.js
 [0-0] [Browser information] chrome 149.0.7827.114 viewPort 1280x937
 [0-11] PASSED in chrome - file:///tests/selenium/docs/Use_MediaWiki_API/specs/api.js
 [0-9] Edit link visible
-[0-12] PASSED in chrome - file:///tests/selenium/wdio-mediawiki/specs/BlankPage.js
-[0-8] PASSED in chrome - file:///tests/selenium/docs/Stack/specs/expect.js
 [0-10] PASSED in chrome - file:///tests/selenium/docs/Stack/specs/pageobject.js
+[0-12] PASSED in chrome - file:///tests/selenium/wdio-mediawiki/specs/BlankPage.js
 [0-9] PASSED in chrome - file:///tests/selenium/docs/Stack/specs/mocha.js
+[0-8] PASSED in chrome - file:///tests/selenium/docs/Stack/specs/expect.js
 [0-6] PASSED in chrome - file:///tests/selenium/docs/Create_a_simple_test/specs/specialpages.js
 [0-7] PASSED in chrome - file:///tests/selenium/docs/Page_object_pattern/specs/login.js
 [0-3] PASSED in chrome - file:///tests/selenium/specs/temporaryuser.js
 [0-2] PASSED in chrome - file:///tests/selenium/specs/recentchanges.js
 [0-4] PASSED in chrome - file:///tests/selenium/specs/temporaryuseraccount.js
-[0-1] PASSED in chrome - file:///tests/selenium/specs/pageadmin.js
 [0-5] PASSED in chrome - file:///tests/selenium/specs/user.js
+[0-1] PASSED in chrome - file:///tests/selenium/specs/pageadmin.js
 [0-0] PASSED in chrome - file:///tests/selenium/specs/page.js
 
  "spec" Reporter:
 ------------------------------------------------------------------
 [chrome 149.0.7827.114 linux #0-11] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-11] Session ID: ce2bfaeb9072c8483c7c73d236caf8b3
+[chrome 149.0.7827.114 linux #0-11] Session ID: 885bb42476402060041f7d62983a7add
 [chrome 149.0.7827.114 linux #0-11]
 [chrome 149.0.7827.114 linux #0-11] » tests/selenium/docs/Use_MediaWiki_API/specs/api.js
 [chrome 149.0.7827.114 linux #0-11] API
 [chrome 149.0.7827.114 linux #0-11]    ✓ Main Page should exist
 [chrome 149.0.7827.114 linux #0-11]    ✓ Missing Page should not exist
 [chrome 149.0.7827.114 linux #0-11]
-[chrome 149.0.7827.114 linux #0-11] 2 passing (647ms)
-------------------------------------------------------------------
-[chrome 149.0.7827.114 linux #0-12] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-12] Session ID: 792d1458eab9ad7ee6ec928b4a226274
-[chrome 149.0.7827.114 linux #0-12]
-[chrome 149.0.7827.114 linux #0-12] » tests/selenium/wdio-mediawiki/specs/BlankPage.js
-[chrome 149.0.7827.114 linux #0-12] BlankPage
-[chrome 149.0.7827.114 linux #0-12]    ✓ should have its title
-[chrome 149.0.7827.114 linux #0-12]
-[chrome 149.0.7827.114 linux #0-12] 1 passing (2.4s)
-------------------------------------------------------------------
-[chrome 149.0.7827.114 linux #0-8] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-8] Session ID: 4785ea7922a4ee2df530b575b3a153db
-[chrome 149.0.7827.114 linux #0-8]
-[chrome 149.0.7827.114 linux #0-8] » tests/selenium/docs/Stack/specs/expect.js
-[chrome 149.0.7827.114 linux #0-8] Main page
-[chrome 149.0.7827.114 linux #0-8]    ✓ should have edit link when using expect
-[chrome 149.0.7827.114 linux #0-8]
-[chrome 149.0.7827.114 linux #0-8] 1 passing (4.3s)
+[chrome 149.0.7827.114 linux #0-11] 2 passing (1.6s)
 ------------------------------------------------------------------
 [chrome 149.0.7827.114 linux #0-10] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-10] Session ID: de3d6b2f2851586a088966534253af69
+[chrome 149.0.7827.114 linux #0-10] Session ID: 5a7cb7eb67fdd4a5a282e1f3de2f7320
 [chrome 149.0.7827.114 linux #0-10]
 [chrome 149.0.7827.114 linux #0-10] » tests/selenium/docs/Stack/specs/pageobject.js
 [chrome 149.0.7827.114 linux #0-10] Main Page
 [chrome 149.0.7827.114 linux #0-10]    ✓ should have edit link when using page object
 [chrome 149.0.7827.114 linux #0-10]
-[chrome 149.0.7827.114 linux #0-10] 1 passing (2.8s)
+[chrome 149.0.7827.114 linux #0-10] 1 passing (4.2s)
+------------------------------------------------------------------
+[chrome 149.0.7827.114 linux #0-12] Running: chrome (v149.0.7827.114) on linux
+[chrome 149.0.7827.114 linux #0-12] Session ID: b1cd96cf2de47b6c814ea29c813c5b98
+[chrome 149.0.7827.114 linux #0-12]
+[chrome 149.0.7827.114 linux #0-12] » tests/selenium/wdio-mediawiki/specs/BlankPage.js
+[chrome 149.0.7827.114 linux #0-12] BlankPage
+[chrome 149.0.7827.114 linux #0-12]    ✓ should have its title
+[chrome 149.0.7827.114 linux #0-12]
+[chrome 149.0.7827.114 linux #0-12] 1 passing (4.7s)
 ------------------------------------------------------------------
 [chrome 149.0.7827.114 linux #0-9] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-9] Session ID: f477fb941fe0756d9e23b430b83445b9
+[chrome 149.0.7827.114 linux #0-9] Session ID: d38a9bd5350ad6efa195910f73ed3866
 [chrome 149.0.7827.114 linux #0-9]
 [chrome 149.0.7827.114 linux #0-9] » tests/selenium/docs/Stack/specs/mocha.js
 [chrome 149.0.7827.114 linux #0-9] Main page
@@ -1722,64 +1713,62 @@ Execution of 13 workers started at 2026-06-19T17:46:13.719Z
 [chrome 149.0.7827.114 linux #0-9]
 [chrome 149.0.7827.114 linux #0-9] 1 passing (3.8s)
 ------------------------------------------------------------------
+[chrome 149.0.7827.114 linux #0-8] Running: chrome (v149.0.7827.114) on linux
+[chrome 149.0.7827.114 linux #0-8] Session ID: 7ae94aefef3004653d43df8fb69a2314
+[chrome 149.0.7827.114 linux #0-8]
+[chrome 149.0.7827.114 linux #0-8] » tests/selenium/docs/Stack/specs/expect.js
+[chrome 149.0.7827.114 linux #0-8] Main page
+[chrome 149.0.7827.114 linux #0-8]    ✓ should have edit link when using expect
+[chrome 149.0.7827.114 linux #0-8]
+[chrome 149.0.7827.114 linux #0-8] 1 passing (3.7s)
+------------------------------------------------------------------
 [chrome 149.0.7827.114 linux #0-6] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-6] Session ID: 79f858c40a009b15d436c783c8a30445
+[chrome 149.0.7827.114 linux #0-6] Session ID: ae573aac243ff161c3e3eb0ece991764
 [chrome 149.0.7827.114 linux #0-6]
 [chrome 149.0.7827.114 linux #0-6] » tests/selenium/docs/Create_a_simple_test/specs/specialpages.js
 [chrome 149.0.7827.114 linux #0-6] Special:SpecialPages
 [chrome 149.0.7827.114 linux #0-6]    ✓ should not have Edit link
 [chrome 149.0.7827.114 linux #0-6]
-[chrome 149.0.7827.114 linux #0-6] 1 passing (5.1s)
+[chrome 149.0.7827.114 linux #0-6] 1 passing (9.4s)
 ------------------------------------------------------------------
 [chrome 149.0.7827.114 linux #0-7] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-7] Session ID: 84cb78c7474776f101a9273762423af4
+[chrome 149.0.7827.114 linux #0-7] Session ID: 4fabcf3a6aa3bab8bfe8a73f57e5ce17
 [chrome 149.0.7827.114 linux #0-7]
 [chrome 149.0.7827.114 linux #0-7] » tests/selenium/docs/Page_object_pattern/specs/login.js
 [chrome 149.0.7827.114 linux #0-7] User
 [chrome 149.0.7827.114 linux #0-7]    ✓ should be able to log in without page object
 [chrome 149.0.7827.114 linux #0-7]
-[chrome 149.0.7827.114 linux #0-7] 1 passing (8s)
+[chrome 149.0.7827.114 linux #0-7] 1 passing (10.9s)
 ------------------------------------------------------------------
 [chrome 149.0.7827.114 linux #0-3] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-3] Session ID: 6cdfcf90f0d063e8b65e669715764992
+[chrome 149.0.7827.114 linux #0-3] Session ID: 27134d6a7f0523d4cd20f77973c300d1
 [chrome 149.0.7827.114 linux #0-3]
 [chrome 149.0.7827.114 linux #0-3] » tests/selenium/specs/temporaryuser.js
 [chrome 149.0.7827.114 linux #0-3] Temporary user
 [chrome 149.0.7827.114 linux #0-3]    ✓ should not see signup form fields relevant to named users
 [chrome 149.0.7827.114 linux #0-3]
-[chrome 149.0.7827.114 linux #0-3] 1 passing (8s)
+[chrome 149.0.7827.114 linux #0-3] 1 passing (14s)
 ------------------------------------------------------------------
 [chrome 149.0.7827.114 linux #0-2] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-2] Session ID: ad8be00e409b0a1faef54ffa682743bf
+[chrome 149.0.7827.114 linux #0-2] Session ID: a9de8886e408ff9c09767d73a6f77b74
 [chrome 149.0.7827.114 linux #0-2]
 [chrome 149.0.7827.114 linux #0-2] » tests/selenium/specs/recentchanges.js
 [chrome 149.0.7827.114 linux #0-2] Special:RecentChanges
 [chrome 149.0.7827.114 linux #0-2]    ✓ shows page creation
 [chrome 149.0.7827.114 linux #0-2]
-[chrome 149.0.7827.114 linux #0-2] 1 passing (9.1s)
+[chrome 149.0.7827.114 linux #0-2] 1 passing (13.8s)
 ------------------------------------------------------------------
 [chrome 149.0.7827.114 linux #0-4] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-4] Session ID: 7dcff47e6eed8648d7ee62f9dbf9460b
+[chrome 149.0.7827.114 linux #0-4] Session ID: d57eb63ccacebce68d16926df43fa5e5
 [chrome 149.0.7827.114 linux #0-4]
 [chrome 149.0.7827.114 linux #0-4] » tests/selenium/specs/temporaryuseraccount.js
 [chrome 149.0.7827.114 linux #0-4] Temporary user account creation
 [chrome 149.0.7827.114 linux #0-4]    ✓ should be able to create account
 [chrome 149.0.7827.114 linux #0-4]
-[chrome 149.0.7827.114 linux #0-4] 1 passing (11.3s)
-------------------------------------------------------------------
-[chrome 149.0.7827.114 linux #0-1] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-1] Session ID: 5c8594283249b7e89372c69b73399382
-[chrome 149.0.7827.114 linux #0-1]
-[chrome 149.0.7827.114 linux #0-1] » tests/selenium/specs/pageadmin.js
-[chrome 149.0.7827.114 linux #0-1] Page admin actions
-[chrome 149.0.7827.114 linux #0-1]    ✓ should be deletable
-[chrome 149.0.7827.114 linux #0-1]    ✓ should be restorable
-[chrome 149.0.7827.114 linux #0-1]    ✓ should be protectable
-[chrome 149.0.7827.114 linux #0-1]
-[chrome 149.0.7827.114 linux #0-1] 3 passing (21s)
+[chrome 149.0.7827.114 linux #0-4] 1 passing (15.3s)
 ------------------------------------------------------------------
 [chrome 149.0.7827.114 linux #0-5] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-5] Session ID: da6718ec2479682b5e02d9c642dc48a6
+[chrome 149.0.7827.114 linux #0-5] Session ID: db9d5ed33fd65af0160dc6b6b3b058dc
 [chrome 149.0.7827.114 linux #0-5]
 [chrome 149.0.7827.114 linux #0-5] » tests/selenium/specs/user.js
 [chrome 149.0.7827.114 linux #0-5] User
@@ -1788,10 +1777,21 @@ Execution of 13 workers started at 2026-06-19T17:46:13.719Z
 [chrome 149.0.7827.114 linux #0-5]    ✓ named user should see extra signup form fields when creating an account
 [chrome 149.0.7827.114 linux #0-5]    ✓ should be able to block a user
 [chrome 149.0.7827.114 linux #0-5]
-[chrome 149.0.7827.114 linux #0-5] 4 passing (20.6s)
+[chrome 149.0.7827.114 linux #0-5] 4 passing (26.2s)
+------------------------------------------------------------------
+[chrome 149.0.7827.114 linux #0-1] Running: chrome (v149.0.7827.114) on linux
+[chrome 149.0.7827.114 linux #0-1] Session ID: c68e025fc17f005d89a22a8c9d09a944
+[chrome 149.0.7827.114 linux #0-1]
+[chrome 149.0.7827.114 linux #0-1] » tests/selenium/specs/pageadmin.js
+[chrome 149.0.7827.114 linux #0-1] Page admin actions
+[chrome 149.0.7827.114 linux #0-1]    ✓ should be deletable
+[chrome 149.0.7827.114 linux #0-1]    ✓ should be restorable
+[chrome 149.0.7827.114 linux #0-1]    ✓ should be protectable
+[chrome 149.0.7827.114 linux #0-1]
+[chrome 149.0.7827.114 linux #0-1] 3 passing (29.4s)
 ------------------------------------------------------------------
 [chrome 149.0.7827.114 linux #0-0] Running: chrome (v149.0.7827.114) on linux
-[chrome 149.0.7827.114 linux #0-0] Session ID: 254336154a7badd8162163914a2142c1
+[chrome 149.0.7827.114 linux #0-0] Session ID: dccb97ca71b2030bdf7b30b5ef86bf34
 [chrome 149.0.7827.114 linux #0-0]
 [chrome 149.0.7827.114 linux #0-0] » tests/selenium/specs/page.js
 [chrome 149.0.7827.114 linux #0-0] Page
@@ -1802,19 +1802,19 @@ Execution of 13 workers started at 2026-06-19T17:46:13.719Z
 [chrome 149.0.7827.114 linux #0-0]    ✓ should have history
 [chrome 149.0.7827.114 linux #0-0]    ✓ should be undoable
 [chrome 149.0.7827.114 linux #0-0]
-[chrome 149.0.7827.114 linux #0-0] 6 passing (30.2s)
+[chrome 149.0.7827.114 linux #0-0] 6 passing (35.6s)
 
 
-Spec Files:	 13 passed, 13 total (100% completed) in 00:00:45  
+Spec Files:	 13 passed, 13 total (100% completed) in 00:00:56  
 
-INFO:quibble.commands:<<< Finish: Browser tests in 'mediawiki/core', in 277.718 s
-INFO:quibble.commands:<<< Finish: Run all browser tests, in 381.190 s
+INFO:quibble.commands:<<< Finish: Browser tests in 'mediawiki/core', in 280.306 s
+INFO:quibble.commands:<<< Finish: Run all browser tests, in 399.768 s
 INFO:quibble.commands:Shutting down backends: <ExternalWebserver http://127.0.0.1:9413 /workspace/src> <Xvfb :94> <ChromeWebDriver :94>
 INFO:backend.ChromeWebDriver:Terminating ChromeWebDriver
 INFO:backend.Xvfb:Terminating Xvfb
 INFO:quibble.commands:Shutting down backends: <Memcached on port 11211>
 INFO:backend.Memcached:Terminating Memcached
-INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-433p3awv/socket>
+INFO:quibble.commands:Shutting down backends: <MySQL /tmp/quibble-mysql-hzf19qhs/socket>
 INFO:backend.MySQL:Terminating MySQL
 INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
@@ -1822,24 +1822,24 @@ INFO:quibble.commands:Wrote durations to /workspace/log/quibble-durations.json
 
 ╒══════════╤═════════════════════════════════════════════════════════════════╕
 │   0.000s │ Report durations                                                │
-│   0.447s │ Versions                                                        │
+│   0.429s │ Versions                                                        │
 │   0.001s │ Ensure dir: '/workspace/log'                                    │
-│   2.603s │ Start backends: <MySQL (no socket)>                             │
-│  12.368s │ Install MediaWiki, db=<MySQL /tmp/quibble-                      │
-│          │ mysql-433p3awv/socket>                                          │
-│  12.368s │ Run Post-dependency install, pre-database dependent steps in    │
+│   3.740s │ Start backends: <MySQL (no socket)>                             │
+│  21.090s │ Install MediaWiki, db=<MySQL /tmp/quibble-mysql-                │
+│          │ hzf19qhs/socket>                                                │
+│  21.090s │ Run Post-dependency install, pre-database dependent steps in    │
 │          │ parallel (concurrency=1): * Install MediaWiki, db=<MySQL        │
-│          │ /tmp/quibble-mysql-433p3awv/socket>                             │
-│   0.104s │ Start backends: <Memcached on port 11211>                       │
+│          │ /tmp/quibble-mysql-hzf19qhs/socket>                             │
+│   0.108s │ Start backends: <Memcached on port 11211>                       │
 │   0.005s │ Start backends: <ExternalWebserver http://127.0.0.1:9413        │
 │          │ /workspace/src> <Xvfb :94> <ChromeWebDriver :94>                │
-│ 103.457s │ Browser tests in 'mediawiki/extensions/Echo'                    │
-│ 277.718s │ Browser tests in 'mediawiki/core'                               │
-│ 381.190s │ Run all browser tests                                           │
+│ 119.442s │ Browser tests in 'mediawiki/extensions/Echo'                    │
+│ 280.306s │ Browser tests in 'mediawiki/core'                               │
+│ 399.768s │ Run all browser tests                                           │
 ╘══════════╧═════════════════════════════════════════════════════════════════╛
-(6m 39s)
+(7m 8s)
 
-  (1 passed, 0 failed, 0 skipped) 2026-06-19 17:47:01 UTC
+  (1 passed, 0 failed, 0 skipped) 2026-06-22 06:47:00 UTC
 
 ========================================
 = Results
@@ -1848,4 +1848,4 @@ PASSED:
   extensions/Echo
 
 All passed.
-(20m 15s) 2026-06-19 17:47:01 UTC
+(20m 43s) 2026-06-22 06:47:00 UTC

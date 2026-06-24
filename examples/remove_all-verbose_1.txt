@@ -7,7 +7,7 @@ bash: 3.2.57(1)-release
 git: git version 2.50.1 (Apple Git-155)
 docker: Docker version 29.5.3, build d1c06ef
 docker CPUs: 18
-docker RAM: 19.5 GB
+docker RAM: 62.7 GB
 
 
 
@@ -131,4 +131,4 @@ docker RAM: 19.5 GB
 
 ========================================
 = remove_all is running: local _code=0
-(1s) 2026-06-20 07:25:30 UTC
+(0s) 2026-06-22 19:00:28 UTC

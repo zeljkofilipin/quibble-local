@@ -10,9 +10,9 @@ bash: 3.2.57(1)-release
 git: git version 2.50.1 (Apple Git-155)
 docker: Docker version 29.5.3, build d1c06ef
 docker CPUs: 18
-docker RAM: 19.5 GB
+docker RAM: 62.7 GB
 
-install_all_gated install_all_gated .................................................................................................................. FAIL (4h 26m 12s)  2026-06-19 23:09:56 UTC
+install_all_gated install_all_gated .................................................................................................................. FAIL (4h 48m 6s)  2026-06-22 12:35:03 UTC
 
 ========================================
 = Results
@@ -21,4 +21,4 @@ FAILED:
   install (install_all_gated)
 
 Logs: log/silent/
-(4h 26m 12s) 2026-06-19 23:09:56 UTC
+(4h 48m 7s) 2026-06-22 12:35:03 UTC

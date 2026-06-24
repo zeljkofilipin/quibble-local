@@ -7,7 +7,7 @@ bash: 3.2.57(1)-release
 git: git version 2.50.1 (Apple Git-155)
 docker: Docker version 29.5.3, build d1c06ef
 docker CPUs: 18
-docker RAM: 19.5 GB
+docker RAM: 62.7 GB
 
 
 
@@ -33,15 +33,15 @@ docker RAM: 19.5 GB
 ========================================
 = fetch is running: '[' 0 -gt 0 ']'
 
-
-========================================
-= fetch is running: find ref -name '*.git' -type d
-
 ========================================
 = fetch is running: IFS=
 
 ========================================
 = fetch is running: read -r repo
+
+
+========================================
+= fetch is running: find ref -name '*.git' -type d
 
 ========================================
 = fetch is running: repos+=("$repo")
@@ -1431,4 +1431,4 @@ From https://gerrit.wikimedia.org/r/mediawiki/vendor
 
 ========================================
 = fetch is running: local _code=0
-(1m 15s) 2026-06-20 03:15:33 UTC
+(1m 17s) 2026-06-22 16:20:25 UTC

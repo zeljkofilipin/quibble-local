@@ -9,7 +9,7 @@ bash: 3.2.57(1)-release
 git: git version 2.50.1 (Apple Git-155)
 docker: Docker version 29.5.3, build d1c06ef
 docker CPUs: 18
-docker RAM: 19.5 GB
+docker RAM: 62.7 GB
 
 1..41
 ok 1 combinations.awk: single item
@@ -53,4 +53,4 @@ ok 38 extract_found_block.awk: extracts 'No dependencies needed' block
 ok 39 extract_found_block.awk: extracts block with required and optional deps
 ok 40 extract_found_block.awk: handles seconds-only duration line
 ok 41 extract_found_block.awk: returns nothing when no FOUND block is present
-(2s) 2026-06-20 05:03:02 UTC
+(2s) 2026-06-22 18:22:54 UTC

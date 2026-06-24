@@ -9,7 +9,7 @@ bash: 3.2.57(1)-release
 git: git version 2.50.1 (Apple Git-155)
 docker: Docker version 29.5.3, build d1c06ef
 docker CPUs: 18
-docker RAM: 19.5 GB
+docker RAM: 62.7 GB
 
 1..307
 ok 1 find_dependencies_minimal_bottom_up: shows usage with no arguments
@@ -37,9 +37,7 @@ ok 22 generate_examples: prints a labeled summary line with counts and total run
 ok 23 generate_examples: warns and skips filename collisions
 ok 24 generate_examples: Usage-line loop reads from FD 3, not stdin
 ok 25 generate_examples: pins prep scripts first and destructive scripts last
-not ok 26 generate_examples: PARALLEL+PREVIEW forces serial (output identical to PREVIEW alone)
-# (in test file test/generate_examples.bats, line 136)
-#   `[ "$serial_output" = "$output" ]' failed
+ok 26 generate_examples: PARALLEL+PREVIEW forces serial (output identical to PREVIEW alone)
 ok 27 generate_examples: PREVIEW forces serial even at PARALLEL=1
 ok 28 generate_examples: parallel path centralises ENVIRONMENT and QUIBBLE_BACKGROUND
 ok 29 generate_examples: parallel path seeds src_N from shared src_save via ./restore
@@ -329,4 +327,4 @@ ok 304 selenium_tests_exist: reads extension from ref and finds selenium-test
 ok 305 selenium_tests_exist: reads skin from ref and finds selenium-test
 ok 306 suggest_parallel: outputs a number
 ok 307 suggest_parallel: output is at least 1
-(48s) 2026-06-20 05:03:03 UTC
+(47s) 2026-06-22 18:23:25 UTC
