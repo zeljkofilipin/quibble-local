@@ -44,27 +44,8 @@ if [ "$parallel" -lt 1 ]; then
     git -C "$repo" fetch # -C runs git in the repo's directory
   done
 else
-  # --- Parallel mode ---
-  pids=() # array of background process IDs
-  pid_repos=() # array of repo paths, indexed same as pids (for error reporting)
-
-  for repo in "${repos[@]}"; do
-    git -C "$repo" fetch &  # run fetch in background
-    pids+=($!) # $! is the PID of the last background process
-    pid_repos+=("$repo") # track which repo this PID is fetching
-
-    # When we have $parallel workers running, wait for all to finish before launching more
-    if [ ${#pids[@]} -ge "$parallel" ]; then
-      for i in "${!pids[@]}"; do
-        wait "${pids[$i]}" || echo "Warning: fetch failed for ${pid_repos[$i]}" >&2
-      done
-      pids=() # reset for next batch
-      pid_repos=()
-    fi
-  done
-
-  # Wait for any remaining workers
-  for i in "${!pids[@]}"; do
-    wait "${pids[$i]}" || echo "Warning: fetch failed for ${pid_repos[$i]}" >&2
-  done
+  # --- Parallel mode: fetch $parallel repos at a time (lib/run_waves) ---
+  items=("${repos[@]}")                   # lib/run_waves processes this ambient items[] array
+  _run_waves_job() { git -C "$1" fetch; } # worker: fetch one repo ($1 = repo path; -C runs git in it)
+  . "$(dirname "$0")"/lib/run_waves       # launch the jobs, throttled to $parallel at a time
 fi
