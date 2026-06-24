@@ -39,6 +39,7 @@ run_test env PARALLEL=1 ./find_dependencies_minimal_gated extensions/Echo  # 22m
 
 # --- All gated repositories (moved from test_integration) ---
 run_test ./prepare_gated               # 4m: test cloning bare repos for all gated repos
+run_test env PARALLEL=1 ./prepare_gated  # 2m: test prepare_gated parallel mode (fetch-updates the just-cloned repos)
 run_test ./install_each_gated extensions/Echo  # 3m: test install_each_gated with a single extension
 run_test env FAST=1 ./install_each_gated extensions/Echo  # 3m: test install_each_gated with fast mode
 run_test env PARALLEL=1 ./install_each_gated extensions/Echo  # 3m: test install_each_gated with parallel mode

@@ -394,9 +394,10 @@ These scripts operate on all gated extensions and skins (from `./list_gated`). T
 
 ### `./prepare_gated`
 
-Clone or fetch bare repos for all gated repositories. Extends `./prepare` by cloning bare repos for all gated extensions and skins. Assumes `./prepare` has been run first (needs `ref/integration/config.git`).
+Clone or fetch bare repos for all gated repositories. Extends `./prepare` by cloning bare repos for all gated extensions and skins. Assumes `./prepare` has been run first (needs `ref/integration/config.git`). `PARALLEL=N` clones/fetches N repos at a time (default: sequential).
 
     ./prepare_gated
+    PARALLEL=1 ./prepare_gated
     VERBOSE=1 ./prepare_gated
 
 ### `./install_all_gated`

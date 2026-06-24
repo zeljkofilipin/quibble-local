@@ -3,17 +3,34 @@
 # Clone or fetch bare repos for all gated repositories.
 # Extends ./prepare by cloning bare repos for all gated extensions and skins.
 # Assumes ./prepare has been run first (needs ref/integration/config.git).
+# PARALLEL=N clones/fetches N repos at a time (default: sequential).
 #
 # Usage: ./prepare_gated
+#        PARALLEL=1 ./prepare_gated
 #        VERBOSE=1 ./prepare_gated
 #
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 . "$(dirname "$0")"/lib/clone_or_fetch # provides clone_or_fetch function
 
-# Clone or fetch bare repos for all gated components
+parallel="${PARALLEL:-0}" # PARALLEL=N clones N repos at a time; unset/0 = sequential (default)
+
+# Build the list of Gerrit repos for all gated components.
+# Convert each component path (e.g. "extensions/Echo") to its Gerrit repo ("mediawiki/extensions/Echo").
+repos=() # array of Gerrit repo paths to clone or fetch
 while IFS= read -r component; do
-  # Convert component path (e.g. "extensions/Echo") to Gerrit repo (e.g. "mediawiki/extensions/Echo")
-  repo="mediawiki/${component}"
-  clone_or_fetch "$repo"
+  repos+=("mediawiki/${component}") # += appends to a bash array
 done < <("$(dirname "$0")"/list_gated)
+
+if [ "$parallel" -lt 1 ]; then
+  # --- Sequential mode (default) ---
+  # ${repos[@]+"${repos[@]}"} is the bash 3.2-safe expansion under set -u (empty array -> no iterations).
+  for repo in ${repos[@]+"${repos[@]}"}; do
+    clone_or_fetch "$repo"
+  done
+else
+  # --- Parallel mode: clone/fetch $parallel repos at a time (lib/run_waves) ---
+  items=(${repos[@]+"${repos[@]}"})         # lib/run_waves processes this ambient items[] array
+  _run_waves_job() { clone_or_fetch "$1"; } # worker: clone or fetch one repo ($1 = Gerrit repo path)
+  . "$(dirname "$0")"/lib/run_waves         # launch the jobs, throttled to $parallel at a time
+fi
