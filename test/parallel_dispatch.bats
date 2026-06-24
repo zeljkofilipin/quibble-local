@@ -33,7 +33,8 @@
     [ "$status" -ne 0 ]
   done
 
-  # All 8 known PARALLEL scripts: fetch, install_each_gated, the 3 find_dependencies_minimal_*
-  # (bottom_up, thorough, gated), the 2 run_selenium_tests_*_gated, and generate_examples.
-  [ "$count" -ge 8 ]
+  # All 10 known PARALLEL scripts: fetch, prepare, prepare_gated, install_each_gated, the 3
+  # find_dependencies_minimal_* (bottom_up, thorough, gated), the 2 run_selenium_tests_*_gated,
+  # and generate_examples.
+  [ "$count" -ge 10 ]
 }

@@ -15,10 +15,14 @@
 # Expects this function to be defined by the caller:
 #   _run_waves_job ITEM — runs one job in the foreground; run_waves backgrounds it with `&`.
 #                         Its exit code is waited on; a non-zero exit warns but does not abort.
+#
+# After sourcing, the caller may read:
+#   _rw_failures — count of jobs that exited non-zero (0 when every job succeeded)
 # shellcheck disable=SC2154 # items/parallel and _run_waves_job are set by the sourcing script
 
-_rw_pids=()  # PIDs of the jobs launched in the current (not-yet-waited) wave
-_rw_items=() # the item each PID is processing, same index as _rw_pids (for the failure label)
+_rw_pids=()    # PIDs of the jobs launched in the current (not-yet-waited) wave
+_rw_items=()   # the item each PID is processing, same index as _rw_pids (for the failure label)
+_rw_failures=0 # running count of jobs that exited non-zero (the caller may read it afterwards)
 
 # Wait for every job in the current wave, warning (but not aborting) on any non-zero exit,
 # then reset the wave arrays so the next batch starts empty.
@@ -26,8 +30,8 @@ _rw_drain() {
   local i # index into the wave arrays
   # ${!arr[@]} yields the array's indices; an empty array means no iterations (safe under set -u)
   for i in "${!_rw_pids[@]}"; do
-    # wait returns the job's exit code; || turns a failure into a warning so set -e cannot abort
-    wait "${_rw_pids[$i]}" || echo "Warning: failed: ${_rw_items[$i]}" >&2 # >&2 prints to stderr
+    # wait returns the job's exit code; on non-zero, warn (so set -e can't abort) and count it
+    wait "${_rw_pids[$i]}" || { echo "Warning: failed: ${_rw_items[$i]}" >&2; _rw_failures=$((_rw_failures + 1)); }
   done
   _rw_pids=()  # clear PIDs for the next wave
   _rw_items=() # clear labels for the next wave

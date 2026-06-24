@@ -3,8 +3,10 @@
 # Prepare the local environment for running Quibble.
 # Pulls the Docker image, clones bare git repos as references,
 # and creates working directories.
+# PARALLEL=N caps concurrency to N jobs at a time (default: all at once).
 #
 # Usage: ./prepare
+#        PARALLEL=1 ./prepare
 #        VERBOSE=1 ./prepare
 #
 # See: https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core
@@ -12,48 +14,50 @@
 set -euo pipefail # exit on error, undefined vars, or pipe failures
 . "$(dirname "$0")"/lib/setup # source shared setup (trace output in verbose mode only)
 
-# Create directory structure for bare repos (must exist before parallel clones)
+# Create directory structure for bare repos (must exist before the clones below)
 mkdir -p ref/mediawiki/skins ref/integration
 
-# Clone bare repos to use as local git references (avoids cloning from Gerrit each run).
-# If a repo already exists, fetch to update it.
-# All operations run in parallel since they are independent.
-pids=()      # array of background process IDs
-pid_names=() # array of descriptions (for error reporting)
+parallel="${PARALLEL:-0}" # PARALLEL=N runs at most N jobs at once; unset/0 = all at once (default)
 
-# Pull Docker image in background
-docker pull "$QUIBBLE_IMAGE" &
-pids+=($!) # $! is the PID of the last background process
-pid_names+=("docker pull $QUIBBLE_IMAGE")
-
-# Clone or fetch each core bare repo in background
+# Build the job list: pull the Docker image, then clone/fetch each base bare repo. The jobs are
+# independent, so they can run concurrently. Each repo entry is "REF_DIR URL"; the literal
+# "docker-pull" is the sentinel for the image pull.
+items=("docker-pull") # first job: pull the Quibble Docker image
 for ref_repo in \
   "ref/mediawiki/core.git https://gerrit.wikimedia.org/r/mediawiki/core" \
   "ref/mediawiki/vendor.git https://gerrit.wikimedia.org/r/mediawiki/vendor" \
   "ref/mediawiki/skins/Vector.git https://gerrit.wikimedia.org/r/mediawiki/skins/Vector" \
   "ref/integration/config.git https://gerrit.wikimedia.org/r/integration/config"; do
-  ref_dir="${ref_repo%% *}"  # first word: local path (e.g. ref/mediawiki/core.git)
-  ref_url="${ref_repo#* }"   # second word: Gerrit URL
+  items+=("$ref_repo") # append "REF_DIR URL"
+done
+
+# lib/run_waves worker: run one job. $1 is "docker-pull" or a "REF_DIR URL" repo spec.
+_run_waves_job() {
+  if [ "$1" = "docker-pull" ]; then
+    docker pull "$QUIBBLE_IMAGE" # pull the Quibble image (QUIBBLE_IMAGE is exported by lib/setup)
+    return
+  fi
+  local ref_dir="${1%% *}" # first word: local bare-repo path (e.g. ref/mediawiki/core.git)
+  local ref_url="${1#* }"  # remainder: Gerrit URL
   if [ -d "$ref_dir" ]; then
-    git -C "$ref_dir" fetch & # update existing bare repo in background
+    git -C "$ref_dir" fetch                # update existing bare repo (-C runs git in its dir)
   else
-    git clone --bare "$ref_url" "$ref_dir" & # clone new bare repo in background
+    git clone --bare "$ref_url" "$ref_dir" # clone a new bare repo
   fi
-  pids+=($!)
-  pid_names+=("$ref_dir")
-done
+}
 
-# Wait for all background jobs and report failures
-failed=0 # count of failed jobs
-for i in "${!pids[@]}"; do
-  if ! wait "${pids[$i]}"; then
-    echo "Warning: failed: ${pid_names[$i]}" >&2 # >&2 prints to stderr
-    failed=$((failed + 1))
-  fi
-done
+# Default (PARALLEL unset/0): no throttle — run every job at once, preserving prior behavior.
+# Unlike fetch/prepare_gated (which default to sequential), prepare's job set is small and fixed,
+# so the fast all-at-once default is kept; PARALLEL=N only *caps* concurrency for constrained machines.
+if [ "$parallel" -lt 1 ]; then
+  parallel=${#items[@]} # cap = total jobs, i.e. run them all concurrently
+fi
 
-if [ "$failed" -gt 0 ]; then
-  echo "Warning: $failed job(s) failed" >&2
+. "$(dirname "$0")"/lib/run_waves # run the jobs, at most $parallel at a time
+
+# Warn (but do not fail) if any job failed, matching prior behavior. _rw_failures is set by lib/run_waves.
+if [ "${_rw_failures:-0}" -gt 0 ]; then
+  echo "Warning: $_rw_failures job(s) failed" >&2 # >&2 prints to stderr
 fi
 
 # Create working directories (chmod 777 because the container runs as a different user)

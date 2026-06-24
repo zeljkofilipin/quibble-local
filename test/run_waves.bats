@@ -70,19 +70,22 @@ setup() {
   [[ "$output" == *"MAX=1"* ]]                          # never two at once
 }
 
-@test "lib/run_waves: a job exiting non-zero warns but does not abort the run" {
+@test "lib/run_waves: failing jobs warn and are counted in _rw_failures, but do not abort" {
   run bash -c '
-    exec 2>&1                                           # capture the stderr warning too
+    exec 2>&1                                           # capture the stderr warnings too
     cd "'"$BATS_TEST_TMPDIR"'"
     : > processed
     items=(i0 i1 i2 i3); parallel=1
-    _run_waves_job() { echo "$1" >> processed; [ "$1" = i1 ] && return 1; return 0; }
+    _run_waves_job() { echo "$1" >> processed; case "$1" in i1|i3) return 1;; esac; return 0; }
     . lib/run_waves
     echo "COUNT=$(grep -c . processed)"
+    echo "FAILURES=$_rw_failures"
   '
-  [ "$status" -eq 0 ]                                   # one failing job must not abort the run
+  [ "$status" -eq 0 ]                                   # failing jobs must not abort the run
   [[ "$output" == *"COUNT=4"* ]]                        # all four still processed
-  [[ "$output" == *"Warning: failed: i1"* ]]            # and the failure is reported by item label
+  [[ "$output" == *"Warning: failed: i1"* ]]            # each failure reported by item label
+  [[ "$output" == *"Warning: failed: i3"* ]]
+  [[ "$output" == *"FAILURES=2"* ]]                     # and counted in _rw_failures
 }
 
 @test "lib/run_waves: an item containing spaces is passed to the worker as one job" {

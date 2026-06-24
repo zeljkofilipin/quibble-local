@@ -210,9 +210,10 @@ Run Bats unit tests. Fast, no Docker needed. Requires Bats in addition to the ba
 
 ### `./prepare`
 
-Prepare the local environment for running Quibble. Pulls the Docker image, clones bare git repos as references, and creates working directories.
+Prepare the local environment for running Quibble. Pulls the Docker image, clones bare git repos as references, and creates working directories. `PARALLEL=N` caps concurrency to N jobs at a time. The default is **all at once** (the job set is small and fixed) — unlike `fetch`/`prepare_gated`, which default to sequential; `PARALLEL=N` only throttles `prepare` for constrained machines.
 
     ./prepare
+    PARALLEL=1 ./prepare
     VERBOSE=1 ./prepare
 
 See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
