@@ -10,12 +10,12 @@ bash: 3.2.57(1)-release
 git: git version 2.50.1 (Apple Git-155)
 docker: Docker version 29.5.3, build d1c06ef
 docker CPUs: 18
-docker RAM: 19.5 GB
+docker RAM: 62.7 GB
 
 
 Parallel mode: 1 slot
   Slot 1: extensions/Echo (ENVIRONMENT=1)
-  extensions/Echo: FAIL (see log/silent/slot-2/parallel/extensions-Echo.log)
+  extensions/Echo: FAIL (see log/silent/slot-3/parallel/extensions-Echo.log)
 
 ========================================
 = Results
@@ -24,4 +24,4 @@ FAILED:
   extensions/Echo
 
 Logs: log/silent/
-(1m 30s) 2026-06-19 18:41:00 UTC
+(1m 11s) 2026-06-22 07:40:21 UTC

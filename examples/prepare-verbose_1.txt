@@ -7,7 +7,7 @@ bash: 3.2.57(1)-release
 git: git version 2.50.1 (Apple Git-155)
 docker: Docker version 29.5.3, build d1c06ef
 docker CPUs: 18
-docker RAM: 19.5 GB
+docker RAM: 62.7 GB
 
 
 
@@ -67,10 +67,10 @@ docker RAM: 19.5 GB
 = prepare is running: ref_dir=ref/mediawiki/vendor.git
 
 ========================================
-= prepare is running: git -C ref/mediawiki/core.git fetch
 
 ========================================
 = prepare is running: ref_url=https://gerrit.wikimedia.org/r/mediawiki/vendor
+= prepare is running: git -C ref/mediawiki/core.git fetch
 
 ========================================
 = prepare is running: '[' -d ref/mediawiki/vendor.git ']'
@@ -100,6 +100,9 @@ docker RAM: 19.5 GB
 = prepare is running: pids+=($!)
 
 ========================================
+= prepare is running: git -C ref/mediawiki/skins/Vector.git fetch
+
+========================================
 = prepare is running: pid_names+=("$ref_dir")
 
 ========================================
@@ -115,13 +118,13 @@ docker RAM: 19.5 GB
 = prepare is running: '[' -d ref/integration/config.git ']'
 
 ========================================
-= prepare is running: git -C ref/mediawiki/skins/Vector.git fetch
-
-========================================
 = prepare is running: pids+=($!)
 
 ========================================
 = prepare is running: pid_names+=("$ref_dir")
+
+========================================
+= prepare is running: git -C ref/integration/config.git fetch
 
 ========================================
 = prepare is running: failed=0
@@ -130,10 +133,7 @@ docker RAM: 19.5 GB
 = prepare is running: for i in '"${!pids[@]}"'
 
 ========================================
-= prepare is running: wait 92747
-
-========================================
-= prepare is running: git -C ref/integration/config.git fetch
+= prepare is running: wait 54866
 latest: Pulling from releng/quibble-bookworm-php83
 Digest: sha256:51b46b51a1787aa0d9dc05736d0b35c2377364f3cb3bc58eb71faecc574812a0
 Status: Image is up to date for docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest
@@ -143,7 +143,7 @@ docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest
 = prepare is running: for i in '"${!pids[@]}"'
 
 ========================================
-= prepare is running: wait 92748
+= prepare is running: wait 54867
 From https://gerrit.wikimedia.org/r/integration/config
  * branch                HEAD       -> FETCH_HEAD
 From https://gerrit.wikimedia.org/r/mediawiki/skins/Vector
@@ -157,19 +157,19 @@ From https://gerrit.wikimedia.org/r/mediawiki/core
 = prepare is running: for i in '"${!pids[@]}"'
 
 ========================================
-= prepare is running: wait 92749
+= prepare is running: wait 54868
 
 ========================================
 = prepare is running: for i in '"${!pids[@]}"'
 
 ========================================
-= prepare is running: wait 92750
+= prepare is running: wait 54869
 
 ========================================
 = prepare is running: for i in '"${!pids[@]}"'
 
 ========================================
-= prepare is running: wait 92751
+= prepare is running: wait 54870
 
 ========================================
 = prepare is running: '[' 0 -gt 0 ']'
@@ -185,4 +185,4 @@ From https://gerrit.wikimedia.org/r/mediawiki/core
 
 ========================================
 = prepare is running: local _code=0
-(1s) 2026-06-19 16:28:48 UTC
+(1s) 2026-06-22 05:28:43 UTC

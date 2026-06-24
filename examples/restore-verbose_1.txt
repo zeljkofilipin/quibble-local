@@ -7,7 +7,7 @@ bash: 3.2.57(1)-release
 git: git version 2.50.1 (Apple Git-155)
 docker: Docker version 29.5.3, build d1c06ef
 docker CPUs: 18
-docker RAM: 19.5 GB
+docker RAM: 62.7 GB
 
 
 
@@ -32,11 +32,11 @@ docker RAM: 19.5 GB
 = restore is running: . ./lib/docker_chmod
 
 ========================================
-= restore is running: '[' '!' -d src_save_1 ']'
+= restore is running: '[' '!' -d src_save_5 ']'
 
 
 ========================================
-= restore is running: ls -A src_save_1
+= restore is running: ls -A src_save_5
 
 ========================================
 = restore is running: '[' -z '.dockerignore
@@ -105,19 +105,19 @@ thumb_handler.php
 vendor' ']'
 
 ========================================
-= restore is running: mkdir -p src_1
+= restore is running: mkdir -p src_5
 
 ========================================
-= restore is running: docker_chmod src_1
+= restore is running: docker_chmod src_5
 
 ========================================
-= restore is running: chmod 777 src_1
+= restore is running: chmod 777 src_5
 
 ========================================
 = restore is running: return 0
 
 ========================================
-= restore is running: docker run --rm --entrypoint bash --user root -v $PWD/src_1:/workspace/src -v $PWD/src_save_1:/workspace/src_save:ro docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/'
+= restore is running: docker run --rm --entrypoint bash --user root -v $PWD/src_5:/workspace/src -v $PWD/src_save_5:/workspace/src_save:ro docker-registry.wikimedia.org/releng/quibble-bookworm-php83:latest -c 'find /workspace/src -mindepth 1 -delete && cp -a /workspace/src_save/. /workspace/src/'
 WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 
 ========================================
@@ -125,4 +125,4 @@ WARNING: The requested image's platform (linux/amd64) does not match the detecte
 
 ========================================
 = restore is running: local _code=0
-(7m 34s) 2026-06-20 04:41:28 UTC
+(7m 49s) 2026-06-22 17:41:49 UTC
