@@ -1,0 +1,52 @@
+# shellcheck shell=bash
+# Run independent background jobs with bounded concurrency, in fixed waves of $parallel.
+# Launches jobs and, once $parallel of them are in flight, waits for that whole wave to
+# finish before launching the next; the final partial wave is drained at the end. A job
+# that exits non-zero only prints a warning — it never aborts the run, so the rest still
+# complete. Simpler than lib/run_pool (which refills each slot the instant it frees): waves
+# suit short, uniform jobs (e.g. git clone/fetch) where a slot-pool's sentinel polling and
+# per-slot src_N isolation would be overkill. Must be sourced, not run directly.
+#
+# Expects these to be set by the caller:
+#   items[]   — array of opaque job specs; each is passed verbatim to the worker and reused
+#               as the label in the failure warning
+#   parallel  — maximum number of jobs to run at once (>= 1; 1 is effectively sequential)
+#
+# Expects this function to be defined by the caller:
+#   _run_waves_job ITEM — runs one job in the foreground; run_waves backgrounds it with `&`.
+#                         Its exit code is waited on; a non-zero exit warns but does not abort.
+#
+# After sourcing, the caller may read:
+#   _rw_failures — count of jobs that exited non-zero (0 when every job succeeded)
+# shellcheck disable=SC2154 # items/parallel and _run_waves_job are set by the sourcing script
+
+_rw_pids=()    # PIDs of the jobs launched in the current (not-yet-waited) wave
+_rw_items=()   # the item each PID is processing, same index as _rw_pids (for the failure label)
+_rw_failures=0 # running count of jobs that exited non-zero (the caller may read it afterwards)
+
+# Wait for every job in the current wave, warning (but not aborting) on any non-zero exit,
+# then reset the wave arrays so the next batch starts empty.
+_rw_drain() {
+  local i # index into the wave arrays
+  # ${!arr[@]} yields the array's indices; an empty array means no iterations (safe under set -u)
+  for i in "${!_rw_pids[@]}"; do
+    # wait returns the job's exit code; on non-zero, warn (so set -e can't abort) and count it
+    wait "${_rw_pids[$i]}" || { echo "Warning: failed: ${_rw_items[$i]}" >&2; _rw_failures=$((_rw_failures + 1)); }
+  done
+  _rw_pids=()  # clear PIDs for the next wave
+  _rw_items=() # clear labels for the next wave
+}
+
+# Launch each item's job in the background, pausing to drain whenever a full wave is in flight.
+# ${items[@]+"${items[@]}"} is the bash 3.2-safe expansion under set -u: an unset/empty array
+# expands to nothing, otherwise to the elements quoted individually (so a spec containing
+# spaces stays a single item).
+for _rw_item in ${items[@]+"${items[@]}"}; do
+  _run_waves_job "$_rw_item" & # run this job in the background (worker body is defined by the caller)
+  _rw_pids+=($!)               # $! is the PID of the job just backgrounded
+  _rw_items+=("$_rw_item")     # remember which item it is, so a failure can name it
+  if [ "${#_rw_pids[@]}" -ge "$parallel" ]; then # a full wave ($parallel jobs) is now in flight
+    _rw_drain # wait for the whole wave to finish before launching any more
+  fi
+done
+_rw_drain # drain the final partial wave (a no-op if the last wave was exactly full)

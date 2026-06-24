@@ -193,7 +193,7 @@ To start from a completely clean state, run `./remove_all` first.
 
 ### `./test_integration_slow`
 
-Run integration tests that are too slow for the fast suite (`./test_integration`). Includes network-heavy setup, full test suites, exhaustive algorithms, and gated repository tests. Silent by default; use `VERBOSE=1` for full output.
+Run integration tests that are too slow for the fast suite (`./test_integration`). Includes network-heavy setup, full test suites, exhaustive algorithms, and gated repository tests. Silent by default; use `VERBOSE=1` for full output. `PARALLEL=N` runs the independent entries across N parallel slots (each in its own `ENVIRONMENT=N`/`src_N`), after a serial prelude (core install + PHPUnit, then `prepare_gated`); the default is fully serial. Use `./suggest_parallel` to pick N.
 
     ./test_integration_slow
 
@@ -210,9 +210,10 @@ Run Bats unit tests. Fast, no Docker needed. Requires Bats in addition to the ba
 
 ### `./prepare`
 
-Prepare the local environment for running Quibble. Pulls the Docker image, clones bare git repos as references, and creates working directories.
+Prepare the local environment for running Quibble. Pulls the Docker image, clones bare git repos as references, and creates working directories. `PARALLEL=N` caps concurrency to N jobs at a time. The default is **all at once** (the job set is small and fixed) — unlike `fetch`/`prepare_gated`, which default to sequential; `PARALLEL=N` only throttles `prepare` for constrained machines.
 
     ./prepare
+    PARALLEL=1 ./prepare
     VERBOSE=1 ./prepare
 
 See: [Install MediaWiki Core](https://www.mediawiki.org/wiki/Selenium/How-to/Run_tests_targeting_Quibble#Install_MediaWiki_Core)
@@ -394,9 +395,10 @@ These scripts operate on all gated extensions and skins (from `./list_gated`). T
 
 ### `./prepare_gated`
 
-Clone or fetch bare repos for all gated repositories. Extends `./prepare` by cloning bare repos for all gated extensions and skins. Assumes `./prepare` has been run first (needs `ref/integration/config.git`).
+Clone or fetch bare repos for all gated repositories. Extends `./prepare` by cloning bare repos for all gated extensions and skins. Assumes `./prepare` has been run first (needs `ref/integration/config.git`). `PARALLEL=N` clones/fetches N repos at a time (default: sequential).
 
     ./prepare_gated
+    PARALLEL=1 ./prepare_gated
     VERBOSE=1 ./prepare_gated
 
 ### `./install_all_gated`
@@ -637,6 +639,10 @@ Provides `run_test` function and `test_counter` for `test_integration`-style scr
 ### `lib/run_pool`
 
 Generic dynamic worker pool: keeps `$parallel` reusable slots busy and refills each slot the instant its item finishes, so one slow item never idles the rest. The caller sets `items[]` and `parallel` and defines `_run_pool_worker SLOT ITEM INDEX` (runs in a background subshell; `SLOT` is a stable `1..parallel` id reused as items complete, for per-slot isolation; `INDEX` is the item's 0-based position in `items[]`), plus optional `_pool_worker_label` (custom per-dispatch progress line) and `_pool_reap SLOT ITEM INDEX` (called the instant a slot's item finishes, so a caller can surface results live rather than after the pool drains) hooks. A caller may also set `_quibble_run_pool_stop` (e.g. inside `_pool_reap`) to stop dispatching new items and drain the in-flight slots — the ordered-search early exit used by `lib/parallel`. Because bash 3.2 has no `wait -n`, completion is detected via a per-slot sentinel file written by an `EXIT` trap inside each worker and polled (interval overridable with `_QUIBBLE_POOL_POLL_SECONDS`, default 1s); the sentinel temp dir is removed on normal completion and via an `INT`/`TERM` trap. Sourced by `generate_examples`, `find_dependencies_minimal_gated`, `install_each_gated`, `run_selenium_tests_all_gated`, `run_selenium_tests_required_gated`, and `lib/parallel` in parallel mode.
+
+### `lib/run_waves`
+
+Bounded-concurrency wave runner: runs independent background jobs `$parallel` at a time, waiting for each full wave before launching the next and draining the final partial wave. A job that exits non-zero only warns (it never aborts the run). The caller sets `items[]` and `parallel` and defines `_run_waves_job ITEM` (run in the background by the helper). Simpler than `lib/run_pool` (no dynamic refill, sentinel polling, or per-slot `src_N` isolation) — a good fit for short, uniform jobs like git clone/fetch. Sourced by `fetch` in parallel mode.
 
 ### `lib/heavy_scripts`
 
