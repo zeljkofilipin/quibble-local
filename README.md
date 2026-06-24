@@ -193,7 +193,7 @@ To start from a completely clean state, run `./remove_all` first.
 
 ### `./test_integration_slow`
 
-Run integration tests that are too slow for the fast suite (`./test_integration`). Includes network-heavy setup, full test suites, exhaustive algorithms, and gated repository tests. Silent by default; use `VERBOSE=1` for full output.
+Run integration tests that are too slow for the fast suite (`./test_integration`). Includes network-heavy setup, full test suites, exhaustive algorithms, and gated repository tests. Silent by default; use `VERBOSE=1` for full output. `PARALLEL=N` runs the independent entries across N parallel slots (each in its own `ENVIRONMENT=N`/`src_N`), after a serial prelude (core install + PHPUnit, then `prepare_gated`); the default is fully serial. Use `./suggest_parallel` to pick N.
 
     ./test_integration_slow
 

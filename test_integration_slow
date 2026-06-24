@@ -4,6 +4,9 @@
 # Includes network-heavy setup, full test suites, exhaustive algorithms, and
 # gated repository tests.
 # Each entry is annotated with its approximate runtime in minutes.
+# PARALLEL=N runs the independent entries across N parallel slots (each in its own ENVIRONMENT=N /
+# src_N), after a serial prelude (core install + PHPUnit, then prepare_gated). This speeds up a
+# standalone run; the default (unset) is fully serial. Use ./suggest_parallel to pick N.
 # WARNING: This will take a long time to run.
 # WARNING: This script inhibits sleep to prevent the machine from suspending.
 #
@@ -15,44 +18,123 @@
 . "$(dirname "$0")"/lib/batch_setup # shared setup: verbose/silent mode, log dir, result tracking
 . "$(dirname "$0")"/lib/run_test    # provides run_test function and test_counter
 
-# --- Core PHPUnit (slow: full core test suite) ---
+parallel="${PARALLEL:-0}" # PARALLEL=N pools the independent entries across N slots; unset/0 = serial (default)
+
+# slow_test marks an entry as independent (no ordering dependency on other entries). In serial mode
+# it runs the entry immediately (via run_test); in parallel mode it queues the entry for the pool
+# drain at the end, so the independent entries run concurrently after the serial prelude below.
+# The prelude/barrier entries (core install + PHPUnit, prepare_gated) use run_test directly so they
+# always run serially in source order — the pooled entries depend on the state they create.
+# Note: a queued entry is word-split on dispatch, so its arguments must not contain spaces (every
+# entry in this suite is "env FOO=1 ./script component", which is safe).
+queue=() # full command strings to pool (parallel mode only)
+slow_test() {
+  if [ "$parallel" -lt 1 ]; then
+    run_test "$@"   # serial: run now
+  else
+    queue+=("$*")   # parallel: defer to the pool drain at the end of the script
+  fi
+}
+
+# --- Core PHPUnit (prelude: serial, builds the default src/ that run_php_unit_tests needs) ---
 # fresh_install is fast but required: run_php_unit_tests assumes src/ already has
-# MediaWiki installed. The later find_dependencies_minimal_greedy* entries set up src/ themselves
+# MediaWiki installed. The pooled find_dependencies_minimal_* entries set up src_N themselves
 # (via lib/minimal_setup), so they don't need this.
 run_test ./fresh_install               # 1m: install core so run_php_unit_tests has something to test
 run_test ./run_php_unit_tests          # 13m: test running all core PHPUnit tests
 run_test ./run_php_unit_tests --filter testValidSpecialPageAliases  # 1m: test filtering core PHPUnit tests
 
-# --- Finding minimum dependencies (slow: exhaustive algorithms) ---
-run_test ./find_dependencies_minimal_bottom_up extensions/Echo  # 4m: test bottom-up exhaustive (fast for Echo: 0 deps needed)
-run_test env FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo  # 4m: test bottom-up with fast mode
-run_test env PARALLEL=1 ./find_dependencies_minimal_bottom_up extensions/Echo  # 7m: test bottom-up with parallel mode
-run_test env PARALLEL=1 FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo  # 7m: test bottom-up with parallel + fast mode
-run_test ./find_dependencies_minimal_greedy extensions/CommunityConfiguration  # 8m: test finding minimum dependencies (greedy algorithm)
-run_test env FAST=1 ./find_dependencies_minimal_greedy extensions/CommunityConfiguration  # 8m: test greedy with fast mode
-run_test ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test greedy + exhaustive verification
-run_test env FAST=1 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with fast mode
-run_test env PARALLEL=1 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with parallel mode
-run_test env PARALLEL=1 FAST=1 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with parallel + fast mode
-run_test ./find_dependencies_minimal_gated extensions/Echo  # 20m: test finding minimum dependencies for gated (single component)
-run_test env PARALLEL=1 ./find_dependencies_minimal_gated extensions/Echo  # 22m: test find_dependencies_minimal_gated with parallel mode
+# --- Finding minimum dependencies (pooled: each builds its own src) ---
+slow_test ./find_dependencies_minimal_bottom_up extensions/Echo  # 4m: test bottom-up exhaustive (fast for Echo: 0 deps needed)
+slow_test env FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo  # 4m: test bottom-up with fast mode
+slow_test env PARALLEL=1 ./find_dependencies_minimal_bottom_up extensions/Echo  # 7m: test bottom-up with parallel mode
+slow_test env PARALLEL=1 FAST=1 ./find_dependencies_minimal_bottom_up extensions/Echo  # 7m: test bottom-up with parallel + fast mode
+slow_test ./find_dependencies_minimal_greedy extensions/CommunityConfiguration  # 8m: test finding minimum dependencies (greedy algorithm)
+slow_test env FAST=1 ./find_dependencies_minimal_greedy extensions/CommunityConfiguration  # 8m: test greedy with fast mode
+slow_test ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test greedy + exhaustive verification
+slow_test env FAST=1 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with fast mode
+slow_test env PARALLEL=1 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with parallel mode
+slow_test env PARALLEL=1 FAST=1 ./find_dependencies_minimal_thorough extensions/Echo  # 21m: test thorough with parallel + fast mode
+slow_test ./find_dependencies_minimal_gated extensions/Echo  # 20m: test finding minimum dependencies for gated (single component)
+slow_test env PARALLEL=1 ./find_dependencies_minimal_gated extensions/Echo  # 22m: test find_dependencies_minimal_gated with parallel mode
 
 # --- All gated repositories (moved from test_integration) ---
+# prepare_gated is a serial barrier: it clones the bare repos the gated entries below need, so it
+# must finish before they run. In parallel mode the pooled entries drain after it (end of script).
 run_test ./prepare_gated               # 4m: test cloning bare repos for all gated repos
 run_test env PARALLEL=1 ./prepare_gated  # 2m: test prepare_gated parallel mode (fetch-updates the just-cloned repos)
-run_test ./install_each_gated extensions/Echo  # 3m: test install_each_gated with a single extension
-run_test env FAST=1 ./install_each_gated extensions/Echo  # 3m: test install_each_gated with fast mode
-run_test env PARALLEL=1 ./install_each_gated extensions/Echo  # 3m: test install_each_gated with parallel mode
-run_test env PARALLEL=1 FAST=1 ./install_each_gated extensions/Echo  # 3m: test install_each_gated with parallel + fast mode
-run_test ./run_selenium_tests_all_gated extensions/Echo     # 5m: test run_selenium_tests_all_gated with a single extension
-run_test env FAST=1 ./run_selenium_tests_all_gated extensions/Echo  # 4m: test run_selenium_tests_all_gated with fast mode
-run_test env PARALLEL=1 ./run_selenium_tests_all_gated extensions/Echo  # 4m: test run_selenium_tests_all_gated with parallel mode
-run_test env PARALLEL=1 FAST=1 ./run_selenium_tests_all_gated extensions/Echo  # 4m: test run_selenium_tests_all_gated with parallel + fast mode
-run_test ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with a single extension
-run_test env FAST=1 ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with fast mode
-run_test env PARALLEL=1 ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with parallel mode
-run_test env PARALLEL=1 FAST=1 ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with parallel + fast mode
-run_test ./run_selenium_tests_gated  # 73m: test run_selenium_tests_gated (installs all gated, runs all selenium tests; also tests install_all_gated)
+slow_test ./install_each_gated extensions/Echo  # 3m: test install_each_gated with a single extension
+slow_test env FAST=1 ./install_each_gated extensions/Echo  # 3m: test install_each_gated with fast mode
+slow_test env PARALLEL=1 ./install_each_gated extensions/Echo  # 3m: test install_each_gated with parallel mode
+slow_test env PARALLEL=1 FAST=1 ./install_each_gated extensions/Echo  # 3m: test install_each_gated with parallel + fast mode
+slow_test ./run_selenium_tests_all_gated extensions/Echo     # 5m: test run_selenium_tests_all_gated with a single extension
+slow_test env FAST=1 ./run_selenium_tests_all_gated extensions/Echo  # 4m: test run_selenium_tests_all_gated with fast mode
+slow_test env PARALLEL=1 ./run_selenium_tests_all_gated extensions/Echo  # 4m: test run_selenium_tests_all_gated with parallel mode
+slow_test env PARALLEL=1 FAST=1 ./run_selenium_tests_all_gated extensions/Echo  # 4m: test run_selenium_tests_all_gated with parallel + fast mode
+slow_test ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with a single extension
+slow_test env FAST=1 ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with fast mode
+slow_test env PARALLEL=1 ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with parallel mode
+slow_test env PARALLEL=1 FAST=1 ./run_selenium_tests_required_gated extensions/Echo  # 3m: test run_selenium_tests_required_gated with parallel + fast mode
+slow_test ./run_selenium_tests_gated  # 73m: test run_selenium_tests_gated (installs all gated, runs all selenium tests; also tests install_all_gated)
+
+if [ "$parallel" -ge 1 ]; then
+  # --- Parallel mode (lib/run_pool: a dynamic slot pool, refilled as each entry finishes) ---
+  # Per-entry log + result files, keyed by queue INDEX. run_pool reuses slot ids as entries finish,
+  # so a slot-keyed path would be clobbered before _pool_reap reads it; each entry runs exactly once,
+  # so its index is a collision-free key. Rooted at $QUIBBLE_LOG_DIR so a nested run can't collide.
+  _slow_dir="${QUIBBLE_LOG_DIR:-log/silent}/parallel"
+  rm -rf "$_slow_dir"   # drop stale logs/results from a prior run
+  mkdir -p "$_slow_dir"
+
+  # lib/run_pool hook: worker body (background subshell). $1 = stable 1..parallel slot id, $2 = the
+  # command string, $3 = its 0-based queue index. Isolates per-slot state so concurrent entries —
+  # including ones that themselves run a PARALLEL=1 inner pool — never share a src dir. Pinning
+  # QUIBBLE_SRC/QUIBBLE_SAVE (not just ENVIRONMENT) is what keeps a nested `export ENVIRONMENT=1`
+  # from escaping this slot: lib/setup preserves an already-set QUIBBLE_SRC. Must NOT install its
+  # own EXIT trap — run_pool sets one to touch its sentinel.
+  _run_pool_worker() {
+    local cmd="$2" idx="$3"
+    export ENVIRONMENT="$1"                     # lib/setup derives src_$slot from this
+    export QUIBBLE_SRC="src_$1"                 # pin the slot's src dir (survives a nested ENVIRONMENT=1)
+    export QUIBBLE_SAVE="src_save_$1"           # pin the slot's save dir (FAST-mode entries save/restore here)
+    export QUIBBLE_BACKGROUND=1                 # no Docker -i/-t flags (background worker, no stdin)
+    export QUIBBLE_LOG_DIR="$_slow_dir/slot-$1" # per-slot log dir so nested batch scripts don't clobber each other
+    export _QUIBBLE_NESTED_BATCH=1              # nested batch scripts must not wipe this slot's log dir mid-run
+    unset PARALLEL                              # bare entries run serially inside; an inline `PARALLEL=1 ...` still wins
+    # Run the entry. $cmd is intentionally unquoted so "env FOO=1 ./script component" word-splits
+    # into separate words; entries in this suite never contain a quoted argument with spaces.
+    # shellcheck disable=SC2086
+    if $cmd > "$_slow_dir/$idx.log" 2>&1; then
+      echo pass > "$_slow_dir/$idx.result"
+    else
+      echo fail > "$_slow_dir/$idx.result"
+    fi
+  }
+
+  # lib/run_pool hook: per-dispatch progress line (run_pool prints progress to stderr, so match it).
+  _pool_worker_label() {
+    printf "  Slot %d: %s\n" "$1" "$2" >&2
+  }
+
+  # lib/run_pool hook: per-completion. Runs in THIS shell (run_pool is sourced), so it appends to
+  # batch_setup's passed/failed directly, surfacing each result live. $2 = command, $3 = index.
+  # shellcheck disable=SC2154 # passed/failed are set by lib/batch_setup
+  _pool_reap() {
+    local cmd="$2" idx="$3" result=""
+    [ -f "$_slow_dir/$idx.result" ] && result=$(cat "$_slow_dir/$idx.result")
+    if [ "$result" = pass ]; then
+      passed="$passed
+  $cmd" # append the command on a new indented line (matches lib/run_test's format)
+    else
+      printf "  FAIL: %s (see %s)\n" "$cmd" "$_slow_dir/$idx.log" >&2
+      failed="$failed
+  $cmd"
+    fi
+  }
+
+  items=("${queue[@]}")             # lib/run_pool processes this ambient items[] array
+  . "$(dirname "$0")"/lib/run_pool
+fi
 
 # Print pass/fail summary and exit with error if any script failed
 print_results
